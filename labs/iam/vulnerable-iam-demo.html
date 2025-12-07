@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vulnerable IAM Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+        <div class="space-x-8">
+            <a href="../../index.html" class="hover:text-teal-400">← Back to Home</a>
+        </div>
+    </nav>
+
+<header>
+    <h1>🔥 Vulnerable IAM Implementation</h1>
+    <p>This page demonstrates intentionally insecure IAM design patterns.</p>
+</header>
+
+<section class="container">
+
+    <!-- ========================================= -->
+    <!-- 1. INSECURE LOGIN -->
+    <!-- ========================================= -->
+
+    <div class="card">
+        <h2>1. Insecure Login</h2>
+        <p>This login form uses <strong>hard-coded credentials</strong>, lacks MFA, and generates a <strong>predictable session token</strong>.</p>
+
+        <form id="vuln-login-form">
+            <label>Username</label>
+            <input type="text" id="vuln-username" placeholder="Enter any username">
+
+            <label>Password</label>
+            <input type="password" id="vuln-password" placeholder="Password123">
+
+            <button type="button" onclick="vulnerableLogin()">Login</button>
+        </form>
+
+        <div id="vuln-login-result" class="result-box"></div>
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- 2. INSECURE RBAC & PROVISIONING -->
+    <!-- ========================================= -->
+
+    <div class="card">
+        <h2>2. Insecure RBAC & Provisioning</h2>
+        <p>This system assigns roles without validation and never removes old roles — causing <strong>privilege creep</strong> and <strong>orphaned access</strong>.</p>
+
+        <label>Assign Role (No Validation)</label>
+        <input type="text" id="vuln-role-input" placeholder="e.g., superadmin">
+
+        <button onclick="assignRole()">Assign Role</button>
+
+        <h3>Current Roles (Unvalidated + Persistent)</h3>
+        <ul id="role-list"></ul>
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- 3. INSECURE AUDIT LOGGING -->
+    <!-- ========================================= -->
+
+    <div class="card">
+        <h2>3. Insecure Audit Log</h2>
+        <p>
+            The audit log has:  
+            - No timestamps  
+            - No user verification  
+            - No integrity  
+            - Spoofable entries  
+        </p>
+
+        <label>Add Log Entry (No controls)</label>
+        <input type="text" id="log-input" placeholder="Anything can be logged">
+
+        <button onclick="addLogEntry()">Add Log Entry</button>
+
+        <h3>Audit Log (Vulnerable)</h3>
+        <ul id="audit-log"></ul>
+    </div>
+
+</section>
+
+<script>
+// =========================================
+// 1. Insecure Login: Hard-coded credentials + predictable token
+// =========================================
+
+function vulnerableLogin() {
+    const user = document.getElementById("vuln-username").value;
+    const pass = document.getElementById("vuln-password").value;
+
+    if (pass === "Password123") {   // Hard-coded credential
+        const token = "session-" + user;  // Predictable session token
+        document.getElementById("vuln-login-result").innerHTML =
+            `<span class='bad'>Logged in insecurely! Token: ${token}</span>`;
+    } else {
+        document.getElementById("vuln-login-result").innerHTML =
+            `<span class='bad'>Invalid password (system leaks this info)</span>`;
+    }
+}
+
+// =========================================
+// 2. Insecure RBAC + Provisioning
+// =========================================
+
+let roles = []; // Persistent, never cleared = privilege creep
+
+function assignRole() {
+    const role = document.getElementById("vuln-role-input").value;
+    roles.push(role); // No validation, no restrictions
+
+    const list = document.getElementById("role-list");
+    list.innerHTML = "";
+
+    roles.forEach(r => {
+        list.innerHTML += `<li>${r}</li>`; // No integrity or permission checks
+    });
+}
+
+// =========================================
+// 3. Insecure Audit Log
+// =========================================
+
+function addLogEntry() {
+    const entry = document.getElementById("log-input").value;
+    const logList = document.getElementById("audit-log");
+
+    logList.innerHTML += `<li>${entry}</li>`; // Spoofable, no timestamp, no user, no hash
+}
+</script>
+
+</body>
+</html>

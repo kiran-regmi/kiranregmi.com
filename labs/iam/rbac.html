@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RBAC Demo | Kiran Regmi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0a192f] text-gray-300">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center py-6 px-10 bg-[#0a192f] border-b border-gray-700">
+        <a href="../../index.html" class="text-teal-400 text-lg font-bold">Kiran</a>
+        <div class="space-x-8">
+            <a href="password-vault.html" class="hover:text-teal-400">Password Vault</a>
+            <a href="secure-notes.html" class="hover:text-teal-400">Secure Notes</a>
+            <a href="rbac.html" class="text-teal-400">RBAC</a>
+            <a href="audit.html" class="hover:text-teal-400 font-semibold">Audit Logs</a>
+            <a href="../../index.html" class="hover:text-teal-400">← Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="px-10 py-14 max-w-5xl mx-auto">
+        <h1 class="text-4xl font-bold text-gray-100">Role-Based Access Control Demo</h1>
+        <p class="text-gray-400 mt-4 max-w-3xl">
+            This page demonstrates a simplified Role-Based Access Control (RBAC) model using three roles:
+            <span class="text-teal-400 font-semibold">Admin</span>, 
+            <span class="text-teal-400 font-semibold">Manager</span>, and 
+            <span class="text-teal-400 font-semibold">User</span>.
+            The interactive demo allows switching roles and seeing which actions are permitted.
+        </p>
+    </section>
+
+    <!-- Role Selector -->
+    <section class="px-10 max-w-5xl mx-auto">
+        <div class="bg-[#112240] p-6 rounded-lg border border-gray-700">
+            <h2 class="text-2xl font-bold text-gray-100 mb-4">Select a Role</h2>
+
+            <select id="roleSelect" class="w-full p-3 rounded bg-[#0a192f] border border-gray-600 text-gray-300">
+                <option value="admin">Admin</option>
+                <option value="manager">Manager</option>
+                <option value="user">User</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Permissions Table -->
+    <section class="px-10 mt-10 max-w-5xl mx-auto">
+        <div class="bg-[#112240] p-6 rounded-lg border border-gray-700">
+            <h2 class="text-2xl font-bold text-gray-100 mb-6">Permissions Overview</h2>
+
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-gray-300 border-b border-gray-700">
+                        <th class="py-3">Action</th>
+                        <th class="py-3">Admin</th>
+                        <th class="py-3">Manager</th>
+                        <th class="py-3">User</th>
+                    </tr>
+                </thead>
+
+                <tbody id="permissionsTable" class="text-gray-400"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Action Simulator -->
+    <section class="px-10 mt-10 max-w-5xl mx-auto mb-20">
+        <div class="bg-[#112240] p-6 rounded-lg border border-gray-700">
+            <h2 class="text-2xl font-bold text-gray-100 mb-6">Action Simulator</h2>
+
+            <div id="actionsContainer" class="grid md:grid-cols-2 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        const permissions = {
+            admin: ["Create User", "Delete User", "View Reports", "Modify Settings"],
+            manager: ["Create User", "View Reports"],
+            user: ["View Reports"]
+        };
+
+        const allActions = ["Create User", "Delete User", "View Reports", "Modify Settings"];
+
+        const roleSelect = document.getElementById("roleSelect");
+        const permissionsTable = document.getElementById("permissionsTable");
+        const actionsContainer = document.getElementById("actionsContainer");
+
+        function generateTable() {
+            permissionsTable.innerHTML = "";
+            allActions.forEach(action => {
+                const row = `
+                    <tr class="border-b border-gray-700">
+                        <td class="py-3">${action}</td>
+                        <td class="py-3 text-center">${permissions.admin.includes(action) ? "✔️" : "❌"}</td>
+                        <td class="py-3 text-center">${permissions.manager.includes(action) ? "✔️" : "❌"}</td>
+                        <td class="py-3 text-center">${permissions.user.includes(action) ? "✔️" : "❌"}</td>
+                    </tr>
+                `;
+                permissionsTable.innerHTML += row;
+            });
+        }
+
+        function renderActions(role) {
+            actionsContainer.innerHTML = "";
+            allActions.forEach(action => {
+                const allowed = permissions[role].includes(action);
+                const card = `
+                    <div class="p-4 rounded border ${allowed ? 'border-teal-400 bg-[#0f2d3a]' : 'border-gray-600 bg-[#233554]'}">
+                        <h3 class="text-lg font-semibold">${action}</h3>
+                        <p class="mt-2 ${allowed ? 'text-teal-400' : 'text-red-400'}">
+                            ${allowed ? "Allowed" : "Denied"}
+                        </p>
+                    </div>
+                `;
+                actionsContainer.innerHTML += card;
+            });
+        }
+
+        roleSelect.addEventListener("change", () => {
+            const role = roleSelect.value;
+            renderActions(role);
+        });
+
+        generateTable();
+        renderActions("admin");
+    </script>
+
+</body>
+</html>

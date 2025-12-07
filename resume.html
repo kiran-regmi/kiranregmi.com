@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume | Kiran Regmi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0a192f] text-gray-300">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center py-6 px-10 bg-[#0a192f]">
+        <a href="index.html" class="text-teal-400 text-xl font-bold hover:text-teal-300">
+            Kiran Regmi
+        </a>
+
+        <div class="space-x-10 text-lg">
+            <a href="index.html" class="text-gray-300 hover:text-teal-400">Home</a>
+            <a href="projects.html" class="text-gray-300 hover:text-teal-400">Portfolio</a>
+            <a href="resume.html" class="text-teal-400 font-semibold">Resume</a>
+            <a href="labs/index.html" class="text-gray-300 hover:text-teal-400">Labs</a>
+            <a href="contact.html" class="text-gray-300 hover:text-teal-400">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Resume Header -->
+    <section class="px-10 py-16 max-w-4xl mx-auto">
+        <div class="flex justify-between items-center">
+            <h1 class="text-4xl font-bold text-gray-100">
+                Resume
+            </h1>
+
+            <!-- Download Button -->
+            <a href="assets/pdfs/kiran-regmi-resume.pdf" 
+               download
+               class="px-5 py-3 border border-teal-400 text-teal-400 rounded-md hover:bg-teal-400 hover:text-black transition">
+               Download PDF
+            </a>
+        </div>
+
+        <p class="text-gray-400 mt-3">
+            Cybersecurity Analyst specializing in GRC, IAM, security engineering fundamentals,
+            and hands-on lab environments demonstrating real-world defensive concepts.
+        </p>
+
+        <!-- SECTION: Skills -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-semibold text-teal-300">Core Skills</h2>
+            <ul class="list-disc pl-6 mt-4 space-y-1 text-gray-400">
+                <li>Governance, Risk & Compliance (NIST RMF, ISO 27001, SOC 2)</li>
+                <li>Identity & Access Management (Azure AD, MFA, RBAC)</li>
+                <li>Network Security, Incident Response, Vulnerability Management</li>
+                <li>SIEM & Log Analysis (Microsoft Sentinel)</li>
+                <li>Cloud Security (Microsoft Azure & M365)</li>
+            </ul>
+        </div>
+
+        <!-- SECTION: Certifications -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-semibold text-teal-300">Certifications</h2>
+            <ul class="list-disc pl-6 mt-4 space-y-1 text-gray-400">
+                <li>CompTIA Security+</li>
+                <li>Cisco CCST Networking</li>
+                <li>Microsoft Azure</li>
+                <li>Microsoft Security</li>
+                <li>Microsoft 365</li>
+            </ul>
+        </div>
+
+        <!-- SECTION: Experience -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-semibold text-teal-300">Experience</h2>
+
+            <div class="mt-6">
+                <h3 class="text-xl font-bold text-gray-200">
+                    Cybersecurity Analyst – Lab / Training Projects
+                </h3>
+                <p class="text-gray-500 italic">2023 – Present</p>
+
+                <ul class="list-disc pl-6 mt-4 space-y-1 text-gray-400">
+                    <li>Built complete GRC Risk Management project following full NIST RMF lifecycle.</li>
+                    <li>Developed IAM demos including RBAC, password vault, secure notes & logging.</li>
+                    <li>Engineered secure/vulnerable versions of IAM flows to demonstrate risk impact.</li>
+                    <li>Created multi-page cybersecurity portfolio with labs and secure demos.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECTION: Projects -->
+        <div class="mt-12 pb-20">
+            <h2 class="text-2xl font-semibold text-teal-300">Highlighted Projects</h2>
+            <p class="text-gray-400 mt-4">Full write-ups available on the <a href="projects.html" class="text-teal-400 hover:underline">Projects Page</a>.</p>
+
+            <ul class="list-disc pl-6 mt-4 space-y-1 text-gray-400">
+                <li>Third Party Risk Management Platform (TPRM)</li>
+                <li>Identity & Access Management Portfolio (IAM Lab)</li>
+                <li>Network Security Monitoring Lab</li>
+                <li>Secure vs Vulnerable IAM Architecture Comparison</li>
+            </ul>
+        </div>
+
+    </section>
+
+</body>
+</html>

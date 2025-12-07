@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FA test</title>
+
+  <!-- Font Awesome (use exact URL) -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-Xx7N7Z5RHPQvSLiTqkLj3im3sHRL5vEJK2Nw1E0r9gM0rNyuxhVcWqZQV8Pj9DDn/JrRB6PIhY9lYBUoDU3uWg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    body { background: #0a192f; color: #eee; font-family: sans-serif; height:200vh; }
+    .social-fixed { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); display:flex; flex-direction:column; gap:16px; z-index:9999;}
+    .social-fixed a { width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:#0f1724; color:#9ca3af; text-decoration:none; transition: transform .18s ease, box-shadow .18s ease; }
+    .social-fixed a:hover { transform: translateX(6px); box-shadow: 0 6px 18px rgba(94,234,212,0.15); color:#5eead4; }
+  </style>
+</head>
+<body>
+  <h1 style="padding:20px">Font Awesome test page</h1>
+  <p style="padding:20px">If you see the icons in the left floating bar, FA is loading correctly.</p>
+
+  <div class="social-fixed">
+    <div class="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#064b46]/30 to-transparent"></div>
+
+    <a href="#" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+    <a href="#" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+    <a href="#" title="Email"><i class="fas fa-envelope fa-lg"></i></a>
+    <a href="#" title="YouTube"><i class="fab fa-youtube fa-lg"></i></a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+/* ---------- Base ---------- */
+body {
+    margin: 0;
+    background-color: #0a0a0a;
+    color: #e5e5e5;
+    font-family: "Inter", sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    color: #fff;
+}
+
+p {
+    color: #cfcfcf;
+}
+
+
+/* ---------- Navbar ---------- */
+.navbar {
+    padding: 20px 0;
+    border-bottom: 1px solid #1f1f1f;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #bbbbbb;
+    transition: 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    color: #64ffda;
+}
+
+
+/* ---------- Hero Section ---------- */
+.hero {
+    padding: 120px 0;
+}
+
+.intro {
+    color: #64ffda;
+    font-size: 18px;
+}
+
+.hero-title {
+    font-size: 48px;
+    margin-top: 10px;
+}
+
+.hero-subtitle {
+    font-size: 32px;
+    color: #888;
+    margin-top: 10px;
+}
+
+.hero-text {
+    max-width: 600px;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+
+/* ---------- Buttons ---------- */
+.button-primary {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 22px;
+    background: #64ffda;
+    color: #000;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.button-primary:hover {
+    background: #52e4c2;
+}
+
+.button-secondary {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 18px;
+    border: 1px solid #64ffda;
+    border-radius: 6px;
+    color: #64ffda;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.button-secondary:hover {
+    background: #133c36;
+}
+
+
+/* ---------- Section Layout ---------- */
+.section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+
+/* ---------- Project Grid ---------- */
+.project-grid {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.project-card {
+    padding: 25px;
+    background: #111;
+    border: 1px solid #1d1d1d;
+    border-radius: 12px;
+    transition: 0.2s ease;
+}
+
+.project-card:hover {
+    border-color: #64ffda;
+    transform: translateY(-3px);
+}
+
+
+/* ---------- Footer ---------- */
+.footer {
+    padding: 40px 0;
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    border-top: 1px solid #1f1f1f;
+}
+
+
+/* ---------- Fade-in Animation ---------- */
+.fade {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+<!-- ---------- Social Fixed Bar (Left) ---------- -->
+/* platform-specific colors */
+.linkedin:hover  { background: #0A66C2; }
+.github:hover    { background: #333; }
+.email:hover     { background: #d44638; }
+.youtube:hover   { background: #FF0000; }

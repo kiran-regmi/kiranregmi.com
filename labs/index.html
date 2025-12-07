@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Labs | Cybersecurity Lab Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Cyber glow */
+        .glow-card {
+            background: rgba(10, 25, 47, 0.7);
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            transition: 0.25s ease-in-out;
+        }
+        .glow-card:hover {
+            border-color: rgba(94, 234, 212, 0.8);
+            box-shadow: 0 0 18px rgba(94, 234, 212, 0.4);
+            transform: translateY(-4px);
+        }
+
+        /* Filter active state */
+        .filter-active {
+            border-color: #5eead4 !important;
+            color: #5eead4 !important;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0a192f] text-gray-300">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center py-6 px-10 bg-[#0a192f] shadow-lg">
+        <a href="../index.html" class="text-teal-400 text-xl font-bold hover:text-teal-300">
+            Kiran Regmi
+        </a>
+
+        <div class="space-x-10 text-lg">
+            <a href="../home.html" class="text-gray-300 hover:text-teal-400">Home</a>
+            <a href="../projects.html" class="text-gray-300 hover:text-teal-400">Projects</a>
+            <a href="../resume.html" class="text-gray-300 hover:text-teal-400">Resume</a>
+            <a href="../labs/index.html" class="text-teal-400 font-semibold">Labs</a>
+            <a href="../contact.html" class="text-gray-300 hover:text-teal-400">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="px-10 py-16 max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-gray-100">
+            Cybersecurity Labs
+        </h1>
+        <p class="text-gray-400 mt-3 max-w-2xl">
+            Hands-on demonstrations showcasing IAM, security weaknesses, secure implementations,
+            and real-world attack/defense concepts.
+        </p>
+
+        <!-- Search -->
+        <div class="mt-8">
+            <input
+                id="searchBar"
+                type="text"
+                placeholder="Search labs..."
+                class="w-full max-w-lg px-4 py-3 bg-[#112240] border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
+            />
+        </div>
+
+        <!-- Filters -->
+        <div class="flex gap-4 mt-6">
+            <button class="filter-btn px-5 py-2 border border-gray-700 rounded-md hover:border-teal-400" data-filter="all">
+                All
+            </button>
+            <button class="filter-btn px-5 py-2 border border-gray-700 rounded-md hover:border-teal-400" data-filter="iam">
+                IAM
+            </button>
+            <button class="filter-btn px-5 py-2 border border-gray-700 rounded-md hover:border-teal-400" data-filter="vulnerable">
+                Vulnerable
+            </button>
+            <button class="filter-btn px-5 py-2 border border-gray-700 rounded-md hover:border-teal-400" data-filter="secure">
+                Secure
+            </button>
+        </div>
+
+    </section>
+
+    <!-- Labs Grid -->
+    <section class="px-10 max-w-6xl mx-auto pb-20">
+
+        <div id="labGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- RBAC -->
+            <a href="iam/rbac.html" class="glow-card p-6 rounded-xl block" data-category="iam secure">
+                <h3 class="text-xl font-bold text-teal-300">RBAC Demo</h3>
+                <p class="text-gray-400 mt-2">Role-based access demonstration with permission tiers.</p>
+            </a>
+
+            <!-- Password Vault -->
+            <a href="iam/password-vault.html" class="glow-card p-6 rounded-xl block" data-category="iam secure">
+                <h3 class="text-xl font-bold text-teal-300">Password Vault</h3>
+                <p class="text-gray-400 mt-2">Front-end password vault simulation with masked passwords.</p>
+            </a>
+
+            <!-- Secure Notes -->
+            <a href="iam/secure-notes.html" class="glow-card p-6 rounded-xl block" data-category="iam secure">
+                <h3 class="text-xl font-bold text-teal-300">Secure Notes</h3>
+                <p class="text-gray-400 mt-2">Encrypted notes simulation with JavaScript-based storage.</p>
+            </a>
+
+            <!-- Audit Logging -->
+            <a href="iam/audit.html" class="glow-card p-6 rounded-xl block" data-category="iam secure">
+                <h3 class="text-xl font-bold text-teal-300">Audit Logging Dashboard</h3>
+                <p class="text-gray-400 mt-2">Tracks user events, logins, and failed access attempts.</p>
+            </a>
+
+            <!-- Vulnerable IAM Demo -->
+            <a href="iam/vulnerable.html" class="glow-card p-6 rounded-xl block" data-category="iam vulnerable">
+                <h3 class="text-xl font-bold text-red-400">Vulnerable IAM Demo</h3>
+                <p class="text-gray-400 mt-2">Intentionally insecure login demo showing weak practices.</p>
+            </a>
+
+            <!-- Vulnerable IAM (Full Version) -->
+            <a href="iam/vulnerable-iam-demo.html" class="glow-card p-6 rounded-xl block" data-category="iam vulnerable">
+                <h3 class="text-xl font-bold text-red-400">IAM Vulnerable Full Demo</h3>
+                <p class="text-gray-400 mt-2">Exposes common authentication & session flaws.</p>
+            </a>
+
+            <!-- Secure IAM Demo -->
+            <a href="iam/secure.html" class="glow-card p-6 rounded-xl block" data-category="iam secure">
+                <h3 class="text-xl font-bold text-teal-300">Secure IAM Demo</h3>
+                <p class="text-gray-400 mt-2">Hardened version with safe authentication patterns.</p>
+            </a>
+
+            <!-- Secure IAM (Full Version) -->
+            <a href="iam/secure-iam-demo.html" class="glow-card p-6 rounded-xl block" data-category="iam secure">
+                <h3 class="text-xl font-bold text-teal-300">IAM Secure Full Demo</h3>
+                <p class="text-gray-400 mt-2">Advanced hardened IAM including MFA concepts.</p>
+            </a>
+
+        </div>
+
+    </section>
+
+    <script>
+        const searchBar = document.getElementById("searchBar");
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const cards = document.querySelectorAll("#labGrid a");
+
+        // Search functionality
+        searchBar.addEventListener("input", (e) => {
+            const q = e.target.value.toLowerCase();
+            cards.forEach(card => {
+                card.style.display = card.innerText.toLowerCase().includes(q) ? "block" : "none";
+            });
+        });
+
+        // Filter functionality
+        filterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const filter = btn.dataset.filter;
+
+                filterBtns.forEach(b => b.classList.remove("filter-active"));
+                btn.classList.add("filter-active");
+
+                cards.forEach(card => {
+                    const cat = card.dataset.category.split(" ");
+                    card.style.display = (filter === "all" || cat.includes(filter)) ? "block" : "none";
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
