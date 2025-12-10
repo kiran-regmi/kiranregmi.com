@@ -1,106 +1,891 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-HHS4JYpX1rHkQvLu9iJq4ZVj3U8YKdbpFSP5iZs5gowSaFQ1YFwhbxiF5dqiBlwDsBekK90dfDqZyU40HAKpVA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiran Regmi | Cybersecurity Portfolio</title>
 
-<!-- test icon div style="color:white; font-size:40px; margin:20px;">
-    TEST ICON → <i class="fa-solid fa-star"></i>
-</div> !-->
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Font Awesome (for icons) -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
 
-<style>
-  /* Force icon visibility — overrides any global black color */
-  .fab, .fas {
-    color: #e2e8f0 !important; /* light gray */
-  }
-</style>
+  <style>
+    /* Fade-up animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.4s ease-out forwards;
+    }
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <title>Kiran Regmi | Home</title>
+    .sidebar a {
+      user-select: none;
+    }
+  </style>
 </head>
 
-<body class="bg-[#0a192f] text-gray-300">
+<body class="bg-[#0a192f] text-[#ccd6f6]">
 
-    <div style="
-  position: fixed; left: 50px; top: 50px; 
-  font-size: 50px; color: white; z-index: 999999;">
-    <i class="fa-solid fa-envelope"></i>
-</div>
+  <!-- NAVBAR (fixed) -->
+  <nav
+    class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center
+           px-6 lg:px-12 py-4 border-b border-slate-800 bg-[#0a192f]/90 backdrop-blur">
 
-<!-- Social Icons — Left Fixed Bar 
-<div class="fixed left-6 top-1/2 -translate-y-1/2 flex flex-col gap-5 z-50">
-
-  <a href="https://www.linkedin.com/in/YOUR_USERNAME" target="_blank"
-     class="w-12 h-12 flex items-center justify-center rounded-full bg-[#112240]
-            hover:bg-teal-500 transition">
-      <i class="fa-brands fa-linkedin text-gray-200 text-2xl"></i>
-  </a>
-
-  <a href="https://github.com/YOUR_USERNAME" target="_blank"
-     class="w-12 h-12 flex items-center justify-center rounded-full bg-[#112240]
-            hover:bg-teal-500 transition">
-      <i class="fa-brands fa-github text-gray-200 text-2xl"></i>
-  </a>
-
-  <a href="mailto:kiranimani@gmail.com"
-     class="w-12 h-12 flex items-center justify-center rounded-full bg-[#112240]
-            hover:bg-teal-500 transition">
-      <i class="fa-solid fa-envelope text-gray-200 text-2xl"></i>
-  </a>
-
-  <a href="https://www.youtube.com/YOUR_CHANNEL" target="_blank"
-     class="w-12 h-12 flex items-center justify-center rounded-full bg-[#112240]
-            hover:bg-red-600 transition">
-      <i class="fa-brands fa-youtube text-gray-200 text-2xl"></i>
-  </a>
-
-</div> -->
-
-
-</div>
-
-    <!-- Navbar -->
-<nav class="flex justify-between items-center py-6 px-10 bg-[#0a192f] shadow-lg">
-    <a href="index.html" class="text-teal-400 text-xl font-bold hover:text-teal-300">
-        Kiran Regmi
+    <!-- Logo = Home -->
+    <a href="#" onclick="showHome(); return false;" class="flex items-center gap-2">
+      <span class="w-9 h-9 rounded-full border border-[#64ffda]
+                   flex items-center justify-center text-[#64ffda] text-lg font-bold">
+        KR
+      </span>
     </a>
 
-    <div class="space-x-10 text-lg">
-        <a href="index.html" class="text-gray-300 hover:text-teal-400 transition">Home</a>
-        <a href="projects.html" class="text-gray-300 hover:text-teal-400 transition">Projects</a>
-        <a href="resume.html" class="text-gray-300 hover:text-teal-400 transition">Resume</a>
-        <a href="labs/index.html" class="text-gray-300 hover:text-teal-400 transition">Labs</a>
-        <a href="contact.html" class="text-gray-300 hover:text-teal-400 transition">Contact</a>
+    <!-- Top Nav (loads into right pane) -->
+    <div class="space-x-6 text-sm sm:text-base">
+      <a href="#" onclick="loadSection('projects'); return false;"
+         class="text-slate-300 hover:text-[#64ffda] transition">Projects</a>
+      <a href="#" onclick="loadSection('labs'); return false;"
+         class="text-slate-300 hover:text-[#64ffda] transition">Labs</a>
+      <a href="#" onclick="loadSection('contact'); return false;"
+         class="text-slate-300 hover:text-[#64ffda] transition">Contact</a>
     </div>
-</nav>
+  </nav>
 
-    <!-- Hero Section -->
-    <section class="px-10 py-20 max-w-5xl mx-auto">
-        <p class="text-teal-400 mb-4">Hi, my name is</p>
+  <!-- MAIN GRID: LEFT SIDEBAR + RIGHT PANEL -->
+  <div
+    class="pt-24 max-w-7xl mx-auto px-6 lg:px-12
+           grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)] gap-12">
 
-        <h1 class="text-5xl font-bold text-gray-100">Kiran Regmi.</h1>
-        <h2 class="text-4xl font-bold text-gray-400 mt-2">I secure systems, identities, and networks.</h2>
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar hidden lg:flex flex-col gap-6 sticky top-28 h-fit text-sm">
 
-        <p class="text-gray-400 mt-6 max-w-2xl">
-            I’m a cybersecurity analyst passionate about Governance, Risk & Compliance (GRC), 
-            Identity & Access Management (IAM), and building secure lab environments.
-            This portfolio showcases hands-on projects, labs, and research.
+      <!-- Intro Line -->
+      <p class="text-teal-400 fade-up">Cybersecurity Analyst</p>
+
+      <!-- Name & Summary -->
+      <div class="fade-up space-y-3">
+        <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
+
+        <p class="text-[#a8b2d1] text-[14px] leading-relaxed">
+          AI-driven GRC, IAM, and security engineering — using hands-on labs,
+          secure vs. vulnerable demos, and documentation that tells a clear story.
         </p>
 
-        <a href="projects.html"
-           class="inline-block mt-10 px-7 py-4 border border-teal-400 text-teal-400 rounded-md hover:bg-teal-400 hover:text-black transition">
-            Explore My Work
+        <p class="text-[15px]">
+          <a href="assets/pdf/Kiran-Regmi-Resume.pdf" target="_blank"
+             class="text-[#64ffda] hover:underline">
+            View Resume
+          </a>
+        </p>
+      </div>
+
+      <!-- Sidebar Navigation (loads into right pane) -->
+      <div class="fade-up flex flex-col gap-4 pt-4">
+        <a onclick="loadSection('skills')"
+           class="cursor-pointer text-slate-400 hover:text-[#64ffda] transition">
+          — Skills
         </a>
-    </section>
+        <a onclick="loadSection('experience')"
+           class="cursor-pointer text-slate-400 hover:text-[#64ffda] transition">
+          — Experience
+        </a>
+        <a onclick="loadSection('certifications')"
+           class="cursor-pointer text-slate-400 hover:text-[#64ffda] transition">
+          — Certifications
+        </a>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="fade-up flex items-center gap-5 pt-4 border-t border-slate-800 text-xl text-[#8892b0]">
+
+        <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"
+           class="hover:text-[#64ffda] transition" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+
+        <a href="https://github.com/kiran-regmi" target="_blank"
+           class="hover:text-[#64ffda] transition" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+
+        <a href="mailto:kiranimani@gmail.com"
+           class="hover:text-[#64ffda] transition" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+
+        <a href="https://www.youtube.com" target="_blank"
+           class="hover:text-[#64ffda] transition" aria-label="YouTube">
+          <i class="fa-brands fa-youtube"></i>
+        </a>
+
+      </div>
+
+    </aside>
+
+    <!-- RIGHT PANEL (dynamic) -->
+    <section id="content-panel" class="space-y-10 pb-24 fade-up"></section>
+
+  </div>
+
+  <!-- JS: DYNAMIC CONTENT -->
+  <script>
+    function renderContent(html) {
+      const panel = document.getElementById("content-panel");
+      panel.classList.remove("fade-up");
+      void panel.offsetWidth;  // restart animation
+      panel.innerHTML = html;
+      panel.classList.add("fade-up");
+    }
+
+    /* ===================== HOME VIEW ===================== */
+    function showHome() {
+      renderContent(`
+        <div class="space-y-10">
+
+          <!-- Hiring Manager Box -->
+          <div class="bg-[#112240] border border-teal-400/40 rounded-xl px-10 py-8 shadow-lg max-w-4xl">
+            <h3 class="text-teal-300 text-sm uppercase tracking-wide">
+              For Hiring Managers & Recruiters
+            </h3>
+
+            <p class="text-gray-200 mt-4 text-sm max-w-3xl">
+              I’m actively pursuing my first cybersecurity role focused on
+              <span class="text-teal-300 font-medium">AI-driven GRC</span>,
+              <span class="text-teal-300 font-medium">Identity & Access Management</span>,
+              and <span class="text-teal-300 font-medium">secure lab design</span>.
+            </p>
+
+            <p class="text-gray-400 mt-2 text-sm max-w-3xl">
+              This site showcases real projects, IAM demos, and vulnerable vs. hardened views
+              that you can use to evaluate how I think about security.
+            </p>
+
+            <button
+              onclick="loadProject('ai-grc')"
+              class="mt-5 px-6 py-3 bg-[#64ffda] text-[#0a192f] font-semibold text-sm rounded-md
+                     hover:bg-[#52e4c3] transition">
+              AI-GRC Portfolio (Coming Soon)
+            </button>
+          </div>
+
+          <!-- Featured Projects (AI-GRC first) -->
+          <div class="space-y-4">
+            <h4 class="text-sm text-[#8892b0] uppercase tracking-wide">Featured Work</h4>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+              <!-- AI-GRC Portfolio card -->
+              <div onclick="loadProject('ai-grc')"
+                   class="cursor-pointer p-6 rounded-xl bg-[#112240] border border-slate-800
+                          hover:border-[#64ffda] transition">
+                <h5 class="text-[#e6f1ff] font-semibold text-sm">
+                  AI-GRC Portfolio (Coming Soon)
+                </h5>
+                <p class="mt-2 text-xs text-[#8892b0]">
+                  AI-enhanced Governance, Risk, Compliance, and Security Operations.
+                </p>
+              </div>
+
+              <!-- RMF -->
+              <div onclick="loadProject('rmf')"
+                   class="cursor-pointer p-6 rounded-xl bg-[#112240] border border-slate-800
+                          hover:border-[#64ffda] transition">
+                <h5 class="text-[#e6f1ff] font-semibold text-sm">
+                  GRC – NIST RMF Project
+                </h5>
+                <p class="mt-2 text-xs text-[#8892b0]">
+                  Full RMF lifecycle: risk register, SSP, SAR, POA&M.
+                </p>
+              </div>
+
+              <!-- IAM Lab -->
+              <div onclick="loadProject('iam-lab')"
+                   class="cursor-pointer p-6 rounded-xl bg-[#112240] border border-slate-800
+                          hover:border-[#64ffda] transition">
+                <h5 class="text-[#e6f1ff] font-semibold text-sm">
+                  IAM Security Lab
+                </h5>
+                <p class="mt-2 text-xs text-[#8892b0]">
+                  RBAC, MFA, least privilege, IAM flow design.
+                </p>
+              </div>
+
+              <!-- Network Lab -->
+              <div onclick="loadProject('network-lab')"
+                   class="cursor-pointer p-6 rounded-xl bg-[#112240] border border-slate-800
+                          hover:border-[#64ffda] transition">
+                <h5 class="text-[#e6f1ff] font-semibold text-sm">
+                  Network Security Lab
+                </h5>
+                <p class="mt-2 text-xs text-[#8892b0]">
+                  Segmentation, logging, and network visibility.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="text-xs text-[#8892b0] border-t border-slate-800 pt-6">
+            <p>
+              Built by <span class="text-[#64ffda]">Kiran Regmi</span> —
+              Cybersecurity Analyst (GRC · IAM · Security Engineering)
+            </p>
+            <p class="mt-1 text-[11px] text-slate-500">
+              © 2025 kiranregmi.com · All rights reserved.
+            </p>
+          </div>
+
+        </div>
+      `);
+    }
+
+    /* ===================== SECTION ROUTER ===================== */
+    function loadSection(section) {
+
+      /* ---------- PROJECTS (Overview) ---------- */
+      if (section === "projects") {
+        return renderContent(`
+          <div class="space-y-8">
+            <div>
+              <h2 class="text-xl font-semibold text-[#e6f1ff]">Projects & Portfolio</h2>
+              <p class="text-sm text-[#a8b2d1] mt-2 max-w-2xl">
+                A curated set of projects that shows how I think about risk, identity,
+                and secure system design.
+              </p>
+            </div>
+
+            <!-- AI-GRC Portfolio Section -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                AI-GRC Portfolio
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div onclick="loadProject('ai-grc')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">AI-GRC Portfolio (Coming Soon)</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    AI-enhanced governance, risk modeling, compliance, and security operations.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- GRC Projects -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                GRC Projects
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+                <div onclick="loadProject('rmf')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">NIST RMF Project</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Risk register, control selection, SSP, SAR, POA&M.
+                  </p>
+                </div>
+
+                <div class="p-5 rounded-xl bg-[#020c1b] border border-dashed border-slate-700 text-xs text-[#8892b0]">
+                  Future: Third-Party Risk, SOPs, and more detailed GRC documentation.
+                </div>
+
+              </div>
+            </section>
+
+            <!-- IAM Projects -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                IAM Projects
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+                <div onclick="loadProject('iam-lab')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">IAM Security Lab</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    RBAC, MFA readiness, least privilege implementation.
+                  </p>
+                </div>
+
+                <div onclick="loadProject('rbac-demo')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">RBAC Demo</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Role design, permission mapping, and enforcement.
+                  </p>
+                </div>
+
+                <div onclick="loadProject('iam-vulnerable')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">IAM – Vulnerable Version</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Intentional misconfigurations to highlight weaknesses.
+                  </p>
+                </div>
+
+                <div onclick="loadProject('iam-hardened')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">IAM – Hardened Version</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Patched IAM model showing mitigations and least privilege.
+                  </p>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- Network Labs -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Network Labs
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+                <div onclick="loadProject('network-lab')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">Network Security Lab</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Segmentation, attack surface reduction, and logging.
+                  </p>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- Security Labs -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Security Labs
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+                <div onclick="loadProject('password-vault')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">Password Vault Demo</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Dummy credentials, hashing concepts, and vault structure.
+                  </p>
+                </div>
+
+                <div onclick="loadProject('secure-notes')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">Secure Notes Demo</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Personal notes with access control and security lens.
+                  </p>
+                </div>
+
+                <div onclick="loadProject('audit-dashboard')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-[#e6f1ff] text-sm font-semibold">Audit & Logging Dashboard</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">
+                    Login activity, role changes, and high-value security events.
+                  </p>
+                </div>
+
+              </div>
+            </section>
+
+          </div>
+        `);
+      }
+
+      /* ---------- LABS (grouped by category) ---------- */
+      if (section === "labs") {
+        return renderContent(`
+          <div class="space-y-8">
+            <div>
+              <h2 class="text-xl font-semibold text-[#e6f1ff]">Security Labs</h2>
+              <p class="text-sm text-[#a8b2d1] mt-2 max-w-2xl">
+                Labs are designed as teaching tools — not production systems — to show
+                how IAM, network security, and logging actually play out.
+              </p>
+            </div>
+
+            <!-- IAM Labs -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                IAM Labs
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div onclick="loadProject('iam-lab')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">IAM Security Lab</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">RBAC, MFA, and secure IAM flows.</p>
+                </div>
+                <div onclick="loadProject('rbac-demo')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">RBAC Demo</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">Role/permission mapping and enforcement.</p>
+                </div>
+                <div onclick="loadProject('iam-vulnerable')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">IAM – Vulnerable Version</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">Misconfigurations used as examples.</p>
+                </div>
+                <div onclick="loadProject('iam-hardened')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">IAM – Hardened Version</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">Secured version showing mitigations.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Application Security Labs -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Application Security Labs
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div onclick="loadProject('password-vault')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">Password Vault Demo</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">Conceptual password storage and security.</p>
+                </div>
+                <div onclick="loadProject('secure-notes')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">Secure Notes Demo</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">Protecting personal notes as sensitive data.</p>
+                </div>
+                <div onclick="loadProject('audit-dashboard')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">Audit & Logging Dashboard</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">Visibility into user and system activity.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Network Labs -->
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Network Labs
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div onclick="loadProject('network-lab')"
+                     class="cursor-pointer p-5 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda]">
+                  <h4 class="text-sm text-[#e6f1ff] font-semibold">Network Security Lab</h4>
+                  <p class="mt-1 text-xs text-[#8892b0]">Segmentation, traffic focus, and monitoring.</p>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        `);
+      }
+
+      /* ---------- CONTACT (Web3Forms) ---------- */
+      if (section === "contact") {
+        return renderContent(`
+          <div class="space-y-6 max-w-xl">
+            <h2 class="text-xl font-semibold text-[#e6f1ff]">Contact</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              If you’d like to talk about roles, projects, or how I built these labs, 
+              you can send me a message here. This form uses Web3Forms on the backend.
+            </p>
+
+            <!-- Contact Form -->
+            <form 
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              class="mt-4 space-y-6 bg-[#112240] p-8 rounded-lg shadow-xl border border-teal-400/20">
+
+              <!-- REQUIRED ACCESS KEY -->
+              <input type="hidden" name="access_key" value="e07cd5aa-6b44-45a4-81fa-1c4349aa36f5">
+
+              <!-- Name -->
+              <div>
+                <label class="block text-gray-300 mb-2 text-sm">Full Name</label>
+                <input type="text" name="name" required
+                  class="w-full px-4 py-3 rounded bg-[#0a192f] text-gray-300 border border-gray-700 focus:border-teal-400 outline-none text-sm">
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label class="block text-gray-300 mb-2 text-sm">Email</label>
+                <input type="email" name="email" required
+                  class="w-full px-4 py-3 rounded bg-[#0a192f] text-gray-300 border border-gray-700 focus:border-teal-400 outline-none text-sm">
+              </div>
+
+              <!-- Message -->
+              <div>
+                <label class="block text-gray-300 mb-2 text-sm">Message</label>
+                <textarea name="message" rows="5" required
+                  class="w-full px-4 py-3 rounded bg-[#0a192f] text-gray-300 border border-gray-700 focus:border-teal-400 outline-none text-sm"></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit"
+                class="w-full py-3 rounded-md border border-teal-400 text-teal-400 text-sm
+                       hover:bg-teal-400 hover:text-black transition">
+                Send Message
+              </button>
+            </form>
+          </div>
+        `);
+      }
+
+      /* ---------- SKILLS ---------- */
+      if (section === "skills") {
+        return renderContent(`
+          <div class="fade-up">
+            <h2 class="text-xl font-semibold text-[#e6f1ff]">Skills</h2>
+            <div class="mt-4 flex flex-wrap gap-3 text-xs">
+              <span class="px-3 py-1 bg-[#112240] border border-slate-700 rounded-full">NIST RMF · GRC</span>
+              <span class="px-3 py-1 bg-[#112240] border border-slate-700 rounded-full">IAM · RBAC · MFA</span>
+              <span class="px-3 py-1 bg-[#112240] border border-slate-700 rounded-full">Azure / M365 Security</span>
+              <span class="px-3 py-1 bg-[#112240] border border-slate-700 rounded-full">SIEM & Logging</span>
+              <span class="px-3 py-1 bg-[#112240] border border-slate-700 rounded-full">Network Security</span>
+            </div>
+          </div>
+        `);
+      }
+
+      /* ---------- EXPERIENCE ---------- */
+      if (section === "experience") {
+        return renderContent(`
+          <div class="fade-up">
+            <h2 class="text-xl font-semibold text-[#e6f1ff]">Experience</h2>
+            <ul class="mt-4 text-sm text-[#a8b2d1] space-y-2">
+              <li>Hands-on labs in IAM, GRC, and network security.</li>
+              <li>Documentation: SSP, SAR, POA&M, SOPs, and risk registers.</li>
+              <li>Designing RBAC, least privilege, and IAM flows in lab environments.</li>
+            </ul>
+          </div>
+        `);
+      }
+
+      /* ---------- CERTIFICATIONS ---------- */
+      if (section === "certifications") {
+        return renderContent(`
+          <div class="fade-up">
+            <h2 class="text-xl font-semibold text-[#e6f1ff]">Certifications</h2>
+            <ul class="mt-4 text-sm text-[#a8b2d1] space-y-2">
+              <li>CompTIA Security+</li>
+              <li>Cisco CCST Networking</li>
+              <li>Microsoft Azure</li>
+              <li>Microsoft 365</li>
+              <li>Microsoft Security</li>
+            </ul>
+          </div>
+        `);
+      }
+    }
+
+    /* ===================== PROJECT DETAIL VIEWS ===================== */
+    function loadProject(project) {
+
+      /* AI-GRC Portfolio */
+      if (project === "ai-grc") {
+        return renderContent(`
+          <div class="fade-up space-y-6 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">AI-GRC Portfolio (Coming Soon)</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A focused portfolio that explores how AI can support Governance, Risk & Compliance —
+              from documentation to control testing to log analysis.
+            </p>
+
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">Overview</h3>
+              <p class="text-sm text-[#8892b0]">
+                This portfolio will document how AI can assist in risk analysis, control mapping,
+                evidence gathering, and decision support — while keeping humans accountable for
+                the final decisions.
+              </p>
+            </section>
+
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Governance (AI-Enhanced Processes)
+              </h3>
+              <p class="text-sm text-[#8892b0]">
+                Using AI to help interpret frameworks, draft policy language, and surface which
+                controls may be impacted when systems or requirements change.
+              </p>
+            </section>
+
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Risk (AI-Driven Modeling)
+              </h3>
+              <p class="text-sm text-[#8892b0]">
+                Experimenting with AI-assisted risk scoring — helping estimate likelihood,
+                impact, and threat scenarios, while keeping final judgement with a human analyst.
+              </p>
+            </section>
+
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Compliance (Automated Documentation & Reviews)
+              </h3>
+              <p class="text-sm text-[#8892b0]">
+                Drafting SSP sections, reviewing control descriptions, and highlighting gaps
+                in evidence or coverage to speed up audits and authorization processes.
+              </p>
+            </section>
+
+            <section class="space-y-3">
+              <h3 class="text-sm font-semibold text-[#64ffda] uppercase tracking-wide">
+                Security Operations (AI Log & Alert Analysis)
+              </h3>
+              <p class="text-sm text-[#8892b0]">
+                Exploring how AI can help summarize IAM logs, highlight anomalies, and group
+                related events to support investigations and incident response.
+              </p>
+            </section>
+
+            <p class="text-xs text-[#64748b]">
+              This section is intentionally marked as "Coming Soon" — I will be filling it with concrete
+              examples, prompts, and screenshots as I complete more AI-GRC work.
+            </p>
+          </div>
+        `);
+      }
+
+      /* NIST RMF */
+      if (project === "rmf") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">NIST RMF Project</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A full walkthrough of the NIST RMF lifecycle, including system categorization, 
+              risk register, control selection, SSP, SAR, and POA&M.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Built a risk register aligned to NIST 800-53 control families.</li>
+              <li>• Drafted key SSP sections and linked them to evidence.</li>
+              <li>• Created POA&M entries to track remediation and risk reduction.</li>
+            </ul>
+            <a href="projects/rmf.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View Raw RMF Page
+            </a>
+          </div>
+        `);
+      }
+
+      /* IAM SECURITY LAB */
+      if (project === "iam-lab") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">IAM Security Lab</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              This lab models identity, roles, and permissions to demonstrate the difference 
+              between authentication and authorization, and how least privilege is enforced.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Designed RBAC for Admin / Analyst / Read-Only roles.</li>
+              <li>• Mapped user actions to roles and enforced access boundaries.</li>
+              <li>• Built flows that are MFA-ready and align with IAM best practices.</li>
+            </ul>
+            <a href="labs/iam/secure-iam-demo.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              Open IAM Demo (Secure Version)
+            </a>
+          </div>
+        `);
+      }
+
+      /* RBAC DEMO */
+      if (project === "rbac-demo") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">RBAC Demo</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A focused lab that shows how different roles see different data and actions 
+              in a web interface, based on role-based access control.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Admin-only actions like user and configuration management.</li>
+              <li>• Analyst access for investigations and log review.</li>
+              <li>• Read-only roles with restricted visibility.</li>
+            </ul>
+            <a href="labs/rbac.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View RBAC Demo Page
+            </a>
+          </div>
+        `);
+      }
+
+      /* PASSWORD VAULT */
+      if (project === "password-vault") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">Password Vault Demo</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A conceptual password vault using dummy data to illustrate how passwords 
+              should be represented and why plaintext storage is dangerous.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Discusses hashing, salting, and credential separation at a high level.</li>
+              <li>• Shows how a vault interface might present entries to users.</li>
+            </ul>
+            <a href="labs/password-vault.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View Password Vault Demo
+            </a>
+          </div>
+        `);
+      }
+
+      /* SECURE NOTES */
+      if (project === "secure-notes") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">Secure Notes Demo</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A simple lab that treats personal notes like sensitive data and explores 
+              how access control and logging apply even to "small" features.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Notes tied conceptually to a user identity.</li>
+              <li>• Discussion around who should see what and why.</li>
+            </ul>
+            <a href="labs/secure-notes.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View Secure Notes Demo
+            </a>
+          </div>
+        `);
+      }
+
+      /* AUDIT DASHBOARD */
+      if (project === "audit-dashboard") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">Audit & Logging Dashboard</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A conceptual dashboard showing which events matter for investigations:
+              login successes/failures, role changes, and sensitive operations.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Emphasizes why logs are a security control, not just a dev tool.</li>
+              <li>• Shows how IAM events and logs support incident response.</li>
+            </ul>
+            <a href="labs/audit.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View Audit Lab Page
+            </a>
+          </div>
+        `);
+      }
+
+      /* IAM VULNERABLE */
+      if (project === "iam-vulnerable") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">IAM – Vulnerable Version</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              This intentionally weak IAM flow shows what happens when role checks are 
+              missing or misconfigured — it is only used for discussion, not production.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Overly permissive roles and missing validations.</li>
+              <li>• Examples of how an attacker might abuse these gaps.</li>
+            </ul>
+            <a href="labs/vulnerable.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View Vulnerable IAM Demo
+            </a>
+          </div>
+        `);
+      }
+
+      /* IAM HARDENED */
+      if (project === "iam-hardened") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">IAM – Hardened Version</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A secured IAM model that fixes the weaknesses from the vulnerable version, 
+              with improved role definitions, checks, and separation of duties.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Enforced checks on all protected actions.</li>
+              <li>• Clear mapping from business roles to permissions.</li>
+            </ul>
+            <a href="labs/secure.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View Hardened IAM Demo
+            </a>
+          </div>
+        `);
+      }
+
+      /* NETWORK LAB */
+      if (project === "network-lab") {
+        return renderContent(`
+          <div class="fade-up space-y-5 max-w-3xl">
+            <button onclick="loadSection('projects')"
+                    class="text-xs text-[#64ffda] hover:underline mb-1">
+              ← Back to Projects
+            </button>
+            <h2 class="text-2xl font-semibold text-[#e6f1ff]">Network Security Lab</h2>
+            <p class="text-sm text-[#a8b2d1]">
+              A conceptual network lab focusing on segmentation, visibility, and how 
+              logs support detection and investigations.
+            </p>
+            <ul class="text-sm text-[#8892b0] space-y-2">
+              <li>• Thinking about “choke points” in network paths.</li>
+              <li>• Where and what to log for detection.</li>
+            </ul>
+            <a href="labs/index.html" target="_blank"
+               class="inline-block mt-2 px-5 py-2 bg-[#64ffda] text-[#0a192f] text-xs font-semibold rounded hover:bg-[#52e4c3]">
+              View Network Lab Overview
+            </a>
+          </div>
+        `);
+      }
+    }
+
+    /* Load Home on first visit */
+    window.addEventListener("DOMContentLoaded", showHome);
+  </script>
+
 </body>
 </html>
