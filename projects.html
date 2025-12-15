@@ -71,40 +71,75 @@
   <!-- ================= RIGHT CONTENT ================= -->
   <section class="space-y-12 pb-20">
 
-    <!-- ================= FLAGSHIP SOC INVESTIGATION ================= -->
-    <section class="bg-[#112240] border border-teal-400/40 rounded-xl p-8 space-y-4">
+   <!-- ================= FLAGSHIP SOC INVESTIGATION ================= -->
+<section class="bg-[#112240] border border-teal-400/40 rounded-xl p-8 space-y-6">
 
-      <h2 class="text-xl font-semibold text-[#e6f1ff]">
-        Flagship SOC Investigation
-      </h2>
+  <header>
+    <h2 class="text-xl font-semibold text-[#e6f1ff]">
+      Flagship SOC Investigation
+    </h2>
+    <p class="text-xs text-teal-300 uppercase tracking-wide mt-1">
+      Tier-1 SOC Alert · Identity & Access Monitoring
+    </p>
+  </header>
 
-      <p class="text-sm text-[#a8b2d1] leading-relaxed">
-        <strong>Scenario Overview:</strong> Suspicious authentication behavior involving
-        multiple failed login attempts followed by a successful login from a new geographic
-        location for a privileged user account.
-      </p>
+  <!-- Scenario -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Alert Scenario
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Multiple failed authentication attempts followed by a successful login
+      from a new geographic location on a privileged user account.
+    </p>
+  </div>
 
-      <p class="text-sm text-[#a8b2d1] leading-relaxed">
-        <strong>Alert Triage:</strong> Reviewed authentication logs, validated timestamps and
-        source systems, checked MFA enforcement, and assessed account privilege level.
-        Alert escalated due to unusual login pattern and identity misuse risk.
-      </p>
+  <!-- Triage -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Initial Triage
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Reviewed authentication logs, timestamps, source IPs, and MFA status.
+      Assessed account privilege level and flagged the alert due to abnormal
+      login behavior and identity misuse risk.
+    </p>
+  </div>
 
-      <p class="text-sm text-[#a8b2d1] leading-relaxed">
-        <strong>Investigation:</strong> Correlated login events, analyzed geolocation data,
-        reviewed historical behavior, and compared activity against baseline access patterns.
-      </p>
+  <!-- Investigation -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Investigation & Analysis
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Correlated historical login activity, analyzed geolocation variance,
+      validated access patterns against baseline behavior, and ruled out
+      false positives.
+    </p>
+  </div>
 
-      <p class="text-sm text-[#a8b2d1] leading-relaxed">
-        <strong>Response:</strong> Forced password reset, enforced MFA, reviewed permissions,
-        monitored for follow-up activity, and documented findings for Tier-2 / IAM escalation.
-      </p>
+  <!-- Response -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Response & Escalation
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Enforced password reset and MFA, reviewed permissions, monitored
+      follow-up activity, and documented findings for Tier-2 / IAM escalation.
+    </p>
+  </div>
 
-      <p class="text-xs text-teal-300 uppercase tracking-wide pt-2">
-        SOC Context: Tier-1 Alert Triage · Identity Misuse · Escalation Documentation
-      </p>
+  <!-- SOC Takeaway -->
+  <div class="mt-4 p-4 rounded-lg bg-[#020c1b] border border-slate-700">
+    <p class="text-xs text-[#a8b2d1] leading-relaxed">
+      <span class="text-teal-300 font-semibold">SOC Analyst Takeaway:</span>
+      Demonstrates Tier-1 alert triage, identity misuse detection, event
+      correlation, and escalation-ready documentation aligned with real SOC workflows.
+    </p>
+  </div>
 
-    </section>
+</section>
+
 
     <!-- ================= PROJECT CARDS ================= -->
     <section>
