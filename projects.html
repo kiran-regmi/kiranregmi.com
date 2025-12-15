@@ -1,78 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects | Kiran Regmi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Kiran Regmi</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 
-<body class="bg-[#0a192f] text-gray-300">
+<body class="bg-[#0a192f] text-[#ccd6f6]">
 
-    <!-- Navbar -->
-    <nav class="flex justify-between items-center py-6 px-10 bg-[#0a192f] shadow-lg">
-    <a href="index.html" class="text-teal-400 text-xl font-bold hover:text-teal-300">
-        Kiran Regmi
-    </a>
+<!-- ================= NAVBAR ================= -->
+<nav class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 lg:px-12 py-4 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
 
-    <div class="space-x-10 text-lg">
-        <a href="index.html" class="text-gray-300 hover:text-teal-400 transition">Home</a>
-        <a href="projects.html" class="text-gray-300 hover:text-teal-400 transition">Projects</a>
-        <a href="labs/index.html" class="text-gray-300 hover:text-teal-400 transition">Labs</a>
-        <a href="contact.html" class="text-gray-300 hover:text-teal-400 transition">Contact</a>
-    </div>
+  <!-- LOGO / HOME -->
+  <a href="index.html" class="flex items-center gap-2">
+    <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
+      KR
+    </span>
+  </a>
+
+  <!-- GLOBAL NAV -->
+  <div class="space-x-6 text-sm sm:text-base">
+    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">Cyber News</a>
+    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">AI | GRC</a>
+    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">Blog</a>
+    <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">Contact</a>
+  </div>
+
 </nav>
 
-    <!-- Projects Section -->
-    <section class="px-10 py-20 max-w-6xl mx-auto">
-        <h1 class="text-4xl font-bold text-gray-100 mb-10">Projects</h1>
+<!-- ================= MAIN LAYOUT ================= -->
+<div class="pt-28 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+  <!-- ================= LEFT SIDEBAR ================= -->
+  <aside class="hidden lg:flex flex-col gap-6 sticky top-28 text-sm">
 
-            <!-- Project Card -->
-            <div class="bg-[#112240] p-6 rounded-xl border border-gray-700 hover:border-teal-400 transition">
-                <h2 class="text-xl font-bold text-gray-100 mb-3">GRC: Risk Management Framework</h2>
-                <p class="text-gray-400 mb-4">
-                    A complete RMF package including SSP, Control Implementation, Risk Register, POA&M,
-                    and Audit Artifacts built for an example organization.
-                </p>
-                <a href="labs/grc-rmf/index.html" class="text-teal-400 hover:underline">View Project →</a>
-            </div>
+    <h1 class="text-2xl font-semibold text-[#e6f1ff]">
+      Projects
+    </h1>
 
-            <!-- Project Card -->
-            <div class="bg-[#112240] p-6 rounded-xl border border-gray-700 hover:border-teal-400 transition">
-                <h2 class="text-xl font-bold text-gray-100 mb-3">IAM: Identity & Access Management Lab</h2>
-                <p class="text-gray-400 mb-4">
-                    Full IAM lab demonstrating user lifecycle management, RBAC, conditional access,
-                    MFA enforcement, and access reviews.
-                </p>
-                <a href="labs/iam/index.html" class="text-teal-400 hover:underline">View Project →</a>
-            </div>
+    <p class="text-[#a8b2d1] leading-relaxed">
+      SOC-focused investigations and security projects demonstrating
+      alert triage, log analysis, identity misuse detection, and
+      escalation-ready documentation.
+    </p>
 
-            <!-- Project Card -->
-            <div class="bg-[#112240] p-6 rounded-xl border border-gray-700 hover:border-teal-400 transition">
-                <h2 class="text-xl font-bold text-gray-100 mb-3">TPRM: Third-Party Risk Management</h2>
-                <p class="text-gray-400 mb-4">
-                    End-to-end third-party onboarding workflow including due diligence, risk scoring,
-                    vendor questionnaire, and remediation plan.
-                </p>
-                <a href="labs/tprm/index.html" class="text-teal-400 hover:underline">View Project →</a>
-            </div>
+    <hr class="border-slate-800">
 
-            <!-- Project Card -->
-            <div class="bg-[#112240] p-6 rounded-xl border border-gray-700 hover:border-teal-400 transition">
-                <h2 class="text-xl font-bold text-gray-100 mb-3">Network Security Home Lab</h2>
-                <p class="text-gray-400 mb-4">
-                    Built a secure virtual network with VLAN segmentation, firewall rules,
-                    Windows Domain, DNS, DHCP, and security monitoring.
-                </p>
-                <a href="labs/network/index.html" class="text-teal-400 hover:underline">View Project →</a>
-            </div>
+    <div class="flex flex-col gap-3">
+      <a href="projects.html" class="text-[#64ffda]">— Projects</a>
+      <a href="skills.html" class="hover:text-[#64ffda]">— Skills</a>
+      <a href="labs.html" class="hover:text-[#64ffda]">— Labs</a>
+      <a href="certifications.html" class="hover:text-[#64ffda]">— Certifications</a>
+    </div>
 
-            <!-- You can add more cards as needed -->
+    <div class="flex gap-4 pt-4 text-lg text-[#8892b0]">
+      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://www.youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    </div>
 
-        </div>
+  </aside>
+
+  <!-- ================= RIGHT CONTENT ================= -->
+  <section class="space-y-12 pb-20">
+
+    <!-- ================= FLAGSHIP SOC INVESTIGATION ================= -->
+    <section class="bg-[#112240] border border-teal-400/40 rounded-xl p-8 space-y-4">
+
+      <h2 class="text-xl font-semibold text-[#e6f1ff]">
+        Flagship SOC Investigation
+      </h2>
+
+      <p class="text-sm text-[#a8b2d1] leading-relaxed">
+        <strong>Scenario Overview:</strong> Suspicious authentication behavior involving
+        multiple failed login attempts followed by a successful login from a new geographic
+        location for a privileged user account.
+      </p>
+
+      <p class="text-sm text-[#a8b2d1] leading-relaxed">
+        <strong>Alert Triage:</strong> Reviewed authentication logs, validated timestamps and
+        source systems, checked MFA enforcement, and assessed account privilege level.
+        Alert escalated due to unusual login pattern and identity misuse risk.
+      </p>
+
+      <p class="text-sm text-[#a8b2d1] leading-relaxed">
+        <strong>Investigation:</strong> Correlated login events, analyzed geolocation data,
+        reviewed historical behavior, and compared activity against baseline access patterns.
+      </p>
+
+      <p class="text-sm text-[#a8b2d1] leading-relaxed">
+        <strong>Response:</strong> Forced password reset, enforced MFA, reviewed permissions,
+        monitored for follow-up activity, and documented findings for Tier-2 / IAM escalation.
+      </p>
+
+      <p class="text-xs text-teal-300 uppercase tracking-wide pt-2">
+        SOC Context: Tier-1 Alert Triage · Identity Misuse · Escalation Documentation
+      </p>
+
     </section>
+
+    <!-- ================= PROJECT CARDS ================= -->
+    <section>
+      <h2 class="text-xl font-semibold text-[#e6f1ff] mb-6">
+        Additional Projects
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        <div class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+          <h3 class="font-semibold">GRC: Risk Management Framework</h3>
+          <p class="text-xs text-[#8892b0] mt-2">
+            NIST RMF lifecycle including SSP, SAR, POA&M, and risk documentation.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+          <h3 class="font-semibold">IAM: Identity & Access Management Lab</h3>
+          <p class="text-xs text-[#8892b0] mt-2">
+            RBAC, MFA enforcement, authentication analysis, and access reviews.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+          <h3 class="font-semibold">TPRM: Third-Party Risk Management</h3>
+          <p class="text-xs text-[#8892b0] mt-2">
+            Vendor risk assessment, security questionnaires, and control validation.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </section>
+</div>
 
 </body>
 </html>
