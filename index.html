@@ -1,403 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiran Regmi | Cybersecurity Portfolio</title>
+  <title>Kiran Regmi | SOC Analyst Portfolio</title>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- TailwindCSS -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    /* Fade animation */
-    .fade-in { opacity: 0; animation: fadeIn 0.45s ease-out forwards; }
-    .fade-up { opacity: 0; transform: translateY(12px); animation: fadeUp 0.45s ease-out forwards; }
-
-    @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-    /* Prevent selection on sidebar links */
-    .sidebar a { user-select: none; }
-  </style>
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous"
+  />
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
-  <!-- NAVBAR (fixed) -->
-  <nav class="fixed top-0 left-0 right-0 z-50 flex justify-between 
-              items-center px-6 lg:px-12 py-4 border-b border-slate-800
-              bg-[#0a192f]/95 backdrop-blur-sm">
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 right-0 z-40 bg-[#0a192f]/95 backdrop-blur border-b border-slate-800">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
 
-    <!-- Logo = Home -->
-    <a href="#" onclick="showHome(); return false;"
-       class="flex items-center gap-2">
-      <span class="w-9 h-9 rounded-full border border-[#64ffda] 
-                   flex items-center justify-center text-[#64ffda] 
-                   text-lg font-bold">KR</span>
-    </a>
-
-    <!-- Top Navigation -->
-    <div class="space-x-6 text-sm sm:text-base">
-      <a href="#" onclick="loadSection('projects'); return false;"
-         class="text-slate-300 hover:text-[#64ffda] transition">Projects</a>
-
-      <a href="#" onclick="loadSection('labs'); return false;"
-         class="text-slate-300 hover:text-[#64ffda] transition">Labs</a>
-
-      <a href="#" onclick="loadSection('contact'); return false;"
-         class="text-slate-300 hover:text-[#64ffda] transition">Contact</a>
-    </div>
-  </nav>
-
-
-
-  <!-- MAIN GRID (mobile first) -->
-  <div class="pt-24 max-w-7xl mx-auto px-6 lg:px-12
-              grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
-
-    <!-- ========================= -->
-    <!-- MOBILE LEFT-PANEL CONTENT -->
-    <!-- ========================= -->
-    <div class="lg:hidden mb-10 space-y-4 fade-up">
-      <p class="text-teal-400 text-sm">Cybersecurity Analyst</p>
-
-      <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
-
-      <p class="text-[#a8b2d1] text-[15px] leading-relaxed">
-        As an AI GRC Analyst, I secure identities, systems, and networks through
-        hands-on labs, IAM demos, RMF projects, and secure-vs-vulnerable app comparisons.
-      </p>
-
-      <a href="assets/pdf/Kiran-Regmi-Resume.pdf" target="_blank"
-         class="inline-block text-[#64ffda] hover:underline">
-        View Resume
-      </a>
-
-      <!-- Mobile Social Icons -->
-      <div class="flex gap-5 text-xl pt-3">
-        <a href="https://www.linkedin.com/in/kiran-regmi/"
-           class="hover:text-[#64ffda]"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://github.com/kiran-regmi"
-           class="hover:text-[#64ffda]"><i class="fa-brands fa-github"></i></a>
-        <a href="mailto:kiranimani@gmail.com"
-           class="hover:text-[#64ffda]"><i class="fa-solid fa-envelope"></i></a>
-        <a href="https://www.youtube.com"
-           class="hover:text-[#64ffda]"><i class="fa-brands fa-youtube"></i></a>
-      </div>
-
-      <!-- Mobile section links -->
-      <div class="flex gap-6 text-sm pt-4">
-        <a onclick="loadSection('skills')" class="hover:text-[#64ffda]">Skills</a>
-        <a onclick="loadSection('experience')" class="hover:text-[#64ffda]">Experience</a>
-        <a onclick="loadSection('certifications')" class="hover:text-[#64ffda]">Certifications</a>
-      </div>
+    <!-- Logo -->
+    <div class="flex items-center gap-2">
+      <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
+        KR
+      </span>
     </div>
 
-
-
-    <!-- ========================= -->
-    <!-- DESKTOP LEFT SIDEBAR -->
-    <!-- ========================= -->
-    <aside class="sidebar hidden lg:flex flex-col gap-8 sticky top-28 h-fit text-sm fade-up">
-
-      <!-- Tagline -->
-      <p class="text-teal-400 text-[15px]">Cybersecurity Analyst</p>
-
-      <!-- Summary -->
-      <div class="space-y-3">
-        <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
-
-        <p class="text-[#a8b2d1] text-[15px] leading-relaxed">
-          AI-driven GRC & IAM practitioner building secure systems, risk workflows,
-          least-privilege models, and hands-on security labs.
-        </p>
-
-        <a href="assets/pdf/Kiran-Regmi-Resume.pdf" target="_blank"
-           class="text-[#64ffda] hover:underline text-[15px]">
-          View Resume
-        </a>
-      </div>
-
-      <!-- Sidebar Navigation -->
-      <div class="flex flex-col gap-5">
-        <a onclick="loadSection('skills')" class="hover:text-[#64ffda]">Skills</a>
-        <a onclick="loadSection('experience')" class="hover:text-[#64ffda]">Experience</a>
-        <a onclick="loadSection('certifications')" class="hover:text-[#64ffda]">Certifications</a>
-      </div>
-
-      <!-- Social Icons -->
-      <div class="flex gap-5 text-xl pt-4 border-t border-slate-800">
-        <a href="https://www.linkedin.com/in/kiran-regmi/" class="hover:text-[#64ffda]">
-          <i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://github.com/kiran-regmi" class="hover:text-[#64ffda]">
-          <i class="fa-brands fa-github"></i></a>
-        <a href="mailto:kiranimani@gmail.com" class="hover:text-[#64ffda]">
-          <i class="fa-solid fa-envelope"></i></a>
-        <a href="https://www.youtube.com" class="hover:text-[#64ffda]">
-          <i class="fa-brands fa-youtube"></i></a>
-      </div>
-
-    </aside>
-
-
-
-    <!-- ========================= -->
-    <!-- RIGHT PANE CONTENT -->
-    <!-- ========================= -->
-    <section id="content-panel" class="space-y-10 pb-20 fade-in"></section>
+    <!-- Nav Links -->
+    <div class="space-x-6 text-sm">
+      <a href="#" class="text-slate-300 hover:text-[#64ffda]">Cyber News</a>
+      <a href="#" class="text-slate-300 hover:text-[#64ffda]">Projects</a>
+      <a href="#" class="text-slate-300 hover:text-[#64ffda]">Labs</a>
+      <a href="#" class="text-slate-300 hover:text-[#64ffda]">Contact</a>
+    </div>
 
   </div>
+</nav>
 
+<!-- MAIN -->
+<main class="pt-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
 
+  <!-- LEFT COLUMN -->
+  <aside class="hidden lg:flex flex-col gap-4 sticky top-24 h-fit">
 
-  <!-- ========================= -->
-  <!-- JS: DYNAMIC CONTENT LOADING -->
-  <!-- ========================= -->
-  <script>
+    <h1 class="text-3xl font-semibold text-[#e6f1ff]">
+      Kiran Regmi
+    </h1>
 
-    function render(html) {
-      const panel = document.getElementById("content-panel");
-      panel.classList.remove("fade-in");
-      void panel.offsetWidth; // restart animation
-      panel.innerHTML = html;
-      panel.classList.add("fade-in");
-    }
+    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
+      Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on
+      experience in security monitoring, alert triage, identity misuse detection,
+      and log analysis through practical labs and simulations.
+    </p>
 
-    /* HOME VIEW */
-    function showHome() {
-      render(`
-        <div class="fade-up space-y-10">
+    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
+      I bring a strong background in GRC and security documentation — including
+      risk assessments, control validation, SOP development, and escalation-ready
+      reporting — enabling a structured, process-driven approach to SOC operations.
+    </p>
 
-          <!-- Hiring Manager Box -->
-          <div class="bg-[#112240] border border-teal-400/40 rounded-xl p-10 shadow-teal-500/10">
-            <h3 class="text-teal-300 text-sm font-semibold uppercase tracking-widest">
-              For Hiring Managers & Recruiters
-            </h3>
+    <p class="text-xs text-slate-400">
+      Target roles: Tier-1 SOC Analyst · Security Operations · Blue Team
+    </p>
 
-            <p class="text-gray-200 mt-4 text-sm leading-relaxed">
-              I specialize in <span class="text-teal-300 font-medium">AI-driven GRC,
-              IAM security models, and secure system design</span>.
-              This portfolio demonstrates real security labs and risk workflows.
-            </p>
+    <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
+       target="_blank"
+       class="text-[#64ffda] text-sm hover:underline mt-2">
+      View Resume →
+    </a>
 
-            <a href="#" class="inline-block mt-6 px-6 py-3 bg-[#64ffda] 
-                               text-[#0a192f] font-semibold rounded-md 
-                               hover:bg-[#53e6c3] transition">
-              Explore AI GRC Portfolio (Coming Soon)
-            </a>
-          </div>
+    <hr class="border-slate-800 mt-4">
 
+    <div class="flex flex-col gap-2 text-sm text-slate-400">
+      <span>— Skills</span>
+      <span>— Experience</span>
+      <span>— Certifications</span>
+    </div>
 
-          <!-- Highlight Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="flex gap-5 pt-6 text-xl text-[#8892b0] border-t border-slate-800">
+      <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-solid fa-envelope"></i></a>
+      <a href="#"><i class="fa-brands fa-youtube"></i></a>
+    </div>
 
-            <div onclick="loadSection('projects')" 
-                 class="cursor-pointer p-6 bg-[#112240] border border-slate-800 
-                        rounded-xl hover:border-[#64ffda] transition">
-              <h4 class="text-[#e6f1ff] font-semibold">GRC – NIST RMF Project</h4>
-              <p class="text-xs text-[#8892b0] mt-2">Risk Register, SSP, SAR, POA&M.</p>
-            </div>
+  </aside>
 
-            <div onclick="loadSection('labs')" 
-                 class="cursor-pointer p-6 bg-[#112240] border border-slate-800 
-                        rounded-xl hover:border-[#64ffda] transition">
-              <h4 class="text-[#e6f1ff] font-semibold">IAM Security Lab</h4>
-              <p class="text-xs text-[#8892b0] mt-2">RBAC, MFA, least privilege.</p>
-            </div>
+  <!-- RIGHT COLUMN -->
+  <section class="space-y-10 pb-20">
 
-            <div onclick="loadSection('labs')" 
-                 class="cursor-pointer p-6 bg-[#112240] border border-slate-800 
-                        rounded-xl hover:border-[#64ffda] transition">
-              <h4 class="text-[#e6f1ff] font-semibold">Network Security Lab</h4>
-              <p class="text-xs text-[#8892b0] mt-2">Segmentation & audit trails.</p>
-            </div>
+    <!-- Hiring Manager Box -->
+    <div class="bg-[#112240] border border-teal-400/40 rounded-xl p-7">
+      <h3 class="text-teal-300 text-sm font-semibold uppercase tracking-widest mb-3">
+        For Hiring Managers & Recruiters
+      </h3>
 
-          </div>
+      <p class="text-sm text-[#e6f1ff] leading-relaxed">
+        This portfolio demonstrates how I support Tier-1 SOC operations in practice —
+        from alert triage and log analysis to investigation, escalation, and clear
+        documentation.
+      </p>
 
-        </div>
-      `);
-    }
+      <p class="mt-2 text-sm text-[#a8b2d1] leading-relaxed">
+        Projects below reflect real SOC-adjacent workflows including identity misuse
+        detection, control validation, and security monitoring, with an emphasis on
+        accuracy, process, and repeatability.
+      </p>
 
+      <a href="#"
+         class="inline-block mt-6 px-6 py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md hover:bg-[#53e6c3] transition">
+        View SOC Projects & Investigation Labs
+      </a>
+    </div>
 
-    /* SKILLS */
-    function loadSection(section) {
+    <!-- Highlighted SOC Projects -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      if (section === "skills") {
-        return render(`
-          <div class="fade-up space-y-4">
-            <h2 class="text-xl font-semibold text-[#e6f1ff]">Skills</h2>
-            <div class="flex flex-wrap gap-3 text-xs">
-              <span class="tag">GRC · NIST RMF</span>
-              <span class="tag">IAM · RBAC · MFA</span>
-              <span class="tag">Azure / M365 Security</span>
-              <span class="tag">SIEM / Logging</span>
-              <span class="tag">Network Security</span>
-            </div>
-          </div>
-        `);
-      }
+      <div class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+        <h4 class="text-sm font-semibold text-[#e6f1ff]">
+          Security Risk & Control Validation (SOC Context)
+        </h4>
+        <p class="mt-2 text-[13px] text-[#8892b0]">
+          Validated security controls by mapping risks to real SOC detections,
+          alerts, and response actions.
+        </p>
+      </div>
 
-      /* EXPERIENCE */
-      if (section === "experience") {
-        return render(`
-          <div class="fade-up">
-            <h2 class="text-xl font-semibold text-[#e6f1ff]">Experience</h2>
-            <ul class="text-sm text-[#a8b2d1] space-y-2 mt-4">
-              <li>Hands-on cybersecurity labs (IAM, network, GRC)</li>
-              <li>Documentation: SSP, SAR, POA&M, SOPs</li>
-              <li>Identity & Access: RBAC, MFA, least privilege</li>
-            </ul>
-          </div>
-        `);
-      }
+      <div class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+        <h4 class="text-sm font-semibold text-[#e6f1ff]">
+          Identity Misuse Detection Lab
+        </h4>
+        <p class="mt-2 text-[13px] text-[#8892b0]">
+          Detected authentication failures, excessive permissions, and identity
+          misuse using access and login events.
+        </p>
+      </div>
 
-      /* CERTIFICATIONS */
-      if (section === "certifications") {
-        return render(`
-          <div class="fade-up">
-            <h2 class="text-xl font-semibold text-[#e6f1ff]">Certifications</h2>
-            <ul class="text-sm text-[#a8b2d1] space-y-2 mt-4">
-              <li>CompTIA Security+</li>
-              <li>Cisco CCST Networking</li>
-              <li>Microsoft Azure</li>
-              <li>Microsoft 365</li>
-              <li>Microsoft Security</li>
-            </ul>
-          </div>
-        `);
-      }
+      <div class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+        <h4 class="text-sm font-semibold text-[#e6f1ff]">
+          Network Traffic Monitoring & Alert Analysis
+        </h4>
+        <p class="mt-2 text-[13px] text-[#8892b0]">
+          Monitored network activity, analyzed suspicious traffic, and identified
+          potential attack paths.
+        </p>
+      </div>
 
-      /* PROJECTS OVERVIEW */
-      if (section === "projects") {
-        return render(`
-          <div class="fade-up space-y-6">
-            <h2 class="text-xl font-semibold text-[#e6f1ff]">Projects</h2>
+    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Footer -->
+    <div class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-14">
+      <p>
+        Design, Developed & Managed by
+        <span class="text-[#64ffda]">Kiran Regmi</span> —
+        loosely designed in Figma, coded in Visual Studio Code, build with Node.Js & Tailwindcss, JS, web3forms, deployed with Vercel, all free resources.
+      </p>
+      <p class="mt-2 text-[0.7rem] text-slate-500">
+        © 2025 kiranregmi.com · All rights reserved.
+      </p>
+    </div>
 
-              <div class="card" onclick="renderRMF()">
-                <h4 class="title">GRC – NIST RMF Project</h4>
-                <p class="desc">Risk register, SSP, SAR, POA&M.</p>
-              </div>
+  </section>
 
-              <div class="card" onclick="renderIAM()">
-                <h4 class="title">IAM Security Lab</h4>
-                <p class="desc">RBAC, MFA, least privilege.</p>
-              </div>
-
-              <div class="card" onclick="renderNetwork()">
-                <h4 class="title">Network Security Lab</h4>
-                <p class="desc">Segmentation & audit trails.</p>
-              </div>
-
-            </div>
-          </div>
-        `);
-      }
-
-      /* LABS OVERVIEW */
-      if (section === "labs") {
-        return render(`
-          <div class="fade-up space-y-6">
-            <h2 class="text-xl font-semibold text-[#e6f1ff]">Security Labs</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-              <div class="card" onclick="renderPasswordVault()">
-                <h4 class="title">Password Vault Demo</h4>
-                <p class="desc">Dummy credentials & hashing.</p>
-              </div>
-
-              <div class="card" onclick="renderSecureNotes()">
-                <h4 class="title">Secure Notes Demo</h4>
-                <p class="desc">Controlled access notes.</p>
-              </div>
-
-              <div class="card" onclick="renderRBAC()">
-                <h4 class="title">RBAC / IAM Flows</h4>
-                <p class="desc">Roles, MFA & least privilege.</p>
-              </div>
-
-              <div class="card" onclick="renderAudit()">
-                <h4 class="title">Audit & Logging Dashboard</h4>
-                <p class="desc">Security log visibility.</p>
-              </div>
-
-              <div class="card" onclick="renderVulnerableIAM()">
-                <h4 class="title">Vulnerable IAM Version</h4>
-                <p class="desc">Intentionally insecure flows.</p>
-              </div>
-
-              <div class="card" onclick="renderHardenedIAM()">
-                <h4 class="title">Hardened IAM Version</h4>
-                <p class="desc">Patched + secure version.</p>
-              </div>
-
-            </div>
-          </div>
-        `);
-      }
-
-      /* CONTACT FORM */
-      if (section === "contact") {
-        return render(`
-          <div class="fade-up max-w-lg">
-
-            <h2 class="text-xl font-semibold text-[#e6f1ff] mb-4">Contact</h2>
-
-            <form 
-              action="https://api.web3forms.com/submit"
-              method="POST"
-              class="space-y-6 bg-[#112240] p-8 rounded-lg shadow-xl border border-teal-400/20">
-
-              <input type="hidden" name="access_key" value="e07cd5aa-6b44-45a4-81fa-1c4349aa36f5">
-
-              <div>
-                <label class="text-gray-300">Name</label>
-                <input type="text" name="name" required
-                  class="w-full px-4 py-2 rounded bg-[#0a192f] border border-gray-700 
-                         text-gray-300 focus:border-teal-400 outline-none mt-1">
-              </div>
-
-              <div>
-                <label class="text-gray-300">Email</label>
-                <input type="email" name="email" required
-                  class="w-full px-4 py-2 rounded bg-[#0a192f] border border-gray-700 
-                         text-gray-300 focus:border-teal-400 outline-none mt-1">
-              </div>
-
-              <div>
-                <label class="text-gray-300">Message</label>
-                <textarea name="message" rows="5" required
-                  class="w-full px-4 py-2 rounded bg-[#0a192f] border border-gray-700 
-                         text-gray-300 focus:border-teal-400 outline-none mt-1"></textarea>
-              </div>
-
-              <button type="submit"
-                class="w-full py-3 rounded-md border border-teal-400 text-teal-400 
-                       hover:bg-teal-400 hover:text-[#0a192f] transition">
-                Send Message
-              </button>
-
-            </form>
-
-          </div>
-        `);
-      }
-
-    }
-
-
-    /* LOAD HOME FIRST */
-    window.addEventListener("DOMContentLoaded", showHome);
-
-  </script>
+</main>
 
 </body>
 </html>
