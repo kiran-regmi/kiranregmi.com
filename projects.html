@@ -16,18 +16,23 @@
   />
 
   <style>
-  a {
-    -webkit-tap-highlight-color: transparent;
-  }
+/* Prevent click flash on anchors */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+  transition: background-color 0.2s, color 0.2s;
+}
 
-  a:focus {
-    outline: none;
-  }
+a:focus, button:focus {
+  outline: none !important;
+}
 
-  a:active {
-    background-color: transparent;
-  }
+a:active, button:active {
+  background-color: transparent !important;
+}
 </style>
+
 
 </head>
 
