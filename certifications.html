@@ -30,9 +30,8 @@
 
   <!-- GLOBAL NAV -->
   <div class="space-x-6 text-sm sm:text-base">
-    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">Cyber News</a>
-    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">AI | GRC</a>
-    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">Blog</a>
+    <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;" class="text-slate-300 hover:text-[#800000] transition">Cyber News</a>
+    <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;" class="text-slate-300 hover:text-[#800000] transition">AI | GRC</a>
     <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">Contact</a>
   </div>
 
@@ -237,6 +236,26 @@
 
 </main>
 
+<!-- Coming Soon Toast -->
+<div id="coming-soon-toast"
+  class="fixed bottom-6 right-6 z-50 hidden bg-[#112240] border border-teal-400/40
+         text-sm text-[#e6f1ff] px-5 py-4 rounded-lg shadow-lg">
+  <span id="coming-soon-text"></span>
+</div>
+
+<script>
+  function showComingSoon(section) {
+    const toast = document.getElementById('coming-soon-toast');
+    const text = document.getElementById('coming-soon-text');
+
+    text.textContent = section + ' is in progress — coming soon.';
+    toast.classList.remove('hidden');
+
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 3000);
+  }
+</script>
+
 </body>
 </html>
-
