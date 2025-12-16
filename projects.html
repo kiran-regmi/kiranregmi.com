@@ -3,19 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projects | Kiran Regmi</title>
+  <title>Kiran Regmi | Projects  </title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous"
+  />
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
-<!-- ================= NAVBAR ================= -->
+<!-- NAVBAR -->
 <nav class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 lg:px-12 py-4 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
 
   <!-- LOGO / HOME -->
@@ -35,44 +38,62 @@
 
 </nav>
 
-<!-- ================= MAIN LAYOUT ================= -->
-<div class="pt-28 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
 
-  <!-- ================= LEFT SIDEBAR ================= -->
-  <aside class="hidden lg:flex flex-col gap-6 sticky top-28 text-sm">
+<!-- MAIN -->
+<main class="pt-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
 
-    <h1 class="text-2xl font-semibold text-[#e6f1ff]">
-      Projects
+  <!-- LEFT COLUMN -->
+  <aside class="hidden lg:flex flex-col gap-4 sticky top-24 h-fit">
+
+    <h1 class="text-3xl font-semibold text-[#e6f1ff]">
+      Kiran Regmi
     </h1>
 
-    <p class="text-[#a8b2d1] leading-relaxed">
-      SOC-focused investigations and security projects demonstrating
-      alert triage, log analysis, identity misuse detection, and
-      escalation-ready documentation.
+    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
+      Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on
+      experience in security monitoring, alert triage, identity misuse detection,
+      and log analysis through practical labs and simulations.
     </p>
 
-    <hr class="border-slate-800">
+    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
+      I bring a strong background in GRC and security documentation — including
+      risk assessments, control validation, SOP development, and escalation-ready
+      reporting — enabling a structured, process-driven approach to SOC operations.
+    </p>
 
-    <div class="flex flex-col gap-3">
-      <a href="projects.html" class="text-[#64ffda]">— Projects</a>
-      <a href="skills.html" class="hover:text-[#64ffda]">— Skills</a>
-      <a href="labs.html" class="hover:text-[#64ffda]">— Labs</a>
-      <a href="certifications.html" class="hover:text-[#64ffda]">— Certifications</a>
+    <p class="text-xs text-slate-400">
+      <bold>Target roles:</bold> Tier-1 SOC Analyst · Security Operations · Blue Team
+    </p>
+
+    <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
+       target="_blank"
+       class="text-[#64ffda] text-sm hover:underline mt-2">
+      View Resume →
+    </a>
+
+    <hr class="border-slate-800 mt-4">
+
+    <div class="flex flex-col gap-2 text-sm text-slate-400">
+      <a href="labs.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Labs</span></a>
+      <a href="skills.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Skills</span></a>
+      <a href="projects.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Projects</span></a>
+      <a href="certifications.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Certifications</span></a>
     </div>
 
-    <div class="flex gap-4 pt-4 text-lg text-[#8892b0]">
-      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-      <a href="https://www.youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    <div class="flex gap-5 pt-6 text-xl text-[#8892b0] border-t border-slate-800">
+      <a href="https://www.linkedin.com/in/kiran-regmi/"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://github.com/kiran-regmi"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense"><i class="fa-brands fa-youtube"></i></a>
     </div>
 
   </aside>
 
   <!-- ================= RIGHT CONTENT ================= -->
-  <section class="space-y-12 pb-20">
+  <section class="space-y-8 pb-20">
 
    <!-- ================= FLAGSHIP SOC INVESTIGATION ================= -->
-<section class="bg-[#112240] border border-teal-400/40 rounded-xl p-8 space-y-6">
+<section class="bg-[#112240] border-2 border-teal-400/60 rounded-2xl p-10 space-y-6 shadow-lg shadow-black/20">
 
   <header>
     <h2 class="text-xl font-semibold text-[#e6f1ff]">
@@ -143,7 +164,7 @@
 
     <!-- ================= PROJECT CARDS ================= -->
     <section>
-      <h2 class="text-xl font-semibold text-[#e6f1ff] mb-6">
+      <h2 class="text-xl font-semibold text-[#e6f1ff] mb-4">
         Additional Projects
       </h2>
 
@@ -172,7 +193,17 @@
 
       </div>
     </section>
-
+  <!-- Footer -->
+    <div class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-14">
+      <p>
+        Design, Developed & Managed by
+        <span class="text-[#64ffda]">Kiran Regmi</span> —
+        loosely designed in Figma, coded in Visual Studio Code, build with Node.Js & Tailwindcss, JS, web3forms, deployed with Vercel, all free resources.
+      </p>
+      <p class="mt-2 text-[0.7rem] text-slate-500">
+        © 2025 kiranregmi.com · All rights reserved.
+      </p>
+    </div>
   </section>
 </div>
 
