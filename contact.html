@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiran Regmi | Certifications</title>
+  <title>Contact | Kiran Regmi</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,32 +15,30 @@
     crossorigin="anonymous"
   />
 
-<style>
-/* Prevent click flash on anchors */
-a, button {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  outline: none !important;
-  transition: background-color 0.2s, color 0.2s;
-}
+  <!-- UX fixes -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
 
-a:focus, button:focus {
-  outline: none !important;
-}
+    a, button {
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      transition: color 0.2s, background-color 0.2s;
+    }
 
-a:active, button:active {
-  background-color: transparent !important;
-}
-</style>
-
+    a:focus, button:focus {
+      outline: none;
+    }
+  </style>
 </head>
 
-<body class="bg-[#0a192f] text-gray-300">
+<body class="bg-[#0a192f] text-[#ccd6f6]">
 
-    <!-- Navbar -->
+<!-- NAVBAR -->
 <nav class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 lg:px-12 py-4 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
 
-  <!-- LOGO / HOME -->
+  <!-- LOGO -->
   <a href="index.html" class="flex items-center gap-2">
     <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
       KR
@@ -53,93 +51,108 @@ a:active, button:active {
     <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;" class="text-slate-300 hover:text-[#800000] transition">AI | GRC</a>
     <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">Contact</a>
   </div>
-
 </nav>
 
-    <!-- Contact Section -->
-    <section class="px-10 py-20 max-w-3xl mx-auto">
-        <h1 class="text-4xl font-bold text-gray-100">Get in Touch</h1>
-        <p class="text-gray-400 mt-4">
-            Whether you’re a hiring manager, recruiter, or cybersecurity professional, 
-            I’d love to connect.  
-            Use the form below or reach out via LinkedIn.
-        </p>
+<!-- CONTACT SECTION -->
+<main class="pt-32 px-6 max-w-3xl mx-auto">
 
-        <!-- Contact Form -->
-        <form 
-            action="https://api.web3forms.com/submit"
-            method="POST"
-            class="mt-12 space-y-6 bg-[#112240] p-10 rounded-lg shadow-xl border border-teal-400/20">
+  <h1 class="text-3xl font-semibold text-[#e6f1ff]">
+    Get in Touch
+  </h1>
 
-            <!-- REQUIRED ACCESS KEY -->
-            <input type="hidden" name="access_key" value="e07cd5aa-6b44-45a4-81fa-1c4349aa36f5">
+  <p class="text-sm text-[#a8b2d1] mt-4 leading-relaxed">
+    Whether you’re a hiring manager, recruiter, or cybersecurity professional,
+    I’d be glad to connect. Use the form below or reach out via LinkedIn.
+  </p>
 
-            <!-- Name -->
-            <div>
-                <label class="block text-gray-300 mb-2">Full Name</label>
-                <input type="text" name="name" required
-                    class="w-full px-4 py-3 rounded bg-[#0a192f] text-gray-300 border border-gray-700 focus:border-teal-400 outline-none">
-            </div>
+  <!-- CONTACT FORM -->
+  <form
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    class="mt-10 space-y-6 bg-[#112240] p-8 rounded-xl border border-teal-400/30">
 
-            <!-- Email -->
-            <div>
-                <label class="block text-gray-300 mb-2">Email</label>
-                <input type="email" name="email" required
-                    class="w-full px-4 py-3 rounded bg-[#0a192f] text-gray-300 border border-gray-700 focus:border-teal-400 outline-none">
-            </div>
+    <!-- Web3Forms Access Key -->
+    <input type="hidden" name="access_key" value="e07cd5aa-6b44-45a4-81fa-1c4349aa36f5">
 
-            <!-- Message -->
-            <div>
-                <label class="block text-gray-300 mb-2">Message</label>
-                <textarea name="message" rows="6" required
-                    class="w-full px-4 py-3 rounded bg-[#0a192f] text-gray-300 border border-gray-700 focus:border-teal-400 outline-none"></textarea>
-            </div>
+    <!-- Name -->
+    <div>
+      <label class="block text-xs text-slate-400 mb-1">Full Name</label>
+      <input type="text" name="name" required
+        class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700 text-sm text-[#e6f1ff] focus:border-teal-400 outline-none">
+    </div>
 
-            <!-- Success + Error Messages -->
-            <div id="form-status" class="text-center text-sm mt-2 hidden"></div>
+    <!-- Email -->
+    <div>
+      <label class="block text-xs text-slate-400 mb-1">Email</label>
+      <input type="email" name="email" required
+        class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700 text-sm text-[#e6f1ff] focus:border-teal-400 outline-none">
+    </div>
 
-            <!-- Submit Button -->
-            <button type="submit"
-                class="w-full py-3 rounded-md border border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-black transition">
-                Send Message
-            </button>
-        </form>
-    </section>
+    <!-- Message -->
+    <div>
+      <label class="block text-xs text-slate-400 mb-1">Message</label>
+      <textarea name="message" rows="5" required
+        class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700 text-sm text-[#e6f1ff] focus:border-teal-400 outline-none"></textarea>
+    </div>
 
-    <!-- Simple Form Handler -->
-    <script>
-        const form = document.querySelector("form");
-        const statusDiv = document.getElementById("form-status");
+    <!-- Status Message -->
+    <div id="form-status" class="text-center text-xs hidden"></div>
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
+    <!-- Submit -->
+    <button type="submit"
+      class="w-full py-3 rounded-md bg-transparent border border-teal-400 text-teal-400
+             hover:bg-teal-400 hover:text-[#0a192f] font-semibold transition">
+      Send Message
+    </button>
+  </form>
 
-            statusDiv.classList.remove("hidden");
-            statusDiv.textContent = "Sending...";
-            statusDiv.className = "text-blue-300 text-center text-sm mt-2";
+</main>
 
-            const formData = new FormData(form);
+<!-- FOOTER -->
+<footer class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-16 px-6 text-center">
+  <p>
+    Designed, developed & maintained by
+    <span class="text-[#64ffda]">Kiran Regmi</span>.
+  </p>
+  <p class="mt-2 text-[0.7rem] text-slate-500">
+    © 2025 kiranregmi.com · All rights reserved.
+  </p>
+</footer>
 
-            try {
-                const res = await fetch(form.action, {
-                    method: "POST",
-                    body: formData,
-                    headers: { Accept: "application/json" },
-                });
+<!-- FORM HANDLER -->
+<script>
+  const form = document.querySelector("form");
+  const statusDiv = document.getElementById("form-status");
 
-                if (res.ok) {
-                    statusDiv.textContent = "Message sent successfully!";
-                    statusDiv.className = "text-green-400 text-center text-sm mt-2";
-                    form.reset();
-                } else {
-                    throw new Error("Submission failed");
-                }
-            } catch (err) {
-                statusDiv.textContent = "Something went wrong. Please try again.";
-                statusDiv.className = "text-red-400 text-center text-sm mt-2";
-            }
-        });
-    </script>
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    statusDiv.classList.remove("hidden");
+    statusDiv.textContent = "Sending...";
+    statusDiv.className = "text-teal-300 text-center text-xs mt-2";
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        statusDiv.textContent = "Message sent successfully!";
+        statusDiv.className = "text-green-400 text-center text-xs mt-2";
+        form.reset();
+      } else {
+        throw new Error("Submission failed");
+      }
+    } catch (err) {
+      statusDiv.textContent = "Something went wrong. Please try again.";
+      statusDiv.className = "text-red-400 text-center text-xs mt-2";
+    }
+  });
+</script>
 
 </body>
 </html>
