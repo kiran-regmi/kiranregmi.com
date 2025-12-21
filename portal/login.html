@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Login | Kiran Regmi</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0a192f] text-[#ccd6f6] flex items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-md bg-[#112240] border border-slate-800 rounded-xl p-8">
+
+    <h1 class="text-xl font-semibold text-[#e6f1ff] mb-2">
+      Secure Portal Login
+    </h1>
+
+    <p class="text-sm text-[#a8b2d1] mb-6">
+      Authorized access only. SOC practice environment.
+    </p>
+
+    <form id="login-form" class="space-y-4">
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">Email</label>
+        <input
+          type="email"
+          id="email"
+          required
+          class="w-full px-3 py-2 rounded-md bg-[#020c1b] border border-slate-700 text-sm text-[#e6f1ff]"
+        />
+      </div>
+
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">Password</label>
+        <input
+          type="password"
+          id="password"
+          required
+          class="w-full px-3 py-2 rounded-md bg-[#020c1b] border border-slate-700 text-sm text-[#e6f1ff]"
+        />
+      </div>
+
+ <button
+  type="submit"
+  class="w-full py-2 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md"
+>
+  Sign In
+</button>
+
+      <p id="error-message" class="text-xs text-red-400 hidden mt-2"></p>
+    </form>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./portal.js"></script>
+
+</body>
+</html>

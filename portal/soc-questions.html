@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOC Questions | Secure Portal</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Supabase JS (must load BEFORE portal.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Your portal code -->
+  <script src="./portal.js" defer></script>
+</head>
+
+<body class="bg-[#0a192f] text-[#ccd6f6]">
+
+  <main class="max-w-4xl mx-auto px-6 py-10">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <h1 class="text-3xl font-semibold text-[#e6f1ff]">SOC Question Practice</h1>
+        <p class="text-sm text-[#a8b2d1] mt-2">
+          Add questions + your answer, then save to Supabase.
+        </p>
+      </div>
+
+      <a href="./dashboard.html"
+         class="text-sm text-[#64ffda] hover:underline mt-2 whitespace-nowrap">
+        ← Back to Dashboard
+      </a>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <!-- FORM -->
+      <section class="bg-[#112240] border border-slate-800 rounded-xl p-6">
+        <h2 class="text-lg font-semibold text-[#e6f1ff] mb-4">Create / Save Question</h2>
+
+        <div id="statusBox" class="hidden text-sm rounded-md px-3 py-2 mb-4"></div>
+
+        <form id="questionForm" class="space-y-4">
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Question</label>
+            <textarea id="question" rows="3" required
+              class="w-full rounded-md bg-[#020c1b] border border-slate-700 px-3 py-2 text-sm"></textarea>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Category</label>
+              <select id="category"
+                class="w-full rounded-md bg-[#020c1b] border border-slate-700 px-3 py-2 text-sm">
+                <option value="SOC">SOC</option>
+                <option value="SIEM">SIEM</option>
+                <option value="IR">Incident Response</option>
+                <option value="IAM">IAM</option>
+                <option value="Networking">Networking</option>
+                <option value="GRC">GRC</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Difficulty</label>
+              <select id="difficulty"
+                class="w-full rounded-md bg-[#020c1b] border border-slate-700 px-3 py-2 text-sm">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Your Answer</label>
+            <textarea id="your_answer" rows="3"
+              class="w-full rounded-md bg-[#020c1b] border border-slate-700 px-3 py-2 text-sm"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Refined Answer</label>
+            <textarea id="refined_answer" rows="3"
+              class="w-full rounded-md bg-[#020c1b] border border-slate-700 px-3 py-2 text-sm"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Notes</label>
+            <textarea id="notes" rows="2"
+              class="w-full rounded-md bg-[#020c1b] border border-slate-700 px-3 py-2 text-sm"></textarea>
+          </div>
+
+          <button id="saveQuestionBtn" type="button"
+            class="w-full mt-2 px-6 py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md hover:bg-[#53e6c3] transition">
+            Save Question
+          </button>
+        </form>
+      </section>
+
+      <!-- LIST / PREVIEW -->
+      <section class="bg-[#112240] border border-slate-800 rounded-xl p-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-semibold text-[#e6f1ff]">Recent Questions</h2>
+          <button id="refreshBtn"
+            class="text-sm text-[#64ffda] hover:underline">
+            Refresh
+          </button>
+        </div>
+
+        <div id="questionsList" class="mt-4 space-y-3 text-sm text-[#a8b2d1]">
+          <p class="text-slate-400">Loading...</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // This script runs after portal.js (since portal.js is defer-loaded in head)
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Require auth
+      const session = await window.requireAuth();
+      if (!session) return;
+
+      const statusBox = document.getElementById("statusBox");
+      const saveBtn = document.getElementById("saveQuestionBtn");
+      const refreshBtn = document.getElementById("refreshBtn");
+      const list = document.getElementById("questionsList");
+
+      function showStatus(type, msg) {
+        statusBox.classList.remove("hidden");
+        statusBox.textContent = msg;
+
+        // reset classes
+        statusBox.className = "text-sm rounded-md px-3 py-2 mb-4";
+
+        if (type === "success") {
+          statusBox.classList.add("bg-emerald-900/30", "border", "border-emerald-500/30", "text-emerald-200");
+        } else if (type === "error") {
+          statusBox.classList.add("bg-red-900/30", "border", "border-red-500/30", "text-red-200");
+        } else {
+          statusBox.classList.add("bg-slate-900/30", "border", "border-slate-600/30", "text-slate-200");
+        }
+      }
+
+      async function loadRecent() {
+        list.innerHTML = `<p class="text-slate-400">Loading...</p>`;
+
+        const { data, error } = await window.supabaseClient
+          .from("soc_questions")
+          .select("id, questions, category, difficulty, created_at")
+          .order("created_at", { ascending: false })
+          .limit(8);
+
+        if (error) {
+          list.innerHTML = `<p class="text-red-300">Error loading: ${error.message}</p>`;
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          list.innerHTML = `<p class="text-slate-400">No questions yet.</p>`;
+          return;
+        }
+
+        list.innerHTML = data.map(row => `
+          <div class="p-3 rounded-lg bg-[#020c1b] border border-slate-700">
+            <div class="flex items-center justify-between gap-3">
+              <div class="font-semibold text-[#e6f1ff] line-clamp-1">
+                ${escapeHtml(row.questions || "")}
+              </div>
+              <div class="text-[11px] text-slate-400 whitespace-nowrap">
+                ${escapeHtml(row.category || "")} · ${escapeHtml(row.difficulty || "")}
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-500 mt-1">
+              ${row.created_at ? new Date(row.created_at).toLocaleString() : ""}
+            </div>
+          </div>
+        `).join("");
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      refreshBtn.addEventListener("click", loadRecent);
+
+      saveBtn.addEventListener("click", async () => {
+        showStatus("info", "Saving...");
+
+        const payload = {
+          // IMPORTANT: your column name is "questions" (plural)
+          questions: document.getElementById("question").value.trim(),
+          category: document.getElementById("category").value,
+          // IMPORTANT: your column is spelled "difficulty" (per your Supabase column list)
+          difficulty: document.getElementById("difficulty").value,
+          your_answer: document.getElementById("your_answer").value.trim(),
+          refined_answer: document.getElementById("refined_answer").value.trim(),
+          notes: document.getElementById("notes").value.trim(),
+          last_reviewed: new Date().toISOString()
+        };
+
+        if (!payload.questions) {
+          showStatus("error", "Question is required.");
+          return;
+        }
+
+        const { error } = await window.supabaseClient
+          .from("soc_questions")
+          .insert([payload]);
+
+        if (error) {
+          showStatus("error", "Error saving question: " + error.message);
+          console.error("Insert error:", error);
+          return;
+        }
+
+        showStatus("success", "Saved successfully.");
+
+        // Clear form
+        document.getElementById("questionForm").reset();
+
+        // Reload list
+        await loadRecent();
+      });
+
+      // initial load
+      await loadRecent();
+    });
+  </script>
+
+</body>
+</html>
