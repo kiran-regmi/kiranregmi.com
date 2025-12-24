@@ -37,27 +37,68 @@ a:active, button:active {
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
-<!-- NAVBAR -->
-<nav class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 lg:px-12 py-4 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
+ <!-- Global Nav--> 
+<nav class="fixed top-0 left-0 right-0 z-40 bg-[#0a192f]/95 backdrop-blur-sm border-b border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="flex items-center justify-between h-16">
 
-  <!-- LOGO / HOME -->
-  <a href="index.html" class="flex items-center gap-2">
-    <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
-      KR
-    </span>
-  </a>
+      <!-- LOGO -->
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
+          KR
+        </span>
+      </a>
 
-  <!-- GLOBAL NAV -->
-  <div class="space-x-6 text-sm sm:text-base">
-    <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;" class="text-slate-300 hover:text-[#800000] transition">Cyber News</a>
-    <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;" class="text-slate-300 hover:text-[#800000] transition">AI | GRC</a>
-    <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">Contact</a>
-    <a href="/portal/login.html" class="text-[#64ffda] hover:underline transition">Portal </a>
+      <!-- DESKTOP NAV -->
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+           class="text-slate-300 hover:text-[#800000] transition">
+          Cyber News
+        </a>
+        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+           class="text-slate-300 hover:text-[#800000] transition">
+          AI | GRC
+        </a>
+        <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">
+          Contact
+        </a>
+        <a href="/portal/login.html" class="text-[#64ffda] hover:underline transition font-semibold">
+          Portal
+        </a>
+      </div>
 
+      <!-- MOBILE MENU BUTTON -->
+      <button id="mobileMenuBtn"
+        class="md:hidden text-slate-300 hover:text-[#64ffda] focus:outline-none"
+        aria-label="Open menu">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+
+    </div>
   </div>
 
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu"
+       class="md:hidden hidden border-t border-slate-800 bg-[#0a192f]">
+    <div class="px-4 py-4 flex flex-col gap-4 text-sm">
+      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+         class="text-slate-300 hover:text-[#64ffda]">
+        Cyber News
+      </a>
+      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+         class="text-slate-300 hover:text-[#64ffda]">
+        AI | GRC
+      </a>
+      <a href="contact.html" class="text-slate-300 hover:text-[#64ffda]">
+        Contact
+      </a>
+      <a href="/portal/login.html"
+         class="text-[#64ffda] font-semibold">
+        Portal
+      </a>
+    </div>
+  </div>
 </nav>
-
 
 <!-- MAIN -->
 <main class="pt-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
@@ -114,7 +155,7 @@ a:active, button:active {
         <i class="fa-brands fa-github"></i>
       </a>
 
-      <a href="mailto:kiranimani@gmail.com"
+      <a href="contact.html"
           class="hover:text-[#64ffda] transition"
           aria-label="Send email"
           target="_blank">
@@ -133,6 +174,33 @@ a:active, button:active {
   <!-- RIGHT COLUMN -->
   <section class="space-y-10 pb-20">
 
+<!-- Mobile Identity Header -->
+<div class="lg:hidden bg-[#112240] border border-slate-800 rounded-xl p-6 space-y-4">
+
+  <h1 class="text-2xl font-semibold text-[#e6f1ff]">
+    Kiran Regmi
+  </h1>
+
+  <p class="text-sm text-[#a8b2d1] leading-relaxed">
+    Tier-1 SOC Analyst candidate focused on alert triage, log analysis,
+    identity misuse detection, and escalation-ready documentation.
+  </p>
+
+  <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
+     target="_blank"
+     class="inline-block w-full text-center px-4 py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md hover:bg-[#53e6c3] transition">
+    View Resume
+  </a>
+
+  <div class="flex justify-between text-sm pt-2 border-t border-slate-700">
+    <a href="skills.html" class="text-[#64ffda] hover:underline">Skills</a>
+    <a href="projects.html" class="text-[#64ffda] hover:underline">Projects</a>
+    <a href="certifications.html" class="text-[#64ffda] hover:underline">Certifications</a>
+  </div>
+
+</div>
+
+    
     <!-- Hiring Manager Box -->
     <div class="bg-[#112240] border border-teal-400/40 rounded-xl p-7">
       <h3 class="text-teal-300 text-sm font-semibold uppercase tracking-widest mb-3">
@@ -220,6 +288,16 @@ a:active, button:active {
     © 2025 kiranregmi.com · All rights reserved.
   </p>
 </footer>
+
+<!-- Mobile toggle script -->
+<script>
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  mobileMenuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+</script>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOC Questions | Secure Portal</title>
+  <title>Cybersecurity Questions | Secure Portal</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,7 +19,7 @@
   <main class="max-w-4xl mx-auto px-6 py-10">
     <div class="flex items-start justify-between gap-6">
       <div>
-        <h1 class="text-3xl font-semibold text-[#e6f1ff]">SOC Question Practice</h1>
+        <h1 class="text-3xl font-semibold text-[#e6f1ff]">Cybersecurity Questions Practice</h1>
         <p class="text-sm text-[#a8b2d1] mt-2">
           Add questions + your answer, then save to Supabase.
         </p>
@@ -146,7 +146,7 @@
         list.innerHTML = `<p class="text-slate-400">Loading...</p>`;
 
         const { data, error } = await window.supabaseClient
-          .from("soc_questions")
+          .from("cs_questions")
           .select("id, questions, category, difficulty, created_at")
           .order("created_at", { ascending: false })
           .limit(8);
@@ -210,7 +210,7 @@
         }
 
         const { error } = await window.supabaseClient
-          .from("soc_questions")
+          .from("cs_questions")
           .insert([payload]);
 
         if (error) {

@@ -9,33 +9,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    crossorigin="anonymous"
-  />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- UX fixes -->
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
-    a, button {
-      -webkit-tap-highlight-color: transparent;
-      outline: none;
-      transition: color 0.2s, background-color 0.2s;
-    }
-
-    a:focus, button:focus {
-      outline: none;
-    }
-  </style>
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
-<!-- NAVBAR -->
+<!-- ================= NAVBAR ================= -->
 <nav class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center px-6 lg:px-12 py-4 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
 
   <!-- LOGO -->
@@ -47,113 +28,106 @@
 
   <!-- GLOBAL NAV -->
   <div class="space-x-6 text-sm sm:text-base">
-    <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;" class="text-slate-300 hover:text-[#800000] transition">Cyber News</a>
-    <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;" class="text-slate-300 hover:text-[#800000] transition">AI | GRC</a>
-    <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">Contact</a>
-    <a href="/portal/login.html" class="text-[#64ffda] hover:underline transition">Portal </a>
+    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">Cyber News</a>
+    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">AI | GRC</a>
+    <a href="#" class="text-slate-300 hover:text-[#64ffda] transition">Blog</a>
+    <a href="contact.html" class="text-[#64ffda] transition">Contact</a>
+    <a href="portal/login.html" class="text-slate-300 hover:text-[#64ffda] transition">Portal</a>
   </div>
+
 </nav>
 
-<!-- CONTACT SECTION -->
-<main class="pt-32 px-6 max-w-3xl mx-auto">
+<!-- ================= MAIN LAYOUT ================= -->
+<main class="pt-28 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
 
-  <h1 class="text-3xl font-semibold text-[#e6f1ff]">
-    Get in Touch
-  </h1>
+  <!-- ================= LEFT SIDEBAR ================= -->
+  <aside class="hidden lg:flex flex-col gap-4 sticky top-24 h-fit">
 
-  <p class="text-sm text-[#a8b2d1] mt-4 leading-relaxed">
-    Whether you’re a hiring manager, recruiter, or cybersecurity professional,
-    I’d be glad to connect. Use the form below or reach out via LinkedIn.
-  </p>
+    <h1 class="text-3xl font-semibold text-[#e6f1ff]">
+      Kiran Regmi
+    </h1>
 
-  <!-- CONTACT FORM -->
-  <form
-    action="https://api.web3forms.com/submit"
-    method="POST"
-    class="mt-10 space-y-6 bg-[#112240] p-8 rounded-xl border border-teal-400/30">
+    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
+      Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with
+      hands-on experience in alert triage, log analysis, identity misuse detection,
+      and escalation-ready documentation.
+    </p>
 
-    <!-- Web3Forms Access Key -->
-    <input type="hidden" name="access_key" value="e07cd5aa-6b44-45a4-81fa-1c4349aa36f5">
+    <p class="text-xs text-slate-400">
+      Target roles: Tier-1 SOC Analyst · Security Operations · Blue Team
+    </p>
 
-    <!-- Name -->
-    <div>
-      <label class="block text-xs text-slate-400 mb-1">Full Name</label>
-      <input type="text" name="name" required
-        class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700 text-sm text-[#e6f1ff] focus:border-teal-400 outline-none">
+    <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
+       target="_blank"
+       class="text-[#64ffda] text-sm hover:underline mt-2">
+      View Resume →
+    </a>
+
+    <hr class="border-slate-800 mt-4">
+
+    <div class="flex flex-col gap-2 text-sm">
+      <a href="labs.html" class="text-[#64ffda] hover:underline">-- Labs</a>
+      <a href="skills.html" class="text-[#64ffda] hover:underline">-- Skills</a>
+      <a href="projects.html" class="text-[#64ffda] hover:underline">-- Projects</a>
+      <a href="certifications.html" class="text-[#64ffda] hover:underline">-- Certifications</a>
     </div>
 
-    <!-- Email -->
-    <div>
-      <label class="block text-xs text-slate-400 mb-1">Email</label>
-      <input type="email" name="email" required
-        class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700 text-sm text-[#e6f1ff] focus:border-teal-400 outline-none">
+    <div class="flex gap-5 pt-6 text-xl text-[#8892b0] border-t border-slate-800">
+      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github"></i></a>
+      <a href="mailto:your-email@example.com"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank"><i class="fa-brands fa-youtube"></i></a>
     </div>
 
-    <!-- Message -->
-    <div>
-      <label class="block text-xs text-slate-400 mb-1">Message</label>
-      <textarea name="message" rows="5" required
-        class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700 text-sm text-[#e6f1ff] focus:border-teal-400 outline-none"></textarea>
+  </aside>
+
+  <!-- ================= RIGHT COLUMN ================= -->
+  <section class="space-y-10 pb-20">
+
+    <!-- Mobile Identity Header -->
+    <div class="lg:hidden bg-[#112240] border border-slate-800 rounded-xl p-6 space-y-4">
+      <h1 class="text-2xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
+      <p class="text-sm text-[#a8b2d1]">
+        Tier-1 SOC Analyst candidate focused on detection, investigation,
+        and escalation-ready documentation.
+      </p>
+      <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
+         target="_blank"
+         class="block w-full text-center px-4 py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md">
+        View Resume
+      </a>
     </div>
 
-    <!-- Status Message -->
-    <div id="form-status" class="text-center text-xs hidden"></div>
+    <!-- Contact Content -->
+    <div class="bg-[#112240] border border-slate-800 rounded-xl p-8 space-y-6">
+      <h2 class="text-xl font-semibold text-[#e6f1ff]">Get in Touch</h2>
 
-    <!-- Submit -->
-    <button type="submit"
-      class="w-full py-3 rounded-md bg-transparent border border-teal-400 text-teal-400
-             hover:bg-teal-400 hover:text-[#0a192f] font-semibold transition">
-      Send Message
-    </button>
-  </form>
+      <p class="text-sm text-[#a8b2d1]">
+        For SOC analyst roles, security operations opportunities, or professional
+        collaboration, feel free to reach out directly.
+      </p>
+
+      <div class="space-y-3 text-sm">
+        <p><strong>Email:</strong> <a href="mailto:kiranimani@gmail.com" class="text-[#64ffda] hover:underline">Email Me</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank" class="text-[#64ffda] hover:underline">LinkedIn</a></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/kiran-regmi" target="_blank" class="text-[#64ffda] hover:underline">GitHub</a></p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-14">
+      <p>
+        Designed, developed & maintained by
+        <span class="text-[#64ffda]">Kiran Regmi</span>.
+      </p>
+      <p class="mt-2 text-[0.7rem] text-slate-500">
+        © 2025 kiranregmi.com · All rights reserved.
+      </p>
+    </div>
+
+  </section>
 
 </main>
-
-<!-- FOOTER -->
-<footer class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-16 px-6 text-center">
-  <p>
-    Designed, developed & maintained by
-    <span class="text-[#64ffda]">Kiran Regmi</span>.
-  </p>
-  <p class="mt-2 text-[0.7rem] text-slate-500">
-    © 2025 kiranregmi.com · All rights reserved.
-  </p>
-</footer>
-
-<!-- FORM HANDLER -->
-<script>
-  const form = document.querySelector("form");
-  const statusDiv = document.getElementById("form-status");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    statusDiv.classList.remove("hidden");
-    statusDiv.textContent = "Sending...";
-    statusDiv.className = "text-teal-300 text-center text-xs mt-2";
-
-    const formData = new FormData(form);
-
-    try {
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
-
-      if (res.ok) {
-        statusDiv.textContent = "Message sent successfully!";
-        statusDiv.className = "text-green-400 text-center text-xs mt-2";
-        form.reset();
-      } else {
-        throw new Error("Submission failed");
-      }
-    } catch (err) {
-      statusDiv.textContent = "Something went wrong. Please try again.";
-      statusDiv.className = "text-red-400 text-center text-xs mt-2";
-    }
-  });
-</script>
 
 </body>
 </html>
