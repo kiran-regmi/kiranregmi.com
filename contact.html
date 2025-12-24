@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiran Regmi | Home</title>
+  <title>Contact | Kiran Regmi</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,224 +12,158 @@
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    crossorigin="anonymous"
   />
-
-  <style>
-/* Prevent click flash on anchors */
-a, button {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  outline: none !important;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-a:focus, button:focus {
-  outline: none !important;
-}
-
-a:active, button:active {
-  background-color: transparent !important;
-}
-</style>
-
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
- <!-- Global Nav--> 
-<nav class="fixed top-0 left-0 right-0 z-40 bg-[#0a192f]/95 backdrop-blur-sm border-b border-slate-800">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-    <div class="flex items-center justify-between h-16">
+<!-- ================= NAVBAR ================= -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center
+ px-6 lg:px-12 py-4 border-b border-slate-800
+ bg-[#0a192f]/95 backdrop-blur-sm">
 
-      <!-- LOGO -->
-      <a href="index.html" class="flex items-center gap-2">
-        <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
-          KR
-        </span>
-      </a>
+  <a href="index.html" class="flex items-center gap-2">
+    <span class="w-9 h-9 rounded-full border border-[#64ffda]
+     flex items-center justify-center text-[#64ffda] font-bold">
+      KR
+    </span>
+  </a>
 
-      <!-- DESKTOP NAV -->
-      <div class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-           class="text-slate-300 hover:text-[#800000] transition">
-          Cyber News
-        </a>
-        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-           class="text-slate-300 hover:text-[#800000] transition">
-          AI | GRC
-        </a>
-        <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">
-          Contact
-        </a>
-        <a href="/portal/login.html" class="text-[#64ffda] hover:underline transition font-semibold">
-          Portal
-        </a>
-      </div>
-
-      <!-- MOBILE MENU BUTTON -->
-      <button id="mobileMenuBtn"
-        class="md:hidden text-slate-300 hover:text-[#64ffda] focus:outline-none"
-        aria-label="Open menu">
-        <i class="fa-solid fa-bars text-xl"></i>
-      </button>
-
-    </div>
+  <div class="hidden md:flex space-x-8 text-sm">
+    <a href="#" onclick="alert('Cyber News coming soon!')" class="hover:text-[#64ffda]">Cyber News</a>
+    <a href="#" onclick="alert('AI | GRC section coming soon!')" class="hover:text-[#64ffda]">AI | GRC</a>
+    <a href="#" onclick="alert('Blog coming soon!')" class="hover:text-[#64ffda]">Blog</a>
+    <a href="contact.html" class="text-[#64ffda] font-semibold">Contact</a>
   </div>
 
-  <!-- MOBILE MENU -->
-  <div id="mobileMenu"
-       class="md:hidden hidden border-t border-slate-800 bg-[#0a192f]">
-    <div class="px-4 py-4 flex flex-col gap-4 text-sm">
-      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-         class="text-slate-300 hover:text-[#64ffda]">
-        Cyber News
-      </a>
-      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-         class="text-slate-300 hover:text-[#64ffda]">
-        AI | GRC
-      </a>
-      <a href="contact.html" class="text-slate-300 hover:text-[#64ffda]">
-        Contact
-      </a>
-      <a href="/portal/login.html"
-         class="text-[#64ffda] font-semibold">
-        Portal
-      </a>
-    </div>
-  </div>
+  <button class="md:hidden text-[#64ffda] text-xl" onclick="toggleMobileMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 </nav>
 
-<!-- MAIN -->
-<main class="pt-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
+<div id="mobileMenu"
+     class="hidden fixed top-16 left-0 right-0 bg-[#112240]
+     border-b border-slate-800 py-4 px-6 md:hidden z-40">
+  <a href="#" onclick="alert('Cyber News coming soon!')" class="block py-2 text-slate-300 hover:text-[#64ffda]">Cyber News</a>
+  <a href="#" onclick="alert('AI | GRC coming soon!')" class="block py-2 text-slate-300 hover:text-[#64ffda]">AI | GRC</a>
+  <a href="#" onclick="alert('Blog coming soon!')" class="block py-2 text-slate-300 hover:text-[#64ffda]">Blog</a>
+  <a href="contact.html" class="block py-2 text-[#64ffda] font-semibold">Contact</a>
+</div>
 
-  <!-- LEFT COLUMN -->
-  <aside class="hidden lg:flex flex-col gap-4 sticky top-24 h-fit">
+<script>
+function toggleMobileMenu() {
+  document.getElementById("mobileMenu").classList.toggle("hidden");
+}
+</script>
 
-    <h1 class="text-3xl font-semibold text-[#e6f1ff]">
-      Kiran Regmi
-    </h1>
 
-    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
-      Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on
-      experience in security monitoring, alert triage, identity misuse detection,
-      and log analysis through practical labs and simulations.
+<!-- ================= MAIN GRID ================= -->
+<main class="pt-24 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
+
+  <!-- MOBILE IDENTITY -->
+  <div class="md:hidden mb-6 space-y-3">
+    <h1 class="text-2xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      SOC Analyst in training with hands-on investigation experience.
     </p>
-
-    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
-      I bring a strong background in GRC and security documentation — including
-      risk assessments, control validation, SOP development, and escalation-ready
-      reporting — enabling a structured, process-driven approach to SOC operations.
-    </p>
-
-    <p class="text-xs text-slate-400">
-    Target roles: Tier-1 SOC Analyst · Security Operations (Blue Team)
-    </p>
-
-    <a href="assets/pdf/kiranregmi-resume-soc.pdf"
+    <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
        target="_blank"
-       class="text-[#64ffda] text-sm hover:underline mt-2">
+       class="text-[#64ffda] text-sm underline">
+      View Resume →
+    </a>
+  </div>
+
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="hidden lg:flex flex-col gap-4 sticky top-28 h-fit">
+    <h1 class="text-3xl font-semibold text-[#e6f1ff]">Contact</h1>
+
+    <p class="text-[13px] text-[#a8b2d1]">
+      I am actively applying and available for interviews.  
+      Feel free to reach out using any method below:
+    </p>
+
+    <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
+       target="_blank"
+       class="text-[#64ffda] text-sm hover:underline">
       View Resume →
     </a>
 
-    <hr class="border-slate-800 mt-4">
+    <hr class="border-slate-800 mt-3">
 
-<!-- LEFT links -->
-    <div class="flex flex-col gap-2 pt-2 pb-5 text-sm text-slate-400">
-      <a href="labs.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Labs</span></a>
-      <a href="skills.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Skills</span></a>
-      <a href="projects.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Projects</span></a>
-      <a href="certifications.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Certifications</span></a>
+    <div class="flex flex-col text-sm gap-2 mt-2">
+      <a href="skills.html" class="text-[#64ffda] hover:underline">— Skills</a>
+      <a href="projects.html" class="text-[#64ffda] hover:underline">— Projects</a>
+      <a href="labs.html" class="text-[#64ffda] hover:underline">— Labs</a>
+      <a href="certifications.html" class="text-[#64ffda] hover:underline">— Certifications</a>
     </div>
 
-    <div class="flex gap-5 pt-6 text-xl text-[#8892b0] border-t border-slate-800">
-      <a href="https://www.linkedin.com/in/kiran-regmi/"
-      class="hover:text-[#64ffda] transition"
-      target="_blank">
-      <i class="fa-brands fa-linkedin"></i>
-      </a>
-
-      <a href="https://github.com/kiran-regmi"
-        class="hover:text-[#64ffda] transition"
-        target="_blank">
-        <i class="fa-brands fa-github"></i>
-      </a>
-
-      <a href="https://x.com/kiranimani"
-          class="hover:text-[#64ffda] transition"
-          target="_blank">
-          <i class="fa-brands fa-x-twitter"></i>
-      </a>
-
-      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" 
-        class="hover:text-[#64ffda] transition"
-        target="_blank">
-        <i class="fa-brands fa-youtube"></i>
-      </a>
+    <div class="flex gap-6 text-xl pt-5 text-[#8892b0] border-t border-slate-800 mt-6">
+      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github"></i></a>
+      <a href="mailto:youremail@example.com"><i class="fa-solid fa-envelope"></i></a>
     </div>
-
   </aside>
 
 
-  <!-- ================= RIGHT COLUMN (CONTACT CONTENT) ================= -->
-  <section class="space-y-10 pb-20">
+  <!-- RIGHT COLUMN CONTENT -->
+  <section class="space-y-8 pb-28">
 
-    <div class="bg-[#112240] border border-slate-800 rounded-xl p-8">
-      <h2 class="text-2xl font-semibold text-[#e6f1ff] mb-4">
-        Get in Touch
-      </h2>
+    <h2 class="text-xl font-semibold text-[#e6f1ff]">Let’s Connect</h2>
 
-      <p class="text-sm text-[#a8b2d1] leading-relaxed mb-6">
-        If you’re a recruiter, hiring manager, or security professional interested in my SOC work,
-        projects, or background — feel free to reach out.
-      </p>
+    <p class="text-sm text-[#a8b2d1]">
+      Whether you’re a hiring manager, recruiter, or fellow cybersecurity professional —
+      I’d love to connect and discuss opportunities in SOC Operations.
+    </p>
 
-      <div class="space-y-4 text-sm">
-        <p>
-          📧 Email:
-          <a href="mailto:kiranregmi@gmail.com" class="text-[#64ffda] hover:underline">
-            kiranregmi@gmail.com
-          </a>
-        </p>
+    <div class="space-y-3 text-sm">
+      <a href="mailto:youremail@example.com"
+         class="block text-[#64ffda] hover:underline">
+        ✉ Email Me
+      </a>
 
-        <p>
-          🔗 LinkedIn:
-          <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank" class="text-[#64ffda] hover:underline">
-            linkedin.com/in/kiran-regmi
-          </a>
-        </p>
+      <a href="https://www.linkedin.com/in/kiran-regmi/"
+         target="_blank"
+         class="block text-[#64ffda] hover:underline">
+        🔗 LinkedIn Profile
+      </a>
 
-        <p>
-          💻 GitHub:
-          <a href="https://github.com/kiran-regmi" target="_blank" class="text-[#64ffda] hover:underline">
-            github.com/kiran-regmi
-          </a>
-        </p>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-14">
-      <p>
-        Designed, developed & maintained by
-        <span class="text-[#64ffda]">Kiran Regmi</span>.
-      </p>
-      <p class="mt-2 text-[0.7rem] text-slate-500">
-        © 2025 kiranregmi.com · All rights reserved.
-      </p>
+      <a href="assets/pdf/Kiran-Regmi-Resume.pdf"
+         target="_blank"
+         class="block text-[#64ffda] hover:underline">
+        📄 Download Resume
+      </a>
     </div>
 
   </section>
 
 </main>
 
-<!-- ================= MOBILE NAV ================= -->
-<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0a192f] border-t border-slate-800 flex justify-around py-3 text-sm z-50">
-  <a href="index.html" class="text-[#64ffda]">Home</a>
-  <a href="projects.html" class="text-slate-300">Projects</a>
-  <a href="certifications.html" class="text-slate-300">Certs</a>
-  <a href="contact.html" class="text-slate-300">Contact</a>
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="fixed bottom-0 left-0 right-0 bg-[#020c1b]
+     border-t border-slate-800 py-3 md:hidden">
+  <div class="flex justify-around text-xs text-slate-300">
+    <a href="skills.html" class="hover:text-[#64ffda]">Skills</a>
+    <a href="projects.html" class="hover:text-[#64ffda]">Projects</a>
+    <a href="labs.html" class="hover:text-[#64ffda]">Labs</a>
+    <a href="certifications.html" class="hover:text-[#64ffda]">Certs</a>
+    <a href="contact.html" class="text-[#64ffda] font-semibold">Contact</a>
+  </div>
 </div>
+
+
+<!-- FOOTER -->
+<footer class="text-xs text-[#8892b0] border-t border-slate-800
+         pt-8 mt-20 px-6 text-center">
+  <p>
+    Designed, developed & maintained by
+    <span class="text-[#64ffda]">Kiran Regmi</span>.
+  </p>
+  <p class="mt-2 text-[0.7rem] text-slate-500">
+    © 2025 kiranregmi.com · All rights reserved.
+  </p>
+</footer>
 
 </body>
 </html>
