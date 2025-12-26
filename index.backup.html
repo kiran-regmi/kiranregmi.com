@@ -1,169 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kiran Regmi | SOC Analyst Portfolio</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous"/>
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
-<!-- ================= NAVBAR ================= -->
-<nav class="fixed top-0 left-0 right-0 z-40 flex justify-between items-center
-           px-6 lg:px-12 py-4 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
 
-  <a href="index.html" class="flex items-center gap-2">
-    <span class="w-9 h-9 rounded-full border border-[#64ffda]
-                 flex items-center justify-center text-[#64ffda] font-bold">KR</span>
-  </a>
+    <!-- LOGO -->
+    <a href="index.html" class="flex items-center gap-2">
+      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center">
+        KR
+      </span>
+    </a>
 
-  <div class="space-x-6 text-sm sm:text-base">
-    <a href="#" onclick="alert('Cyber News Coming Soon!')" class="hover:text-[#64ffda]">Cyber News</a>
-    <a href="#" onclick="alert('AI | GRC Coming Soon!')" class="hover:text-[#64ffda]">AI | GRC</a>
-    <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
-    <a href="/portal/login.html" class="hover:text-[#64ffda]">Portal</a>
+    <!-- DESKTOP NAV -->
+    <div class="hidden md:flex items-center gap-6 text-sm">
+      <a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]">Cyber News</a>
+      <a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]">AI | GRC</a>
+      <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
+      <a href="login.html" class="hover:text-[#64ffda]">Login</a>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button id="mobileMenuBtn" class="md:hidden text-xl text-slate-300 hover:text-[#64ffda]">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </div>
 
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#0a192f]">
+    <div class="flex flex-col px-4 py-4 gap-3 text-sm">
+      <a href="#" onclick="alert('Coming soon');return false;">Cyber News</a>
+      <a href="#" onclick="alert('Coming soon');return false;">AI | GRC</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="assets/pdf/kiranregmi-resume-soc.pdf" class="text-[#64ffda]" target="_blank">View Resume →</a>
+    </div>
+  </div>
 </nav>
 
-<!-- ================= MAIN ================= -->
-<main class="pt-24 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-10">
 
-  <!-- LEFT COLUMN (DESKTOP) -->
-  <aside class="hidden lg:flex flex-col gap-4 sticky top-24 h-fit">
+
+<!-- MAIN -->
+<main class="pt-24 md:pt-28 pb-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-10">
+
+  <!-- LEFT SIDEBAR (Desktop Hero) -->
+  <aside class="hidden lg:flex flex-col gap-4 sticky top-28">
 
     <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
 
-    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
-      Cybersecurity professional preparing for a Tier-1 SOC Analyst role with hands-on
-      experience in security monitoring, alert triage, identity misuse detection,
-      and log analysis through labs and simulation.
-    </p>
-
-    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
-      Strong foundation in GRC, risk assessments, security documentation,
-      control validation, and escalation-ready reporting — enabling a
-      process-driven approach to SOC operations.
-    </p>
+    <p class="text-[13.5px] text-[#a8b2d1]">Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on experience in security monitoring, alert triage, identity misuse detection, and log analysis through practical labs and simulations.</p>
+    <p class="text-[13.5px] text-[#a8b2d1]">I bring a strong background in GRC and security documentation — including risk assessments, control validation, SOP development, and escalation-ready reporting — enabling a structured, process-driven approach to SOC operations.</p>
 
     <p class="text-xs text-slate-400">
       <strong>Target roles:</strong> SOC Analyst · Blue Team · Security Operations
     </p>
 
     <a href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank"
-       class="text-[#64ffda] text-sm hover:underline mt-2 pt-6">View My Resume →</a>
+       class="text-[#64ffda] text-sm hover:underline mt-2">
+      View My Resume →
+    </a>
 
-    <hr class="border-slate-900 mt-4">
+    <hr class="border-slate-900 my-3">
 
-     <!-- LEFT navigation links (DESKTOP) -->
-    <div class="flex flex-col gap-2 text-sm text-slate-400">
-      <a href="labs.html" class="hover:text-[#64ffda]">-- Labs</a>
-      <a href="skills.html" class="hover:text-[#64ffda]">-- Skills</a>
-      <a href="projects.html" class="hover:text-[#64ffda]">-- Projects</a>
-      <a href="certifications.html" class="hover:text-[#64ffda]">-- Certifications</a>
+    <!-- Desktop Sidebar Quick Links -->
+    <div class="flex flex-col gap-2 text-sm">
+      <a href="labs.html" class="hover:text-[#64ffda]">--- Labs</a>
+      <a href="skills.html" class="hover:text-[#64ffda]">--- Skills</a>
+      <a href="projects.html" class="hover:text-[#64ffda]">--- Projects</a>
+      <a href="certifications.html" class="hover:text-[#64ffda]">--- Certifications</a>
     </div>
-  
-    <!-- LEFT social icons (DESKTOP) -->
-    <div class="flex gap-5 pt-10 text-xl text-[#8892b0] border-t border-slate-900">
-      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github fa-xl hover:text-[#64ffda]"></i></a>
-      <a href="https://x.com/kiranimani" target="_blank"><i class="fa-brands fa-x-twitter fa-xl hover:text-[#64ffda]"></i></a>
-      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank"><i class="fa-brands fa-youtube fa-xl hover:text-[#64ffda]"></i></a>
-      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin fa-xl hover:text-[#64ffda]"></i></a>
+
+    <hr class="border-slate-900 my-3">
+
+    <!-- Desktop Social Icons (larger now) -->
+    <div class="flex gap-6 pt-2 text-2xl text-[#8892b0]">
+      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github hover:text-[#64ffda]"></i></a>
+      <a href="https://x.com/kiranimani" target="_blank"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
+      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank"><i class="fa-brands fa-youtube hover:text-[#64ffda]"></i></a>
+      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin hover:text-[#64ffda]"></i></a>
     </div>
 
   </aside>
 
-  <!-- RIGHT CONTENT -->
-  <section class="space-y-10 pb-28">
 
-    <!-- MOBILE Resume Card -->
+
+  <!-- RIGHT CONTENT -->
+  <section class="space-y-10">
+
+    <!-- MOBILE HERO -->
     <div class="lg:hidden bg-[#112240] border border-slate-700 rounded-xl p-6 text-center">
       <h2 class="text-xl font-semibold text-[#e6f1ff]">Kiran Regmi</h2>
       <p class="text-xs text-[#8892b0] mt-2 leading-relaxed">
-        Cybersecurity professional preparing for a Tier-1 SOC Analyst role.
+        Cybersecurity professional preparing for a Tier-1 SOC Analyst role with hands-on experience in security monitoring, alert triage, identity misuse detection, and log analysis through labs and simulation.
       </p>
-      <a href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank"
-         class="inline-block mt-4 px-4 py-2 bg-[#64ffda] text-[#0a192f] rounded-md">
-        View My Resume
+      <a class="inline-block mt-4 px-4 py-2 bg-[#64ffda] rounded-md text-[#0a192f]"
+         href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank">
+        View Resume
       </a>
-      <div class="flex justify-center gap-6 text-lg text-[#8892b0] mt-5">
+
+      <div class="flex justify-center gap-8 mt-4 text-2xl text-[#8892b0]">
         <a href="https://github.com/kiran-regmi"><i class="fa-brands fa-github hover:text-[#64ffda]"></i></a>
-        <a href="https://x.com"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
+        <a href="https://x.com/kiranimani"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
         <a href="https://www.linkedin.com/in/kiran-regmi/"><i class="fa-brands fa-linkedin hover:text-[#64ffda]"></i></a>
       </div>
     </div>
 
-    <!-- SOC Mindset -->
-    <div class="bg-[#020c1b] border border-slate-700 rounded-lg p-4">
-      <p class="text-xs text-[#a8b2d1] leading-relaxed">
-        <span class="text-teal-300 font-semibold">SOC Mindset:</span>
-        Tier-1 means fast triage, false-positive reduction, log correlation,
-        and disciplined escalation — ensuring actionable intelligence for Tier-2/Tier-3
-        with no delays and no guesswork.
-      </p>
-    </div>
 
-    <!-- Hiring Manager Box -->
+
+    <!-- Hiring Manager -->
     <div class="bg-[#112240] border border-teal-400/40 rounded-xl p-7">
-      <h3 class="text-teal-300 text-xsm font-semibold uppercase tracking-widest mb-3">
-        For Hiring Managers & Recruiters
-      </h3>
-      <p class="text-sm text-[#e6f1ff] leading-relaxed">
-        Demonstrating Tier-1 SOC operations — alert qualification, investigation,
-        escalation, and clean documentation.
+      <h3 class="text-teal-300 text-sm font-semibold uppercase tracking-wide mb-3">For Hiring Managers</h3>
+      <p class="text-sm text-[#e6f1ff]">
+        Demonstrating Tier-1 SOC operations — alert qualification, log correlation,
+        validation, escalation, and documentation.
       </p>
       <p class="text-sm text-[#a8b2d1] mt-2">
-        Labs feature identity misuse detection, network monitoring,
-        and security control validation.
+        Labs simulate identity abuse, suspicious network traffic, and security control validation.
       </p>
+
       <a href="projects.html"
-         class="inline-block mt-6 px-6 py-3 bg-[#64ffda] text-[#0a192f] rounded-md hover:bg-[#53e6c3] transition">
+         class="inline-block w-full text-center mt-6 px-6 py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md">
         View SOC Projects & Labs
       </a>
     </div>
 
-    <!-- Project Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      <a href="projects.html#identity-misuse"
-         class="p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-        <h4 class="text-sm font-semibold text-[#e6f1ff]">Identity Misuse Detection Lab</h4>
-        <p class="text-[11px] text-slate-400 mt-1 uppercase tracking-wide">SOC · IAM · Controls</p>
+
+    <!-- SOC Mindset -->
+    <div class="bg-[#02101f] rounded-xl p-5 border-l-2 border-teal-400 text-xs">
+      <h4 class="text-[#e6f1ff] font-semibold mb-2">SOC Mindset</h4>
+      <p class="text-[#a8b2d1]">
+        Tier-1 drives operational stability — reducing noise for Tier-2/3 and preventing delays in real threats.
+      </p>
+      <p class="mt-2 text-[#a8b2d1]">
+        Strong shift handovers ensure 24/7 situational awareness with no dropped alerts.
+      </p>
+    </div>
+
+
+
+    <!-- SOC Projects -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+      <a href="projects.html#identity-misuse" class="block">
+        <div class="bg-[#112240] h-full border border-slate-800 rounded-xl p-6 flex flex-col justify-between">
+          <h4 class="text-sm text-[#e6f1ff] font-semibold">Identity Misuse Detection Lab</h4>
+          <p class="text-[11px] text-teal-300 mt-1 uppercase tracking-wide">SOC · IAM · Controls</p>
+          <p class="text-[11px] text-[#8892b0] mt-3">Investigated failed logins and suspicious identity activity.</p>
+        </div>
       </a>
 
-      <a href="projects.html#risk-control"
-         class="p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-        <h4 class="text-sm font-semibold text-[#e6f1ff]">Security Risk & Control Validation</h4>
-        <p class="text-[11px] text-slate-400 mt-1 uppercase tracking-wide">Detection · Investigation</p>
+      <!-- Card 2 -->
+      <a href="projects.html#control-validation" class="block">
+        <div class="bg-[#112240] h-full border border-slate-800 rounded-xl p-6 flex flex-col justify-between">
+          <h4 class="text-sm text-[#e6f1ff] font-semibold">Security Control Validation</h4>
+          <p class="text-[11px] text-teal-300 mt-1 uppercase tracking-wide">SOC · Detection</p>
+          <p class="text-[11px] text-[#8892b0] mt-3">Validated alerting effectiveness mapped to real risks.</p>
+        </div>
       </a>
 
-      <a href="projects.html#network-alerts"
-         class="p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-        <h4 class="text-sm font-semibold text-[#e6f1ff]">Network Traffic Monitoring</h4>
-        <p class="text-[11px] text-slate-400 mt-1 uppercase tracking-wide">Alerts · Threat Paths</p>
+      <!-- Card 3 -->
+      <a href="projects.html#traffic-monitoring" class="block">
+        <div class="bg-[#112240] h-full border border-slate-800 rounded-xl p-6 flex flex-col justify-between">
+          <h4 class="text-sm text-[#e6f1ff] font-semibold">Network Traffic Monitoring</h4>
+          <p class="text-[11px] text-teal-300 mt-1 uppercase tracking-wide">Network · Visibility</p>
+          <p class="text-[11px] text-[#8892b0] mt-3">Analyzed suspicious traffic patterns for escalation.</p>
+        </div>
       </a>
 
     </div>
 
+
+
     <!-- Footer -->
-    <footer class="text-xs text-center text-[#8892b0] pt-10">
-      <p>Design & Developed by <span class="text-[#64ffda]">Kiran Regmi</span></p>
-      <p class="text-[0.7rem] text-slate-500 mt-2">© 2025 kiranregmi.com · All rights reserved.</p>
+    <footer class="text-center border-t border-slate-800 pt-8">
+      <p class="text-xs text-[#8892b0]">
+        Design & Developed by <span class="text-[#64ffda]">Kiran Regmi</span>
+      </p>
+      <p class="text-xs text-slate-500 mt-1">© 2025 kiranregmi.com · All rights reserved.</p>
     </footer>
 
   </section>
 </main>
 
 
-<!-- ================= MOBILE BOTTOM NAV ================= -->
-<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-[#112240] border-t border-slate-700 p-3 flex justify-around text-xs">
-  <a href="labs.html" class="text-[#64ffda]">Labs</a>
-  <a href="skills.html" class="text-[#64ffda]">Skills</a>
-  <a href="projects.html" class="text-[#64ffda]">Projects</a>
-  <a href="certifications.html" class="text-[#64ffda]">Certs</a>
-</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#112240] border-t border-slate-700 p-3 flex justify-around text-xs">
+  <a href="labs.html" class="hover:text-[#64ffda]">Labs</a>
+  <a href="skills.html" class="hover:text-[#64ffda]">Skills</a>
+  <a href="projects.html" class="hover:text-[#64ffda]">Projects</a>
+  <a href="certifications.html" class="hover:text-[#64ffda]">Certs</a>
+</nav>
+
+
+
+<script>
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+</script>
 
 </body>
 </html>
