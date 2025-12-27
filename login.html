@@ -1,181 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiran Regmi | Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiran Regmi | SOC Analyst Portfolio</title>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    crossorigin="anonymous"
-  />
-
-  <style>
-/* Prevent click flash on anchors */
-a, button {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  outline: none !important;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-a:focus, button:focus {
-  outline: none !important;
-}
-
-a:active, button:active {
-  background-color: transparent !important;
-}
-</style>
-
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
- <!-- Global Nav--> 
-<nav class="fixed top-0 left-0 right-0 z-40 bg-[#0a192f]/95 backdrop-blur-sm border-b border-slate-800">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-    <div class="flex items-center justify-between h-16">
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
 
-      <!-- LOGO -->
-      <a href="/index.html" class="flex items-center gap-2">
-        <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
-          KR
-        </span>
-      </a>
+    <!-- LOGO -->
+    <a href="index.html" class="flex items-center gap-2">
+      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center">
+        KR
+      </span>
+    </a>
 
-      <!-- DESKTOP NAV -->
-      <div class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-           class="text-slate-300 hover:text-[#800000] transition">
-          Cyber News
-        </a>
-        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-           class="text-slate-300 hover:text-[#800000] transition">
-          AI | GRC
-        </a>
-        <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">
-          Contact
-        </a>
-        <a href="/portal/login.html" class="text-[#64ffda] hover:underline transition font-semibold">
-          Portal
-        </a>
-      </div>
-
-      <!-- MOBILE MENU BUTTON -->
-      <button id="mobileMenuBtn"
-        class="md:hidden text-slate-300 hover:text-[#64ffda] focus:outline-none"
-        aria-label="Open menu">
-        <i class="fa-solid fa-bars text-xl"></i>
-      </button>
-
+    <!-- DESKTOP NAV -->
+    <div class="hidden md:flex items-center gap-6 text-sm">
+      <a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]">Cyber News</a>
+      <a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]">AI | GRC</a>
+      <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
+      <a href="login.html" class="hover:text-[#64ffda]">Login</a>
     </div>
+
+    <!-- Mobile menu button -->
+    <button id="mobileMenuBtn" class="md:hidden text-xl text-slate-300 hover:text-[#64ffda]">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </div>
 
   <!-- MOBILE MENU -->
-  <div id="mobileMenu"
-       class="md:hidden hidden border-t border-slate-800 bg-[#0a192f]">
-    <div class="px-4 py-4 flex flex-col gap-4 text-sm">
-      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-         class="text-slate-300 hover:text-[#64ffda]">
-        Cyber News
-      </a>
-      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
-         class="text-slate-300 hover:text-[#64ffda]">
-        AI | GRC
-      </a>
-      <a href="contact.html" class="text-slate-300 hover:text-[#64ffda]">
-        Contact
-      </a>
-      <a href="/portal/login.html"
-         class="text-[#64ffda] font-semibold">
-        Portal
-      </a>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#0a192f]">
+    <div class="flex flex-col px-4 py-4 gap-3 text-sm">
+      <a href="#" onclick="alert('Coming soon');return false;">Cyber News</a>
+      <a href="#" onclick="alert('Coming soon');return false;">AI | GRC</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="assets/pdf/kiranregmi-resume-soc.pdf" class="text-[#64ffda]" target="_blank">View Resume →</a>
     </div>
   </div>
 </nav>
 
+
+
 <!-- MAIN -->
-<main class="pt-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
+<main class="pt-24 md:pt-28 pb-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-10">
 
-  <!-- LEFT COLUMN -->
-  <aside class="hidden lg:flex flex-col gap-4 sticky top-24 h-fit">
+  <!-- LEFT SIDEBAR (Desktop Hero) -->
+  <aside class="hidden lg:flex flex-col gap-4 sticky top-28">
 
-    <h1 class="text-3xl font-semibold text-[#e6f1ff]">
-      Kiran Regmi
-    </h1>
+    <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
 
-    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
-      Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on
-      experience in security monitoring, alert triage, identity misuse detection,
-      and log analysis through practical labs and simulations.
-    </p>
+    <p class="text-[13.5px] text-[#a8b2d1]">Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on experience in security monitoring, alert triage, identity misuse detection, and log analysis through practical labs and simulations.</p>
+    <p class="text-[13.5px] text-[#a8b2d1]">I bring a strong background in GRC and security documentation — including risk assessments, control validation, SOP development, and escalation-ready reporting — enabling a structured, process-driven approach to SOC operations.</p>
+    <p class="text-xs text-slate-400"><strong>Target roles:</strong> SOC Analyst · Blue Team · Security Operations</p>
+    <a href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank"class="text-[#64ffda] text-sm hover:underline mt-2">View My Resume →</a>
 
-    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
-      I bring a strong background in GRC and security documentation — including
-      risk assessments, control validation, SOP development, and escalation-ready
-      reporting — enabling a structured, process-driven approach to SOC operations.
-    </p>
+    <hr class="border-slate-900 my-3">
 
-    <p class="text-xs text-slate-400">
-    Target roles: Tier-1 SOC Analyst · Security Operations (Blue Team)
-    </p>
-
-    <a href="assets/pdf/kiranregmi-resume-soc.pdf"
-       target="_blank"
-       class="text-[#64ffda] text-sm hover:underline mt-2">
-      View Resume →
-    </a>
-
-    <hr class="border-slate-800 mt-4">
-
-<!-- LEFT links -->
-    <div class="flex flex-col gap-2 pt-2 pb-5 text-sm text-slate-400">
-      <a href="/labs.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Labs</span></a>
-      <a href="/skills.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Skills</span></a>
-      <a href="/projects.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Projects</span></a>
-      <a href="/certifications.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Certifications</span></a>
+    <!-- Desktop Sidebar Quick Links -->
+    <div class="flex flex-col gap-2 text-sm">
+      <a href="labs.html" class="hover:text-[#64ffda]">--- Labs</a>
+      <a href="skills.html" class="hover:text-[#64ffda]">--- Skills</a>
+      <a href="projects.html" class="hover:text-[#64ffda]">--- Projects</a>
+      <a href="certifications.html" class="hover:text-[#64ffda]">--- Certifications</a>
     </div>
 
-    <div class="flex gap-5 pt-6 text-xl text-[#8892b0] border-t border-slate-800">
-      <a href="https://www.linkedin.com/in/kiran-regmi/"
-      class="hover:text-[#64ffda] transition"
-      target="_blank">
-      <i class="fa-brands fa-linkedin"></i>
-      </a>
+    <hr class="border-slate-900 my-3">
 
-      <a href="https://github.com/kiran-regmi"
-        class="hover:text-[#64ffda] transition"
-        target="_blank">
-        <i class="fa-brands fa-github"></i>
-      </a>
-
-      <a href="/contact.html"
-          class="hover:text-[#64ffda] transition"
-          aria-label="Send email"
-          target="_blank">
-          <i class="fa-solid fa-envelope"></i>
-      </a>
-
-      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" 
-        class="hover:text-[#64ffda] transition"
-        target="_blank">
-        <i class="fa-brands fa-youtube"></i>
-      </a>
+    <!-- Desktop Social Icons (larger now) -->
+    <div class="flex gap-6 pt-2 text-2xl text-[#8892b0]">
+      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github hover:text-[#64ffda]"></i></a>
+      <a href="https://x.com/kiranimani" target="_blank"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
+      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank"><i class="fa-brands fa-youtube hover:text-[#64ffda]"></i></a>
+      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin hover:text-[#64ffda]"></i></a>
     </div>
 
   </aside>
 
-<!-- Right Column-->
+
+
+  <!-- RIGHT CONTENT -->
+  <section class="space-y-10">
+
+  <!-- Right Column-->
 <body class="bg-[#0a192f] text-[#ccd6f6] flex items-center justify-center min-h-screen">
-
   <div class="w-full max-w-md bg-[#112240] border border-slate-800 rounded-xl p-8">
-
     <h1 class="text-xl font-semibold text-[#e6f1ff] mb-2">
       Secure Portal Login
     </h1>
@@ -220,20 +141,38 @@ a:active, button:active {
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./portal.js"></script>
 
- </section>
- 
-    <!-- FOOTER -->
-    <div class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-14">
-      <p>
-        Designed, developed & maintained by
-        <span class="text-[#64ffda]">Kiran Regmi</span>.
-      </p>
-      <p class="mt-2 text-[0.7rem] text-slate-500">
-        © 2025 kiranregmi.com · All rights reserved.
-      </p>
-    </div>
+ </section>  
 
- 
+
+<!-- ================= GLOBAL FOOTER ================= -->
+<footer class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 pb-10 mt-20 text-center">
+  <p>
+    Designed & Developed by <span class="text-[#64ffda]">Kiran Regmi</span> —
+    Deployed with Vercel · Powered by TailwindCSS · No paid resources used.
+  </p>
+  <p class="mt-2 text-[0.7rem] text-slate-500">
+    © 2025 kiranregmi.com · All rights reserved
+  </p>
+</footer>
+
+  </section>
+</main>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#112240] border-t border-slate-700 p-3 flex justify-around text-xs">
+  <a href="labs.html" class="hover:text-[#64ffda]">Labs</a>
+  <a href="skills.html" class="hover:text-[#64ffda]">Skills</a>
+  <a href="projects.html" class="hover:text-[#64ffda]">Projects</a>
+  <a href="certifications.html" class="hover:text-[#64ffda]">Certs</a>
+</nav>
+
+
+
+<script>
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+</script>
 
 </body>
 </html>

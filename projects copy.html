@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiran Regmi | Projects</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous"
+  />
+
+  <style>
+/* Prevent click flash on anchors */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+a:focus, button:focus {
+  outline: none !important;
+}
+
+a:active, button:active {
+  background-color: transparent !important;
+}
+</style>
+
+</head>
+
+<body class="bg-[#0a192f] text-[#ccd6f6]">
+
+ <!-- Global Nav--> 
+<nav class="fixed top-0 left-0 right-0 z-40 bg-[#0a192f]/95 backdrop-blur-sm border-b border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- LOGO -->
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center text-[#64ffda] font-bold">
+          KR
+        </span>
+      </a>
+
+      <!-- DESKTOP NAV -->
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+           class="text-slate-300 hover:text-[#800000] transition">
+          Cyber News
+        </a>
+        <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+           class="text-slate-300 hover:text-[#800000] transition">
+          AI | GRC
+        </a>
+        <a href="contact.html" class="text-slate-300 hover:text-[#64ffda] transition">
+          Contact
+        </a>
+        <a href="/portal/login.html" class="text-[#64ffda] hover:underline transition font-semibold">
+          Portal
+        </a>
+      </div>
+
+      <!-- MOBILE MENU BUTTON -->
+      <button id="mobileMenuBtn"
+        class="md:hidden text-slate-300 hover:text-[#64ffda] focus:outline-none"
+        aria-label="Open menu">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu"
+       class="md:hidden hidden border-t border-slate-800 bg-[#0a192f]">
+    <div class="px-4 py-4 flex flex-col gap-4 text-sm">
+      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+         class="text-slate-300 hover:text-[#64ffda]">
+        Cyber News
+      </a>
+      <a href="#" onclick="alert('This section is in progress - coming soon.'); return false;"
+         class="text-slate-300 hover:text-[#64ffda]">
+        AI | GRC
+      </a>
+      <a href="contact.html" class="text-slate-300 hover:text-[#64ffda]">
+        Contact
+      </a>
+      <a href="/portal/login.html"
+         class="text-[#64ffda] font-semibold">
+        Portal
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- MAIN -->
+<main class="pt-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-12">
+
+  <!-- LEFT COLUMN -->
+  <aside class="hidden lg:flex flex-col gap-4 sticky top-24 h-fit">
+
+    <h1 class="text-3xl font-semibold text-[#e6f1ff]">
+      Kiran Regmi
+    </h1>
+
+    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
+      Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on
+      experience in security monitoring, alert triage, identity misuse detection,
+      and log analysis through practical labs and simulations.
+    </p>
+
+    <p class="text-[13.5px] text-[#a8b2d1] leading-relaxed">
+      I bring a strong background in GRC and security documentation — including
+      risk assessments, control validation, SOP development, and escalation-ready
+      reporting — enabling a structured, process-driven approach to SOC operations.
+    </p>
+
+    <p class="text-xs text-slate-400">
+    Target roles: Tier-1 SOC Analyst · Security Operations (Blue Team)
+    </p>
+
+    <a href="assets/pdf/kiranregmi-resume-soc.pdf"
+       target="_blank"
+       class="text-[#64ffda] text-sm hover:underline mt-2">
+      View Resume →
+    </a>
+
+    <hr class="border-slate-800 mt-4">
+
+<!-- LEFT links -->
+    <div class="flex flex-col gap-2 pt-2 pb-5 text-sm text-slate-400">
+      <a href="labs.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Labs</span></a>
+      <a href="skills.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Skills</span></a>
+      <a href="projects.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Projects</span></a>
+      <a href="certifications.html" class="text-[#64ffda] text-sm hover:underline mt-2"><span>-- Certifications</span></a>
+    </div>
+
+    <div class="flex gap-5 pt-6 text-xl text-[#8892b0] border-t border-slate-800">
+      <a href="https://www.linkedin.com/in/kiran-regmi/"
+      class="hover:text-[#64ffda] transition"
+      target="_blank">
+      <i class="fa-brands fa-linkedin"></i>
+      </a>
+
+      <a href="https://github.com/kiran-regmi"
+        class="hover:text-[#64ffda] transition"
+        target="_blank">
+        <i class="fa-brands fa-github"></i>
+      </a>
+
+      <a href="https://x.com/kiranimani"
+          class="hover:text-[#64ffda] transition"
+          target="_blank">
+          <i class="fa-brands fa-x-twitter"></i>
+      </a>
+
+      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" 
+        class="hover:text-[#64ffda] transition"
+        target="_blank">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- RIGHT COLUMN -->
+
+  <!-- ================= RIGHT CONTENT ================= -->
+  <section class="space-y-8 pb-20">
+  
+   <!-- ================= FLAGSHIP SOC INVESTIGATION ================= -->
+<section class="bg-[#112240] border-2 border-teal-400/60 rounded-2xl p-10 space-y-6 shadow-lg shadow-black/20">
+
+  <header>
+    <h2 class="text-xl font-semibold text-[#e6f1ff]">
+      Flagship SOC Investigation
+    </h2>
+    <p class="text-xs text-teal-300 uppercase tracking-wide mt-1">
+      Tier-1 SOC Alert · Identity & Access Monitoring
+    </p>
+  </header>
+
+  <!-- Scenario -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Alert Scenario
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Multiple failed authentication attempts followed by a successful login
+      from a new geographic location on a privileged user account.
+    </p>
+  </div>
+
+  <!-- Triage -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Initial Triage
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Reviewed authentication logs, timestamps, source IPs, and MFA status.
+      Assessed account privilege level and flagged the alert due to abnormal
+      login behavior and identity misuse risk.
+    </p>
+  </div>
+
+  <!-- Investigation -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Investigation & Analysis
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Correlated historical login activity, analyzed geolocation variance,
+      validated access patterns against baseline behavior, and ruled out
+      false positives.
+    </p>
+  </div>
+
+  <!-- Response -->
+  <div>
+    <h3 class="text-sm font-semibold text-[#e6f1ff] mb-1">
+      Response & Escalation
+    </h3>
+    <p class="text-sm text-[#a8b2d1] leading-relaxed">
+      Enforced password reset and MFA, reviewed permissions, monitored
+      follow-up activity, and documented findings for Tier-2 / IAM escalation.
+    </p>
+  </div>
+
+  <!-- SOC Takeaway -->
+  <div class="mt-4 p-4 rounded-lg bg-[#020c1b] border border-slate-700">
+    <p class="text-xs text-[#a8b2d1] leading-relaxed">
+      <span class="text-teal-300 font-semibold">SOC Analyst Takeaway:</span>
+      Demonstrates Tier-1 alert triage, identity misuse detection, event
+      correlation, and escalation-ready documentation aligned with real SOC workflows.
+    </p>
+  </div>
+
+</section>
+
+<section class="space-y-14 pb-20"> <!-- space adjusemnt here, y-14,pb-20-->
+
+  
+  <!-- ================= SOC PROJECTS ================= -->
+  <section id="soc-projects">
+    <h2 class="text-xl font-semibold text-[#e6f1ff] mb-6">
+      SOC Investigation Projects
+    </h2>
+
+<p class="mt-2 text-xs text-[#a8b2d1] max-w-2xl">
+  Each investigation emphasizes alert validation, signal confidence,
+  and clear escalation paths aligned with Tier-1 SOC responsibilities.
+</p>
+
+<br>
+
+    <!-- Project 1 -->
+    <div id="identity-misuse" class="p-6 rounded-xl bg-[#112240] border border-slate-800 mb-6">
+      <h3 class="font-semibold text-[#e6f1ff]">
+        Identity Misuse Detection Lab
+      </h3>
+      <p class="text-xs text-teal-300 mt-1 uppercase tracking-wide">
+        Authentication · IAM · SOC Investigation
+      </p>
+      <p class="text-sm text-[#a8b2d1] mt-3">
+        Simulated suspicious authentication behavior to practice alert triage,
+        investigation, and escalation workflows in a SOC context.
+      </p>
+    </div>
+
+    <!-- Project 2 -->
+    <div id="network-monitoring" class="p-6 rounded-xl bg-[#112240] border border-slate-800 mb-6">
+      <h3 class="font-semibold text-[#e6f1ff]">
+        Network Traffic Monitoring & Alert Analysis
+      </h3>
+      <p class="text-xs text-teal-300 mt-1 uppercase tracking-wide">
+        Network · Detection · Monitoring
+      </p>
+      <p class="text-sm text-[#a8b2d1] mt-3">
+        Analyzed network traffic and logs to identify suspicious behavior,
+        validate alerts, and understand potential attack paths.
+      </p>
+    </div>
+
+    <!-- Project 3 -->
+    <div id="control-validation" class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+      <h3 class="font-semibold text-[#e6f1ff]">
+        Security Risk & Control Validation (SOC Context)
+      </h3>
+      <p class="text-xs text-teal-300 mt-1 uppercase tracking-wide">
+        Controls · Risk · Detection
+      </p>
+      <p class="text-sm text-[#a8b2d1] mt-3">
+        Validated security controls by mapping risks to detections,
+        alerts, and SOC response actions.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= SUPPORTING PROJECTS ================= -->
+  <section id="security-projects">
+    <h2 class="text-xl font-semibold text-[#e6f1ff] mt-14 mb-6">
+      GRC & TPRM Projects
+    </h2>
+
+    <div id="rmf" class="p-6 rounded-xl bg-[#112240] border border-slate-800 mb-6">
+      <h3 class="font-semibold">GRC – NIST RMF Project</h3>
+      <p class="text-sm text-[#a8b2d1] mt-2">
+        Full NIST RMF lifecycle including risk register, SSP, SAR, and POA&M.
+      </p>
+    </div>
+
+    <div id="iam-lab" class="p-6 rounded-xl bg-[#112240] border border-slate-800 mb-6">
+      <h3 class="font-semibold">IAM Security Lab</h3>
+      <p class="text-sm text-[#a8b2d1] mt-2">
+        RBAC, MFA enforcement, least privilege, access review, and identity flow validation.
+      </p>
+    </div>
+
+    <div id="tprm" class="p-6 rounded-xl bg-[#112240] border border-slate-800">
+      <h3 class="font-semibold">Third-Party Risk Management (TPRM)</h3>
+      <p class="text-sm text-[#a8b2d1] mt-2">
+        Vendor risk assessment, security questionnaires, risk documentation and due diligence.
+      </p>
+    </div>
+  </section>
+
+</section>
+
+
+  <!-- FOOTER -->
+<footer class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 mt-16 px-6 text-center">
+  <p>
+    Designed, developed & maintained by
+    <span class="text-[#64ffda]">Kiran Regmi</span>.
+  </p>
+  <p class="mt-2 text-[0.7rem] text-slate-500">
+    © 2025 kiranregmi.com · All rights reserved.
+  </p>
+</footer>
+
+<!-- Coming Soon Toast -->
+<div id="coming-soon-toast"
+  class="fixed bottom-6 right-6 z-50 hidden bg-[#112240] border border-teal-400/40
+         text-sm text-[#e6f1ff] px-5 py-4 rounded-lg shadow-lg">
+  <span id="coming-soon-text"></span>
+</div>
+
+<script>
+  function showComingSoon(section) {
+    const toast = document.getElementById('coming-soon-toast');
+    const text = document.getElementById('coming-soon-text');
+
+    text.textContent = section + ' is in progress — coming soon.';
+    toast.classList.remove('hidden');
+
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 3000);
+  }
+</script>
+<!-- Mobile toggle script -->
+<script>
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  mobileMenuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+</script>
+
+</body>
+</html>
