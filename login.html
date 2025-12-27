@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Secure Portal</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
   <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
@@ -15,23 +17,28 @@
   <!-- NAVBAR -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a192f]/95 border-b border-slate-800 
               px-6 lg:px-12 py-4 flex justify-between items-center backdrop-blur-sm">
-    <a href="index.html" class="flex items-center gap-2">
-      <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center 
-            text-[#64ffda] font-bold">KR</span>
+    <a href="/index.html" class="flex items-center gap-2">
+      <span class="w-9 h-9 rounded-full border border-[#64ffda]
+                   flex items-center justify-center text-[#64ffda] font-bold">
+        KR
+      </span>
     </a>
 
     <div class="space-x-6 text-sm sm:text-base">
-      <a href="#" onclick="alert('Coming Soon!')" class="hover:text-[#64ffda]">Cyber News</a>
-      <a href="#" onclick="alert('Coming Soon!')" class="hover:text-[#64ffda]">AI | GRC</a>
-      <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
-      <a href="login.html" class="text-[#64ffda]">Login</a>
+      <a href="#" class="hover:text-[#64ffda]" onclick="alert('Coming Soon!')">Cyber News</a>
+      <a href="#" class="hover:text-[#64ffda]" onclick="alert('Coming Soon!')">AI | GRC</a>
+      <a href="/contact.html" class="hover:text-[#64ffda]">Contact</a>
+      <a href="/login.html" class="text-[#64ffda]">Login</a>
     </div>
   </nav>
 
-  <!-- LOGIN FORM -->
-  <main class="pt-32 flex items-center justify-center px-4">
+  <!-- LOGIN BOX -->
+  <main class="pt-32 flex items-center justify-center min-h-screen">
     <div class="w-full max-w-md bg-[#112240] p-8 rounded-xl border border-slate-800 shadow-md">
-      <h2 class="text-center text-xl font-semibold text-[#e6f1ff] mb-6">Secure Login</h2>
+
+      <h2 class="text-center text-xl font-semibold mb-6 text-[#e6f1ff]">
+        Secure Login
+      </h2>
 
       <form id="loginForm" class="space-y-4">
         <input id="Email" type="email" placeholder="Email"
@@ -41,20 +48,28 @@
           class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700">
 
         <button id="loginBtn" type="submit"
-          class="w-full py-3 rounded-md bg-[#64ffda] text-[#0a192f] font-semibold hover:bg-[#52e6c3] transition">
+          class="w-full py-3 rounded-md bg-[#64ffda] text-[#0a192f] font-semibold
+                 hover:bg-[#52e6c3] transition">
           Sign In
         </button>
       </form>
 
-      <p id="loginMessage" class="text-center text-xs mt-3"></p>
+      <p id="loginMessage" class="text-center text-sm italic pt-3"></p>
+
     </div>
   </main>
 
-  <!-- Supabase library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#112240]
+              border-t border-slate-700 p-3 flex justify-around text-xs">
+    <a href="/labs.html" class="hover:text-[#64ffda]">Labs</a>
+    <a href="/skills.html" class="hover:text-[#64ffda]">Skills</a>
+    <a href="/projects.html" class="hover:text-[#64ffda]">Projects</a>
+    <a href="/certifications.html" class="hover:text-[#64ffda]">Certs</a>
+  </nav>
 
-  <!-- Login Logic -->
-  <script src="/auth.js"></script>
+  <!-- Auth Logic -->
+  <script src="/auth.js" defer></script>
 
 </body>
 </html>
