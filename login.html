@@ -3,176 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kiran Regmi | SOC Analyst Portfolio</title>
-  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+  <title>Login | Secure Portal</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
-<!-- NAVBAR -->
-<nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-
-    <!-- LOGO -->
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a192f]/95 border-b border-slate-800 
+              px-6 lg:px-12 py-4 flex justify-between items-center backdrop-blur-sm">
     <a href="index.html" class="flex items-center gap-2">
-      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center">
-        KR
-      </span>
+      <span class="w-9 h-9 rounded-full border border-[#64ffda] flex items-center justify-center 
+            text-[#64ffda] font-bold">KR</span>
     </a>
 
-    <!-- DESKTOP NAV -->
-    <div class="hidden md:flex items-center gap-6 text-sm">
-      <a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]">Cyber News</a>
-      <a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]">AI | GRC</a>
+    <div class="space-x-6 text-sm sm:text-base">
+      <a href="#" onclick="alert('Coming Soon!')" class="hover:text-[#64ffda]">Cyber News</a>
+      <a href="#" onclick="alert('Coming Soon!')" class="hover:text-[#64ffda]">AI | GRC</a>
       <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
-      <a href="login.html" class="hover:text-[#64ffda]">Login</a>
+      <a href="login.html" class="text-[#64ffda]">Login</a>
     </div>
+  </nav>
 
-    <!-- Mobile menu button -->
-    <button id="mobileMenuBtn" class="md:hidden text-xl text-slate-300 hover:text-[#64ffda]">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-  </div>
+  <!-- LOGIN FORM -->
+  <main class="pt-32 flex items-center justify-center px-4">
+    <div class="w-full max-w-md bg-[#112240] p-8 rounded-xl border border-slate-800 shadow-md">
+      <h2 class="text-center text-xl font-semibold text-[#e6f1ff] mb-6">Secure Login</h2>
 
-  <!-- MOBILE MENU -->
-  <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#0a192f]">
-    <div class="flex flex-col px-4 py-4 gap-3 text-sm">
-      <a href="#" onclick="alert('Coming soon');return false;">Cyber News</a>
-      <a href="#" onclick="alert('Coming soon');return false;">AI | GRC</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html">Login</a>
-      <a href="assets/pdf/kiranregmi-resume-soc.pdf" class="text-[#64ffda]" target="_blank">View Resume →</a>
+      <form id="loginForm" class="space-y-4">
+        <input id="Email" type="email" placeholder="Email"
+          class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700">
+
+        <input id="Password" type="password" placeholder="Password"
+          class="w-full px-4 py-3 rounded-md bg-[#0a192f] border border-slate-700">
+
+        <button id="loginBtn" type="submit"
+          class="w-full py-3 rounded-md bg-[#64ffda] text-[#0a192f] font-semibold hover:bg-[#52e6c3] transition">
+          Sign In
+        </button>
+      </form>
+
+      <p id="loginMessage" class="text-center text-xs mt-3"></p>
     </div>
-  </div>
-</nav>
+  </main>
 
-
-
-<!-- MAIN -->
-<main class="pt-24 md:pt-28 pb-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-10">
-
-  <!-- LEFT SIDEBAR (Desktop Hero) -->
-  <aside class="hidden lg:flex flex-col gap-4 sticky top-28">
-
-    <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
-
-    <p class="text-[13.5px] text-[#a8b2d1]">Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on experience in security monitoring, alert triage, identity misuse detection, and log analysis through practical labs and simulations.</p>
-    <p class="text-[13.5px] text-[#a8b2d1]">I bring a strong background in GRC and security documentation — including risk assessments, control validation, SOP development, and escalation-ready reporting — enabling a structured, process-driven approach to SOC operations.</p>
-    <p class="text-xs text-slate-400"><strong>Target roles:</strong> SOC Analyst · Blue Team · Security Operations</p>
-    <a href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank"class="text-[#64ffda] text-sm hover:underline mt-2">View My Resume →</a>
-
-    <hr class="border-slate-900 my-3">
-
-    <!-- Desktop Sidebar Quick Links -->
-    <div class="flex flex-col gap-2 text-sm">
-      <a href="labs.html" class="hover:text-[#64ffda]">--- Labs</a>
-      <a href="skills.html" class="hover:text-[#64ffda]">--- Skills</a>
-      <a href="projects.html" class="hover:text-[#64ffda]">--- Projects</a>
-      <a href="certifications.html" class="hover:text-[#64ffda]">--- Certifications</a>
-    </div>
-
-    <hr class="border-slate-900 my-3">
-
-    <!-- Desktop Social Icons (larger now) -->
-    <div class="flex gap-6 pt-2 text-2xl text-[#8892b0]">
-      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github hover:text-[#64ffda]"></i></a>
-      <a href="https://x.com/kiranimani" target="_blank"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
-      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank"><i class="fa-brands fa-youtube hover:text-[#64ffda]"></i></a>
-      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin hover:text-[#64ffda]"></i></a>
-    </div>
-
-  </aside>
-
-
-
-  <!-- RIGHT CONTENT -->
-  <section class="space-y-10">
-
-  <!-- Right Column-->
-<body class="bg-[#0a192f] text-[#ccd6f6] flex items-center justify-center min-h-screen">
-  <div class="w-full max-w-md bg-[#112240] border border-slate-800 rounded-xl p-8">
-    <h1 class="text-xl font-semibold text-[#e6f1ff] mb-2">
-      Secure Portal Login
-    </h1>
-
-    <p class="text-sm text-[#a8b2d1] mb-6">
-      Authorized access only. SOC practice environment.
-    </p>
-
-    <form id="login-form" class="space-y-4">
-      <div>
-        <label class="block text-xs text-slate-400 mb-1">Email</label>
-        <input
-          type="email"
-          id="email"
-          required
-          class="w-full px-3 py-2 rounded-md bg-[#020c1b] border border-slate-700 text-sm text-[#e6f1ff]"
-        />
-      </div>
-
-      <div>
-        <label class="block text-xs text-slate-400 mb-1">Password</label>
-        <input
-          type="password"
-          id="password"
-          required
-          class="w-full px-3 py-2 rounded-md bg-[#020c1b] border border-slate-700 text-sm text-[#e6f1ff]"
-        />
-      </div>
-
- <button
-  type="submit"
-  class="w-full py-2 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md"
->
-  Sign In
-</button>
-
-      <p id="error-message" class="text-xs text-red-400 hidden mt-2"></p>
-    </form>
-
-  </div>
-
+  <!-- Supabase library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./portal.js"></script>
 
- </section>  
-
-
-<!-- ================= GLOBAL FOOTER ================= -->
-<footer class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 pb-10 mt-20 text-center">
-  <p>
-    Designed & Developed by <span class="text-[#64ffda]">Kiran Regmi</span> —
-    Deployed with Vercel · Powered by TailwindCSS · No paid resources used.
-  </p>
-  <p class="mt-2 text-[0.7rem] text-slate-500">
-    © 2025 kiranregmi.com · All rights reserved
-  </p>
-</footer>
-
-  </section>
-</main>
-
-<!-- MOBILE BOTTOM NAV -->
-<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#112240] border-t border-slate-700 p-3 flex justify-around text-xs">
-  <a href="labs.html" class="hover:text-[#64ffda]">Labs</a>
-  <a href="skills.html" class="hover:text-[#64ffda]">Skills</a>
-  <a href="projects.html" class="hover:text-[#64ffda]">Projects</a>
-  <a href="certifications.html" class="hover:text-[#64ffda]">Certs</a>
-</nav>
-
-
-
-<script>
-  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-  const mobileMenu = document.getElementById("mobileMenu");
-  mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
-</script>
+  <!-- Login Logic -->
+  <script src="/auth.js"></script>
 
 </body>
 </html>
