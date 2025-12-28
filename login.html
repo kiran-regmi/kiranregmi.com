@@ -68,8 +68,12 @@
     <a href="/certifications.html" class="hover:text-[#64ffda]">Certs</a>
   </nav>
 
-  <!-- Auth Logic -->
-  <script src="/auth.js" defer></script>
+<!-- Load Supabase library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+
+<!-- Load login logic AFTER global supabase is available -->
+<script src="/auth.js"></script>
+
 
 </body>
 </html>
