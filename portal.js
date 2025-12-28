@@ -16,13 +16,7 @@ function saveSession(session) {
 
 function loadSession() {
   const raw = localStorage.getItem(SESSION_KEY);
-  if (!raw) return null;
-  try {
-    return JSON.parse(raw);
-  } catch (e) {
-    console.error("Failed to parse session", e);
-    return null;
-  }
+  return raw ? JSON.parse(raw) : null;
 }
 
 function clearSession() {
@@ -49,24 +43,32 @@ const logoutBtn = document.getElementById("logoutBtn");
 const addProjectBtn = document.getElementById("addProjectBtn");
 const projectTableBody = document.getElementById("projectTableBody");
 
-const profileEmail = document.getElementById("profileEmail");
-const profileRole = document.getElementById("profileRole");
-const profileName = document.getElementById("profileName");
-
 const sidebarButtons = document.querySelectorAll(".sidebar-nav button");
 const views = document.querySelectorAll(".view-section");
 
+/* ------- Modal / Drawer Elements ------- */
+const projectDrawer = document.getElementById("projectDrawer");
+const drawerClose = document.getElementById("drawerClose");
+const drawerTitle = document.getElementById("drawerTitle");
+
+const projectForm = document.getElementById("projectForm");
+const formProjectName = document.getElementById("formProjectName");
+const formCompliance = document.getElementById("formCompliance");
+const formRisk = document.getElementById("formRisk");
+const formStatus = document.getElementById("formStatus");
+const formAssignedTo = document.getElementById("formAssignedTo");
+const formLastAudit = document.getElementById("formLastAudit");
+
+let editProjectId = null; // Tracks editing state
+
 /* --------------------------
-    Login Handler (JWT Auth)
+    LOGIN HANDLER
 --------------------------- */
 async function handleLogin(event) {
-  event.preventDefault(); // Prevent page refresh
+  event.preventDefault();
 
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/login`, {
@@ -80,12 +82,9 @@ async function handleLogin(event) {
       return;
     }
 
-    authError.classList.add("hidden");
-
     const data = await response.json();
     const token = data.token;
-
-    const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+    const payload = JSON.parse(atob(token.split(".")[1]));
 
     const session = {
       isAuthenticated: true,
@@ -93,35 +92,29 @@ async function handleLogin(event) {
       email: payload.email,
       role: payload.role,
       name: payload.name,
-      loginTime: new Date().toISOString(),
     };
 
     saveSession(session);
     showDashboard(session);
+
   } catch (error) {
-    console.error("Login error:", error);
+    console.error(error);
     authError.classList.remove("hidden");
   }
 }
 
 /* --------------------------
-    Dashboard / UI Loading
+    SHOW DASHBOARD
 --------------------------- */
 function showDashboard(session) {
   authSection.classList.add("hidden");
   dashboardSection.classList.remove("hidden");
 
-  const { email, role, name } = session;
+  userChip.textContent = `${session.name} • ${session.role}`;
+  sidebarEmailText.textContent = session.email;
+  sidebarRoleText.textContent = session.role;
 
-  userChip.textContent = `${name || "User"} • ${role}`;
-  sidebarRoleText.textContent = role === "admin" ? "Administrator" : "User";
-  sidebarEmailText.textContent = email;
-
-  profileEmail.textContent = email;
-  profileRole.textContent = role;
-  profileName.textContent = name;
-
-  if (role === "admin") {
+  if (session.role === "admin") {
     adminNavItem.classList.remove("hidden");
     addProjectBtn.classList.remove("hidden");
   } else {
@@ -130,43 +123,21 @@ function showDashboard(session) {
   }
 
   welcomeTitle.textContent =
-    role === "admin" ? "Admin Project Dashboard" : "Project Dashboard";
-
-  welcomeSubtitle.textContent =
-    role === "admin"
-      ? "You have administrative access to manage portal projects."
-      : "You can view projects assigned to your team.";
+    session.role === "admin" ? "Admin Project Dashboard" : "Project Dashboard";
 
   renderProjects(session);
 }
 
-function showAuth() {
-  authSection.classList.remove("hidden");
-  dashboardSection.classList.add("hidden");
-}
-
 /* --------------------------
-  Fetch & Render Projects
+    LOAD / FETCH PROJECTS
 --------------------------- */
 async function renderProjects(session) {
-  const token = session?.token;
-  if (!token) {
-    clearSession();
-    return showAuth();
-  }
-
   try {
     const response = await fetch(`${API_BASE_URL}/api/projects`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${session.token}` },
     });
 
-    if (response.status === 401 || response.status === 403) {
-      clearSession();
-      return showAuth();
-    }
-
-    const data = await response.json();
-    const projects = data.projects || [];
+    const { projects } = await response.json();
 
     projectTableBody.innerHTML = "";
 
@@ -175,279 +146,159 @@ async function renderProjects(session) {
 
       tr.innerHTML = `
         <td>${project.projectName}</td>
-        <td>${project.compliance || "-"}</td>
-        <td>${project.riskLevel || "-"}</td>
-        <td>${project.status || "-"}</td>
-        <td>${project.lastAudit || "-"}</td>
-        <td>${project.assignedTo || "-"}</td>
+        <td>${project.compliance}</td>
+        <td>${project.riskLevel}</td>
+        <td>${project.status}</td>
+        <td>${project.lastAudit}</td>
+        <td>${project.assignedTo}</td>
         <td>
-          ${
-            session.role === "admin"
-              ? `
-              <button 
-                class="btn-link" 
-                data-action="edit" 
-                data-id="${project.id}"
-              >Edit</button>
-              <button 
-                class="btn-danger" 
-                data-action="delete" 
-                data-id="${project.id}"
-              >Delete</button>
-            `
-              : `<span style="font-size:0.8rem; color:#6b7280;">View only</span>`
-          }
+        ${
+          session.role === "admin"
+            ? `<button class="btn-link" data-id="${project.id}" data-action="edit">Edit</button>
+               <button class="btn-danger" data-id="${project.id}" data-action="delete">Delete</button>`
+            : `<span style="font-size:0.8rem;color:#666;">View only</span>`
+        }
         </td>
       `;
 
       projectTableBody.appendChild(tr);
     });
-  } catch (error) {
-    console.error("Auth failed:", error);
-    clearSession();
-    showAuth();
+  } catch (e) {
+    console.error("Error loading projects", e);
   }
 }
 
 /* --------------------------
-      Admin CRUD Helpers
+    OPEN DRAWER (ADD/EDIT)
 --------------------------- */
-async function handleAddProject(session) {
-  if (session.role !== "admin") return;
+function openDrawer(mode, project = null) {
+  const session = loadSession();
+  if (!session?.isAuthenticated || session.role !== "admin") return;
 
-  const projectName = prompt("Project name (e.g., SOC 2 Audit Prep):");
-  if (!projectName) return;
+  editProjectId = mode === "edit" ? project.id : null;
+  drawerTitle.textContent = mode === "edit" ? "Edit Project" : "Add Project";
 
-  const compliance = prompt(
-    "Compliance framework (e.g., ISO27001, SOC2, PCI-DSS, NIST CSF, HIPAA):",
-    "SOC2"
-  );
+  formProjectName.value = project?.projectName || "";
+  formCompliance.value = project?.compliance || "SOC2";
+  formRisk.value = project?.riskLevel || "High";
+  formStatus.value = project?.status || "Active";
+  formAssignedTo.value = project?.assignedTo || "GRC Team";
+  formLastAudit.value = project?.lastAudit || "";
 
-  const riskLevel = prompt(
-    "Risk level (High / Medium / Low):",
-    "High"
-  );
-
-  const status = prompt(
-    "Status (Active / Pending / Closed):",
-    "Active"
-  );
-
-  const lastAudit = prompt(
-    "Last audit date (YYYY-MM-DD) or leave blank for today:",
-    ""
-  );
-
-  const assignedTo = prompt(
-    "Control owner (GRC Team / SOC Team / IAM Team / SecOps Team):",
-    "GRC Team"
-  );
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/projects`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.token}`,
-      },
-      body: JSON.stringify({
-        projectName,
-        compliance,
-        riskLevel,
-        status,
-        lastAudit: lastAudit || undefined,
-        assignedTo,
-      }),
-    });
-
-    if (!response.ok) {
-      console.error("Failed to create project");
-      return;
-    }
-
-    await renderProjects(session);
-  } catch (error) {
-    console.error("Error creating project:", error);
-  }
+  projectDrawer.classList.add("show");
 }
 
-async function handleEditProject(session, id) {
-  if (session.role !== "admin") return;
+/* --------------------------
+    CLOSE DRAWER
+--------------------------- */
+function closeDrawer() {
+  projectDrawer.classList.remove("show");
+  editProjectId = null;
+}
 
-  try {
-    // First fetch latest list to get current values
-    const response = await fetch(`${API_BASE_URL}/api/projects`, {
+drawerClose.addEventListener("click", closeDrawer);
+
+/* --------------------------
+    HANDLE SAVE SUBMIT
+--------------------------- */
+projectForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const session = loadSession();
+  if (!session?.isAuthenticated || session.role !== "admin") return;
+
+  const projectData = {
+    projectName: formProjectName.value,
+    compliance: formCompliance.value,
+    riskLevel: formRisk.value,
+    status: formStatus.value,
+    assignedTo: formAssignedTo.value,
+    lastAudit: formLastAudit.value,
+  };
+
+  const method = editProjectId ? "PUT" : "POST";
+  const url = editProjectId
+    ? `${API_BASE_URL}/api/projects/${editProjectId}`
+    : `${API_BASE_URL}/api/projects`;
+
+  const response = await fetch(url, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${session.token}`,
+    },
+    body: JSON.stringify(projectData),
+  });
+
+  if (response.ok) {
+    closeDrawer();
+    renderProjects(session);
+  } else {
+    alert("Failed to save project.");
+  }
+});
+
+/* --------------------------
+ DELETE / EDIT ACTIONS
+--------------------------- */
+projectTableBody.addEventListener("click", async (event) => {
+  const button = event.target;
+  const id = button.getAttribute("data-id");
+  const action = button.getAttribute("data-action");
+
+  const session = loadSession();
+
+  if (action === "edit") {
+    const { projects } = await (await fetch(`${API_BASE_URL}/api/projects`, {
+      headers: { Authorization: `Bearer ${session.token}` },
+    })).json();
+
+    const project = projects.find((p) => p.id == id);
+    openDrawer("edit", project);
+  }
+
+  if (action === "delete") {
+    if (!confirm("Delete this project permanently?")) return;
+
+    await fetch(`${API_BASE_URL}/api/projects/${id}`, {
+      method: "DELETE",
       headers: { Authorization: `Bearer ${session.token}` },
     });
 
-    const data = await response.json();
-    const projects = data.projects || [];
-    const project = projects.find((p) => p.id === id);
-    if (!project) {
-      alert("Project not found.");
-      return;
-    }
-
-    const projectName = prompt(
-      "Project name:",
-      project.projectName
-    );
-    if (!projectName) return;
-
-    const compliance = prompt(
-      "Compliance framework:",
-      project.compliance
-    );
-
-    const riskLevel = prompt(
-      "Risk level (High / Medium / Low):",
-      project.riskLevel
-    );
-
-    const status = prompt(
-      "Status (Active / Pending / Closed):",
-      project.status
-    );
-
-    const lastAudit = prompt(
-      "Last audit date (YYYY-MM-DD):",
-      project.lastAudit
-    );
-
-    const assignedTo = prompt(
-      "Control owner:",
-      project.assignedTo
-    );
-
-    const updateRes = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session.token}`,
-      },
-      body: JSON.stringify({
-        projectName,
-        compliance,
-        riskLevel,
-        status,
-        lastAudit,
-        assignedTo,
-      }),
-    });
-
-    if (!updateRes.ok) {
-      console.error("Failed to update project");
-      return;
-    }
-
-    await renderProjects(session);
-  } catch (error) {
-    console.error("Error editing project:", error);
+    renderProjects(session);
   }
-}
-
-async function handleDeleteProject(session, id) {
-  if (session.role !== "admin") return;
-
-  const confirmed = confirm(
-    "Are you sure you want to delete this project? This cannot be undone."
-  );
-  if (!confirmed) return;
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${session.token}`,
-      },
-    });
-
-    if (!response.ok) {
-      console.error("Failed to delete project");
-      return;
-    }
-
-    await renderProjects(session);
-  } catch (error) {
-    console.error("Error deleting project:", error);
-  }
-}
+});
 
 /* --------------------------
-    Table Action Delegation
---------------------------- */
-function handleProjectActionClick(event) {
-  const button = event.target.closest("button[data-action]");
-  if (!button) return;
-
-  const action = button.getAttribute("data-action");
-  const id = parseInt(button.getAttribute("data-id"), 10);
-  const session = loadSession();
-
-  if (!session?.isAuthenticated) {
-    return showAuth();
-  }
-
-  if (action === "edit") {
-    handleEditProject(session, id);
-  } else if (action === "delete") {
-    handleDeleteProject(session, id);
-  }
-}
-
-/* --------------------------
-          Sidebar
---------------------------- */
-function handleSidebarClick(event) {
-  const button = event.target.closest("button[data-view]");
-  if (!button) return;
-
-  const targetViewId = button.getAttribute("data-view");
-
-  sidebarButtons.forEach((btn) => btn.classList.remove("active"));
-  button.classList.add("active");
-
-  views.forEach((view) => {
-    view.classList.toggle("active", view.id === targetViewId);
-  });
-}
-
-/* --------------------------
-          Logout
+ SIDEBAR + LOGOUT
 --------------------------- */
 function handleLogout() {
   clearSession();
   showAuth();
 }
 
+sidebarButtons.forEach((btn) =>
+  btn.addEventListener("click", (e) => {
+    const view = btn.getAttribute("data-view");
+    views.forEach((v) =>
+      v.classList.toggle("active", v.id === view)
+    );
+  })
+);
+
 /* --------------------------
-          Init
+ INIT
 --------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const session = loadSession();
   if (session?.isAuthenticated) {
     showDashboard(session);
   } else {
-    showAuth();
+    authSection.classList.remove("hidden");
+    dashboardSection.classList.add("hidden");
   }
 
   if (loginForm) loginForm.addEventListener("submit", handleLogin);
   if (logoutBtn) logoutBtn.addEventListener("click", handleLogout);
-
-  sidebarButtons.forEach((btn) =>
-    btn.addEventListener("click", handleSidebarClick)
-  );
-
-  if (projectTableBody) {
-    projectTableBody.addEventListener("click", handleProjectActionClick);
-  }
-
-  if (addProjectBtn) {
-    addProjectBtn.addEventListener("click", () => {
-      const session = loadSession();
-      if (!session?.isAuthenticated) return showAuth();
-      if (session.role !== "admin") return;
-      handleAddProject(session);
-    });
-  }
+  if (addProjectBtn)
+    addProjectBtn.addEventListener("click", () => openDrawer("add"));
 });
