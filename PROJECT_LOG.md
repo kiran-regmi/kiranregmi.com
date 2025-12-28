@@ -1,4 +1,10 @@
-# Project Log – kiranregmi.com
+admin user:
+    admin@kiranregmi.com
+    Admin@123
+Other user:
+    user@kiranregmi.com
+    User@123
+
 
 ## Tell me about yourself.
 “I’m preparing for a Tier-1 SOC role with hands-on experience in alert triage, log analysis, and identity misuse detection.

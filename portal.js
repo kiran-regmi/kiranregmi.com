@@ -1,75 +1,15 @@
 // portal.js
 
-// --- Mock users for demo authentication (Phase 1) ---
-const MOCK_USERS = [
-  {
-    email: "admin@kiranregmi.com",
-    password: "Admin@123",
-    role: "admin",
-    name: "Admin User",
-  },
-  {
-    email: "user@kiranregmi.com",
-    password: "User@123",
-    role: "user",
-    name: "Standard User",
-  },
-];
+/* --------------------------
+    Backend API Base URL
+--------------------------- */
+const API_BASE_URL = "http://localhost:5000";
 
-// --- Demo projects ---
-let projects = [
-  {
-    id: 1,
-    name: "Onboarding – New Client A",
-    status: "active",
-    owner: "Security Team",
-    updated: "2025-12-20",
-  },
-  {
-    id: 2,
-    name: "IAM Policy Review – Internal",
-    status: "pending",
-    owner: "GRC",
-    updated: "2025-12-15",
-  },
-  {
-    id: 3,
-    name: "Vulnerability Remediation Wave 3",
-    status: "closed",
-    owner: "Ops",
-    updated: "2025-11-30",
-  },
-];
-
+/* --------------------------
+    Session Storage Helpers
+--------------------------- */
 const SESSION_KEY = "kr_portal_session";
 
-// --- DOM Elements ---
-const authSection = document.getElementById("authSection");
-const dashboardSection = document.getElementById("dashboardSection");
-const loginForm = document.getElementById("loginForm");
-const authError = document.getElementById("authError");
-
-const sidebarRoleText = document.getElementById("sidebarRoleText");
-const sidebarEmailText = document.getElementById("sidebarEmailText");
-const sidebarRoleBadge = document.getElementById("sidebarRoleBadge");
-const adminNavItem = document.getElementById("adminNavItem");
-
-const welcomeTitle = document.getElementById("welcomeTitle");
-const welcomeSubtitle = document.getElementById("welcomeSubtitle");
-const userChip = document.getElementById("userChip");
-
-const logoutBtn = document.getElementById("logoutBtn");
-const addProjectBtn = document.getElementById("addProjectBtn");
-const projectTableBody = document.getElementById("projectTableBody");
-
-const profileEmail = document.getElementById("profileEmail");
-const profileRole = document.getElementById("profileRole");
-const profileName = document.getElementById("profileName");
-
-const sidebarButtons = document.querySelectorAll(".sidebar-nav button");
-const views = document.querySelectorAll(".view-section");
-
-// --- Session Helpers ---
 function saveSession(session) {
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 }
@@ -89,18 +29,38 @@ function clearSession() {
   localStorage.removeItem(SESSION_KEY);
 }
 
-// --- Auth Logic ---
-function authenticate(email, password) {
-  return MOCK_USERS.find(
-    (user) =>
-      user.email.toLowerCase() === email.toLowerCase() &&
-      user.password === password
-  );
-}
+/* --------------------------
+    DOM Elements
+--------------------------- */
+const authSection = document.getElementById("authSection");
+const dashboardSection = document.getElementById("dashboardSection");
+const loginForm = document.getElementById("loginForm");
+const authError = document.getElementById("authError");
 
-function handleLogin(event) {
-  event.preventDefault();
-  if (!loginForm) return;
+const sidebarRoleText = document.getElementById("sidebarRoleText");
+const sidebarEmailText = document.getElementById("sidebarEmailText");
+const adminNavItem = document.getElementById("adminNavItem");
+
+const welcomeTitle = document.getElementById("welcomeTitle");
+const welcomeSubtitle = document.getElementById("welcomeSubtitle");
+const userChip = document.getElementById("userChip");
+
+const logoutBtn = document.getElementById("logoutBtn");
+const addProjectBtn = document.getElementById("addProjectBtn");
+const projectTableBody = document.getElementById("projectTableBody");
+
+const profileEmail = document.getElementById("profileEmail");
+const profileRole = document.getElementById("profileRole");
+const profileName = document.getElementById("profileName");
+
+const sidebarButtons = document.querySelectorAll(".sidebar-nav button");
+const views = document.querySelectorAll(".view-section");
+
+/* --------------------------
+    Login Handler (JWT Auth)
+--------------------------- */
+async function handleLogin(event) {
+  event.preventDefault(); // Prevent page refresh
 
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
@@ -108,62 +68,59 @@ function handleLogin(event) {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
-  const user = authenticate(email, password);
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-  if (!user) {
+    if (!response.ok) {
+      authError.classList.remove("hidden");
+      return;
+    }
+
+    authError.classList.add("hidden");
+
+    const data = await response.json();
+    const token = data.token;
+
+    const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+
+    const session = {
+      isAuthenticated: true,
+      token,
+      email: payload.email,
+      role: payload.role,
+      name: payload.name,
+      loginTime: new Date().toISOString(),
+    };
+
+    saveSession(session);
+    showDashboard(session);
+  } catch (error) {
+    console.error("Login error:", error);
     authError.classList.remove("hidden");
-    return;
   }
-
-  authError.classList.add("hidden");
-
-  const session = {
-    isAuthenticated: true,
-    email: user.email,
-    role: user.role,
-    name: user.name,
-    loginTime: new Date().toISOString(),
-  };
-
-  saveSession(session);
-  showDashboard(session);
 }
 
-// --- UI Rendering ---
-function showAuth() {
-  authSection.classList.remove("hidden");
-  dashboardSection.classList.add("hidden");
-}
-
+/* --------------------------
+    Dashboard / UI Loading
+--------------------------- */
 function showDashboard(session) {
   authSection.classList.add("hidden");
   dashboardSection.classList.remove("hidden");
 
   const { email, role, name } = session;
 
-  // Header text
-  welcomeTitle.textContent =
-    role === "admin" ? "Admin Project Dashboard" : "Project Dashboard";
-  welcomeSubtitle.textContent =
-    role === "admin"
-      ? "You have administrative access to manage portal projects."
-      : "You can view projects assigned to your team.";
-
-  // Sidebar info
+  userChip.textContent = `${name || "User"} • ${role}`;
   sidebarRoleText.textContent = role === "admin" ? "Administrator" : "User";
   sidebarEmailText.textContent = email;
-  sidebarRoleBadge.style.background =
-    role === "admin" ? "rgba(220, 38, 38, 0.2)" : "rgba(37, 99, 235, 0.2)";
 
-  // User chip
-  userChip.textContent = `${name || "User"} • ${role}`;
-
-  // Profile view data
   profileEmail.textContent = email;
   profileRole.textContent = role;
   profileName.textContent = name;
 
-  // Admin-only elements
   if (role === "admin") {
     adminNavItem.classList.remove("hidden");
     addProjectBtn.classList.remove("hidden");
@@ -172,194 +129,325 @@ function showDashboard(session) {
     addProjectBtn.classList.add("hidden");
   }
 
-  renderProjects(role);
+  welcomeTitle.textContent =
+    role === "admin" ? "Admin Project Dashboard" : "Project Dashboard";
+
+  welcomeSubtitle.textContent =
+    role === "admin"
+      ? "You have administrative access to manage portal projects."
+      : "You can view projects assigned to your team.";
+
+  renderProjects(session);
 }
 
-function renderProjects(role) {
-  projectTableBody.innerHTML = "";
+function showAuth() {
+  authSection.classList.remove("hidden");
+  dashboardSection.classList.add("hidden");
+}
 
-  projects.forEach((project) => {
-    const tr = document.createElement("tr");
+/* --------------------------
+  Fetch & Render Projects
+--------------------------- */
+async function renderProjects(session) {
+  const token = session?.token;
+  if (!token) {
+    clearSession();
+    return showAuth();
+  }
 
-    const statusClass =
-      project.status === "active"
-        ? "status-active"
-        : project.status === "pending"
-        ? "status-pending"
-        : "status-closed";
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/projects`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-    tr.innerHTML = `
-      <td>${project.name}</td>
-      <td>
-        <span class="project-status ${statusClass}">
-          ${project.status.charAt(0).toUpperCase() + project.status.slice(1)}
-        </span>
-      </td>
-      <td>${project.owner}</td>
-      <td>${project.updated}</td>
-      <td>
-        <div class="project-actions">
+    if (response.status === 401 || response.status === 403) {
+      clearSession();
+      return showAuth();
+    }
+
+    const data = await response.json();
+    const projects = data.projects || [];
+
+    projectTableBody.innerHTML = "";
+
+    projects.forEach((project) => {
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${project.projectName}</td>
+        <td>${project.compliance || "-"}</td>
+        <td>${project.riskLevel || "-"}</td>
+        <td>${project.status || "-"}</td>
+        <td>${project.lastAudit || "-"}</td>
+        <td>${project.assignedTo || "-"}</td>
+        <td>
           ${
-            role === "admin"
+            session.role === "admin"
               ? `
-              <button class="btn-link" data-action="edit" data-id="${project.id}">Edit</button>
-              <button class="btn-danger" data-action="delete" data-id="${project.id}">Delete</button>
+              <button 
+                class="btn-link" 
+                data-action="edit" 
+                data-id="${project.id}"
+              >Edit</button>
+              <button 
+                class="btn-danger" 
+                data-action="delete" 
+                data-id="${project.id}"
+              >Delete</button>
             `
               : `<span style="font-size:0.8rem; color:#6b7280;">View only</span>`
           }
-        </div>
-      </td>
-    `;
+        </td>
+      `;
 
-    projectTableBody.appendChild(tr);
-  });
-
-  if (role === "admin") {
-    attachProjectActionHandlers();
+      projectTableBody.appendChild(tr);
+    });
+  } catch (error) {
+    console.error("Auth failed:", error);
+    clearSession();
+    showAuth();
   }
 }
 
-function attachProjectActionHandlers() {
-  projectTableBody.addEventListener("click", function (event) {
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) return;
-
-    const action = target.getAttribute("data-action");
-    const idAttr = target.getAttribute("data-id");
-    if (!action || !idAttr) return;
-
-    const id = parseInt(idAttr, 10);
-    if (action === "delete") {
-      handleDeleteProject(id);
-    } else if (action === "edit") {
-      handleEditProject(id);
-    }
-  });
-}
-
-// --- Project CRUD (Admin Only) ---
-function handleAddProject(session) {
+/* --------------------------
+      Admin CRUD Helpers
+--------------------------- */
+async function handleAddProject(session) {
   if (session.role !== "admin") return;
 
-  const name = prompt("Project name:");
-  if (!name) return;
+  const projectName = prompt("Project name (e.g., SOC 2 Audit Prep):");
+  if (!projectName) return;
+
+  const compliance = prompt(
+    "Compliance framework (e.g., ISO27001, SOC2, PCI-DSS, NIST CSF, HIPAA):",
+    "SOC2"
+  );
+
+  const riskLevel = prompt(
+    "Risk level (High / Medium / Low):",
+    "High"
+  );
 
   const status = prompt(
-    "Status (active / pending / closed):",
-    "active"
-  )?.toLowerCase();
-  if (!["active", "pending", "closed"].includes(status)) {
-    alert("Invalid status. Using 'pending'.");
+    "Status (Active / Pending / Closed):",
+    "Active"
+  );
+
+  const lastAudit = prompt(
+    "Last audit date (YYYY-MM-DD) or leave blank for today:",
+    ""
+  );
+
+  const assignedTo = prompt(
+    "Control owner (GRC Team / SOC Team / IAM Team / SecOps Team):",
+    "GRC Team"
+  );
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/projects`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.token}`,
+      },
+      body: JSON.stringify({
+        projectName,
+        compliance,
+        riskLevel,
+        status,
+        lastAudit: lastAudit || undefined,
+        assignedTo,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to create project");
+      return;
+    }
+
+    await renderProjects(session);
+  } catch (error) {
+    console.error("Error creating project:", error);
   }
-
-  const project = {
-    id: Date.now(),
-    name: name.trim(),
-    status: ["active", "pending", "closed"].includes(status)
-      ? status
-      : "pending",
-    owner: session.role === "admin" ? "Admin" : "Team",
-    updated: new Date().toISOString().slice(0, 10),
-  };
-
-  projects.unshift(project);
-  renderProjects(session.role);
 }
 
-function handleDeleteProject(id) {
+async function handleEditProject(session, id) {
+  if (session.role !== "admin") return;
+
+  try {
+    // First fetch latest list to get current values
+    const response = await fetch(`${API_BASE_URL}/api/projects`, {
+      headers: { Authorization: `Bearer ${session.token}` },
+    });
+
+    const data = await response.json();
+    const projects = data.projects || [];
+    const project = projects.find((p) => p.id === id);
+    if (!project) {
+      alert("Project not found.");
+      return;
+    }
+
+    const projectName = prompt(
+      "Project name:",
+      project.projectName
+    );
+    if (!projectName) return;
+
+    const compliance = prompt(
+      "Compliance framework:",
+      project.compliance
+    );
+
+    const riskLevel = prompt(
+      "Risk level (High / Medium / Low):",
+      project.riskLevel
+    );
+
+    const status = prompt(
+      "Status (Active / Pending / Closed):",
+      project.status
+    );
+
+    const lastAudit = prompt(
+      "Last audit date (YYYY-MM-DD):",
+      project.lastAudit
+    );
+
+    const assignedTo = prompt(
+      "Control owner:",
+      project.assignedTo
+    );
+
+    const updateRes = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.token}`,
+      },
+      body: JSON.stringify({
+        projectName,
+        compliance,
+        riskLevel,
+        status,
+        lastAudit,
+        assignedTo,
+      }),
+    });
+
+    if (!updateRes.ok) {
+      console.error("Failed to update project");
+      return;
+    }
+
+    await renderProjects(session);
+  } catch (error) {
+    console.error("Error editing project:", error);
+  }
+}
+
+async function handleDeleteProject(session, id) {
+  if (session.role !== "admin") return;
+
   const confirmed = confirm(
     "Are you sure you want to delete this project? This cannot be undone."
   );
   if (!confirmed) return;
 
-  projects = projects.filter((p) => p.id !== id);
-  const session = loadSession();
-  if (session) {
-    renderProjects(session.role);
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error("Failed to delete project");
+      return;
+    }
+
+    await renderProjects(session);
+  } catch (error) {
+    console.error("Error deleting project:", error);
   }
 }
 
-function handleEditProject(id) {
-  const project = projects.find((p) => p.id === id);
-  if (!project) return;
+/* --------------------------
+    Table Action Delegation
+--------------------------- */
+function handleProjectActionClick(event) {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
 
-  const newName = prompt("Update project name:", project.name);
-  if (!newName) return;
-
-  const newStatus = prompt(
-    "Update status (active / pending / closed):",
-    project.status
-  )?.toLowerCase();
-
-  if (!["active", "pending", "closed"].includes(newStatus)) {
-    alert("Invalid status. Keeping current status.");
-  }
-
-  project.name = newName.trim();
-  if (["active", "pending", "closed"].includes(newStatus)) {
-    project.status = newStatus;
-  }
-  project.updated = new Date().toISOString().slice(0, 10);
-
+  const action = button.getAttribute("data-action");
+  const id = parseInt(button.getAttribute("data-id"), 10);
   const session = loadSession();
-  if (session) {
-    renderProjects(session.role);
+
+  if (!session?.isAuthenticated) {
+    return showAuth();
+  }
+
+  if (action === "edit") {
+    handleEditProject(session, id);
+  } else if (action === "delete") {
+    handleDeleteProject(session, id);
   }
 }
 
-// --- Tabs / Views ---
+/* --------------------------
+          Sidebar
+--------------------------- */
 function handleSidebarClick(event) {
   const button = event.target.closest("button[data-view]");
   if (!button) return;
 
   const targetViewId = button.getAttribute("data-view");
-  if (!targetViewId) return;
 
   sidebarButtons.forEach((btn) => btn.classList.remove("active"));
   button.classList.add("active");
 
   views.forEach((view) => {
-    if (view.id === targetViewId) {
-      view.classList.add("active");
-    } else {
-      view.classList.remove("active");
-    }
+    view.classList.toggle("active", view.id === targetViewId);
   });
 }
 
-// --- Logout ---
+/* --------------------------
+          Logout
+--------------------------- */
 function handleLogout() {
   clearSession();
   showAuth();
 }
 
-// --- Init ---
+/* --------------------------
+          Init
+--------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
-  const existingSession = loadSession();
-  if (existingSession && existingSession.isAuthenticated) {
-    showDashboard(existingSession);
+  const session = loadSession();
+  if (session?.isAuthenticated) {
+    showDashboard(session);
   } else {
     showAuth();
   }
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", handleLogin);
-  }
+  if (loginForm) loginForm.addEventListener("submit", handleLogin);
+  if (logoutBtn) logoutBtn.addEventListener("click", handleLogout);
 
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", handleLogout);
+  sidebarButtons.forEach((btn) =>
+    btn.addEventListener("click", handleSidebarClick)
+  );
+
+  if (projectTableBody) {
+    projectTableBody.addEventListener("click", handleProjectActionClick);
   }
 
   if (addProjectBtn) {
     addProjectBtn.addEventListener("click", () => {
       const session = loadSession();
-      if (!session || !session.isAuthenticated) return;
+      if (!session?.isAuthenticated) return showAuth();
+      if (session.role !== "admin") return;
       handleAddProject(session);
     });
   }
-
-  // Sidebar
-  sidebarButtons.forEach((btn) =>
-    btn.addEventListener("click", handleSidebarClick)
-  );
 });

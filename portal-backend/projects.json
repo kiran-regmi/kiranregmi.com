@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "projectName": "SOC 2 Audit - Internal",
+    "compliance": "SOC2",
+    "riskLevel": "High",
+    "status": "Active",
+    "lastAudit": "2025-12-20",
+    "assignedTo": "GRC Team"
+  }
+]
