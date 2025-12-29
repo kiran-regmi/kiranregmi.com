@@ -92,3 +92,30 @@
 .drawer-save:hover {
   background-color: #1d4ed8;
 }
+.hidden { display: none; }
+
+.question-card {
+  background: #1e1e2e;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #333;
+}
+
+.answer {
+  margin-top: 0.5rem;
+  color: #9cf;
+}
+
+.category-tag {
+  font-size: 0.7rem;
+  background: #3a3ea3;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 5px;
+  float: right;
+}
+.category-tag.security { background: #e11d48; }
+.category-tag.dev { background: #10b981; }
+.category-tag.misc { background: #8b5cf6; }   

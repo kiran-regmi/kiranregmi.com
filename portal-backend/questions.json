@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "question": "Explain the SOC Tier-1 analyst's primary responsibility.",
+    "answer": "To monitor alerts, perform initial triage, escalate confirmed incidents, and ensure no critical alerts are missed.",
+    "category": "SOC"
+  },
+  {
+    "id": 2,
+    "question": "What is RBAC?",
+    "answer": "Role-Based Access Control restricts access based on a user's assigned role to enforce least privilege.",
+    "category": "IAM"
+  },
+  {
+    "id": 3,
+    "question": "What is the purpose of SIEM?",
+    "answer": "SIEM tools collect, aggregate, and correlate security logs to detect threats and provide incident response context.",
+    "category": "SOC"
+  },
+  {
+    "id": 4,
+    "question": "What is MFA?",
+    "answer": "Multi-Factor Authentication requires two or more verification methods to increase security against credential compromise.",
+    "category": "IAM"
+  },
+  {
+    "id": 5,
+    "question": "What is a risk assessment?",
+    "answer": "A process to identify, analyze, and evaluate potential threats to confidentiality, integrity, and availability.",
+    "category": "GRC"
+  },
+  {
+    "id": 6,
+    "question": "What is SOC 2?",
+    "answer": "SOC 2 is a compliance framework to evaluate the security, availability, processing integrity, confidentiality, and privacy controls of service organizations.",
+    "category": "GRC"
+  },
+  {
+    "id": 7,
+    "question": "Explain Least Privilege principle.",
+    "answer": "Users are granted only the minimum access necessary to perform their duties to reduce the attack surface.",
+    "category": "IAM"
+  },
+  {
+    "id": 8,
+    "question": "What is Phishing?",
+    "answer": "A social engineering attack where attackers impersonate trusted entities to steal credentials or sensitive data.",
+    "category": "SOC"
+  },
+  {
+    "id": 9,
+    "question": "What is an Incident Response Plan?",
+    "answer": "A structured process for handling security incidents including detection, analysis, containment, eradication, and recovery.",
+    "category": "Incident Response"
+  },
+  {
+    "id": 10,
+    "question": "What is TCP/IP?",
+    "answer": "A set of communication protocols used to interconnect network devices, defining how data should be packetized and transmitted.",
+    "category": "Network"
+  }
+]

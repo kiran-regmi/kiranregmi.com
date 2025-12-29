@@ -1,304 +1,160 @@
-// portal.js
-
-/* --------------------------
-    Backend API Base URL
---------------------------- */
 const API_BASE_URL = "http://localhost:5000";
 
-/* --------------------------
-    Session Storage Helpers
---------------------------- */
-const SESSION_KEY = "kr_portal_session";
-
+// SAVE & LOAD SESSION
 function saveSession(session) {
-  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  localStorage.setItem("session", JSON.stringify(session));
 }
-
 function loadSession() {
-  const raw = localStorage.getItem(SESSION_KEY);
-  return raw ? JSON.parse(raw) : null;
+  return JSON.parse(localStorage.getItem("session"));
 }
-
 function clearSession() {
-  localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem("session");
+  showLogin();
 }
 
-/* --------------------------
-    DOM Elements
---------------------------- */
 const authSection = document.getElementById("authSection");
 const dashboardSection = document.getElementById("dashboardSection");
-const loginForm = document.getElementById("loginForm");
-const authError = document.getElementById("authError");
 
-const sidebarRoleText = document.getElementById("sidebarRoleText");
-const sidebarEmailText = document.getElementById("sidebarEmailText");
-const adminNavItem = document.getElementById("adminNavItem");
-
-const welcomeTitle = document.getElementById("welcomeTitle");
-const welcomeSubtitle = document.getElementById("welcomeSubtitle");
-const userChip = document.getElementById("userChip");
-
-const logoutBtn = document.getElementById("logoutBtn");
-const addProjectBtn = document.getElementById("addProjectBtn");
-const projectTableBody = document.getElementById("projectTableBody");
-
-const sidebarButtons = document.querySelectorAll(".sidebar-nav button");
-const views = document.querySelectorAll(".view-section");
-
-/* ------- Modal / Drawer Elements ------- */
-const projectDrawer = document.getElementById("projectDrawer");
-const drawerClose = document.getElementById("drawerClose");
-const drawerTitle = document.getElementById("drawerTitle");
-
-const projectForm = document.getElementById("projectForm");
-const formProjectName = document.getElementById("formProjectName");
-const formCompliance = document.getElementById("formCompliance");
-const formRisk = document.getElementById("formRisk");
-const formStatus = document.getElementById("formStatus");
-const formAssignedTo = document.getElementById("formAssignedTo");
-const formLastAudit = document.getElementById("formLastAudit");
-
-let editProjectId = null; // Tracks editing state
-
-/* --------------------------
-    LOGIN HANDLER
---------------------------- */
-async function handleLogin(event) {
-  event.preventDefault();
-
+// LOGIN
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
   const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+  const password = document.getElementById("password").value.trim();
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+  const res = await fetch(`${API_BASE_URL}/api/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
 
-    if (!response.ok) {
-      authError.classList.remove("hidden");
-      return;
-    }
+  if (!res.ok) return alert("Invalid login");
 
-    const data = await response.json();
-    const token = data.token;
-    const payload = JSON.parse(atob(token.split(".")[1]));
+  const data = await res.json();
+  saveSession({ token: data.token, role: data.role, email: data.email, name: data.name });
 
-    const session = {
-      isAuthenticated: true,
-      token,
-      email: payload.email,
-      role: payload.role,
-      name: payload.name,
-    };
+  const session = loadSession();
+  showDashboard(session);
+  loadProjects();
+  loadQuestions(); // NEW
+});
 
-    saveSession(session);
-    showDashboard(session);
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  clearSession();
+});
 
-  } catch (error) {
-    console.error(error);
-    authError.classList.remove("hidden");
-  }
+// SHOW UI SECTIONS
+function showLogin() {
+  authSection.classList.remove("hidden");
+  dashboardSection.classList.add("hidden");
 }
 
-/* --------------------------
-    SHOW DASHBOARD
---------------------------- */
 function showDashboard(session) {
   authSection.classList.add("hidden");
   dashboardSection.classList.remove("hidden");
 
-  userChip.textContent = `${session.name} • ${session.role}`;
-  sidebarEmailText.textContent = session.email;
-  sidebarRoleText.textContent = session.role;
+  document.getElementById("sidebarRoleText").textContent = session.role;
+  document.getElementById("sidebarEmailText").textContent = session.email;
+  document.getElementById("userChip").textContent = session.email;
+  document.getElementById("profileEmail").textContent = session.email;
+  document.getElementById("profileRole").textContent = session.role;
+  document.getElementById("profileName").textContent = session.name;
 
   if (session.role === "admin") {
-    adminNavItem.classList.remove("hidden");
-    addProjectBtn.classList.remove("hidden");
+    document.getElementById("adminNavItem").classList.remove("hidden");
+    document.getElementById("addProjectBtn").classList.remove("hidden");
   } else {
-    adminNavItem.classList.add("hidden");
-    addProjectBtn.classList.add("hidden");
+    document.getElementById("adminNavItem").classList.add("hidden");
+    document.getElementById("addProjectBtn").classList.add("hidden");
   }
 
-  welcomeTitle.textContent =
-    session.role === "admin" ? "Admin Project Dashboard" : "Project Dashboard";
-
-  renderProjects(session);
+  switchView("dashboardView");
 }
 
-/* --------------------------
-    LOAD / FETCH PROJECTS
---------------------------- */
-async function renderProjects(session) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/projects`, {
-      headers: { Authorization: `Bearer ${session.token}` },
-    });
+// NAVIGATION
+const buttons = document.querySelectorAll(".dashboard-sidebar button");
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    switchView(btn.dataset.view);
+    if (btn.dataset.view === "practiceView") {
+      loadQuestions(); // NEW — auto load when tab switches
+    }
+  });
+});
 
-    const { projects } = await response.json();
+function switchView(targetId) {
+  document.querySelectorAll(".view-section").forEach(v => v.classList.remove("active"));
+  const section = document.getElementById(targetId);
+  if (section) section.classList.add("active");
 
-    projectTableBody.innerHTML = "";
-
-    projects.forEach((project) => {
-      const tr = document.createElement("tr");
-
-      tr.innerHTML = `
-        <td>${project.projectName}</td>
-        <td>${project.compliance}</td>
-        <td>${project.riskLevel}</td>
-        <td>${project.status}</td>
-        <td>${project.lastAudit}</td>
-        <td>${project.assignedTo}</td>
-        <td>
-        ${
-          session.role === "admin"
-            ? `<button class="btn-link" data-id="${project.id}" data-action="edit">Edit</button>
-               <button class="btn-danger" data-id="${project.id}" data-action="delete">Delete</button>`
-            : `<span style="font-size:0.8rem;color:#666;">View only</span>`
-        }
-        </td>
-      `;
-
-      projectTableBody.appendChild(tr);
-    });
-  } catch (e) {
-    console.error("Error loading projects", e);
-  }
+  buttons.forEach(b => b.classList.remove("active"));
+  document.querySelector(`[data-view="${targetId}"]`).classList.add("active");
 }
 
-/* --------------------------
-    OPEN DRAWER (ADD/EDIT)
---------------------------- */
-function openDrawer(mode, project = null) {
+// LOAD PROJECTS
+async function loadProjects() {
   const session = loadSession();
-  if (!session?.isAuthenticated || session.role !== "admin") return;
+  const res = await fetch(`${API_BASE_URL}/api/projects`, {
+    headers: { "Authorization": `Bearer ${session.token}` }
+  });
+  const data = await res.json();
 
-  editProjectId = mode === "edit" ? project.id : null;
-  drawerTitle.textContent = mode === "edit" ? "Edit Project" : "Add Project";
+  const tbody = document.getElementById("projectTableBody");
+  tbody.innerHTML = "";
 
-  formProjectName.value = project?.projectName || "";
-  formCompliance.value = project?.compliance || "SOC2";
-  formRisk.value = project?.riskLevel || "High";
-  formStatus.value = project?.status || "Active";
-  formAssignedTo.value = project?.assignedTo || "GRC Team";
-  formLastAudit.value = project?.lastAudit || "";
-
-  projectDrawer.classList.add("show");
+  data.projects.forEach(p => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${p.project}</td>
+        <td>${p.compliance}</td>
+        <td>${p.riskImpact}</td>
+        <td>${p.status}</td>
+        <td>${p.auditDate}</td>
+        <td>${p.owner}</td>
+        <td>—</td>
+      </tr>`;
+  });
 }
 
-/* --------------------------
-    CLOSE DRAWER
---------------------------- */
-function closeDrawer() {
-  projectDrawer.classList.remove("show");
-  editProjectId = null;
-}
-
-drawerClose.addEventListener("click", closeDrawer);
-
-/* --------------------------
-    HANDLE SAVE SUBMIT
---------------------------- */
-projectForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+// ======================================================
+// 📚 LOAD INTERVIEW QUESTIONS (NEW)
+// ======================================================
+async function loadQuestions() {
   const session = loadSession();
-  if (!session?.isAuthenticated || session.role !== "admin") return;
-
-  const projectData = {
-    projectName: formProjectName.value,
-    compliance: formCompliance.value,
-    riskLevel: formRisk.value,
-    status: formStatus.value,
-    assignedTo: formAssignedTo.value,
-    lastAudit: formLastAudit.value,
-  };
-
-  const method = editProjectId ? "PUT" : "POST";
-  const url = editProjectId
-    ? `${API_BASE_URL}/api/projects/${editProjectId}`
-    : `${API_BASE_URL}/api/projects`;
-
-  const response = await fetch(url, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${session.token}`,
-    },
-    body: JSON.stringify(projectData),
+  const res = await fetch(`${API_BASE_URL}/api/questions`, {
+    headers: { Authorization: `Bearer ${session.token}` },
   });
 
-  if (response.ok) {
-    closeDrawer();
-    renderProjects(session);
-  } else {
-    alert("Failed to save project.");
-  }
-});
-
-/* --------------------------
- DELETE / EDIT ACTIONS
---------------------------- */
-projectTableBody.addEventListener("click", async (event) => {
-  const button = event.target;
-  const id = button.getAttribute("data-id");
-  const action = button.getAttribute("data-action");
-
-  const session = loadSession();
-
-  if (action === "edit") {
-    const { projects } = await (await fetch(`${API_BASE_URL}/api/projects`, {
-      headers: { Authorization: `Bearer ${session.token}` },
-    })).json();
-
-    const project = projects.find((p) => p.id == id);
-    openDrawer("edit", project);
-  }
-
-  if (action === "delete") {
-    if (!confirm("Delete this project permanently?")) return;
-
-    await fetch(`${API_BASE_URL}/api/projects/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${session.token}` },
-    });
-
-    renderProjects(session);
-  }
-});
-
-/* --------------------------
- SIDEBAR + LOGOUT
---------------------------- */
-function handleLogout() {
-  clearSession();
-  showAuth();
+  const data = await res.json();
+  renderQuestions(data.questions);
 }
 
-sidebarButtons.forEach((btn) =>
-  btn.addEventListener("click", (e) => {
-    const view = btn.getAttribute("data-view");
-    views.forEach((v) =>
-      v.classList.toggle("active", v.id === view)
-    );
-  })
-);
+function renderQuestions(questions) {
+  const container = document.getElementById("questionsContainer");
+  container.innerHTML = "";
 
-/* --------------------------
- INIT
---------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
+  questions.forEach(q => {
+    const div = document.createElement("div");
+    div.classList.add("question-card");
+    div.innerHTML = `
+      <strong>${q.question}</strong>
+      <span class="category-tag">${q.category}</span>
+      <div class="answer hidden">${q.answer}</div>
+    `;
+    div.addEventListener("click", () => {
+      div.querySelector(".answer").classList.toggle("hidden");
+    });
+    container.appendChild(div);
+  });
+}
+
+// INITIAL LOAD
+(function init() {
   const session = loadSession();
-  if (session?.isAuthenticated) {
+  if (session?.token) {
     showDashboard(session);
+    loadProjects();
+    loadQuestions(); // NEW
   } else {
-    authSection.classList.remove("hidden");
-    dashboardSection.classList.add("hidden");
+    showLogin();
   }
-
-  if (loginForm) loginForm.addEventListener("submit", handleLogin);
-  if (logoutBtn) logoutBtn.addEventListener("click", handleLogout);
-  if (addProjectBtn)
-    addProjectBtn.addEventListener("click", () => openDrawer("add"));
-});
+})();

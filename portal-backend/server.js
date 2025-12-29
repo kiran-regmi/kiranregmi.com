@@ -71,6 +71,8 @@ app.post("/api/login", async (req, res) => {
   return res.json({
     message: "Logged in successfully",
     token,
+    role: user.role,
+    name: user.name,
   });
 });
 
@@ -183,6 +185,66 @@ app.delete("/api/projects/:id", verifyToken, verifyAdmin, (req, res) => {
   writeProjects(remaining);
 
   return res.json({ message: "Project deleted", project: removed });
+});
+
+// 📌 Load Questions Data
+const questionsFile = path.join(__dirname, "questions.json");
+let questions = JSON.parse(fs.readFileSync(questionsFile));
+
+// Save Questions Helper
+function saveQuestions() {
+  fs.writeFileSync(questionsFile, JSON.stringify(questions, null, 2));
+}
+
+// ------------------------
+// Q&A API Routes
+// ------------------------
+
+// GET ALL QUESTIONS (all authenticated users)
+app.get("/api/questions", verifyToken, (req, res) => {
+  res.json({ questions });
+});
+
+// CREATE a new question (admin only)
+app.post("/api/questions", verifyToken, verifyAdmin, (req, res) => {
+  const newQ = {
+    id: Date.now(),
+    question: req.body.question,
+    answer: req.body.answer,
+    category: req.body.category
+  };
+
+  questions.push(newQ);
+  saveQuestions();
+  res.status(201).json({ message: "Question added", question: newQ });
+});
+
+// UPDATE a question (admin only)
+app.put("/api/questions/:id", verifyToken, verifyAdmin, (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = questions.findIndex(q => q.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Question not found" });
+  }
+
+  questions[index] = { ...questions[index], ...req.body };
+  saveQuestions();
+  res.json({ message: "Question updated", question: questions[index] });
+});
+
+// DELETE a question (admin only)
+app.delete("/api/questions/:id", verifyToken, verifyAdmin, (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = questions.findIndex(q => q.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Question not found" });
+  }
+
+  questions.splice(index, 1);
+  saveQuestions();
+  res.json({ message: "Question deleted" });
 });
 
 /* --------------------------
