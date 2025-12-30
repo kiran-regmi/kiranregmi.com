@@ -5,10 +5,23 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
 const { JWT_SECRET, PORT } = require("./config");
-const users = require("./users.json");
+
+
+// make this LET so we can modify it
+let users = require("./users.json");
+const questions = require("./questions.json");
+
+const USERS_FILE = path.join(__dirname, "users.json");
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: [
+    "http://localhost:8080",      // local dev
+    "https://kiranregmi.com"      // live site on Vercel
+  ]
+}));
+
 app.use(express.json());
 
 const PROJECTS_PATH = path.join(__dirname, "projects.json");
@@ -76,6 +89,47 @@ app.post("/api/login", async (req, res) => {
   });
 });
 
+// REGISTER ENDPOINT (public, creates standard "user" accounts)
+app.post("/api/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required." });
+    }
+
+    const existing = users.find(
+      u => u.email.toLowerCase() === String(email).toLowerCase()
+    );
+    if (existing) {
+      return res.status(409).json({ message: "User already exists." });
+    }
+
+    const hashed = await bcrypt.hash(password, 10);
+    const newUser = {
+      name: name || email,
+      email,
+      password: hashed,
+      role: "user"                 // IMPORTANT: new sign-ups are regular users
+    };
+
+    users.push(newUser);
+
+    // persist to users.json (OK for demo / portfolio)
+    fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2), (err) => {
+      if (err) {
+        console.error("Error writing users file:", err);
+      }
+    });
+
+    return res.status(201).json({ message: "User registered successfully." });
+  } catch (err) {
+    console.error("Register error:", err);
+    return res.status(500).json({ message: "Registration failed." });
+  }
+});
+
+
 // AUTH MIDDLEWARE
 function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -97,6 +151,30 @@ function verifyAdmin(req, res, next) {
   }
   next();
 }
+
+// Simple JWT middleware (you already have something like this)
+function verifyToken(req, res, next) {
+  const auth = req.headers["authorization"] || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+}
+
+// Interview questions (protected)
+app.get("/api/questions", verifyToken, (req, res) => {
+  res.json({ questions });
+});
+
 
 /* --------------------------
         Projects API
@@ -261,3 +339,31 @@ app.get("/api/admin/users", verifyToken, verifyAdmin, (req, res) => {
         Start Server
 --------------------------- */
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// POST /api/projects (admin only)
+/*
+app.post("/api/projects", authenticateToken, (req, res) => {
+  const user = req.user; // from JWT
+  if (user.role !== "admin") {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  const newProject = {
+    id: Date.now(),
+    project: req.body.project,
+    compliance: req.body.compliance,
+    riskImpact: req.body.riskImpact,
+    status: req.body.status,
+    auditDate: req.body.auditDate,
+    owner: req.body.owner,
+  };
+
+  const projects = JSON.parse(fs.readFileSync("./projects.json", "utf-8"));
+  projects.push(newProject);
+  fs.writeFileSync("./projects.json", JSON.stringify(projects, null, 2));
+  res.json({ project: newProject });
+}); //
+*/
+
+// GET /api/questions already exists
+// You can add POST /api/questions similarly later if you want add-question UI.

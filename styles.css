@@ -119,3 +119,857 @@
 .category-tag.security { background: #e11d48; }
 .category-tag.dev { background: #10b981; }
 .category-tag.misc { background: #8b5cf6; }   
+
+/* ========= Portal Layout ========= */
+
+.portal-main {
+  min-height: calc(100vh - 140px);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #f5f7fb;
+}
+
+/* Auth card */
+.auth-wrapper {
+  max-width: 420px;
+  width: 100%;
+  margin: 2rem auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15, 35, 95, 0.12);
+  padding: 2.5rem 2rem;
+}
+
+.auth-wrapper h2 {
+  margin-bottom: 0.5rem;
+}
+
+.auth-wrapper p {
+  margin-bottom: 1.5rem;
+  color: #66708a;
+}
+
+.auth-form-group {
+  margin-bottom: 1rem;
+}
+
+.auth-form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #3b4460;
+}
+
+.auth-form-group input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #cdd4e6;
+  font-size: 0.95rem;
+}
+
+.auth-error {
+  font-size: 0.85rem;
+  color: #c0392b;
+  margin-top: 0.35rem;
+}
+
+.auth-btn-full {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.auth-demo-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Buttons (reuse your global .btn-primary, .btn-secondary, .btn-link) */
+.btn-primary {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+.btn-secondary {
+  background: #eef2ff;
+  border: none;
+  color: #374151;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.btn-link {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+/* Top portal nav */
+.portal-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #0b1120;
+}
+
+.portal-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.portal-logo-badge {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  border: 1px solid #64ffd0;
+  color: #64ffda;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.portal-nav-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.portal-tab {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.portal-tab.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+.portal-tab-admin.hidden {
+  display: none;
+}
+
+.portal-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e5e7eb;
+  font-size: 0.85rem;
+}
+
+.portal-user-email {
+  font-weight: 500;
+}
+
+.portal-user-role {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.portal-logout-btn {
+  background: transparent;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  color: #e5e7eb;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.portal-logout-btn.hidden {
+  display: none;
+}
+
+/* Portal Shell & views */
+.portal-shell {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cards-column {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* will allow 3 cols */
+  gap: 0.75rem;
+}
+
+.portal-view {
+  display: none;
+  margin-top: 1.5rem;
+}
+.portal-view.active {
+  display: block;
+}
+
+.portal-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.portal-section-header h2 {
+  margin: 0;
+}
+
+.portal-section-subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.portal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 12px 30px rgba(15, 35, 95, 0.08);
+  border: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.portal-helper-text {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Projects table */
+.project-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.project-list thead {
+  background: #f3f4ff;
+}
+.project-list th,
+.project-list td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Profile list */
+.profile-list {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+.profile-list li {
+  margin-bottom: 0.4rem;
+}
+
+/* Interview Practice */
+.practice-progress {
+  font-size: 0.8rem;
+  color: #4b5563;
+  text-align: right;
+}
+.practice-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.btn-chip {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  border: none;
+  background: #eef2ff;
+  color: #374151;
+  cursor: pointer;
+}
+.btn-chip.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.practice-filters {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.practice-filters select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #cbd5f5;
+  font-size: 0.85rem;
+}
+
+.cards-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 800px;
+}
+
+/* Question cards */
+.question-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+  font-size: 0.92rem;
+  touch-action: pan-y;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.question-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+.question-card.mastered {
+  border-left: 4px solid #16a34a;
+}
+.question-card.needs-work {
+  border-left: 4px solid #f97316;
+}
+
+.question-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  gap: 0.5rem;
+}
+
+.category-tag {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+}
+
+.status-pill {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #4b5563;
+  white-space: nowrap;
+}
+.status-pill.mastered {
+  background: #dcfce7;
+  color: #166534;
+}
+.status-pill.needs-work {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.answer {
+  margin-top: 0.6rem;
+  padding: 0.75rem;
+  background: #eef2ff;
+  color: #1e3a8a;
+  border-radius: 6px;
+  border-left: 3px solid #2563eb;
+  font-size: 0.88rem;
+  line-height: 1.35rem;
+}
+
+.swipe-hint {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+.pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Drawer (match your existing styling or basic) */
+.drawer.hidden {
+  display: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .portal-main {
+    padding: 1.25rem 0.75rem;
+  }
+  .portal-top-nav {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .portal-nav-center {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .portal-nav-right {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .portal-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .practice-progress {
+    text-align: left;
+  }
+}
+/* ========== PORTAL v3 LAYOUT ========== */
+
+.hidden { display: none !important; }
+
+.portal-body {
+  background: #f5f7fb;
+}
+
+/* Sticky header only for portal */
+.portal-body .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Top navbar */
+.portal-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #0b1120;
+  border-bottom: 1px solid #1f2937;
+}
+
+/* Logo */
+.portal-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.portal-logo-badge {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  border: 1px solid #64ffd0;
+  color: #64ffda;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+/* Nav center buttons */
+.portal-nav-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.portal-tab {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.portal-tab.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+.portal-tab-admin.hidden {
+  display: none;
+}
+
+/* Nav right */
+.portal-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e5e7eb;
+  font-size: 0.85rem;
+}
+.portal-user-email {
+  font-weight: 500;
+}
+.portal-logout-btn {
+  background: transparent;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  color: #e5e7eb;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.portal-logout-btn.hidden {
+  display: none;
+}
+
+/* Main portal area */
+.portal-main {
+  min-height: calc(100vh - 80px);
+  padding: 1rem 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Auth card */
+.auth-wrapper {
+  max-width: 420px;
+  width: 100%;
+  margin: 1.5rem auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15, 35, 95, 0.12);
+  padding: 2rem 1.75rem;
+}
+.auth-wrapper h2 {
+  margin-bottom: 0.5rem;
+}
+.auth-wrapper p {
+  margin-bottom: 1.25rem;
+  color: #66708a;
+}
+.auth-form-group {
+  margin-bottom: 1rem;
+}
+.auth-form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #3b4460;
+}
+.auth-form-group input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #cdd4e6;
+  font-size: 0.95rem;
+}
+.auth-error {
+  font-size: 0.85rem;
+  color: #c0392b;
+  margin-top: 0.35rem;
+}
+.auth-btn-full {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.auth-demo-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Buttons */
+.btn-primary {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+.btn-secondary {
+  background: #eef2ff;
+  border: none;
+  color: #374151;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.btn-link {
+  background: transparent;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+/* Portal shell & views */
+.portal-shell {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+.portal-view {
+  display: none;
+  margin-top: 1rem;
+}
+.portal-view.active {
+  display: block;
+}
+
+/* Headers */
+.portal-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.portal-section-header h2 {
+  margin: 0;
+}
+.portal-section-subtitle {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin-top: 0.2rem;
+}
+
+/* Card container */
+.portal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 12px 30px rgba(15, 35, 95, 0.08);
+  border: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+}
+.portal-helper-text {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Projects table */
+.project-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.project-list thead {
+  background: #f3f4ff;
+}
+.project-list th,
+.project-list td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Profile list */
+.profile-list {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+.profile-list li {
+  margin-bottom: 0.4rem;
+}
+
+/* Interview Practice */
+.practice-progress {
+  font-size: 0.8rem;
+  color: #4b5563;
+  text-align: right;
+}
+.practice-controls {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.btn-chip {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  border: none;
+  background: #eef2ff;
+  color: #374151;
+  cursor: pointer;
+}
+.btn-chip.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* Flashcard grid */
+.cards-column {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Question cards */
+.question-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+  font-size: 0.92rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.question-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+.question-card.mastered {
+  border-left: 4px solid #16a34a;
+}
+.question-card.needs-work {
+  border-left: 4px solid #f97316;
+}
+
+.question-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  gap: 0.5rem;
+}
+.category-tag {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+}
+
+.answer {
+  margin-top: 0.6rem;
+  padding: 0.75rem;
+  background: #eef2ff;
+  color: #111827;
+  border-radius: 6px;
+  border-left: 3px solid #2563eb;
+  font-size: 0.88rem;
+  line-height: 1.35rem;
+}
+
+/* Per-card progress pills */
+.card-actions {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.status-pill {
+  flex: 1;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: #e5e7eb;
+  color: #374151;
+  text-align: center;
+}
+.status-pill.active-mastered {
+  background: #22c55e;
+  color: #064e3b;
+}
+.status-pill.active-needs-work {
+  background: #fb923c;
+  color: #7c2d12;
+}
+
+/* Summary & pagination */
+.practice-summary-text {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+.pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Drawer visibility */
+.drawer.hidden {
+  display: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .portal-main {
+    padding: 0.75rem 0.75rem 2rem;
+  }
+  .portal-top-nav {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .portal-nav-center {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .portal-nav-right {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .portal-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .practice-progress {
+    text-align: left;
+  }
+}

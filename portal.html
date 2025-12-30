@@ -1,697 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portal Login | kiranregmi.com</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Portal | kiranregmi.com</title>
 
-    <!-- Global site styles -->
-    <link rel="stylesheet" href="styles.css" />
-
-    <style>
-        /* Utility */
-        .hidden { display: none !important; }
-
-        body {
-            background-color: #f5f7fb;
-        }
-
-        .portal-layout {
-            min-height: calc(100vh - 140px);
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            padding: 2rem 1rem;
-        }
-
-        /* Auth Section */
-        .auth-wrapper {
-            max-width: 420px;
-            margin: 3rem auto;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 12px 30px rgba(15, 35, 95, 0.12);
-            padding: 2.5rem 2rem;
-        }
-
-        .auth-wrapper h2 {
-            margin-bottom: 0.5rem;
-        }
-
-        .auth-wrapper p {
-            margin-bottom: 1.5rem;
-            color: #66708a;
-        }
-
-        .auth-form-group {
-            margin-bottom: 1rem;
-        }
-
-        .auth-form-group label {
-            display: block;
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-            color: #3b4460;
-        }
-
-        .auth-form-group input {
-            width: 100%;
-            padding: 0.65rem 0.75rem;
-            border-radius: 8px;
-            border: 1px solid #cdd4e6;
-            font-size: 0.95rem;
-        }
-
-        .auth-error {
-            font-size: 0.85rem;
-            color: #c0392b;
-            margin-top: 0.35rem;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            border: none;
-            color: #fff;
-            padding: 0.75rem 1.25rem;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-secondary {
-            background: #eef2ff;
-            border: none;
-            color: #374151;
-            padding: 0.6rem 1rem;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            border: none;
-            color: #fff;
-            padding: 0.4rem 0.8rem;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .btn-link {
-            background: transparent;
-            border: none;
-            color: #2563eb;
-            cursor: pointer;
-            padding: 0;
-            font-size: 0.85rem;
-        }
-
-        /* Dashboard Layout */
-        .dashboard-wrapper {
-            display: flex;
-            gap: 1.5rem;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .dashboard-sidebar {
-            width: 230px;
-            background: #0f172a;
-            border-radius: 16px;
-            padding: 1.5rem 1rem;
-            color: #e5e7eb;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .sidebar-title {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #6b7280;
-        }
-
-        .sidebar-nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0.5rem 0 0;
-        }
-
-        .sidebar-nav li {
-            margin-bottom: 0.4rem;
-        }
-
-        .sidebar-nav button {
-            width: 100%;
-            text-align: left;
-            background: transparent;
-            border: none;
-            color: #e5e7eb;
-            font-size: 0.9rem;
-            padding: 0.55rem 0.75rem;
-            border-radius: 999px;
-            cursor: pointer;
-        }
-
-        .sidebar-nav button.active {
-            background: #2563eb;
-        }
-
-        .sidebar-meta {
-            margin-top: auto;
-            font-size: 0.8rem;
-            color: #9ca3af;
-        }
-
-        .sidebar-role-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            background: rgba(37, 99, 235, 0.2);
-            border-radius: 999px;
-            padding: 0.25rem 0.6rem;
-            color: #bfdbfe;
-            font-size: 0.75rem;
-        }
-
-        /* Dashboard Content */
-        .dashboard-content {
-            flex: 1;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 12px 30px rgba(15, 35, 95, 0.08);
-            padding: 1.75rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .dashboard-header-left h2 {
-            margin-bottom: 0.25rem;
-        }
-
-        .dashboard-header-left p {
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-
-        .dashboard-header-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .user-chip {
-            font-size: 0.85rem;
-            padding: 0.4rem 0.75rem;
-            border-radius: 999px;
-            background: #eff6ff;
-            color: #1e3a8a;
-        }
-
-        .logout-btn {
-            background: transparent;
-            border: 1px solid #cbd5f5;
-            color: #374151;
-            padding: 0.5rem 0.9rem;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .logout-btn:hover {
-            background: #eff6ff;
-        }
-
-        /* Tabbed views inside dashboard */
-        .view-section { display: none; }
-        .view-section.active { display: block; }
-
-        /* Projects */
-        .projects-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .projects-header h3 {
-            margin: 0;
-        }
-
-        .project-list {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        .project-list thead {
-            background: #f3f4ff;
-        }
-
-        .project-list th,
-        .project-list td {
-            padding: 0.6rem 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .project-status {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.15rem 0.55rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-        }
-
-        .status-active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-pending {
-            background: #fef9c3;
-            color: #854d0e;
-        }
-
-        .status-closed {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .project-actions {
-            display: flex;
-            gap: 0.35rem;
-        }
-
-        /* Placeholder cards */
-        .placeholder-card {
-            padding: 1rem;
-            border-radius: 12px;
-            background: #f9fafb;
-            border: 1px dashed #cbd5f5;
-            font-size: 0.9rem;
-            color: #4b5563;
-        }
-
-        .placeholder-card strong {
-            color: #111827;
-        }
-
-        /* Interview practice */
-        .question-card {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: .75rem;
-            cursor: pointer;
-        }
-        .question-card .answer.hidden { display: none; }
-        .category-tag {
-            float: right;
-            font-size: .7rem;
-            background: #dbeafe;
-            color: #1e40af;
-            padding: 2px 6px;
-            border-radius: 5px;
-        }
-        .question-card .answer {
-            margin-top: 0.6rem;
-            padding: 0.75rem;
-            background: #eef2ff;
-            color: #1e3a8a; /* deep blue for readability */
-            border-radius: 6px;
-            font-size: 0.88rem;
-            line-height: 1.35rem;
-            border-left: 3px solid #2563eb; /* subtle accent */
-}
-
-
-        /* Drawer */
-        .drawer {
-            position: fixed;
-            right: 0;
-            top: 0;
-            height: 100vh;
-            width: 360px;
-            max-width: 100%;
-            background: #ffffff;
-            box-shadow: -12px 0 30px rgba(15, 23, 42, 0.25);
-            transform: translateX(100%);
-            transition: transform 0.25s ease-out;
-            z-index: 40;
-        }
-
-        .drawer.open {
-            transform: translateX(0);
-        }
-
-        .drawer-content {
-            height: 100%;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .drawer-close {
-            float: right;
-            cursor: pointer;
-            font-size: 1.25rem;
-            color: #6b7280;
-        }
-
-        .drawer-save {
-            margin-top: 1rem;
-            width: 100%;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .dashboard-wrapper {
-                flex-direction: column;
-            }
-
-            .dashboard-sidebar {
-                width: 100%;
-                flex-direction: row;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .sidebar-nav {
-                flex: 1;
-            }
-
-            .sidebar-nav ul {
-                display: flex;
-                gap: 0.5rem;
-            }
-
-            .sidebar-nav li {
-                margin-bottom: 0;
-            }
-
-            .dashboard-content {
-                padding: 1.25rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .auth-wrapper {
-                margin: 1.5rem auto;
-                padding: 1.75rem 1.25rem;
-            }
-
-            .dashboard-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .dashboard-header-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-        }
-    </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-
-    <!-- Shared Navbar -->
-    <header class="site-header">
-        <nav class="navbar">
-            <a href="index.html" class="flex items-center gap-2">
-                <span class="w-9 h-9 rounded-full border border-[#64ffd0] text-[#64ffda] font-bold flex items-center justify-center">
-                    KR
-                </span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="portal.html" class="active">Portal</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="portal-layout">
-
-        <!-- AUTH VIEW -->
-        <section class="auth-wrapper" id="authSection">
-            <h2>Secure Portal</h2>
-            <p>Sign in to access your projects and admin tools.</p>
-
-            <form id="loginForm">
-                <div class="auth-form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required placeholder="you@example.com" />
-                </div>
-
-                <div class="auth-form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required placeholder="••••••••" />
-                </div>
-
-                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">
-                    Login
-                </button>
-
-                <div id="authError" class="auth-error hidden">
-                    Invalid credentials. Please try again.
-                </div>
-
-                <p style="margin-top: 1rem; font-size: 0.8rem; color:#6b7280;">
-                    Demo accounts:
-                    <br />
-                    Admin: <code>admin@kiranregmi.com / Admin@123</code><br />
-                    User: <code>user@kiranregmi.com / User@123</code>
-                </p>
-            </form>
-        </section>
-
-        <!-- DASHBOARD WRAPPER -->
-        <section class="dashboard-wrapper hidden" id="dashboardSection">
-            <!-- Sidebar -->
-            <aside class="dashboard-sidebar">
-                <div>
-                    <div class="sidebar-title">Portal | Console</div>
-                    <div style="font-size: 1.1rem; font-weight: 600; margin-top: 0.25rem;">
-                        Project Console
-                    </div>
-                </div>
-
-                <nav class="sidebar-nav">
-                    <ul>
-                        <li>
-                            <button type="button" data-view="dashboardView" class="active">
-                                Dashboard
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" data-view="profileView">
-                                Profile
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" data-view="practiceView">
-                                Interview Practice
-                            </button>
-                        </li>
-                        <li id="adminNavItem" class="hidden">
-                            <button type="button" data-view="adminView">
-                                Admin Panel
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="sidebar-meta">
-                    <div id="sidebarRoleBadge" class="sidebar-role-badge">
-                        <span>Role:</span> <span id="sidebarRoleText">User</span>
-                    </div>
-                    <div style="margin-top: 0.4rem;">
-                        <span id="sidebarEmailText"></span>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Main Content -->
-            <section class="dashboard-content">
-                <header class="dashboard-header">
-                    <div class="dashboard-header-left">
-                        <h2 id="welcomeTitle">Welcome</h2>
-                        <p id="welcomeSubtitle">
-                            You are signed in to the secure portal.
-                        </p>
-                    </div>
-                    <div class="dashboard-header-actions">
-                        <span class="user-chip" id="userChip"></span>
-                        <button id="logoutBtn" class="logout-btn">Logout</button>
-                    </div>
-                </header>
-
-                <!-- DASHBOARD VIEW -->
-                <section id="dashboardView" class="view-section active">
-                    <div class="projects-header">
-                        <h3>Projects</h3>
-                        <button id="addProjectBtn" class="btn-secondary hidden">
-                            + New Project
-                        </button>
-                    </div>
-
-                    <table class="project-list" id="projectTable">
-                        <thead>
-                            <tr>
-                                <th>Project</th>
-                                <th>Compliance</th>
-                                <th>Risk Impact</th>
-                                <th>Status</th>
-                                <th>Audit Date</th>
-                                <th>Control Owner</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="projectTableBody"></tbody>
-                    </table>
-                </section>
-
-                <!-- INTERVIEW PRACTICE VIEW -->
-                <section id="practiceView" class="view-section">
-                    <h3>Interview Practice</h3>
-
-                    <div class="mode-toggle" style="margin-bottom: 0.75rem;">
-                        <button id="studyModeBtn" class="btn-link">Study Mode</button>
-                        <button id="quizModeBtn" class="btn-link">Quiz Mode</button>
-                    </div>
-
-                    <div style="margin-bottom: 0.75rem;">
-                        <label for="categoryFilter">Filter by Category:</label>
-                        <select id="categoryFilter">
-                            <option value="all">All</option>
-                            <option value="SOC">SOC</option>
-                            <option value="IAM">IAM</option>
-                            <option value="GRC">GRC</option>
-                            <option value="Incident Response">Incident Response</option>
-                            <option value="Network">Network</option>
-                        </select>
-                    </div>
-
-                    <div id="questionsContainer"></div>
-                </section>
-
-                <!-- PROFILE VIEW -->
-                <section id="profileView" class="view-section">
-                    <h3>Profile</h3>
-                    <div class="placeholder-card">
-                        <p>
-                            <strong>Session details</strong> from this demo:
-                        </p>
-                        <ul style="margin-top: 0.5rem; padding-left: 1.25rem;">
-                            <li><strong>Email:</strong> <span id="profileEmail"></span></li>
-                            <li><strong>Role:</strong> <span id="profileRole"></span></li>
-                            <li><strong>Display Name:</strong> <span id="profileName"></span></li>
-                        </ul>
-                    </div>
-                </section>
-
-                <!-- ADMIN VIEW -->
-                <section id="adminView" class="view-section">
-                    <h3>Admin Panel</h3>
-                    <div class="placeholder-card">
-                        <p>
-                            This area is <strong>restricted to admin role</strong>. In a real
-                            deployment, this is where you would expose:
-                        </p>
-                        <ul style="margin-top: 0.5rem; padding-left: 1.25rem;">
-                            <li>User management (create, disable, reset access)</li>
-                            <li>Project access control configuration</li>
-                            <li>Audit logs / activity tracking</li>
-                        </ul>
-                        <p style="margin-top: 0.5rem;">
-                            For now, use the <strong>Dashboard</strong> tab to manage projects.
-                        </p>
-                    </div>
-                </section>
-            </section>
-        </section>
-    </main>
-
-    <!-- Shared footer -->
-    <footer class="site-footer">
-        <p>© 2025 kiranregmi.com • Identity & Access Controlled Portal</p>
-    </footer>
-
-    <!-- Portal logic -->
-    <script src="portal.js"></script>
-
-    <!-- Project Edit Drawer (Slide-in Panel) -->
-    <div id="projectDrawer" class="drawer hidden">
-      <div class="drawer-content">
-        <span id="drawerClose" class="drawer-close">&times;</span>
-        <h3 id="drawerTitle">Add Project</h3>
-
-        <form id="projectForm">
-          <label>Project Name</label>
-          <input type="text" id="formProjectName" required />
-
-          <label>Compliance Framework</label>
-          <select id="formCompliance">
-            <option>SOC2</option>
-            <option>ISO27001</option>
-            <option>PCI-DSS</option>
-            <option>NIST CSF</option>
-            <option>HIPAA</option>
-          </select>
-
-          <label>Risk Impact</label>
-          <select id="formRisk">
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-          </select>
-
-          <label>Status</label>
-          <select id="formStatus">
-            <option>Active</option>
-            <option>Pending</option>
-            <option>Closed</option>
-          </select>
-
-          <label>Control Owner</label>
-          <select id="formAssignedTo">
-            <option>GRC Team</option>
-            <option>SOC Team</option>
-            <option>IAM Team</option>
-            <option>SecOps Team</option>
-          </select>
-
-          <label>Last Audit Date</label>
-          <input type="date" id="formLastAudit" />
-
-          <button type="submit" class="btn-primary drawer-save">Save Project</button>
-        </form>
+<body class="portal-body">
+  <!-- Top Navbar -->
+  <header class="site-header">
+    <nav class="navbar portal-top-nav">
+      <div class="portal-nav-left">
+        <a href="index.html" class="portal-logo-link">
+          <span class="portal-logo-badge">KR</span>
+        </a>
       </div>
-    </div>
 
+      <div class="portal-nav-center">
+        <button type="button" class="portal-tab active" data-view="projectsView">
+          Projects
+        </button>
+        <button type="button" class="portal-tab" data-view="practiceView">
+          Interview Practice
+        </button>
+        <button type="button" class="portal-tab" data-view="profileView">
+          Profile
+        </button>
+        <button
+          type="button"
+          class="portal-tab portal-tab-admin hidden"
+          data-view="adminView"
+          id="adminTab"
+        >
+          Admin Panel
+        </button>
+      </div>
+
+      <div class="portal-nav-right">
+        <span id="portalUserEmail" class="portal-user-email"></span>
+        <button id="logoutBtn" class="portal-logout-btn hidden">Logout</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="portal-main">
+    <!-- LOGIN VIEW -->
+    <section class="auth-wrapper" id="authSection">
+      <h2>Secure Portal Login</h2>
+      <p>Sign in to access projects and interview practice tools.</p>
+
+      <form id="loginForm">
+        <div class="auth-form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="you@example.com" />
+        </div>
+
+        <div class="auth-form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required placeholder="••••••••" />
+        </div>
+
+        <button type="submit" class="btn-primary auth-btn-full">Login</button>
+
+        <div id="authError" class="auth-error hidden">
+          Invalid credentials. Please try again.
+        </div>
+
+        <p class="auth-demo-note">
+          Demo accounts:
+          <br />
+          Admin: <code>admin@kiranregmi.com / Admin@123</code><br />
+          User: <code>user@kiranregmi.com / User@123</code>
+        </p>
+      </form>
+    </section>
+
+    <!-- PORTAL APP -->
+    <section id="portalShell" class="portal-shell hidden">
+      <!-- PROJECTS VIEW -->
+      <section id="projectsView" class="portal-view active">
+        <header class="portal-section-header">
+          <div>
+            <h2>Projects</h2>
+            <p class="portal-section-subtitle">
+              Simple governance view of compliance, risk and control owners.
+            </p>
+          </div>
+          <div>
+            <button id="addProjectBtn" class="btn-secondary hidden">
+              + New Project
+            </button>
+          </div>
+        </header>
+
+        <div class="portal-card">
+          <table class="project-list" id="projectTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Compliance</th>
+                <th>Risk Impact</th>
+                <th>Status</th>
+                <th>Audit Date</th>
+                <th>Control Owner</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="projectTableBody">
+              <!-- filled by JS -->
+            </tbody>
+          </table>
+          <p class="portal-helper-text">
+            Admin can create and manage projects. Standard users have view-only access.
+          </p>
+        </div>
+      </section>
+
+      <!-- INTERVIEW PRACTICE VIEW -->
+      <section id="practiceView" class="portal-view">
+        <header class="portal-section-header">
+          <div>
+            <h2>Interview Practice</h2>
+            <p class="portal-section-subtitle">
+              SOC, GRC, IAM flashcards. Tap to reveal answers. Use the colored
+              pills to track what needs more work.
+            </p>
+          </div>
+          <div class="practice-progress">
+            <span id="practiceProgressLabel">
+              Pick a category and start drilling.
+            </span>
+          </div>
+        </header>
+
+        <div class="practice-controls">
+          <div class="mode-toggle">
+            <button id="studyModeBtn" type="button" class="btn-chip active">
+              Study Mode
+            </button>
+            <button id="quizModeBtn" type="button" class="btn-chip">
+              Quiz Mode
+            </button>
+            <select id="categoryFilter">
+              <option value="SOC">SOC Interview</option>
+              <option value="GRC">GRC Interview</option>
+              <option value="IAM">IAM Interview</option>
+              <option value="all">All Categories</option>
+            </select>
+            <button id="shuffleBtn" type="button" class="btn-link">
+              Shuffle
+            </button>
+          </div>
+        </div>
+
+        <div id="questionsContainer" class="cards-column">
+          <!-- cards injected by JS -->
+        </div>
+
+        <div id="practiceSummary" class="practice-summary-text"></div>
+        <div id="practicePagination" class="pagination-controls"></div>
+      </section>
+
+      <!-- PROFILE VIEW -->
+      <section id="profileView" class="portal-view">
+        <header class="portal-section-header">
+          <div>
+            <h2>Profile</h2>
+            <p class="portal-section-subtitle">
+              Basic session details for this demo portal.
+            </p>
+          </div>
+        </header>
+
+        <div class="portal-card">
+          <ul class="profile-list">
+            <li><strong>Email:</strong> <span id="profileEmail"></span></li>
+            <li><strong>Role:</strong> <span id="profileRole"></span></li>
+            <li><strong>Display Name:</strong> <span id="profileName"></span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ADMIN VIEW -->
+      <section id="adminView" class="portal-view">
+        <header class="portal-section-header">
+          <div>
+            <h2>Admin Panel</h2>
+            <p class="portal-section-subtitle">
+              Restricted to admin role. Use this panel to talk about RBAC and least
+              privilege during interviews.
+            </p>
+          </div>
+        </header>
+
+        <div class="portal-card">
+          <ul class="profile-list">
+            <li>User management (create, disable, reset access)</li>
+            <li>Project access control configuration</li>
+            <li>Audit logs / activity tracking</li>
+          </ul>
+          <p class="portal-helper-text">
+            This panel is conceptual in the demo. The real value is how you explain
+            the design to a hiring manager.
+          </p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 kiranregmi.com • Identity & Access Controlled Portal</p>
+  </footer>
+
+  <script src="portal.js"></script>
+
+  <!-- Project Drawer -->
+  <div id="projectDrawer" class="drawer hidden">
+    <div class="drawer-content">
+      <span id="drawerClose" class="drawer-close">&times;</span>
+      <h3 id="drawerTitle">Add Project</h3>
+
+      <form id="projectForm">
+        <label>Project Name</label>
+        <input type="text" id="formProjectName" />
+
+        <label>Compliance Framework</label>
+        <select id="formCompliance">
+          <option>SOC2</option>
+          <option>ISO27001</option>
+          <option>PCI-DSS</option>
+          <option>NIST CSF</option>
+          <option>HIPAA</option>
+        </select>
+
+        <label>Risk Impact</label>
+        <select id="formRisk">
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+
+        <label>Status</label>
+        <select id="formStatus">
+          <option>Active</option>
+          <option>Pending</option>
+          <option>Closed</option>
+        </select>
+
+        <label>Control Owner</label>
+        <select id="formAssignedTo">
+          <option>GRC Team</option>
+          <option>SOC Team</option>
+          <option>IAM Team</option>
+          <option>SecOps Team</option>
+        </select>
+
+        <label>Last Audit Date</label>
+        <input type="date" id="formLastAudit" />
+
+        <button type="submit" class="btn-primary drawer-save">Save Project</button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
