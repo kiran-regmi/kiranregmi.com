@@ -1,7 +1,7 @@
 // portal.js
 
 // const API_BASE_URL = "http://localhost:5000"; // change later when backend is deployed
-const API_BASE_URL = "https://kiranregmi-com-backend.onrender.com";//
+const API_BASE_URL = "https://kiranregmi-com-backend.onrender.com/api";//
 const SESSION_KEY = "kr_portal_session";
 const PROGRESS_KEY = "kr_practice_progress";
 
