@@ -1,7 +1,14 @@
 // portal.js
 
 // const API_BASE_URL = "http://localhost:5000"; // change later when backend is deployed
-const API_BASE_URL = "https://kiranregmi-com-backend.onrender.com/api";//
+
+
+// Decide backend URL: localhost in dev, Render in prod
+const API_BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "https://kiranregmi-com-backend.onrender.com";
+
 const SESSION_KEY = "kr_portal_session";
 const PROGRESS_KEY = "kr_practice_progress";
 
@@ -144,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ---------- Auth handlers ---------- */
+  /* ---------- Auth/Login handlers ---------- */
   async function handleLogin(e) {
     e.preventDefault();
     authError.classList.add("hidden");
