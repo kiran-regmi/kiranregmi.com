@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const password = document.getElementById("password").value.trim();
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/login`, {
+    const res = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!session || !session.token || !projectTableBody) return;
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/projects`, {
+      const res = await fetch(`${API_BASE_URL}/projects`, {
         headers: { Authorization: `Bearer ${session.token}` },
       });
 
@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/projects`, {
+      const res = await fetch(`${API_BASE_URL}/projects`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -483,7 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!session || !session.token) return;
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/questions`, {
+      const res = await fetch(`${API_BASE_URL}/questions`, {
         headers: { Authorization: `Bearer ${session.token}` },
       });
 
