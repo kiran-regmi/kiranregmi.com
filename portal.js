@@ -153,21 +153,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------- Auth/Login handlers ---------- */
   async function handleLogin(event) {
-    event.preventDefault();
-    authError.classList.add("hidden");
+  event.preventDefault();
+  authError.classList.add("hidden");
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const authError = document.getElementById("authError");
- 
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-      const data = await res.json();
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
 
     if (!res.ok) {
       authError.textContent = data.message || "Invalid credentials";
@@ -175,26 +174,25 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Save token
-    localStorage.setItem("portalToken", data.token);
+    const session = {
+      token: data.token,
+      email: data.user.email,
+      role: data.user.role,
+      name: data.user.name,
+      isAuthenticated: true
+    };
 
-    setAuthUI(data.user);
-    loadDashboard();
+    saveSession(session);
+    showPortal(session);
+    loadProjects();
+    loadQuestions();
+
   } catch (err) {
-    console.error("Login error:", err);
-    authError.textContent = "Network error, try again.";
+    console.error("Login failed:", err);
+    authError.textContent = "Network error. Try again.";
     authError.classList.remove("hidden");
   }
 }
-
-      saveSession(session);
-      showPortal(session);
-      loadProjects();
-      loadQuestions();
-    } catch (err) {
-      console.error("Login failed:", err);
-      authError.classList.remove("hidden");
-    }
 
   function handleLogout() {
     clearSession();
