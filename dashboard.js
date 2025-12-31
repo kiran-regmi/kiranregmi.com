@@ -1,6 +1,6 @@
 // portal.js – minimal, working v1 to get login + questions going
 
-const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
+const backendURL = "https://kiranregmi-com-backend.onrender.com/api";
 
 let allQuestions = [];
 let filteredQuestions = [];
@@ -63,7 +63,7 @@ function wireLoginForm(form) {
 
     try {
       const res = await fetch(`${API_BASE}/login`, {
-        method: "POST",
+        method: "POST", "GET";
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
       });
