@@ -152,13 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------- Auth/Login handlers ---------- */
-  async function handleLogin(e) {
-    e.preventDefault();
+  async function handleLogin(event) {
+    event.preventDefault();
     authError.classList.add("hidden");
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-
+    const authError = document.getElementById("authError");
+ 
     try {
       const res = await fetch(`${API_BASE_URL}/api/login`, {
         method: "POST",
@@ -166,19 +167,25 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!res.ok) {
-        authError.classList.remove("hidden");
-        return;
-      }
-
       const data = await res.json();
-      const session = {
-        token: data.token,
-        role: data.role,
-        email: data.email,
-        name: data.name || data.email,
-        isAuthenticated: true,
-      };
+
+    if (!res.ok) {
+      authError.textContent = data.message || "Invalid credentials";
+      authError.classList.remove("hidden");
+      return;
+    }
+
+    // Save token
+    localStorage.setItem("portalToken", data.token);
+
+    setAuthUI(data.user);
+    loadDashboard();
+  } catch (err) {
+    console.error("Login error:", err);
+    authError.textContent = "Network error, try again.";
+    authError.classList.remove("hidden");
+  }
+}
 
       saveSession(session);
       showPortal(session);
@@ -188,7 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Login failed:", err);
       authError.classList.remove("hidden");
     }
-  }
 
   function handleLogout() {
     clearSession();
