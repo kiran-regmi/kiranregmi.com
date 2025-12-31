@@ -6,8 +6,8 @@
 // Decide backend URL: localhost in dev, Render in prod
 const API_BASE_URL =
   window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://kiranregmi-com-backend.onrender.com";
+    ? "http://localhost:5000/api"
+    : "https://kiranregmi-com-backend.onrender.com/api";
 
 const SESSION_KEY = "kr_portal_session";
 const PROGRESS_KEY = "kr_practice_progress";
