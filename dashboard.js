@@ -49,7 +49,7 @@ async function loadQuestions() {
 
   const email = localStorage.getItem("userEmail");
   if (!email) {
-    window.location.href = "portal-login.html";
+    window.location.href = "login.html";
     return;
   }
 
