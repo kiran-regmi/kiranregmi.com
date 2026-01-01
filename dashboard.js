@@ -1,227 +1,194 @@
-// portal.js – minimal, working v1 to get login + questions going
+// dashboard.js
+// Frontend logic for login + interview practice
 
-const backendURL = "https://kiranregmi-com-backend.onrender.com/api";
+const BACKEND_URL = "https://kiranregmi-com-backend.onrender.com";
+const API_BASE = `${BACKEND_URL}/api`;
 
-let allQuestions = [];
-let filteredQuestions = [];
-let currentCategory = "All";
-let currentPage = 1;
-const PAGE_SIZE = 8;
-
-document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("loginForm");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  if (loginForm) {
-    wireLoginForm(loginForm);
-  }
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", handleLogout);
-    initDashboard();
-  }
-});
-
-// ========== AUTH ==========
-
-function saveSession(email, role) {
-  localStorage.setItem("portalEmail", email);
-  localStorage.setItem("portalRole", role);
+// -------- Session helpers --------
+function saveSession(email, role, token) {
+  localStorage.setItem(
+    "portalSession",
+    JSON.stringify({ email, role, token })
+  );
 }
 
 function getSession() {
-  const email = localStorage.getItem("portalEmail");
-  const role = localStorage.getItem("portalRole");
-  if (!email || !role) return null;
-  return { email, role };
+  try {
+    const raw = localStorage.getItem("portalSession");
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
 }
 
 function clearSession() {
-  localStorage.removeItem("portalEmail");
-  localStorage.removeItem("portalRole");
+  localStorage.removeItem("portalSession");
 }
 
-function handleLogout() {
-  clearSession();
-  window.location.href = "login.html";
-}
+// -------- Login page --------
+function initLoginPage() {
+  const loginForm = document.getElementById("loginForm");
+  const emailInput = document.getElementById("loginEmail");
+  const passwordInput = document.getElementById("loginPassword");
+  const loginError = document.getElementById("loginError");
 
-// ========== LOGIN PAGE LOGIC ==========
+  if (!loginForm || !emailInput || !passwordInput || !loginError) {
+    return; // not on login.html
+  }
 
-function wireLoginForm(form) {
-  form.addEventListener("submit", async (e) => {
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    loginError.textContent = "";
 
-    const emailEl = document.getElementById("loginEmail");
-    const passEl = document.getElementById("loginPassword");
-    const errorEl = document.getElementById("loginError");
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
-    errorEl.textContent = "";
-
-    const email = emailEl.value.trim();
-    const password = passEl.value;
+    if (!email || !password) {
+      loginError.textContent = "Please enter email and password.";
+      return;
+    }
 
     try {
       const res = await fetch(`${API_BASE}/login`, {
-        method: "POST", "GET";
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
-      if (!res.ok) {
-        errorEl.textContent = "Invalid email or password.";
-        return;
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
       }
 
-      const data = await res.json();
-      saveSession(data.email, data.role);
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed. Please try again.");
+      }
 
-      errorEl.style.color = "#16a34a";
-      errorEl.textContent = "Login successful. Redirecting…";
+      saveSession(data.email, data.role, data.token);
 
-      setTimeout(() => {
-        window.location.href = "dashboard.html";
-      }, 600);
+      // Go to the dashboard
+      window.location.href = "dashboard.html";
     } catch (err) {
       console.error("Login error:", err);
-      errorEl.textContent = "Network error. Please try again.";
+      loginError.textContent =
+        err.message || "Network error. Please try again.";
     }
   });
 }
 
-// ========== DASHBOARD / QUESTIONS LOGIC ==========
-
-async function initDashboard() {
-  const session = getSession();
-  const notice = document.getElementById("loginRedirectNotice");
-  const userChip = document.getElementById("userChip");
-  const welcomeLine = document.getElementById("welcomeLine");
-  const categorySelect = document.getElementById("categorySelect");
-  const shuffleBtn = document.getElementById("shuffleBtn");
-
-  if (!session) {
-    if (notice) {
-      notice.style.display = "block";
-      notice.textContent = "You must sign in. Redirecting to login…";
-    }
-    setTimeout(() => {
-      window.location.href = "login.html";
-    }, 900);
-    return;
-  }
-
-  if (userChip) {
-    userChip.textContent = `${session.email} • ${session.role.toUpperCase()}`;
-  }
-  if (welcomeLine) {
-    welcomeLine.textContent = `Practicing as ${session.role.toUpperCase()}. Use filters to focus on SOC, GRC, or IAM.`;
-  }
-
-  if (categorySelect) {
-    categorySelect.addEventListener("change", () => {
-      currentCategory = categorySelect.value;
-      applyFiltersAndRender();
-    });
-  }
-
-  if (shuffleBtn) {
-    shuffleBtn.addEventListener("click", () => {
-      filteredQuestions.sort(() => Math.random() - 0.5);
-      currentPage = 1;
-      renderQuestions();
-    });
-  }
-
-  await fetchQuestions();
-}
-
-async function fetchQuestions() {
-  const container = document.getElementById("questionsContainer");
-  if (!container) return;
-
-  try {
-    const res = await fetch(`${API_BASE}/questions`);
-    if (!res.ok) {
-      throw new Error("Failed to load questions");
-    }
-    const data = await res.json();
-    allQuestions = Array.isArray(data) ? data : [];
-    applyFiltersAndRender();
-  } catch (err) {
-    console.error("Fetch questions error:", err);
-    container.innerHTML = `<p style="color:#b91c1c;">Unable to load questions from backend.</p>`;
-  }
-}
-
-function applyFiltersAndRender() {
-  if (currentCategory === "All") {
-    filteredQuestions = [...allQuestions];
-  } else {
-    filteredQuestions = allQuestions.filter(q => q.category === currentCategory);
-  }
-  currentPage = 1;
-  updateStats();
-  renderQuestions();
-}
-
-function updateStats() {
-  const totalEl = document.getElementById("totalCount");
-  if (totalEl) {
-    totalEl.textContent = filteredQuestions.length.toString();
-  }
-}
+// -------- Dashboard (questions) --------
+let allQuestions = [];
+let currentQuestions = [];
 
 function renderQuestions() {
   const container = document.getElementById("questionsContainer");
-  const pageBox = document.getElementById("pageBox");
-  if (!container || !pageBox) return;
+  if (!container) return;
 
   container.innerHTML = "";
-  pageBox.innerHTML = "";
 
-  if (!filteredQuestions.length) {
-    container.innerHTML = `<p style="font-size:0.9rem; color:#6b7280;">No questions found for this filter.</p>`;
+  if (!currentQuestions.length) {
+    const empty = document.createElement("p");
+    empty.textContent = "No questions found.";
+    container.appendChild(empty);
     return;
   }
 
-  const totalPages = Math.ceil(filteredQuestions.length / PAGE_SIZE);
-  const startIdx = (currentPage - 1) * PAGE_SIZE;
-  const pageItems = filteredQuestions.slice(startIdx, startIdx + PAGE_SIZE);
+  const fragment = document.createDocumentFragment();
 
-  pageItems.forEach((q, idx) => {
-    const globalIndex = startIdx + idx + 1;
-    const card = document.createElement("div");
+  currentQuestions.forEach((q, idx) => {
+    const card = document.createElement("article");
     card.className = "question-card";
+
+    const number =
+      typeof q.id === "number" ? q.id : idx + 1;
+    const numberLabel = String(number).padStart(2, "0");
+
     card.innerHTML = `
-      <h4>Q${globalIndex}: ${q.question}</h4>
-      <p>${q.answer}</p>
+      <header class="question-card__header">
+        <span class="question-card__qnum">Q${numberLabel}</span>
+        <span class="question-card__tag">${q.category || ""}</span>
+      </header>
+      <div class="question-card__body">
+        <h3 class="question-card__question">
+          ${q.question}
+        </h3>
+        <p class="question-card__answer">
+          ${q.answer}
+        </p>
+      </div>
     `;
-    container.appendChild(card);
+
+    fragment.appendChild(card);
   });
 
-  const prevBtn = document.createElement("button");
-  prevBtn.textContent = "Prev";
-  prevBtn.disabled = currentPage === 1;
-  prevBtn.onclick = () => {
-    if (currentPage > 1) {
-      currentPage--;
-      renderQuestions();
-    }
-  };
-
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next";
-  nextBtn.disabled = currentPage === totalPages;
-  nextBtn.onclick = () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      renderQuestions();
-    }
-  };
-
-  pageBox.appendChild(prevBtn);
-  const label = document.createElement("span");
-  label.textContent = ` Page ${currentPage} of ${totalPages} `;
-  pageBox.appendChild(label);
-  pageBox.appendChild(nextBtn);
+  container.appendChild(fragment);
 }
+
+async function loadQuestions() {
+  try {
+    const res = await fetch(`${API_BASE}/questions`);
+    if (!res.ok) throw new Error("Failed to load questions");
+
+    const data = await res.json();
+    allQuestions = Array.isArray(data) ? data : [];
+    currentQuestions = [...allQuestions];
+    renderQuestions();
+  } catch (err) {
+    console.error("Error loading questions:", err);
+    const container = document.getElementById("questionsContainer");
+    if (container) {
+      container.innerHTML =
+        '<p style="color:#b91c1c;">Failed to load questions. Please try again later.</p>';
+    }
+  }
+}
+
+function initDashboardPage() {
+  const container = document.getElementById("questionsContainer");
+  if (!container) return; // not on dashboard.html
+
+  // Optional: if you want to force login first
+  // const session = getSession();
+  // if (!session) {
+  //   window.location.href = "login.html";
+  //   return;
+  // }
+
+  const shuffleBtn = document.getElementById("shuffleBtn");
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener("click", () => {
+      if (!allQuestions.length) return;
+      currentQuestions = [...allQuestions];
+
+      // Fisher–Yates shuffle
+      for (let i = currentQuestions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [currentQuestions[i], currentQuestions[j]] = [
+          currentQuestions[j],
+          currentQuestions[i],
+        ];
+      }
+      renderQuestions();
+    });
+  }
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      clearSession();
+      window.location.href = "login.html";
+    });
+  }
+
+  loadQuestions();
+}
+
+// -------- Bootstrapping --------
+document.addEventListener("DOMContentLoaded", () => {
+  initLoginPage();
+  initDashboardPage();
+});
+
+<script src="dashboard.js"></script>
