@@ -145,6 +145,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     // Save token and role
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
+    localStorage.setItem("email", email);
     
     // Redirect to dashboard
     window.location.href = "/dashboard.html";
