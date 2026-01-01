@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // State
   let allQuestions = [];
   let currentPage = 1;
-  const PAGE_SIZE = 6;
+  const PAGE_SIZE = 12;
   let shuffled = false;
 
   // --- Session / Auth helpers ---
@@ -156,10 +156,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const idLabel = q.id || q._id || "";
 
         card.innerHTML = `
-          <h4>${text}</h4>
+          <h4 class="question-text">${text}</h4>
           <p><strong>Category:</strong> ${categoryLabel}</p>
           ${idLabel ? `<p style="font-size:0.75rem;color:#9ca3af;">ID: ${idLabel}</p>` : ""}
-        `;
+          <button class="answer-btn">Show Answer</button>
+          <div class="answer hidden">
+              ${q.answer ? q.answer : "No answer provided in dataset."}
+          </div>
+          `;
+
+          const btn = card.querySelector(".answer-btn");
+          const ans = card.querySelector(".answer");
+
+          btn.addEventListener("click", () => {
+            const isHidden = ans.classList.contains("hidden");
+            ans.classList.toggle("hidden");
+            btn.textContent = isHidden ? "Hide Answer" : "Show Answer";
+        });
 
         questionsContainer.appendChild(card);
       }

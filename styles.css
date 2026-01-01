@@ -973,3 +973,34 @@
     text-align: left;
   }
 }
+.answer {
+  margin-top: 8px;
+  padding: 8px;
+  font-size: 0.9rem;
+  border-left: 3px solid #4B5563;
+  background: #F9FAFB;
+  border-radius: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+.answer-btn {
+  margin-top: 6px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.answer-btn:hover {
+  background: #2563EB;
+}
+.answer-btn:focus {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
