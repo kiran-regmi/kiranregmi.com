@@ -117,45 +117,45 @@
   </div>
 
   <script>
-document.getElementById("loginForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
+const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
 
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value.trim();
-    const errorMsg = document.getElementById("errorMsg");
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    errorMsg.style.display = "none";
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+  const error = document.getElementById("loginError");
 
-    try {
-        const response = await fetch("https://kiranregmi-com-backend.onrender.com/api/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
-        });
+  error.textContent = "";
 
-        const data = await response.json();
-        console.log("LOGIN RESPONSE:", data);
+  try {
+    const res = await fetch(`${API_BASE}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
 
-        if (!response.ok || !data.success) {
-            errorMsg.style.display = "block";
-            errorMsg.innerText = "Invalid email or password.";
-            return;
-        }
+    const data = await res.json();
 
-        // Save token & role for protected pages
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("userRole", data.role);
-
-        // Redirect to dashboard
-        window.location.href = "dashboard.html";
-
-    } catch (err) {
-        console.error("Login Error:", err);
-        errorMsg.style.display = "block";
-        errorMsg.innerText = "Network error. Try again.";
+    if (!res.ok) {
+      error.textContent = data.message || "Login failed.";
+      return;
     }
+
+    // Save token and role
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.role);
+    
+    // Redirect to dashboard
+    window.location.href = "/dashboard.html";
+
+  } catch (err) {
+    console.error(err);
+    error.textContent = "Network error contacting server.";
+  }
 });
 </script>
+
 
 </body>
 </html>

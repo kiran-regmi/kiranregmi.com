@@ -1,4 +1,4 @@
-const API_BASE = "https://kiranregmi-com-backend.onrender.com";
+const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
 
 async function handleLogin(event) {
   event.preventDefault();
