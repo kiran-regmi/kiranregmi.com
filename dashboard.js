@@ -161,7 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
           ${idLabel ? `<p style="font-size:0.75rem;color:#9ca3af;">ID: ${idLabel}</p>` : ""}
           <button class="answer-btn">Show Answer</button>
           <div class="answer hidden">
-              ${q.answer ? q.answer : "No answer provided in dataset."}
+          <strong>Answer:</strong>
+          <div class="answer-text">
+            ${q.answer ? q.answer : "No answer provided in dataset."}
+          </div>
           </div>
           `;
 
