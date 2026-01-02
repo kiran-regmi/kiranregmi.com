@@ -1056,10 +1056,10 @@
 }
 
 .question-title {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: #4b5563; /* subtle gray */
+  color: #6b7280; /* subtle gray */
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
 }
