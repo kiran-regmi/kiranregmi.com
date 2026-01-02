@@ -14,6 +14,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const userChip = document.getElementById("userChip");
   const loginRedirectNotice = document.getElementById("loginRedirectNotice");
   const logoutBtn = document.getElementById("logoutBtn");
+  const studyModeToggle = document.getElementById("studyModeToggle");
+  const reviewedStoreKey = "reviewedQuestions";
+
+// Add reviewed Logic here
+
+function getReviewedMap() {
+  return JSON.parse(localStorage.getItem(reviewedStoreKey) || "{}");
+}
+
+function isReviewed(id) {
+  return !!getReviewedMap()[id];
+}
+
+function setReviewed(id, value) {
+  const map = getReviewedMap();
+  if (value) map[id] = true;
+  else delete map[id];
+  localStorage.setItem(reviewedStoreKey, JSON.stringify(map));
+}
+
 
   // ---- State ----
   let allQuestions = [];
@@ -92,6 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Study Mode: unreviewed only
+if (
+  studyModeToggle?.checked &&
+  document.getElementById("unreviewedOnly")?.checked &&
+  isReviewed(q.id)
+) {
+  return false;
+}
+
   // ---- Render ----
   function renderQuestions() {
     let filtered = getFilteredQuestions();
@@ -138,6 +167,23 @@ document.addEventListener("DOMContentLoaded", () => {
       questionsContainer.appendChild(card);
     });
 
+    // update card with review button 
+    const reviewed = isReviewed(q.id);
+
+    if (studyModeToggle?.checked) {
+      const reviewBtn = document.createElement("button");
+      reviewBtn.textContent = reviewed ? "Mark Unreviewed" : "Mark Reviewed";
+      reviewBtn.style.marginTop = "0.5rem";
+      reviewBtn.style.fontSize = "0.75rem";
+
+      reviewBtn.addEventListener("click", () => {
+        setReviewed(q.id, !reviewed);
+        renderQuestions();
+      });
+
+      card.appendChild(reviewBtn);
+    }
+
     // Pagination
     pageBox.innerHTML = `<span>Page ${currentPage} of ${totalPages}</span>`;
     if (totalPages > 1) {
@@ -171,6 +217,10 @@ document.addEventListener("DOMContentLoaded", () => {
     renderQuestions();
   });
 
+ studyModeToggle?.addEventListener("change", () => {
+  renderQuestions();
+  }); 
+  
   // ---- Init ----
   if (requireAuthOrRedirect()) {
     loadQuestions();
