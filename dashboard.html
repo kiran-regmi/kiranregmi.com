@@ -82,7 +82,7 @@
       align-items: center;
       margin-bottom: 1rem;
       flex-wrap: wrap;
-      
+
     }
     .top-controls select, .top-controls button {
       border-radius: 999px;
@@ -153,13 +153,16 @@
   </header>
 
   <main class="page">
-    <div class="page-header">
-      <div>
-        <h1>Interview Practice</h1>
-        <p id="welcomeLine">Loading session…</p>
-      </div>
-      <span class="user-chip" id="userChip"></span>
+    <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+  <div>
+    <div style="display:flex; align-items:center; gap:0.75rem;">
+      <h1 style="margin:0;">Interview Practice</h1>
+      <span id="progressSummary" style="font-size:0.85rem; color:#374151;"></span>
     </div>
+    <p id="welcomeLine">Loading session…</p>
+  </div>
+  <span class="user-chip" id="userChip"></span>
+</div>
 
     <p id="loginRedirectNotice" style="display:none;">
       You are not signed in. Redirecting to login…

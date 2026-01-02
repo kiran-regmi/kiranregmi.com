@@ -18,21 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
 
   // Study mode controls
-  const studyModeToggle = document.getElementById("studyModeToggle");
-  const unreviewedOnlyCheckbox = document.getElementById("unreviewedOnly");
-
-  // Progress summary (optional placeholder in HTML; we’ll create if missing)
-  let progressSummary = document.getElementById("progressSummary");
-  const topControls = document.querySelector(".top-controls");
-
-  if (!progressSummary && topControls) {
-    progressSummary = document.createElement("span");
-    progressSummary.id = "progressSummary";
-    progressSummary.style.fontSize = "0.85rem";
-    progressSummary.style.color = "#374151";
-    progressSummary.style.marginLeft = "0.25rem";
-    topControls.appendChild(progressSummary);
-  }
+  const progressSummary = document.getElementById("progressSummary");
 
   // ---------------------------
   // State
