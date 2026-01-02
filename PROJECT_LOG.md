@@ -50,13 +50,27 @@ Backend	server.js
     package.json	
     config.js	
     generate-hash.js	
-        
-        
+     
 Version 1	Auth + Session	
     Question Rendering	
     Show / Hide Answers	
     Search (Questions + answers)	
     Category Filter	
     Shuffle	
-    Pagination - 12/page	
-    Clean UI 	
+    Pagination - 12/page		
+
+Version 1.1 
+    Auth + session 
+    questions card
+    serach (questions/answers)
+    category filter
+    shuffle
+    pagination -12/page
+    ++++++
+    Study mode
+    mark reviewed / unreviewed
+    progress summary in header
+    Local storage persistence
+    
+
+

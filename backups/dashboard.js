@@ -101,15 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // category count logic, after data is loaded
-  allQuestions = data.questions || [];
-  dataLoaded = true;
-
-  updateCategoryCounts();   // 👈 add this line
-  currentPage = 1;
-  renderQuestions();
-
-
   // ---------------------------
   // Helpers
   // ---------------------------
@@ -161,30 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return true;
     });
   }
-
-
-  // category count logic
-  function updateCategoryCounts() {
-  if (!allQuestions.length) return;
-
-  const counts = allQuestions.reduce((acc, q) => {
-    acc[q.category] = (acc[q.category] || 0) + 1;
-    return acc;
-  }, {});
-
-  const options = categorySelect.querySelectorAll("option");
-
-  options.forEach(opt => {
-    const value = opt.value;
-
-    if (value === "All") {
-      opt.textContent = `All Categories (${allQuestions.length})`;
-    } else {
-      const count = counts[value] || 0;
-      opt.textContent = `${value} (${count})`;
-    }
-  });
-}
 
   // ---------------------------
   // Render
