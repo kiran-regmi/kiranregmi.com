@@ -2,123 +2,196 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Secure Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css" />
+  <title>Dashboard • kiranregmi.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
       background: #f3f4f6;
       margin: 0;
-      padding: 0;
     }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .top-bar {
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #0b1120;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
     }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+    header .brand {
+      font-weight: 600;
+      font-size: 0.95rem;
     }
-
-    .question-card {
-      background: white;
-      padding: 14px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      margin-bottom: 12px;
+    header nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-size: 0.85rem;
     }
-
-    button {
-      padding: 6px 10px;
-      border-radius: 4px;
-      border: 1px solid #d1d5db;
-      background: #fff;
+    header nav a.active {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: #2563eb;
+    }
+    #logoutBtn {
+      margin-left: 1rem;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb33;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #f9fafb;
+    .page {
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem 2rem;
     }
-
-    .reviewed-badge {
-      font-size: 0.7rem;
-      background: #10b981;
-      color: white;
-      padding: 2px 6px;
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+    .page-header p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    .user-chip {
+      font-size: 0.8rem;
+      background: #e0f2fe;
+      color: #0f172a;
+      padding: 0.25rem 0.65rem;
       border-radius: 999px;
-      margin-left: 6px;
     }
 
-    .answer.hidden {
-      display: none;
+    .top-controls {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .top-controls select, .top-controls button {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.8rem;
+      background: #fff;
+      cursor: pointer;
+    }
+    #shuffleBtn {
+      background: #2563eb;
+      color: #fff;
+      border-color: transparent;
+    }
+
+    #questionsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .question-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e5e7eb;
+    }
+    .question-card h4 {
+      font-size: 0.95rem;
+      margin: 0 0 0.5rem 0;
+    }
+    .question-card p {
+      font-size: 0.85rem;
+      color: #4b5563;
+      margin: 0;
     }
 
     #pageBox {
-      margin-top: 16px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    #pageBox button {
+      border-radius: 999px;
+      border: none;
+      padding: 0.35rem 0.7rem;
+      margin: 0 0.3rem;
+      background: #111827;
+      color: #f9fafb;
+      cursor: pointer;
+    }
+    #loginRedirectNotice {
+      font-size: 0.85rem;
+      color: #b91c1c;
     }
   </style>
 </head>
 <body>
-
-<div class="container">
-
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div>
-      <h2 id="welcomeLine">Dashboard</h2>
-      <span id="userChip"></span>
+  <header>
+    <div class="brand">kiranregmi.com • Secure Dashboard</div>
+    <div style="display:flex; align-items:center;">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
     </div>
-    <button id="logoutBtn">Logout</button>
-  </div>
+  </header>
 
-  <div id="loginRedirectNotice" style="display:none;color:red;">
-    Redirecting to login...
-  </div>
+  <main class="page">
+    <div class="page-header">
+      <div>
+        <h1>Interview Practice</h1>
+        <p id="welcomeLine">Loading session…</p>
+      </div>
+      <span class="user-chip" id="userChip"></span>
+    </div>
 
-  <!-- Controls -->
-  <div class="controls">
-    <input id="searchInput" type="text" placeholder="Search questions..." />
+    <p id="loginRedirectNotice" style="display:none;">
+      You are not signed in. Redirecting to login…
+    </p>
 
-    <select id="categorySelect">
-      <option value="All">All</option>
-      <option value="GRC">GRC</option>
-      <option value="IAM">IAM</option>
-      <option value="SOC">SOC</option>
-    </select>
+    <section id="questionsSection">
+      <div class="top-controls">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search questions or answers..."
+          class="search-box"
+          />
+        <span>Total: <strong id="totalCount">0</strong></span>
+        <select id="categorySelect">
+          <option value="All">All Categories</option>
+          <option value="SOC">SOC</option>
+          <option value="GRC">GRC</option>
+          <option value="IAM">IAM</option>
+        </select>
+        <label style="font-size:0.85rem;">
+        <input type="checkbox" id="unreviewedOnly" />
+        Show unreviewed only
+        </label>
 
-    <button id="shuffleBtn">Shuffle</button>
+        <button id="shuffleBtn">Shuffle</button>
+      </div>
 
-    <label>
-      <input type="checkbox" id="unreviewedOnly" />
-      Unreviewed only
-    </label>
+      <div id="questionsContainer"></div>
+      <div id="pageBox"></div>
+    </section>
+  </main>
 
-    <span>Total: <strong id="totalCount">0</strong></span>
-  </div>
-
-  <!-- Questions -->
-  <div id="questionsContainer"></div>
-
-  <!-- Pagination -->
-  <div id="pageBox"></div>
-
-</div>
-
-<script src="dashboard.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
