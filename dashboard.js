@@ -86,28 +86,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch questions
   // ---------------------------
   async function loadQuestions() {
-    try {
-      const { token } = getSession();
-      const res = await fetch(`${API_BASE}/questions`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
-      allQuestions = data.questions || [];
-      dataLoaded = true;
-      currentPage = 1;
-      renderQuestions();
-    } catch (err) {
-      console.error("Failed to load questions", err);
+  try {
+    const { token } = getSession();
+    const res = await fetch(`${API_BASE}/questions`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const data = await res.json();
+
+    // ✅ data is ONLY used here
+    allQuestions = data.questions || [];
+    dataLoaded = true;
+
+    // ✅ category counts use allQuestions, NOT data
+    if (typeof updateCategoryCounts === "function") {
+      updateCategoryCounts();
     }
+
+    currentPage = 1;
+    renderQuestions();
+  } catch (err) {
+    console.error("Failed to load questions", err);
+    welcomeLine.textContent = "Failed to load questions.";
   }
+}
 
-  // category count logic, after data is loaded
-  allQuestions = data.questions || [];
-  dataLoaded = true;
-
-  updateCategoryCounts();   // 👈 add this line
-  currentPage = 1;
-  renderQuestions();
 
 
   // ---------------------------
