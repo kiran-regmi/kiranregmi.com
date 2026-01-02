@@ -102,6 +102,9 @@
   cursor: pointer;
   border: 1px solid #333;
 }
+.question-card h4 {
+  margin-top: 2px;
+}
 
 .answer {
   margin-top: 0.5rem;
