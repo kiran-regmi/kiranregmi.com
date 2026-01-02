@@ -1,4 +1,4 @@
-// dashboard.js — BASELINE + STUDY MODE + PROGRESS SUMMARY (SAFE VERSION)
+// dashboard.js — STABLE + STUDY MODE + PROGRESS SUMMARY (HARDENED)
 
 const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
 
@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginRedirectNotice = document.getElementById("loginRedirectNotice");
   const logoutBtn = document.getElementById("logoutBtn");
 
-  // Study mode controls
+  const studyModeToggle = document.getElementById("studyModeToggle");
+  const unreviewedOnlyCheckbox = document.getElementById("unreviewedOnly");
   const progressSummary = document.getElementById("progressSummary");
 
   // ---------------------------
@@ -27,9 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentPage = 1;
   const PAGE_SIZE = 12;
   let shuffled = false;
+  let dataLoaded = false; // 🔑 important
 
   // ---------------------------
-  // Reviewed (localStorage)
+  // Reviewed storage
   // ---------------------------
   const reviewedStoreKey = "reviewedQuestions";
 
@@ -47,13 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setReviewed(id, value) {
     const map = getReviewedMap();
-    if (value) map[id] = true;
-    else delete map[id];
+    value ? (map[id] = true) : delete map[id];
     localStorage.setItem(reviewedStoreKey, JSON.stringify(map));
   }
 
   // ---------------------------
-  // Auth helpers
+  // Auth
   // ---------------------------
   function getSession() {
     return {
@@ -76,26 +77,23 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-  function handleLogout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("email");
+  logoutBtn.addEventListener("click", () => {
+    ["token", "role", "email"].forEach(k => localStorage.removeItem(k));
     window.location.href = "/login.html";
-  }
-
-  logoutBtn.addEventListener("click", handleLogout);
+  });
 
   // ---------------------------
   // Fetch questions
   // ---------------------------
   async function loadQuestions() {
-    const { token } = getSession();
     try {
+      const { token } = getSession();
       const res = await fetch(`${API_BASE}/questions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
       allQuestions = data.questions || [];
+      dataLoaded = true;
       currentPage = 1;
       renderQuestions();
     } catch (err) {
@@ -113,32 +111,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function getCategoryScopedQuestions() {
-    // Progress should follow the category selection, but not be distorted by search text.
-    const category = categorySelect.value;
-    if (category === "All") return allQuestions;
-    return allQuestions.filter(q => q.category === category);
-  }
-
   function updateProgressSummary() {
+    // 🔒 HARD GUARDS
     if (!progressSummary) return;
+    if (!dataLoaded) return;
 
-    const scoped = getCategoryScopedQuestions();
+    const category = categorySelect.value;
+    const scoped =
+      category === "All"
+        ? allQuestions
+        : allQuestions.filter(q => q.category === category);
+
     const total = scoped.length;
+    const reviewed = scoped.reduce(
+      (acc, q) => acc + (isReviewed(q.id) ? 1 : 0),
+      0
+    );
 
-    const reviewedCount = scoped.reduce((acc, q) => {
-      return acc + (isReviewed(q.id) ? 1 : 0);
-    }, 0);
-
-    const pct = total > 0 ? Math.round((reviewedCount / total) * 100) : 0;
-
-    // Always visible, regardless of Study Mode.
-    progressSummary.innerHTML = `Reviewed: <strong>${reviewedCount}</strong> / <strong>${total}</strong> (${pct}%)`;
+    const pct = total ? Math.round((reviewed / total) * 100) : 0;
+    progressSummary.innerHTML = `Reviewed: <strong>${reviewed}</strong> / <strong>${total}</strong> (${pct}%)`;
   }
 
-  // ---------------------------
-  // Filtering logic (for what’s displayed)
-  // ---------------------------
   function getFilteredQuestions() {
     const category = categorySelect.value;
     const searchTerm = searchInput.value.trim().toLowerCase();
@@ -146,17 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const unreviewedOnly = unreviewedOnlyCheckbox?.checked;
 
     return allQuestions.filter(q => {
-      // Category filter
       if (category !== "All" && q.category !== category) return false;
 
-      // Search filter
       if (searchTerm) {
         const qt = (q.question || "").toLowerCase();
         const at = (q.answer || "").toLowerCase();
         if (!qt.includes(searchTerm) && !at.includes(searchTerm)) return false;
       }
 
-      // Study mode filter (only when Study Mode ON + checkbox checked)
       if (studyModeOn && unreviewedOnly && isReviewed(q.id)) return false;
 
       return true;
@@ -167,7 +157,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Render
   // ---------------------------
   function renderQuestions() {
-    updateProgressSummary(); // <-- always update when rendering
+    if (!dataLoaded) return;
+
+    updateProgressSummary();
 
     let filtered = getFilteredQuestions();
     totalDisplay.textContent = filtered.length;
@@ -192,47 +184,40 @@ document.addEventListener("DOMContentLoaded", () => {
       card.innerHTML = `
         <h4>${q.question}</h4>
         <p><strong>Category:</strong> ${q.category}</p>
-
         <button class="answer-btn">Show Answer</button>
-
         <div class="answer hidden">
           <strong>Answer:</strong>
           <div class="answer-text">${q.answer || "No answer provided."}</div>
         </div>
       `;
 
-      // Answer toggle
       const btn = card.querySelector(".answer-btn");
       const ans = card.querySelector(".answer");
 
       btn.addEventListener("click", () => {
-        const hidden = ans.classList.contains("hidden");
         ans.classList.toggle("hidden");
-        btn.textContent = hidden ? "Hide Answer" : "Show Answer";
+        btn.textContent = ans.classList.contains("hidden")
+          ? "Show Answer"
+          : "Hide Answer";
       });
 
-      // Study Mode: Reviewed button (only visible when Study Mode ON)
       if (studyModeToggle?.checked) {
         const reviewed = isReviewed(q.id);
-
         const reviewBtn = document.createElement("button");
         reviewBtn.textContent = reviewed ? "Mark Unreviewed" : "Mark Reviewed";
         reviewBtn.style.marginTop = "0.5rem";
         reviewBtn.style.fontSize = "0.75rem";
-
-        reviewBtn.addEventListener("click", () => {
+        reviewBtn.onclick = () => {
           setReviewed(q.id, !reviewed);
           renderQuestions();
-        });
-
+        };
         card.appendChild(reviewBtn);
       }
 
       questionsContainer.appendChild(card);
     });
 
-    // Pagination
-    pageBox.innerHTML = `<span>Page ${currentPage} of ${totalPages}</span>`;
+    pageBox.innerHTML = `Page ${currentPage} of ${totalPages}`;
     if (totalPages > 1) {
       const prev = document.createElement("button");
       const next = document.createElement("button");
@@ -250,15 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------------------------
   // Events
   // ---------------------------
-  searchInput.addEventListener("input", () => {
-    currentPage = 1;
-    renderQuestions();
-  });
-
-  categorySelect.addEventListener("change", () => {
-    currentPage = 1;
-    renderQuestions();
-  });
+  [searchInput, categorySelect].forEach(el =>
+    el.addEventListener("input", () => {
+      currentPage = 1;
+      renderQuestions();
+    })
+  );
 
   shuffleBtn.addEventListener("click", () => {
     shuffled = true;
