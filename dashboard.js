@@ -218,18 +218,14 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "question-card";
 
      // adding a title attribute for better accessibility
-
       card.innerHTML = `
-        ${q.title ? `<div class="question-title">${q.title}</div>` : ""}
-       if (q.title) {
-          const titleEl = document.createElement("div");
-          titleEl.className = "question-title";
-          titleEl.textContent = q.title;
-          card.appendChild(titleEl);
-        } 
         <h4>${q.question}</h4>
         <p><strong>Category:</strong> ${q.category}</p>
-        <button class="show-answer">Show Answer</button>
+        <button class="answer-btn">Show Answer</button>
+        <div class="answer hidden">
+          <strong>Answer:</strong>
+          <div class="answer-text">${q.answer || "No answer provided."}</div>
+        </div>
       `;
 
       const btn = card.querySelector(".answer-btn");
