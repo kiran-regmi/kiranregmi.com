@@ -1,9 +1,11 @@
-// dashboard.js — STABLE BASELINE (NO REVIEW FEATURE)
+// dashboard.js — BASELINE + STUDY MODE (SAFE VERSION)
 
 const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM references (MUST exist)
+  // ---------------------------
+  // DOM references
+  // ---------------------------
   const searchInput = document.getElementById("searchInput");
   const totalDisplay = document.getElementById("totalCount");
   const categorySelect = document.getElementById("categorySelect");
@@ -14,34 +16,46 @@ document.addEventListener("DOMContentLoaded", () => {
   const userChip = document.getElementById("userChip");
   const loginRedirectNotice = document.getElementById("loginRedirectNotice");
   const logoutBtn = document.getElementById("logoutBtn");
+
+  // Study mode controls (optional but present in your HTML)
   const studyModeToggle = document.getElementById("studyModeToggle");
-  const reviewedStoreKey = "reviewedQuestions";
+  const unreviewedOnlyCheckbox = document.getElementById("unreviewedOnly");
 
-// Add reviewed Logic here
-
-function getReviewedMap() {
-  return JSON.parse(localStorage.getItem(reviewedStoreKey) || "{}");
-}
-
-function isReviewed(id) {
-  return !!getReviewedMap()[id];
-}
-
-function setReviewed(id, value) {
-  const map = getReviewedMap();
-  if (value) map[id] = true;
-  else delete map[id];
-  localStorage.setItem(reviewedStoreKey, JSON.stringify(map));
-}
-
-
-  // ---- State ----
+  // ---------------------------
+  // State
+  // ---------------------------
   let allQuestions = [];
   let currentPage = 1;
   const PAGE_SIZE = 12;
   let shuffled = false;
 
-  // ---- Auth helpers ----
+  // ---------------------------
+  // Reviewed (localStorage)
+  // ---------------------------
+  const reviewedStoreKey = "reviewedQuestions";
+
+  function getReviewedMap() {
+    try {
+      return JSON.parse(localStorage.getItem(reviewedStoreKey) || "{}");
+    } catch {
+      return {};
+    }
+  }
+
+  function isReviewed(id) {
+    return !!getReviewedMap()[id];
+  }
+
+  function setReviewed(id, value) {
+    const map = getReviewedMap();
+    if (value) map[id] = true;
+    else delete map[id];
+    localStorage.setItem(reviewedStoreKey, JSON.stringify(map));
+  }
+
+  // ---------------------------
+  // Auth helpers
+  // ---------------------------
   function getSession() {
     return {
       token: localStorage.getItem("token"),
@@ -55,7 +69,7 @@ function setReviewed(id, value) {
     if (!token || !role) {
       loginRedirectNotice.style.display = "block";
       welcomeLine.textContent = "No active session found. Redirecting...";
-      setTimeout(() => window.location.href = "/login.html", 1200);
+      setTimeout(() => (window.location.href = "/login.html"), 1200);
       return false;
     }
     welcomeLine.textContent = `Welcome back, ${email || "User"}`;
@@ -72,7 +86,9 @@ function setReviewed(id, value) {
 
   logoutBtn.addEventListener("click", handleLogout);
 
-  // ---- Fetch questions ----
+  // ---------------------------
+  // Fetch questions
+  // ---------------------------
   async function loadQuestions() {
     const { token } = getSession();
     try {
@@ -88,19 +104,31 @@ function setReviewed(id, value) {
     }
   }
 
-  // ---- Filters ----
+  // ---------------------------
+  // Filtering logic
+  // ---------------------------
   function getFilteredQuestions() {
     const category = categorySelect.value;
     const searchTerm = searchInput.value.trim().toLowerCase();
+    const studyModeOn = studyModeToggle?.checked;
+    const unreviewedOnly = unreviewedOnlyCheckbox?.checked;
 
     return allQuestions.filter(q => {
+      // Category
       if (category !== "All" && q.category !== category) return false;
 
+      // Search
       if (searchTerm) {
         const qt = (q.question || "").toLowerCase();
         const at = (q.answer || "").toLowerCase();
         if (!qt.includes(searchTerm) && !at.includes(searchTerm)) return false;
       }
+
+      // Study Mode filter
+      if (studyModeOn && unreviewedOnly && isReviewed(q.id)) {
+        return false;
+      }
+
       return true;
     });
   }
@@ -112,16 +140,9 @@ function setReviewed(id, value) {
     }
   }
 
-  // Study Mode: unreviewed only
-if (
-  studyModeToggle?.checked &&
-  document.getElementById("unreviewedOnly")?.checked &&
-  isReviewed(q.id)
-) {
-  return false;
-}
-
-  // ---- Render ----
+  // ---------------------------
+  // Render
+  // ---------------------------
   function renderQuestions() {
     let filtered = getFilteredQuestions();
     totalDisplay.textContent = filtered.length;
@@ -155,6 +176,7 @@ if (
         </div>
       `;
 
+      // Answer toggle
       const btn = card.querySelector(".answer-btn");
       const ans = card.querySelector(".answer");
 
@@ -164,25 +186,25 @@ if (
         btn.textContent = hidden ? "Hide Answer" : "Show Answer";
       });
 
+      // Study Mode: Reviewed button
+      if (studyModeToggle?.checked) {
+        const reviewed = isReviewed(q.id);
+
+        const reviewBtn = document.createElement("button");
+        reviewBtn.textContent = reviewed ? "Mark Unreviewed" : "Mark Reviewed";
+        reviewBtn.style.marginTop = "0.5rem";
+        reviewBtn.style.fontSize = "0.75rem";
+
+        reviewBtn.addEventListener("click", () => {
+          setReviewed(q.id, !reviewed);
+          renderQuestions();
+        });
+
+        card.appendChild(reviewBtn);
+      }
+
       questionsContainer.appendChild(card);
     });
-
-    // update card with review button 
-    const reviewed = isReviewed(q.id);
-
-    if (studyModeToggle?.checked) {
-      const reviewBtn = document.createElement("button");
-      reviewBtn.textContent = reviewed ? "Mark Unreviewed" : "Mark Reviewed";
-      reviewBtn.style.marginTop = "0.5rem";
-      reviewBtn.style.fontSize = "0.75rem";
-
-      reviewBtn.addEventListener("click", () => {
-        setReviewed(q.id, !reviewed);
-        renderQuestions();
-      });
-
-      card.appendChild(reviewBtn);
-    }
 
     // Pagination
     pageBox.innerHTML = `<span>Page ${currentPage} of ${totalPages}</span>`;
@@ -200,7 +222,9 @@ if (
     }
   }
 
-  // ---- Events ----
+  // ---------------------------
+  // Events
+  // ---------------------------
   searchInput.addEventListener("input", () => {
     currentPage = 1;
     renderQuestions();
@@ -217,11 +241,19 @@ if (
     renderQuestions();
   });
 
- studyModeToggle?.addEventListener("change", () => {
-  renderQuestions();
-  }); 
-  
-  // ---- Init ----
+  studyModeToggle?.addEventListener("change", () => {
+    currentPage = 1;
+    renderQuestions();
+  });
+
+  unreviewedOnlyCheckbox?.addEventListener("change", () => {
+    currentPage = 1;
+    renderQuestions();
+  });
+
+  // ---------------------------
+  // Init
+  // ---------------------------
   if (requireAuthOrRedirect()) {
     loadQuestions();
   }
