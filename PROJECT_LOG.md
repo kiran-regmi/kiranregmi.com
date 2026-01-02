@@ -21,7 +21,7 @@ Outcome: What action or escalation followed
 
 “I treated it like a Tier-1 investigation — validate first, then escalate with evidence.”
 
-## you GRC experience - how does that help in a SOC?
+## your GRC experience - how does that help in a SOC?
 “It helps me document clearly, understand control intent, and escalate with context.
 I don’t just say what happened — I explain why it matters.”
 
@@ -31,3 +31,32 @@ I’m especially comfortable with IAM-related alerts.”
 
 ## How do you keep building skills?
 “I focus on fundamentals first — Security+, networking, cloud identity — then reinforce them with hands-on labs.”
+
+
+End	Pages	details
+FrontEnd	index.html	Home
+    projects.html	list of projects
+    skills.html	list of projects
+    certifications.html	list of certificates
+    contact.html	form for contacts
+    login.html	login page, entry point for dashboard.html
+    dashboard.html	tracks questions and answers, projects
+    dashboard.js	work as bridge between dashboard.html and questions.js, users.json, 
+        
+Backend	server.js	
+    questions.json	
+    users.json	
+    projects.json	
+    package.json	
+    config.js	
+    generate-hash.js	
+        
+        
+Version 1	Auth + Session	
+    Question Rendering	
+    Show / Hide Answers	
+    Search (Questions + answers)	
+    Category Filter	
+    Shuffle	
+    Pagination - 12/page	
+    Clean UI 	
