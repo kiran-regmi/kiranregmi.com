@@ -221,11 +221,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.innerHTML = `
         ${q.title ? `<div class="question-title">${q.title}</div>` : ""}
+       if (q.title) {
+          const titleEl = document.createElement("div");
+          titleEl.className = "question-title";
+          titleEl.textContent = q.title;
+          card.appendChild(titleEl);
+        } 
         <h4>${q.question}</h4>
         <p><strong>Category:</strong> ${q.category}</p>
         <button class="show-answer">Show Answer</button>
       `;
-      
+
       const btn = card.querySelector(".answer-btn");
       const ans = card.querySelector(".answer");
 
