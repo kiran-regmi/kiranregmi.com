@@ -219,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
      // adding a title attribute for better accessibility
       card.innerHTML = `
+        ${q.title ? `<div class="question-title">${q.title}</div>` : ""}
         <h4>${q.question}</h4>
         <p><strong>Category:</strong> ${q.category}</p>
         <button class="answer-btn">Show Answer</button>
