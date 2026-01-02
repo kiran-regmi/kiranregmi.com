@@ -1,4 +1,4 @@
-// dashboard.js — BASELINE + STUDY MODE (SAFE VERSION)
+// dashboard.js — BASELINE + STUDY MODE + PROGRESS SUMMARY (SAFE VERSION)
 
 const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
 
@@ -17,9 +17,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginRedirectNotice = document.getElementById("loginRedirectNotice");
   const logoutBtn = document.getElementById("logoutBtn");
 
-  // Study mode controls (optional but present in your HTML)
+  // Study mode controls
   const studyModeToggle = document.getElementById("studyModeToggle");
   const unreviewedOnlyCheckbox = document.getElementById("unreviewedOnly");
+
+  // Progress summary (optional placeholder in HTML; we’ll create if missing)
+  let progressSummary = document.getElementById("progressSummary");
+  const topControls = document.querySelector(".top-controls");
+
+  if (!progressSummary && topControls) {
+    progressSummary = document.createElement("span");
+    progressSummary.id = "progressSummary";
+    progressSummary.style.fontSize = "0.85rem";
+    progressSummary.style.color = "#374151";
+    progressSummary.style.marginLeft = "0.25rem";
+    topControls.appendChild(progressSummary);
+  }
 
   // ---------------------------
   // State
@@ -105,7 +118,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ---------------------------
-  // Filtering logic
+  // Helpers
+  // ---------------------------
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  function getCategoryScopedQuestions() {
+    // Progress should follow the category selection, but not be distorted by search text.
+    const category = categorySelect.value;
+    if (category === "All") return allQuestions;
+    return allQuestions.filter(q => q.category === category);
+  }
+
+  function updateProgressSummary() {
+    if (!progressSummary) return;
+
+    const scoped = getCategoryScopedQuestions();
+    const total = scoped.length;
+
+    const reviewedCount = scoped.reduce((acc, q) => {
+      return acc + (isReviewed(q.id) ? 1 : 0);
+    }, 0);
+
+    const pct = total > 0 ? Math.round((reviewedCount / total) * 100) : 0;
+
+    // Always visible, regardless of Study Mode.
+    progressSummary.innerHTML = `Reviewed: <strong>${reviewedCount}</strong> / <strong>${total}</strong> (${pct}%)`;
+  }
+
+  // ---------------------------
+  // Filtering logic (for what’s displayed)
   // ---------------------------
   function getFilteredQuestions() {
     const category = categorySelect.value;
@@ -114,36 +160,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const unreviewedOnly = unreviewedOnlyCheckbox?.checked;
 
     return allQuestions.filter(q => {
-      // Category
+      // Category filter
       if (category !== "All" && q.category !== category) return false;
 
-      // Search
+      // Search filter
       if (searchTerm) {
         const qt = (q.question || "").toLowerCase();
         const at = (q.answer || "").toLowerCase();
         if (!qt.includes(searchTerm) && !at.includes(searchTerm)) return false;
       }
 
-      // Study Mode filter
-      if (studyModeOn && unreviewedOnly && isReviewed(q.id)) {
-        return false;
-      }
+      // Study mode filter (only when Study Mode ON + checkbox checked)
+      if (studyModeOn && unreviewedOnly && isReviewed(q.id)) return false;
 
       return true;
     });
-  }
-
-  function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
   }
 
   // ---------------------------
   // Render
   // ---------------------------
   function renderQuestions() {
+    updateProgressSummary(); // <-- always update when rendering
+
     let filtered = getFilteredQuestions();
     totalDisplay.textContent = filtered.length;
 
@@ -186,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.textContent = hidden ? "Hide Answer" : "Show Answer";
       });
 
-      // Study Mode: Reviewed button
+      // Study Mode: Reviewed button (only visible when Study Mode ON)
       if (studyModeToggle?.checked) {
         const reviewed = isReviewed(q.id);
 
