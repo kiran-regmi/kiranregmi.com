@@ -4,6 +4,7 @@ const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
 
 document.addEventListener("DOMContentLoaded", () => {
   // DOM references
+  const searchInput = document.getElementById("searchInput");
   const totalDisplay = document.getElementById("totalCount");
   const categorySelect = document.getElementById("categorySelect");
   const shuffleBtn = document.getElementById("shuffleBtn");
@@ -109,12 +110,34 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Rendering helpers ---
 
   function getFilteredQuestions() {
-    const category = categorySelect.value;
-    if (category === "All") {
-      return [...allQuestions];
+  const category = categorySelect.value;
+  const searchTerm = searchInput.value.trim().toLowerCase();
+
+  return allQuestions.filter(q => {
+    // Category filter
+    if (category !== "All" && q.category !== category) {
+      return false;
     }
-    return allQuestions.filter(q => q.category === category);
-  }
+
+    // Search filter (question + answer)
+    if (searchTerm) {
+      const questionText = (q.question || "").toLowerCase();
+      const answerText = (q.answer || "").toLowerCase();
+
+      return (
+        questionText.includes(searchTerm) ||
+        answerText.includes(searchTerm)
+      );
+    }
+
+    return true;
+  });
+}
+
+searchInput.addEventListener("input", () => {
+  currentPage = 1;
+  renderQuestions();
+});
 
   function shuffleArray(arr) {
     // Fisher–Yates
