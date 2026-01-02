@@ -14,6 +14,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const userChip = document.getElementById("userChip");
   const loginRedirectNotice = document.getElementById("loginRedirectNotice");
   const logoutBtn = document.getElementById("logoutBtn");
+  const reviewedStoreKey = "reviewedQuestions";
+  const unreviewedOnlyCheckbox = document.getElementById("unreviewedOnly");
+
+  // Add State + helpers for reviewed questions
+  function getReviewedMap() {
+  return JSON.parse(localStorage.getItem(reviewedStoreKey) || "{}");
+}
+
+function setReviewed(id, value) {
+  const map = getReviewedMap();
+  if (value) {
+    map[id] = true;
+  } else {
+    delete map[id];
+  }
+  localStorage.setItem(reviewedStoreKey, JSON.stringify(map));
+}
+
+function isReviewed(id) {
+  const map = getReviewedMap();
+  return !!map[id];
+}
 
   // State
   let allQuestions = [];
@@ -112,23 +134,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function getFilteredQuestions() {
   const category = categorySelect.value;
   const searchTerm = searchInput.value.trim().toLowerCase();
+  const unreviewedOnly = unreviewedOnlyCheckbox.checked;
 
   return allQuestions.filter(q => {
-    // Category filter
-    if (category !== "All" && q.category !== category) {
-      return false;
-    }
+    const id = q.id || q._id;
+    if (!id) return false;
 
-    // Search filter (question + answer)
+    // Category
+    if (category !== "All" && q.category !== category) return false;
+
+    // Search
     if (searchTerm) {
-      const questionText = (q.question || "").toLowerCase();
-      const answerText = (q.answer || "").toLowerCase();
-
-      return (
-        questionText.includes(searchTerm) ||
-        answerText.includes(searchTerm)
-      );
+      const qt = (q.question || "").toLowerCase();
+      const at = (q.answer || "").toLowerCase();
+      if (!qt.includes(searchTerm) && !at.includes(searchTerm)) return false;
     }
+
+    // Reviewed filter
+    if (unreviewedOnly && isReviewed(id)) return false;
 
     return true;
   });
@@ -149,6 +172,7 @@ searchInput.addEventListener("input", () => {
 
   function renderQuestions() {
     const filtered = getFilteredQuestions();
+    const reviewed = isReviewed(idLabel);
 
     // update total count
     totalDisplay.textContent = filtered.length.toString();
@@ -179,17 +203,37 @@ searchInput.addEventListener("input", () => {
         const idLabel = q.id || q._id || "";
 
         card.innerHTML = `
-          <h4 class="question-text">${text}</h4>
+          <h4>
+            ${text}
+            ${reviewed ? `<span class="reviewed-badge">Reviewed</span>` : ""}
+          </h4>
           <p><strong>Category:</strong> ${categoryLabel}</p>
-          ${idLabel ? `<p style="font-size:0.75rem;color:#9ca3af;">ID: ${idLabel}</p>` : ""}
+
+          <button class="review-btn">
+            ${reviewed ? "Mark Unreviewed" : "Mark Reviewed"}
+          </button>
+
           <button class="answer-btn">Show Answer</button>
+
           <div class="answer hidden">
-          <strong>Answer:</strong>
-          <div class="answer-text">
-            ${q.answer ? q.answer : "No answer provided in dataset."}
+            <strong>Answer:</strong>
+            <div class="answer-text">
+              ${q.answer || "No answer provided."}
+            </div>
           </div>
-          </div>
-          `;
+        `;
+
+        const reviewBtn = card.querySelector(".review-btn");
+
+        reviewBtn.addEventListener("click", () => {
+          setReviewed(idLabel, !reviewed);
+          renderQuestions();
+        });
+
+        unreviewedOnlyCheckbox.addEventListener("change", () => {
+        currentPage = 1;
+        renderQuestions();
+        });
 
           const btn = card.querySelector(".answer-btn");
           const ans = card.querySelector(".answer");

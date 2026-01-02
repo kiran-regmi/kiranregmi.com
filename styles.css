@@ -1031,3 +1031,26 @@
   outline: none;
   border-color: #3B82F6;
 }
+.reviewed-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  background: #10B981;
+  color: white;
+  border-radius: 999px;
+  margin-left: 6px;
+}
+
+.review-btn {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  background: #E5E7EB;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.review-btn:hover {
+  background: #D1D5DB;
+}
