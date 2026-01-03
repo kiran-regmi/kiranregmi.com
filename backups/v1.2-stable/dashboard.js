@@ -86,20 +86,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch questions
   // ---------------------------
   async function loadQuestions() {
-    try {
-      const { token } = getSession();
-      const res = await fetch(`${API_BASE}/questions`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
-      allQuestions = data.questions || [];
-      dataLoaded = true;
-      currentPage = 1;
-      renderQuestions();
-    } catch (err) {
-      console.error("Failed to load questions", err);
+  try {
+    const { token } = getSession();
+    const res = await fetch(`${API_BASE}/questions`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const data = await res.json();
+
+    // ✅ data is ONLY used here
+    allQuestions = data.questions || [];
+    dataLoaded = true;
+
+    // ✅ category counts use allQuestions, NOT data
+    if (typeof updateCategoryCounts === "function") {
+      updateCategoryCounts();
     }
+
+    currentPage = 1;
+    renderQuestions();
+  } catch (err) {
+    console.error("Failed to load questions", err);
+    welcomeLine.textContent = "Failed to load questions.";
   }
+}
+
+
 
   // ---------------------------
   // Helpers
@@ -153,6 +165,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
+  // category count logic
+  function updateCategoryCounts() {
+  if (!allQuestions.length) return;
+
+  const counts = allQuestions.reduce((acc, q) => {
+    acc[q.category] = (acc[q.category] || 0) + 1;
+    return acc;
+  }, {});
+
+  const options = categorySelect.querySelectorAll("option");
+
+  options.forEach(opt => {
+    const value = opt.value;
+
+    if (value === "All") {
+      opt.textContent = `All Categories (${allQuestions.length})`;
+    } else {
+      const count = counts[value] || 0;
+      opt.textContent = `${value} (${count})`;
+    }
+  });
+}
+
   // ---------------------------
   // Render
   // ---------------------------
@@ -181,7 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("div");
       card.className = "question-card";
 
+     // adding a title attribute for better accessibility
       card.innerHTML = `
+        ${q.title ? `<div class="question-title">${q.title}</div>` : ""}
         <h4>${q.question}</h4>
         <p><strong>Category:</strong> ${q.category}</p>
         <button class="answer-btn">Show Answer</button>
