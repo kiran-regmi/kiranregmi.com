@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard • kiranregmi.com</title>
+  <title>Security Posture • kiranregmi.com</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
   <style>
@@ -154,59 +154,7 @@
     </div>
   </header>
 
-  <main class="page">
-    <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
-  <div>
-    <div style="display:flex; align-items:center; gap:0.75rem;">
-      <h1 style="margin:0;">Interview Practice</h1>
-      <span id="progressSummary" style="font-size:0.85rem; color:#374151;"></span>
-    </div>
-    <p id="welcomeLine">Loading session…</p>
-  </div>
-  <span class="user-chip" id="userChip"></span>
-</div>
+  
 
-    <p id="loginRedirectNotice" style="display:none;">
-      You are not signed in. Redirecting to login…
-    </p>
-
-    <section id="questionsSection">
-      <div class="top-controls">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search questions or answers..."
-          class="search-box"
-          />
-        <span>Total: <strong id="totalCount">0</strong></span>
-        <select id="categorySelect">
-          <option value="All">All Categories</option>
-          <option value="CSF">Foundation</option>
-          <option value="SOC">SOC</option>
-          <option value="GRC">GRC</option>
-          <option value="IAM">IAM</option>
-          <option value="NET">Network</option>
-          <option value="SOCINT">SOCINT</option>
-          <option value="GRCINT">GRCINT</option>
-          <option value="NETINT">NETINT</option>
-        </select>
-        <label style="font-size:0.85rem;">
-        <input type="checkbox" id="unreviewedOnly" />
-        Show unreviewed only
-        </label>
-
-        <button id="shuffleBtn">Shuffle</button>
-        <label style="font-size:0.85rem;">
-          <input type="checkbox" id="studyModeToggle" />
-          Study Mode
-        </label>
-      </div>
-
-      <div id="questionsContainer"></div>
-      <div id="pageBox"></div>
-    </section>
-  </main>
-
-  <script src="dashboard.js"></script>
 </body>
 </html>
