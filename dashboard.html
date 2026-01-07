@@ -146,10 +146,25 @@
     <div class="brand">kiranregmi.com • Secure Dashboard</div>
     <div style="display:flex; align-items:center;">
       <nav>
-        <a href="index.html">Home</a>
-        <a href="dashboard.html" class="active">Dashboard</a>
-        <a href="assets/pdf/Kiran_Regmi_Security_Posture_Plan.pdf" target="_blank">Security Posture</a>
-      </nav>
+  <a href="index.html">Home</a>
+  <a href="dashboard.html" class="active">Dashboard</a>
+
+  <!-- Security Posture Dropdown -->
+  <div class="dropdown">
+    <a href="#" class="dropdown-toggle">Security Posture</a>
+    <div class="dropdown-menu">
+      <a href="assets/pdf/Kiran_Regmi_Security_Posture_Plan.pdf" target="_blank">
+        Security Plan (PDF)
+      </a>
+      <a href="assets/pdf/Kiran_Regmi_Gap_Analysis.pdf" target="_blank">
+        Gap Analysis & Remediation
+      </a>
+      <a href="security-controls.html">
+        Security Controls Overview
+      </a>
+    </div>
+  </div>
+</nav>
       <button id="logoutBtn">Logout</button>
     </div>
   </header>

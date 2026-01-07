@@ -1066,3 +1066,41 @@
   letter-spacing: 0.05em;
   margin-bottom: 2px;
 }
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #0b1220;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  min-width: 220px;
+  z-index: 1000;
+}
+
+/* Dropdown links */
+.dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: #cbd5f5;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+  background-color: #111827;
+  color: #38bdf8;
+}
+
+/* Show menu on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
