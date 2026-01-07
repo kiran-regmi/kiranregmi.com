@@ -15,3 +15,6 @@ ISO/IEC 27001 Annex A Mapping (PDF)
 This is exactly how mature security programs present documentation  
 
 
+old password hashes:
+        $2a$10$b4o5gCvrXIbt4qZtoga.LORT78wHs9JPXHzBVhQsNUx4yZP5tzi2C - admin
+        $2a$10$a1Jp1YxDyZOCXsHdqcX65e19B8kOeQ7p3IwcbFxIxnQVbe004wOLO - user
