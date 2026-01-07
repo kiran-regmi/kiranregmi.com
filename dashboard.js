@@ -82,18 +82,45 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/login.html";
   });
 
+
+// auth helper  
+function forceLogout(message) {
+  ["token", "role", "email"].forEach(k => localStorage.removeItem(k));
+
+  welcomeLine.textContent = message;
+
+  setTimeout(() => {
+    window.location.href = "/login.html";
+  }, 1200);
+}
+
   // ---------------------------
   // Fetch questions
   // ---------------------------
-  async function loadQuestions() {
+async function loadQuestions() {
   try {
     const { token } = getSession();
+
+    if (!token) {
+      forceLogout("Session missing. Please log in again.");
+      return;
+    }
+
     const res = await fetch(`${API_BASE}/questions`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    const data = await res.json();
+    // 🔥 EXPLICIT AUTH HANDLING
+    if (res.status === 401 || res.status === 403) {
+      forceLogout("Session expired. Please log in again.");
+      return;
+    }
 
+    if (!res.ok) {
+      throw new Error("Failed to fetch questions");
+    }
+
+    const data = await res.json();
     // ✅ data is ONLY used here
     allQuestions = data.questions || [];
     dataLoaded = true;
@@ -110,8 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
     welcomeLine.textContent = "Failed to load questions.";
   }
 }
-
-
 
   // ---------------------------
   // Helpers
