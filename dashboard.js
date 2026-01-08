@@ -105,25 +105,25 @@ async function loadQuestions() {
       forceLogout("Session missing. Please log in again.");
       return;
     }
-    // handle 403 explicitly 
-    if (res.status === 403) {
-  forceLogout("Access denied. Your account does not have dashboard access.");
-  return;
-}
-
-
     const res = await fetch(`${API_BASE}/questions`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    // 🔥 EXPLICIT AUTH HANDLING
-    if (res.status === 401 || res.status === 403) {
+    // 🔥 EXPLICIT AUTHENTICATION HANDLING
+    if (res.status === 401 {
       forceLogout("Session expired. Please log in again.");
       return;
     }
+    
+    // 🚫 AUTHORIZATION
+    if (res.status === 403) {
+      forceLogout("Access denied. Your account is not authorized.");
+      return;
+    }
 
+    // ❌ REAL ERRORS
     if (!res.ok) {
-      throw new Error("Failed to fetch questions");
+      throw new Error(`Request failed with status ${res.status}`);
     }
 
     const data = await res.json();
