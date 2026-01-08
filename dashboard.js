@@ -339,9 +339,23 @@ async function openSecureDoc(filename) {
     }
   }
 
-  // ---------------------------
-  // Events
-  // ---------------------------
+  // Security Posture Dropdown ---------------------------
+function wireSecureDocLinks() {
+  const menu = document.getElementById("securityDocsMenu");
+  if (!menu) return;
+
+  menu.querySelectorAll("a[data-doc]").forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const filename = link.dataset.doc;
+      openSecureDoc(filename);
+    });
+  });
+}
+  // 
+
+
+  // Events ---------------------------
   [searchInput, categorySelect].forEach(el =>
     el.addEventListener("input", () => {
       currentPage = 1;
@@ -369,6 +383,18 @@ async function openSecureDoc(filename) {
   // Init
   // ---------------------------
   if (requireAuthOrRedirect()) {
-    loadQuestions();
+  applyRoleBasedUI()
+  {
+  const { role } = getSession(); // hides menu for non-admin
+  const menu = document.getElementById("securityDocsMenu");
+
+  if (!menu) return;
+
+  if (role !== "admin") {
+    menu.style.display = "none";
+  }
+};   
+  wireSecureDocLinks(); // enables secure-doc clicks
+  loadQuestions();
   }
 });
