@@ -105,6 +105,12 @@ async function loadQuestions() {
       forceLogout("Session missing. Please log in again.");
       return;
     }
+    // handle 403 explicitly 
+    if (res.status === 403) {
+  forceLogout("Access denied. Your account does not have dashboard access.");
+  return;
+}
+
 
     const res = await fetch(`${API_BASE}/questions`, {
       headers: { Authorization: `Bearer ${token}` }
