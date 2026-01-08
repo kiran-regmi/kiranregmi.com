@@ -110,11 +110,11 @@ async function loadQuestions() {
     });
 
     // 🔥 EXPLICIT AUTHENTICATION HANDLING
-    if (res.status === 401 {
+    if (res.status === 401) {
       forceLogout("Session expired. Please log in again.");
       return;
     }
-    
+
     // 🚫 AUTHORIZATION
     if (res.status === 403) {
       forceLogout("Access denied. Your account is not authorized.");
