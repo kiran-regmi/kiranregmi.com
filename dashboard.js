@@ -53,9 +53,20 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(reviewedStoreKey, JSON.stringify(map));
   }
 
+  // File Order 
+  // 1. getSession
+  // 2. requireAuthOrRedirect
+  // 3. forceLogout
+  // 4. loadQuestions
+  // 5. openSecureDoc
+  // 6. updateCategoryCounts
+  // 7. renderQuestions
+  // 8. wireSecureDocLinks
+  // 9. applyRoleBasedUI  
   // ---------------------------
-  // Auth
-  // ---------------------------
+
+
+  // Auth ---------------------------
   function getSession() {
     return {
       token: localStorage.getItem("token"),
@@ -93,6 +104,57 @@ function forceLogout(message) {
     window.location.href = "/login.html";
   }, 1200);
 }
+
+// open secure doc helper
+function openSecureDoc(filename) {
+  const { token } = getSession();
+
+  if (!token) {
+    forceLogout("Session expired. Please log in again.");
+    return;
+  }
+
+  fetch(`${API_BASE}/secure-doc/${filename}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+    .then(res => {
+      if (res.status === 401 || res.status === 403) {
+        forceLogout("Access denied.");
+        return null;
+      }
+      if (!res.ok) throw new Error("Failed to fetch document");
+      return res.blob();
+    })
+    .then(blob => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    })
+    .catch(err => {
+      console.error("Secure doc error:", err);
+    });
+}
+
+function applyRoleBasedUI() {
+  const { role } = getSession();
+  const menu = document.getElementById("securityDocsMenu");
+  if (!menu) return;
+  if (role !== "admin") menu.style.display = "none";
+}
+
+function wireSecureDocLinks() {
+  const menu = document.getElementById("securityDocsMenu");
+  if (!menu) return;
+
+  menu.querySelectorAll("a[data-doc]").forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      openSecureDoc(link.dataset.doc);
+    });
+
+}
+
+
 
   // ---------------------------
   // Fetch questions
@@ -197,43 +259,7 @@ async function loadQuestions() {
   }
 
 
-// open secure doc helper
-async function openSecureDoc(filename) {
-  const { token } = getSession();
 
-  if (!token) {
-    forceLogout("Session expired. Please log in again.");
-    return;
-  }
-
-  try {
-    const res = await fetch(
-      `${API_BASE}/secure-doc/${filename}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    if (res.status === 401 || res.status === 403) {
-      forceLogout("Access denied.");
-      return;
-    }
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch document");
-    }
-
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-    window.open(url, "_blank");
-
-  } catch (err) {
-    console.error("Secure doc error:", err);
-    alert("Unable to open secure document.");
-  }
-}
 
   // category count logic
   function updateCategoryCounts() {
