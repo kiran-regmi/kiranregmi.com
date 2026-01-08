@@ -197,6 +197,44 @@ async function loadQuestions() {
   }
 
 
+// open secure doc helper
+async function openSecureDoc(filename) {
+  const { token } = getSession();
+
+  if (!token) {
+    forceLogout("Session expired. Please log in again.");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `${API_BASE}/secure-doc/${filename}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    if (res.status === 401 || res.status === 403) {
+      forceLogout("Access denied.");
+      return;
+    }
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch document");
+    }
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, "_blank");
+
+  } catch (err) {
+    console.error("Secure doc error:", err);
+    alert("Unable to open secure document.");
+  }
+}
+
   // category count logic
   function updateCategoryCounts() {
   if (!allQuestions.length) return;
