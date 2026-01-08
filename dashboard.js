@@ -409,18 +409,8 @@ function wireSecureDocLinks() {
   // Init
   // ---------------------------
   if (requireAuthOrRedirect()) {
-  applyRoleBasedUI()
-  {
-  const { role } = getSession(); // hides menu for non-admin
-  const menu = document.getElementById("securityDocsMenu");
-
-  if (!menu) return;
-
-  if (role !== "admin") {
-    menu.style.display = "none";
-  }
-};   
-  wireSecureDocLinks(); // enables secure-doc clicks
+  applyRoleBasedUI();
+  wireSecureDocLinks();
   loadQuestions();
-  }
-});
+}
+
