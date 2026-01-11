@@ -1,0 +1,129 @@
+<!-- Dashboard.html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard • User Profile & Practice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+
+  <!-- Dashboard-specific -->
+  <link rel="stylesheet" href="./css/dashboard.css" />
+</head>
+
+<body class="app-shell">
+
+<!-- ===== AUTH GUARD ===== -->
+<script>
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "/login.html";
+  }
+</script>
+
+<!-- ===== TOP NAVBAR ===== -->
+<header class="top-navbar">
+  <div class="top-navbar-inner">
+
+    <a href="/index.html" class="top-logo">
+      <span class="logo-badge">KR</span>
+    </a>
+
+    <nav class="top-nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/dashboard.html" class="active">Dashboard</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+
+    <button id="logoutBtn">Logout</button>
+  </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="dashboard-page">
+
+  <!-- ===== TEMP ROUTING (WIP) ===== -->
+  <section class="portal-routing">
+    <h2>Portal Navigation (WIP)</h2>
+    <p class="muted">
+      Access in-progress learning modules.
+    </p>
+
+    <div class="route-links">
+      <a href="/welcome.html" class="route-btn primary">
+        Welcome / Onboarding
+      </a>
+      <a href="/learning/foundations.html" class="route-btn secondary">
+        Cybersecurity Foundations
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD HEADER ===== -->
+  <section class="dashboard-header">
+    <div>
+      <h1>User Dashboard</h1>
+      <p id="welcomeLine">Loading session…</p>
+    </div>
+    <span class="user-chip" id="userChip"></span>
+  </section>
+
+  <!-- ===== INTERVIEW PRACTICE MODULE ===== -->
+  <section class="practice-module">
+
+    <div class="practice-controls">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search questions or answers…"
+      />
+
+      <span>Total: <strong id="totalCount">0</strong></span>
+
+      <select id="categorySelect">
+        <option value="All">All Categories</option>
+        <option value="CSF">Foundation</option>
+        <option value="SOC">SOC</option>
+        <option value="GRC">GRC</option>
+        <option value="IAM">IAM</option>
+        <option value="NET">Network</option>
+        <option value="SOCINT">SOCINT</option>
+        <option value="GRCINT">GRCINT</option>
+        <option value="NETINT">NETINT</option>
+      </select>
+
+      <label>
+        <input type="checkbox" id="unreviewedOnly" />
+        Unreviewed only
+      </label>
+
+      <button id="shuffleBtn">Shuffle</button>
+
+      <label>
+        <input type="checkbox" id="studyModeToggle" />
+        Study mode
+      </label>
+    </div>
+
+    <div id="questionsContainer"></div>
+    <div id="pageBox"></div>
+
+  </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 kiranregmi.com · Secure Learning Portal</p>
+  </div>
+</footer>
+
+<script src="./dashboard.js"></script>
+</body>
+</html>
+

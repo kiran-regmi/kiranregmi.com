@@ -1,129 +1,150 @@
-<!-- Dashboard.html-->
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard • User Profile & Practice</title>
+  <title>Welcome · Cyber Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Global styles -->
   <link rel="stylesheet" href="./css/base.css" />
   <link rel="stylesheet" href="./css/layout.css" />
   <link rel="stylesheet" href="./css/components.css" />
 
-  <!-- Dashboard-specific -->
-  <link rel="stylesheet" href="./css/dashboard.css" />
+
+  <style>
+    body {
+  background: #f5f7fb;
+  color: #111827;
+    }
+
+    .welcome-shell {
+      min-height: calc(100vh - 120px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .welcome-card {
+      max-width: 760px;
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .welcome-card h1 {
+      margin-bottom: 0.75rem;
+    }
+
+    .welcome-card p {
+      color: #9ca3af;
+      margin-bottom: 1.5rem;
+    }
+
+    .welcome-video {
+      margin-top: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+    }
+
+    .welcome-actions {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .welcome-actions a {
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .welcome-actions a.secondary {
+      background: #020617;
+      border: 1px solid #1f2937;
+    }
+  </style>
 </head>
 
 <body class="app-shell">
-
-<!-- ===== AUTH GUARD ===== -->
-<script>
+  <!--script>
   const token = localStorage.getItem("token");
   if (!token) {
     window.location.href = "/login.html";
   }
 </script>
 
-<!-- ===== TOP NAVBAR ===== -->
+<!-- TOP NAVBAR (reuse same markup as foundations) -->
 <header class="top-navbar">
   <div class="top-navbar-inner">
 
-    <a href="/index.html" class="top-logo">
+    <!-- Logo -->
+    <a href="./index.html" class="top-logo">
       <span class="logo-badge">KR</span>
     </a>
 
+    <!-- Nav Links -->
     <nav class="top-nav-links">
-      <a href="/index.html">Home</a>
-      <a href="/dashboard.html" class="active">Dashboard</a>
-      <a href="/contact.html">Contact</a>
+      <a href="./index.html">Home</a>
+      <a href="#" onclick="alert('Coming soon')">News</a>
+      <a href="#" onclick="alert('Coming soon')">Appointment</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./login.html" id="loginLink">Log Out</a>
     </nav>
 
-    <button id="logoutBtn">Logout</button>
   </div>
 </header>
 
-<!-- ===== MAIN ===== -->
-<main class="dashboard-page">
+  <!-- ========== MAIN CONTENT ========== -->
 
-  <!-- ===== TEMP ROUTING (WIP) ===== -->
-  <section class="portal-routing">
-    <h2>Portal Navigation (WIP)</h2>
-    <p class="muted">
-      Access in-progress learning modules.
+<main class="welcome-shell">
+  <div class="welcome-card">
+    <h1>Welcome to the Cyber Portal</h1>
+    <p>
+      This platform is designed to guide you through structured cybersecurity learning,
+      skill validation, and progression into advanced domains.
     </p>
 
-    <div class="route-links">
-      <a href="/welcome.html" class="route-btn primary">
-        Welcome / Onboarding
-      </a>
-      <a href="/learning/foundations.html" class="route-btn secondary">
-        Cybersecurity Foundations
-      </a>
+    <!-- Video placeholder -->
+    <div class="welcome-video">
+  <video
+    width="100%"
+    height="360"
+    controls
+    preload="metadata"
+    poster="./assets/images/welcome-poster.png"
+  >
+    <source src="./assets/videos/welcome.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+
+    <div class="welcome-actions">
+      <a href="./learning/foundations.html">Start Foundations</a>
+      <a href="./dashboard.html" class="secondary">View Profile</a>
     </div>
-  </section>
-
-  <!-- ===== DASHBOARD HEADER ===== -->
-  <section class="dashboard-header">
-    <div>
-      <h1>User Dashboard</h1>
-      <p id="welcomeLine">Loading session…</p>
-    </div>
-    <span class="user-chip" id="userChip"></span>
-  </section>
-
-  <!-- ===== INTERVIEW PRACTICE MODULE ===== -->
-  <section class="practice-module">
-
-    <div class="practice-controls">
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Search questions or answers…"
-      />
-
-      <span>Total: <strong id="totalCount">0</strong></span>
-
-      <select id="categorySelect">
-        <option value="All">All Categories</option>
-        <option value="CSF">Foundation</option>
-        <option value="SOC">SOC</option>
-        <option value="GRC">GRC</option>
-        <option value="IAM">IAM</option>
-        <option value="NET">Network</option>
-        <option value="SOCINT">SOCINT</option>
-        <option value="GRCINT">GRCINT</option>
-        <option value="NETINT">NETINT</option>
-      </select>
-
-      <label>
-        <input type="checkbox" id="unreviewedOnly" />
-        Unreviewed only
-      </label>
-
-      <button id="shuffleBtn">Shuffle</button>
-
-      <label>
-        <input type="checkbox" id="studyModeToggle" />
-        Study mode
-      </label>
-    </div>
-
-    <div id="questionsContainer"></div>
-    <div id="pageBox"></div>
-
-  </section>
+  </div>
 </main>
 
-<!-- ===== FOOTER ===== -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <p>© 2026 kiranregmi.com · Secure Learning Portal</p>
+    <p>© 2026 kiranregmi.com · Cybersecurity Learning Portal</p>
   </div>
 </footer>
 
-<script src="./dashboard.js"></script>
 </body>
 </html>
 
