@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secure Notes | Internal Lab</title>
+    <link rel="stylesheet" href="secure-notes.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0a192f] text-gray-300">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center py-6 px-10 bg-[#0a192f] border-b border-gray-700">
+        <a href="../../index.html" class="text-teal-400 text-lg font-bold">Kiran</a>
+        <div class="space-x-8">
+            <a href="../../index.html" class="hover:text-teal-400">Home</a>
+            <a href="password-vault.html" class="hover:text-teal-400">Password Vault</a>
+            <a href="secure-notes.html" class="text-teal-400">Secure Notes</a>
+            <a href="rbac.html" class="hover:text-teal-400">RBAC</a>
+            <a href="audit.html" class="hover:text-teal-400 font-semibold">Audit Logs</a>
+            
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <section class="max-w-5xl mx-auto px-10 py-10">
+
+        <!-- Create Note Box -->
+        <div class="bg-[#112240] p-6 rounded-lg border border-gray-700">
+            <h2 class="text-lg font-bold text-teal-400 mb-3">Create Note</h2>
+
+            <textarea 
+                id="noteInput"
+                placeholder="Write your note here..."
+                class="w-full h-32 bg-[#0e1b33] border border-gray-700 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400">
+            </textarea>
+
+            <button 
+                onclick="addNote()"
+                class="mt-4 px-6 py-3 bg-teal-400 text-black rounded-md hover:bg-teal-300">
+                Save Note
+            </button>
+        </div>
+
+        <!-- Notes Grid -->
+        <div id="notesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10"></div>
+
+    </section>
+
+    <script src="secure-notes.js"></script>
+</body>
+</html>

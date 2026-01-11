@@ -1,0 +1,61 @@
+List of the features I would like to have on the site
+
+// FrontEnd (public facing)
+Nav (Logo, News, AI/GRC, Contact, Login)
+Left Section:
+    1. Profile Sumary
+    2. Skills Section
+    3. Projects Section
+    4. Certification Section
+    5. Social icons  
+
+Right Section:
+    1. Hiring manager Section
+    2. Soc Impact 
+    3. Flagship Projects 
+    4. Other 
+
+// BackEnd (Secured with logins)
+    1. Dashbord - Admin
+    2. Dashboard - User
+    3. Questions and Answers Bank
+    4. Secure Docs - Admin
+
+// Source of Truth
+    1. Authentication
+    2. Authorization (RBAC)
+    3. MFA enforcement(later)    
+    4. APIs for:
+        * SOC data
+        * GRC content
+        * iam labs
+        * network exercises
+    5. Audit logging (huge resume value)        
+
+// Login features
+    1. User must be able to register
+    2. User must be able to change/update password
+    3. User should be able to use federation logins
+    4. User should see welcome message with name and flashing bloon when they login
+    5. User should see clear message when they are not able to login and why
+
+// Questions / Answers features
+    1. Foundation - User must master the foundation with dropdown and multiple quesions Answers
+    2. Scenario base - User  
+    3. Behavioral base - 
+    4. Interview Practice -    
+
+// CSS Layers
+    css/
+├── base.css              ← resets, typography, variables
+├── layout.css            ← sidebar, header, grid
+├── components.css        ← cards, buttons, badges
+├── dashboard.css         ← profile/admin-specific
+├── learning.css          ← foundations + SOC + IAM + GRC
+
+index.html  - existing tailwind only
+login.html - base + layout
+foundations.html - base + layout + components + learning
+soc/iam/grc - same as foundations
+dashboard.html - base + layout + components + dashboard
+ 

@@ -1,234 +1,129 @@
-<!-- v1.1 - dashboard.html — STABLE + STUDY MODE + PROGRESS SUMMARY (HARDENED) -->
+<!-- Dashboard.html-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard • kiranregmi.com</title>
+  <title>Dashboard • User Profile & Practice</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      background: #f3f4f6;
-      margin: 0;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: #0b1120;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header .brand {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    header nav a {
-      color: #e5e7eb;
-      text-decoration: none;
-      margin-left: 1rem;
-      font-size: 0.85rem;
-    }
-    header nav a.active {
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      background: #2563eb;
-    }
-    #logoutBtn {
-      margin-left: 1rem;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb33;
-      background: transparent;
-      color: #e5e7eb;
-      font-size: 0.8rem;
-      padding: 0.3rem 0.8rem;
-      cursor: pointer;
-    }
 
-    .page {
-      max-width: 1200px;
-      margin: 1.5rem auto;
-      padding: 0 1.25rem 2rem;
-    }
-    .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 1rem;
-    }
-    .page-header h1 {
-      font-size: 1.4rem;
-      margin: 0;
-    }
-    .page-header p {
-      margin: 0;
-      font-size: 0.85rem;
-      color: #6b7280;
-    }
-    .user-chip {
-      font-size: 0.8rem;
-      background: #e0f2fe;
-      color: #0f172a;
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-    }
+  <!-- Global styles -->
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/components.css" />
 
-    .top-controls {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-
-    }
-    .top-controls select, .top-controls button {
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      padding: 0.35rem 0.7rem;
-      font-size: 0.8rem;
-      background: #fff;
-      cursor: pointer;
-    }
-    #shuffleBtn {
-      background: #2563eb;
-      color: #fff;
-      border-color: transparent;
-    }
-
-    #questionsContainer {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-    .question-card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-    }
-    .question-card h4 {
-      font-size: 0.95rem;
-      margin: 0 0 0.5rem 0;
-    }
-    .question-card p {
-      font-size: 0.85rem;
-      color: #4b5563;
-      margin: 0;
-    }
-
-    #pageBox {
-      margin-top: 1rem;
-      text-align: center;
-      font-size: 0.85rem;
-    }
-    #pageBox button {
-      border-radius: 999px;
-      border: none;
-      padding: 0.35rem 0.7rem;
-      margin: 0 0.3rem;
-      background: #111827;
-      color: #f9fafb;
-      cursor: pointer;
-    }
-    #loginRedirectNotice {
-      font-size: 0.85rem;
-      color: #b91c1c;
-    }
-  </style>
+  <!-- Dashboard-specific -->
+  <link rel="stylesheet" href="./css/dashboard.css" />
 </head>
-<body>
-  <header>
-    <div class="brand">kiranregmi.com • Secure Dashboard</div>
-    <div style="display:flex; align-items:center;">
-      <nav>
-  <a href="index.html">Home</a>
-  <a href="dashboard.html" class="active">Dashboard</a>
 
-  <!-- Security Posture Dropdown -->
-  <div class="dropdown">
-  <a href="#" class="dropdown-toggle">Security Posture</a>
+<body class="app-shell">
 
-  <div class="dropdown-menu" id="securityDocsMenu">
-    <a href="#" data-doc="Kiran_Regmi_Application_Security_Plan.pdf">
-      Security Plan (PDF)
+<!-- ===== AUTH GUARD ===== -->
+<script>
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "/login.html";
+  }
+</script>
+
+<!-- ===== TOP NAVBAR ===== -->
+<header class="top-navbar">
+  <div class="top-navbar-inner">
+
+    <a href="/index.html" class="top-logo">
+      <span class="logo-badge">KR</span>
     </a>
-    <a href="#" data-doc="Kiran_Regmi_Security_Gap_Analysis.pdf">
-      Gap Analysis & Remediation (PDF)
-    </a>
-    <a href="#" data-doc="Kiran_Regmi_NIST_CSF_2.0_Mapping.pdf">
-      NIST CSF 2.0 Mapping (PDF)
-    </a>
-    <a href="#" data-doc="Kiran_Regmi_ISO_27001_Mapping.pdf">
-      ISO 27001 Mapping (PDF)
-    </a>
-    <a href="security-controls.html">
-      Security Controls Overview
-    </a>
+
+    <nav class="top-nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/dashboard.html" class="active">Dashboard</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+
+    <button id="logoutBtn">Logout</button>
   </div>
-</div>
-</nav>
-      <button id="logoutBtn">Logout</button>
-    </div>
-  </header>
+</header>
 
-  <main class="page">
-    <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
-  <div>
-    <div style="display:flex; align-items:center; gap:0.75rem;">
-      <h1 style="margin:0;">Interview Practice</h1>
-      <span id="progressSummary" style="font-size:0.85rem; color:#374151;"></span>
-    </div>
-    <p id="welcomeLine">Loading session…</p>
-  </div>
-  <span class="user-chip" id="userChip"></span>
-</div>
+<!-- ===== MAIN ===== -->
+<main class="dashboard-page">
 
-    <p id="loginRedirectNotice" style="display:none;">
-      You are not signed in. Redirecting to login…
+  <!-- ===== TEMP ROUTING (WIP) ===== -->
+  <section class="portal-routing">
+    <h2>Portal Navigation (WIP)</h2>
+    <p class="muted">
+      Access in-progress learning modules.
     </p>
 
-    <section id="questionsSection">
-      <div class="top-controls">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search questions or answers..."
-          class="search-box"
-          />
-        <span>Total: <strong id="totalCount">0</strong></span>
-        <select id="categorySelect">
-          <option value="All">All Categories</option>
-          <option value="CSF">Foundation</option>
-          <option value="SOC">SOC</option>
-          <option value="GRC">GRC</option>
-          <option value="IAM">IAM</option>
-          <option value="NET">Network</option>
-          <option value="SOCINT">SOCINT</option>
-          <option value="GRCINT">GRCINT</option>
-          <option value="NETINT">NETINT</option>
-        </select>
-        <label style="font-size:0.85rem;">
+    <div class="route-links">
+      <a href="/welcome.html" class="route-btn primary">
+        Welcome / Onboarding
+      </a>
+      <a href="/learning/foundations.html" class="route-btn secondary">
+        Cybersecurity Foundations
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD HEADER ===== -->
+  <section class="dashboard-header">
+    <div>
+      <h1>User Dashboard</h1>
+      <p id="welcomeLine">Loading session…</p>
+    </div>
+    <span class="user-chip" id="userChip"></span>
+  </section>
+
+  <!-- ===== INTERVIEW PRACTICE MODULE ===== -->
+  <section class="practice-module">
+
+    <div class="practice-controls">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search questions or answers…"
+      />
+
+      <span>Total: <strong id="totalCount">0</strong></span>
+
+      <select id="categorySelect">
+        <option value="All">All Categories</option>
+        <option value="CSF">Foundation</option>
+        <option value="SOC">SOC</option>
+        <option value="GRC">GRC</option>
+        <option value="IAM">IAM</option>
+        <option value="NET">Network</option>
+        <option value="SOCINT">SOCINT</option>
+        <option value="GRCINT">GRCINT</option>
+        <option value="NETINT">NETINT</option>
+      </select>
+
+      <label>
         <input type="checkbox" id="unreviewedOnly" />
-        Show unreviewed only
-        </label>
+        Unreviewed only
+      </label>
 
-        <button id="shuffleBtn">Shuffle</button>
-        <label style="font-size:0.85rem;">
-          <input type="checkbox" id="studyModeToggle" />
-          Study Mode
-        </label>
-      </div>
+      <button id="shuffleBtn">Shuffle</button>
 
-      <div id="questionsContainer"></div>
-      <div id="pageBox"></div>
-    </section>
-  </main>
+      <label>
+        <input type="checkbox" id="studyModeToggle" />
+        Study mode
+      </label>
+    </div>
 
-  <script src="dashboard.js"></script>
+    <div id="questionsContainer"></div>
+    <div id="pageBox"></div>
+
+  </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 kiranregmi.com · Secure Learning Portal</p>
+  </div>
+</footer>
+
+<script src="./dashboard.js"></script>
 </body>
 </html>
+

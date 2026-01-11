@@ -1,0 +1,121 @@
+
+/* ===============================
+   APP NAVBAR (SCOPED)
+   =============================== */
+
+.app-shell .top-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #0b1120;
+  border-bottom: 1px solid #1f2937;
+}
+
+.app-shell .top-navbar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-shell .top-logo {
+  text-decoration: none;
+}
+
+.app-shell .logo-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid #64ffda;
+  color: #64ffda;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+.app-shell .top-nav-links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.app-shell .top-nav-links a {
+  color: #ccd6f6;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.app-shell .top-nav-links a:hover {
+  color: #64ffda;
+}
+
+/* ===============================
+   APP FOOTER (SCOPED)
+   =============================== */
+
+.app-shell .site-footer {
+  margin-top: 4rem;
+  padding: 2rem 1.5rem;
+  background: #020617;
+  border-top: 1px solid #1f2937;
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+.app-shell .footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.app-shell .footer-inner p {
+  margin: 0.25rem 0;
+}
+.portal-routing {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.portal-routing h2 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+}
+
+.portal-routing .muted {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.route-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.route-btn {
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.route-btn.primary {
+  background: #2563eb;
+  color: white;
+}
+
+.route-btn.secondary {
+  background: #020617;
+  color: white;
+}
+

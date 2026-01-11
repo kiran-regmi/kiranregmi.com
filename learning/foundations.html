@@ -1,0 +1,219 @@
+<!--learning/foundations.html --> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cybersecurity Foundations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+
+  <!-- Learning-specific -->
+  <link rel="stylesheet" href="../css/learning.css" />
+
+  <script defer src="/dashboard.js"></script>
+
+  <!--script>
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "/login.html";
+  }
+</script -->
+</head>
+
+
+<!-- ========== TOP NAVBAR ========== -->
+<header class="top-navbar">
+  <div class="top-navbar-inner">
+
+    <!-- Logo -->
+    <a href="/index.html" class="top-logo">
+      <span class="logo-badge">KR</span>
+    </a>
+
+    <!-- Nav Links -->
+    <nav class="top-nav-links">
+      <a href="../index.html">Home</a>
+      <a href="#" onclick="alert('Coming soon')">News</a>
+      <a href="#" onclick="alert('Coming soon')">Appointment</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../login.html" id="loginLink">Log Out</a>
+    </nav>
+
+  </div>
+</header>
+
+<body class="learning-body">
+<div class="learning-shell">
+
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="learning-sidebar">
+    <div class="sidebar-brand">Cyber Portal</div>
+
+    <nav class="sidebar-nav">
+     <a href="/dashboard.html" class="profile-btn">Profile</a>   
+      <a class="nav-foundations active" href="foundations.html">Foundations</a>
+      <a class="nav-soc locked">SOC</a>
+      <a class="nav-iam locked">IAM</a>
+      <a class="nav-grc locked">GRC</a>
+      <a class="nav-networking locked">Networking</a>
+      <a class="nav-interview locked">Interview</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span id="userEmail"></span>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="learning-content">
+
+    <!-- Header -->
+    <header class="learning-header">
+      <h1>Cybersecurity Foundations</h1>
+      <p class="subtitle">
+        Complete Foundations to unlock advanced domains.
+        <strong>70% required to progress.</strong>
+      </p>
+      <div class="progress-pill">Progress: 0%</div>
+    </header>
+
+    <!-- Blocks -->
+    <section class="learning-grid">
+
+      <!-- Block template -->
+      <div class="learning-block">
+        <h3>Cybersecurity Basics</h3>
+        <p>Core security concepts, CIA triad, attack surfaces.</p>
+
+        <div class="block-actions">
+          <a href="/learning/foundations/basics.html" class="btn-primary">
+            Lessons
+          </a>
+
+          <button class="btn-secondary"
+            onclick="openRecordingModal('foundations_basics_intro.mp4')">
+            Recordings
+          </button>
+
+          <button class="btn-secondary"
+            onclick="openSecureDoc('Foundations_Basics_Resources.pdf')">
+            Resources
+          </button>
+        </div>
+      </div>
+
+      <div class="learning-block">
+        <h3>Risk & Threat Modeling</h3>
+        <p>Threat actors, likelihood, impact, and mitigation.</p>
+
+        <div class="block-actions">
+          <a class="btn-primary">Lessons</a>
+          <button class="btn-secondary locked-btn">Recordings</button>
+          <button class="btn-secondary locked-btn">Resources</button>
+        </div>
+      </div>
+
+      <div class="learning-block">
+        <h3>Identity Fundamentals</h3>
+        <p>Authentication, authorization, identity misuse.</p>
+        <div class="block-actions">
+          <a class="btn-primary">Lessons</a>
+          <button class="btn-secondary locked-btn">Recordings</button>
+          <button class="btn-secondary locked-btn">Resources</button>
+        </div>
+      </div>
+
+      <div class="learning-block">
+        <h3>Network Fundamentals</h3>
+        <p>Traffic, protocols, visibility, and monitoring.</p>
+        <div class="block-actions">
+          <a class="btn-primary">Lessons</a>
+          <button class="btn-secondary locked-btn">Recordings</button>
+          <button class="btn-secondary locked-btn">Resources</button>
+        </div>
+      </div>
+
+      <div class="learning-block">
+        <h3>SOC Workflow Basics</h3>
+        <p>Alert triage, escalation, and documentation.</p>
+        <div class="block-actions">
+          <a class="btn-primary">Lessons</a>
+          <button class="btn-secondary locked-btn">Recordings</button>
+          <button class="btn-secondary locked-btn">Resources</button>
+        </div>
+      </div>
+
+      <div class="learning-block">
+        <h3>AI Foundations for Security</h3>
+        <p>AI-assisted detection, analysis, and limits.</p>
+        <div class="block-actions">
+          <a class="btn-primary">Lessons</a>
+          <button class="btn-secondary locked-btn">Recordings</button>
+          <button class="btn-secondary locked-btn">Resources</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+</div>
+
+
+<!--- Footer Section -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>
+      © 2026 <strong>kiranregmi.com</strong> · Cybersecurity Learning Portal
+    </p>
+    <p class="footer-sub">
+      Built for skill progression · Secure by design
+    </p>
+  </div>
+</footer>
+
+
+<!-- ========== RECORDING MODAL ========== -->
+<div id="recordingModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeRecordingModal()">×</span>
+    <h3>Protected Recording</h3>
+    <div id="recordingPlayer">
+      <!-- Secure video injected here -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Session UI
+  const email = localStorage.getItem("email");
+  if (email) document.getElementById("userEmail").textContent = email;
+
+  // Modal logic (stub)
+  function openRecordingModal(filename) {
+    document.getElementById("recordingModal").classList.remove("hidden");
+    document.getElementById("recordingPlayer").innerHTML =
+      "<p>Secure recording access check…</p>";
+  }
+
+  function closeRecordingModal() {
+    document.getElementById("recordingModal").classList.add("hidden");
+  }
+</script>
+
+<script>
+  const token = localStorage.getItem("token");
+  if (token) {
+    const loginLink = document.getElementById("loginLink");
+    if (loginLink) loginLink.textContent = "Logout";
+  }
+</script>
+
+
+</body>
+</html>

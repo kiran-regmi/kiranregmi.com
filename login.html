@@ -5,6 +5,10 @@
   <title>Login • kiranregmi.com</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
+
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/components.css" />
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
@@ -84,6 +88,33 @@
     }
   </style>
 </head>
+
+<!-- ========== TOP NAVBAR ========== -->
+<body class="app-shell">
+
+<!-- TOP NAVBAR (reuse same markup as foundations) -->
+<header class="top-navbar">
+  <div class="top-navbar-inner">
+
+    <!-- Logo -->
+    <a href="../index.html" class="top-logo">
+      <span class="logo-badge">KR</span>
+    </a>
+
+    <!-- Nav Links -->
+    <nav class="top-nav-links">
+      <a href="./index.html">Home</a>
+      <a href="#" onclick="alert('Coming soon')">News</a>
+      <a href="#" onclick="alert('Coming soon')">Appointment</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./login.html" id="loginLink">Log Out</a>
+    </nav>
+
+  </div>
+</header>
+
+<!-- ========== Body start here ========== -->
+
 <body>
   <div class="login-wrapper">
     <div class="login-card">
@@ -148,7 +179,8 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     localStorage.setItem("email", email);
     
     // Redirect to dashboard
-    window.location.href = "/dashboard.html";
+    // window.location.href = "/dashboard.html";
+    window.location.href = "/welcome.html";
 
   } catch (err) {
     console.error(err);
