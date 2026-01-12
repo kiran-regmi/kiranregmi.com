@@ -865,6 +865,12 @@ function closeBrainBoost() {
   boostA.value = "";
 }
 
+function openBrainBoost() {
+  brainBackdrop.classList.remove("hidden");
+  generateBoostByLevel();
+  setTimeout(() => boostA.focus(), 50);
+}
+
 function generateBoostByLevel() {
   boostResult.textContent = "";
   boostA.value = "";
@@ -885,6 +891,12 @@ function generateBoostByLevel() {
 }
 
 function checkBoost() {
+  if (!currentBoost) {
+    boostResult.textContent = "⚠️ Loading question… try again.";
+    generateBoostByLevel();
+    return;
+  }
+
   const v = Number(boostA.value.trim());
 
   if (v === currentBoost.a) {
@@ -898,6 +910,7 @@ function checkBoost() {
     boostResult.textContent = "❌ Not quite — try again!";
   }
 }
+
 
 /* ---------- Boost Types ---------- */
 
