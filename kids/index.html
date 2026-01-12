@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Builder Quest</title>
+  <link rel="stylesheet" href="./kids.css" />
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🧩</div>
+      <div>
+        <div class="title">Builder Quest</div>
+        <div class="subtitle">Build games. Build apps. Level up.</div>
+      </div>
+    </div>
+
+    <div class="status">
+      <div class="chip" id="kidNameChip">👋 Hi, Builder</div>
+      <div class="chip">⭐ Level <span id="level">1</span></div>
+      <div class="chip">🎯 Mission: <span id="missionText">Make something move.</span></div>
+      <button class="btn ghost" id="openParentViewBtn" type="button" title="Parent View">📊</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Main Tiles -->
+    <section class="tiles">
+      <button class="tile" id="tileBuildGame" type="button">
+        <div class="tileIcon">🎮</div>
+        <div class="tileTitle">Build a Game</div>
+        <div class="tileDesc">Make characters move, score points, and play.</div>
+      </button>
+
+      <button class="tile" id="tileBuildApp" type="button">
+        <div class="tileIcon">📱</div>
+        <div class="tileTitle">Build an App</div>
+        <div class="tileDesc">Make buttons, screens, counters, and fun apps.</div>
+      </button>
+
+      <button class="tile" id="tileAskBot" type="button">
+        <div class="tileIcon">🤖</div>
+        <div class="tileTitle">Ask the Helper</div>
+        <div class="tileDesc">Get short hints (not full answers).</div>
+      </button>
+
+      <button class="tile" id="tileBrainBoost" type="button">
+        <div class="tileIcon">🧠</div>
+        <div class="tileTitle">Brain Boost</div>
+        <div class="tileDesc">Quick math & science mini-challenges.</div>
+      </button>
+    </section>
+
+    <!-- Creations -->
+    <section class="panel">
+      <div class="panelHeader">
+        <h2>🏗️ My Creations</h2>
+        <div class="panelActions">
+          <button class="btn" id="newProjectBtn" type="button">➕ New</button>
+          <button class="btn ghost" id="clearAllBtn" type="button">🧹 Clear</button>
+        </div>
+      </div>
+
+      <div class="creations" id="creations"></div>
+      <div class="empty" id="emptyState">
+        No creations yet. Click <b>Build a Game</b> or <b>Build an App</b>.
+      </div>
+    </section>
+  </main>
+
+  <!-- Builder Modal -->
+  <div class="modalBackdrop hidden" id="builderBackdrop" role="dialog" aria-modal="true" aria-label="Builder">
+    <div class="modal">
+      <div class="modalHeader">
+        <div>
+          <div class="modalTitle" id="builderTitle">Build</div>
+          <div class="modalSub" id="builderSub">Pick blocks and press Play.</div>
+        </div>
+        <div class="modalHeaderRight">
+          <input class="input" id="projectName" placeholder="Name your creation (e.g., Coin Chase)" maxlength="32" />
+          <button class="btn ghost" id="closeBuilderBtn" type="button">✖</button>
+        </div>
+      </div>
+
+      <div class="modalBody">
+        <!-- Left: Block Library -->
+        <aside class="library">
+          <div class="sectionTitle">🧱 Blocks</div>
+          <div class="blockGroupTitle">Events</div>
+          <div class="blockList" id="blockListEvents"></div>
+
+          <div class="blockGroupTitle">Actions</div>
+          <div class="blockList" id="blockListActions"></div>
+
+          <div class="blockGroupTitle">Logic</div>
+          <div class="blockList" id="blockListLogic"></div>
+
+          <div class="hint">
+            Tip: Click blocks to add them to your script. Then press <b>Play</b>.
+          </div>
+        </aside>
+
+        <!-- Middle: Script -->
+        <section class="script">
+          <div class="sectionTitle">📜 My Script</div>
+          <div class="scriptArea" id="scriptArea"></div>
+          <div class="scriptActions">
+            <button class="btn ghost" id="undoBlockBtn" type="button">↩ Undo</button>
+            <button class="btn ghost" id="clearScriptBtn" type="button">🗑 Clear Script</button>
+          </div>
+        </section>
+
+        <!-- Right: Preview -->
+        <section class="preview">
+          <div class="sectionTitle">👀 Preview</div>
+
+          <!-- Game preview -->
+          <canvas id="gameCanvas" width="420" height="280" class="canvas hidden"></canvas>
+
+          <!-- App preview -->
+          <div id="appPreview" class="appPreview hidden"></div>
+
+          <div class="previewActions">
+            <button class="btn" id="playBtn" type="button">▶ Play</button>
+            <button class="btn ghost" id="stopBtn" type="button">⏹ Stop</button>
+            <button class="btn" id="saveBtn" type="button">💾 Save</button>
+          </div>
+
+          <div class="log" id="runLog"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Helper Bot Modal -->
+  <div class="modalBackdrop hidden" id="botBackdrop" role="dialog" aria-modal="true" aria-label="Helper Bot">
+    <div class="modal small">
+      <div class="modalHeader">
+        <div>
+          <div class="modalTitle">🤖 Helper Bot</div>
+          <div class="modalSub">Short hints only. Try things.</div>
+        </div>
+        <button class="btn ghost" id="closeBotBtn" type="button">✖</button>
+      </div>
+
+      <div class="modalBody single">
+        <div class="chat" id="chat"></div>
+        <div class="chatBar">
+          <input class="input" id="chatInput" placeholder="Ask: how do I make a button work?" />
+          <button class="btn" id="sendChatBtn" type="button">Send</button>
+        </div>
+
+        <div class="tiny">
+          Phase 1 uses a built-in helper. Later we can connect this to your AI endpoint.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brain Boost Modal -->
+  <div class="modalBackdrop hidden" id="brainBackdrop" role="dialog" aria-modal="true" aria-label="Brain Boost">
+    <div class="modal small">
+      <div class="modalHeader">
+        <div>
+          <div class="modalTitle">🧠 Brain Boost</div>
+          <div class="modalSub">Quick challenge. No pressure.</div>
+        </div>
+        <button class="btn ghost" id="closeBrainBtn" type="button">✖</button>
+      </div>
+
+      <div class="modalBody single">
+        <div class="boostCard">
+          <div class="boostQ" id="boostQ">What is 7 + 5?</div>
+          <div class="boostRow">
+            <input class="input" id="boostA" placeholder="Type answer" />
+            <button class="btn" id="checkBoostBtn" type="button">Check</button>
+          </div>
+          <div class="boostResult" id="boostResult"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parent View Modal -->
+  <div class="modalBackdrop hidden" id="parentBackdrop" role="dialog" aria-modal="true" aria-label="Parent View">
+    <div class="modal small">
+      <div class="modalHeader">
+        <div>
+          <div class="modalTitle">📊 Parent View</div>
+          <div class="modalSub">Progress summary (Phase 1)</div>
+        </div>
+        <button class="btn ghost" id="closeParentBtn" type="button">✖</button>
+      </div>
+
+      <div class="modalBody single">
+        <div class="parentGrid">
+          <div class="parentStat">
+            <div class="parentLabel">Projects Saved</div>
+            <div class="parentValue" id="pvProjects">0</div>
+          </div>
+          <div class="parentStat">
+            <div class="parentLabel">Time Building</div>
+            <div class="parentValue" id="pvTime">0m</div>
+          </div>
+          <div class="parentStat">
+            <div class="parentLabel">Skills Unlocked</div>
+            <div class="parentValue" id="pvSkills">0</div>
+          </div>
+        </div>
+
+        <div class="parentSkills" id="parentSkills"></div>
+        <div class="tiny">Hook this into your real DB later. For now it tracks locally.</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./kids.js"></script>
+</body>
+</html>
