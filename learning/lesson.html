@@ -64,6 +64,18 @@
       font-size: 0.75rem;
       cursor: pointer;
     }
+    .lesson-filters {
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    }
+
+    .lesson-filters select {
+    margin-left: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    }
+
   </style>
 </head>
 
@@ -97,6 +109,21 @@
   </section>
 
   <div class="lesson-progress" id="progressText"></div>
+  
+  <!--adding unit selector-->
+  <div class="lesson-filters">
+  <label for="unitSelect">Unit:</label>
+  <select id="unitSelect">
+    <option value="ALL">All Units</option>
+    <option value="basics">Cybersecurity Basics</option>
+    <option value="risk">Risk & Threat Modeling</option>
+    <option value="identity">Identity Fundamentals</option>
+    <option value="network">Network Fundamentals</option>
+    <option value="soc">SOC Workflow Basics</option>
+    <option value="ai">AI Foundations</option>
+  </select>
+</div>
+
 
   <section id="questionsContainer"></section>
 </main>
