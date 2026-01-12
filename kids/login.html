@@ -95,7 +95,7 @@
     <div class="error" id="error"></div>
 
     <div class="tiny">
-      Grown-ups? <a href="/login.html" style="color:#9db0ff">Use adult login</a>
+      Grown-ups? <a href="/login.html?target=kids" style="color:#9db0ff">Use adult/Admin login</a>
     </div>
   </div>
 
@@ -135,11 +135,20 @@
         localStorage.setItem("email", email);
 
         // Redirect based on role
+        const params = new URLSearchParams(window.location.search);
+        const target = params.get("target");
+
         if (data.role === "kid") {
+          // Kids always go to kids portal
+          window.location.href = "/kids/index.html";
+        } else if (target === "kids") {
+          // Parent/Admin logging in FROM kids portal
           window.location.href = "/kids/index.html";
         } else {
+          // Default adult/student behavior
           window.location.href = "/dashboard.html";
         }
+
 
       } catch (err) {
         errorEl.textContent = "Server error. Try again.";
