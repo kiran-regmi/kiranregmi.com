@@ -5,8 +5,9 @@
   <title>Kids Login – Builder Quest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <script src="/js/app-config.js"></script>
   <style>
-    
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -83,7 +84,7 @@
 <body>
   <div class="card">
     <h1>🧩 Builder Quest</h1>
-    <p>Kids Login</p>
+    <p>Pranav's Login</p>
 
     <input class="input" id="email" placeholder="Email" />
     <input class="input" id="password" type="password" placeholder="Password" />
@@ -113,7 +114,7 @@
       }
 
       try {
-        const res = await fetch("/api/login", {
+        const res = await fetch(`${window.APP_CONFIG.API_BASE_URL}/api/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
