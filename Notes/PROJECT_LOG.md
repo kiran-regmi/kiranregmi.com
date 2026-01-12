@@ -4,7 +4,9 @@ admin user:
 Other user:
     user@kiranregmi.com
     User@123
-
+Kids user:
+    kid@kiranregmi.com
+    KidBuilder123!
 
 End	Pages	details
 FrontEnd	index.html	Home

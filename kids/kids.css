@@ -338,3 +338,53 @@ body{
 .tiny{ margin-top:10px; color: var(--muted); font-size:12px; }
 
 .hidden{ display:none !important; }
+/* ================================
+   KIDS DASHBOARD VISIBILITY FIX
+   ================================ */
+
+.kids-ui {
+  color: #f5f7ff; /* force readable base text */
+}
+
+.kids-ui h1,
+.kids-ui h2,
+.kids-ui h3,
+.kids-ui h4,
+.kids-ui .title,
+.kids-ui .tileTitle {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.kids-ui p,
+.kids-ui .tileDesc,
+.kids-ui .subtitle {
+  color: rgba(245, 247, 255, 0.92);
+}
+
+.kids-ui .chip {
+  background: rgba(20, 30, 60, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.kids-ui .tile {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 28, 58, 0.95),
+    rgba(18, 28, 58, 0.85)
+  );
+}
+
+.kids-ui .tileDesc {
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.kids-ui .panel {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 26, 48, 0.98),
+    rgba(16, 26, 48, 0.9)
+  );
+}
