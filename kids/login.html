@@ -100,6 +100,8 @@
   </div>
 
   <script>
+const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
+
     const loginBtn = document.getElementById("loginBtn");
     const errorEl = document.getElementById("error");
 
@@ -114,10 +116,10 @@
         return;
       }
 
-      const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
       
+
       try {
-        const res = await fetch(`${API_BASE}/login`, {
+        const res = await fetch(`${API_BASE}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
