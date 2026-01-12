@@ -13,7 +13,7 @@
   // Replace with your real session/user from kiranregmi.com
   // -------------------------
   const session = {
-    kidName: "Pranav!",
+    kidName: "Pranav",
     kidId: "kid_local_1",
   };
 
