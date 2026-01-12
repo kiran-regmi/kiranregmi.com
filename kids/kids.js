@@ -889,7 +889,7 @@ function checkBoost() {
 
   if (v === currentBoost.a) {
     boostResult.textContent = "✅ Correct! Nice thinking.";
-    unlockSkills(["variables", "conditionals", "logic"]);
+    unlockSkills(["variables", "conditionals"]);
     state.missionIndex++;
     saveState(state);
     levelUpIfNeeded();
