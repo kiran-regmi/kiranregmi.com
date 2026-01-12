@@ -118,4 +118,16 @@
   background: #020617;
   color: white;
 }
+.breadcrumbs {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+.breadcrumbs a {
+  color: #2563eb;
+  text-decoration: none;
+}
+.breadcrumbs span {
+  margin: 0 0.25rem;
+}
 
