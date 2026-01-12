@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lesson • Cyber Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+
+  <style>
+    .lesson-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1.25rem 3rem;
+    }
+
+    .lesson-header h1 {
+      margin-bottom: 0.25rem;
+    }
+
+    .lesson-meta {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 1.25rem;
+    }
+
+    .lesson-progress {
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .question-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.05);
+    }
+
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .answer {
+      display: none;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .show-answer-btn {
+      margin-top: 0.75rem;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body class="app-shell">
+
+<!-- AUTH GUARD -->
+<script>
+  if (!localStorage.getItem("token")) {
+    window.location.href = "/login.html";
+  }
+</script>
+
+<!-- TOP NAV -->
+<header class="top-navbar">
+  <div class="top-navbar-inner">
+    <a href="/dashboard.html" class="top-logo">
+      <span class="logo-badge">KR</span>
+    </a>
+    <nav class="top-nav-links">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/learning/foundations.html">Foundations</a>
+      <a href="/login.html">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="lesson-container">
+  <section class="lesson-header">
+    <h1 id="lessonTitle">Lesson</h1>
+    <p class="lesson-meta" id="lessonMeta"></p>
+  </section>
+
+  <div class="lesson-progress" id="progressText"></div>
+
+  <section id="questionsContainer"></section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 kiranregmi.com · Secure Learning Portal</p>
+  </div>
+</footer>
+
+<script src="./lesson.js"></script>
+</body>
+</html>
