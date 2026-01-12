@@ -402,4 +402,12 @@ body{
 .kids-ui .tileDesc {
   font-size: 0.95rem;
 }
+.kids-ui .tile {
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.kids-ui .tile:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(124,92,255,.35);
+}
 

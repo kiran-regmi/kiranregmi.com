@@ -859,10 +859,10 @@ if (logoutKidBtn) {
 
 let currentBoost = null;
 
-function openBrainBoost() {
-  brainBackdrop.classList.remove("hidden");
-  generateBoostByLevel();
-  setTimeout(() => boostA.focus(), 50);
+function closeBrainBoost() {
+  brainBackdrop.classList.add("hidden");
+  boostResult.textContent = "";
+  boostA.value = "";
 }
 
 function generateBoostByLevel() {
@@ -889,7 +889,7 @@ function checkBoost() {
 
   if (v === currentBoost.a) {
     boostResult.textContent = "✅ Correct! Nice thinking.";
-    unlockSkills(["variables", "logic"]);
+    unlockSkills(["variables", "conditionals", "logic"]);
     state.missionIndex++;
     saveState(state);
     levelUpIfNeeded();
