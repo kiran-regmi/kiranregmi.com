@@ -243,7 +243,7 @@
 if (logoutKidBtn) {
   logoutKidBtn.addEventListener("click", () => {
     ["token", "role", "email"].forEach(k => localStorage.removeItem(k));
-    window.location.href = "/login.html";
+    window.location.href = "/kids/login.html";
   });
 }
 
