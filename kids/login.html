@@ -5,16 +5,6 @@
   <title>Kids Login – Builder Quest</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<script>
-  (function () {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-
-    if (!token || role !== "kid") {
-      window.location.href = "/kids/login.html";
-    }
-  })();
-</script>
 
 
   <style>
@@ -90,6 +80,17 @@
     }
   </style>
 </head>
+
+<script>
+  (function () {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token || role !== "kid") {
+      window.location.href = "/kids/login.html";
+    }
+  })();
+</script>
 
 <body>
   <div class="card">
