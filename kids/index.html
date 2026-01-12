@@ -7,6 +7,19 @@
   <title>Builder Quest</title>
   <link rel="stylesheet" href="./kids.css" />
 </head>
+
+<script>
+  (function () {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token || role !== "kid") {
+      window.location.href = "/kids/login.html";
+    }
+  })();
+</script>
+
+
 <body class="kids-ui">
   <!-- Top Bar -->
   <header class="topbar">
@@ -226,7 +239,7 @@
     const token = localStorage.getItem("token");
 
     if (!token || (role !== "kid" && role !== "admin")) {
-      window.location.href = "/login.html";
+      window.location.href = "/kids/login.html";
     }
   })();
 </script>
