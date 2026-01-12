@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <script src="/app-config.js"></script>
+  const API_BASE ="https://kiranregmi-backend.onrender.com>";
   <style>
 
     body {
@@ -114,11 +115,12 @@
       }
 
       try {
-        const res = await fetch(`${window.APP_CONFIG.API_BASE_URL}/api/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
-        });
+        const res = await fetch(`${API_BASE}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
 
         const data = await res.json();
 
@@ -144,5 +146,8 @@
       }
     });
   </script>
+
+  <script src="/app-config.js"></script>
+
 </body>
 </html>
