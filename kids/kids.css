@@ -342,8 +342,11 @@ body{
    KIDS DASHBOARD VISIBILITY FIX
    ================================ */
 
-.kids-ui {
-  color: #f5f7ff; /* force readable base text */
+.kids-ui {           /* force readable base text */
+  background:
+    radial-gradient(900px 600px at 15% -10%, rgba(124,92,255,.55), transparent),
+    radial-gradient(800px 500px at 85% 10%, rgba(46,229,157,.45), transparent),
+    linear-gradient(180deg, #0a1020, #0b1224);
 }
 
 .kids-ui h1,
@@ -388,3 +391,15 @@ body{
     rgba(16, 26, 48, 0.9)
   );
 }
+.kids-ui {
+  font-size: 16px;
+}
+
+.kids-ui .tileTitle {
+  font-size: 1.2rem;
+}
+
+.kids-ui .tileDesc {
+  font-size: 0.95rem;
+}
+

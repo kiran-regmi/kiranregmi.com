@@ -239,6 +239,15 @@
     parentBackdrop.addEventListener("click", (e) => { if (e.target === parentBackdrop) closeParent(); });
   }
 
+  const logoutKidBtn = document.getElementById("logoutKidBtn");
+if (logoutKidBtn) {
+  logoutKidBtn.addEventListener("click", () => {
+    ["token", "role", "email"].forEach(k => localStorage.removeItem(k));
+    window.location.href = "/login.html";
+  });
+}
+
+
   // -------------------------
   // Missions / level
   // -------------------------
@@ -844,42 +853,97 @@
     chat.scrollTop = chat.scrollHeight;
   }
 
-  // -------------------------
-  // Brain boost (Phase 1)
-  // -------------------------
-  let currentBoost = { a: 12 };
-  function openBrainBoost() {
-    brainBackdrop.classList.remove("hidden");
-    nextBoost();
-    setTimeout(() => boostA.focus(), 50);
-  }
-  function closeBrainBoost() { brainBackdrop.classList.add("hidden"); }
+/// -------------------------
+// Brain Boost (Structured)
+// -------------------------
 
-  function nextBoost() {
-    boostResult.textContent = "";
-    boostA.value = "";
+let currentBoost = null;
 
-    // simple random addition
-    const x = 4 + Math.floor(Math.random() * 10);
-    const y = 4 + Math.floor(Math.random() * 10);
-    currentBoost = { q: `What is ${x} + ${y}?`, a: x + y };
-    boostQ.textContent = currentBoost.q;
+function openBrainBoost() {
+  brainBackdrop.classList.remove("hidden");
+  generateBoostByLevel();
+  setTimeout(() => boostA.focus(), 50);
+}
+
+function generateBoostByLevel() {
+  boostResult.textContent = "";
+  boostA.value = "";
+
+  const level = state.level || 1;
+
+  if (level <= 3) {
+    currentBoost = simpleAddition();
+  } else if (level <= 6) {
+    currentBoost = mixedAdditionSubtraction();
+  } else if (level <= 10) {
+    currentBoost = multiplication();
+  } else {
+    currentBoost = logicPattern();
   }
 
-  function checkBoost() {
-    const v = Number((boostA.value || "").trim());
-    if (Number.isFinite(v) && v === currentBoost.a) {
-      boostResult.textContent = "✅ Correct! Nice job.";
-      unlockSkills(["variables"]); // math contributes to number sense
-      state.missionIndex = (state.missionIndex + 1) % missions.length;
-      saveState(state);
-      updateMission();
-      levelUpIfNeeded();
-      setTimeout(nextBoost, 900);
-    } else {
-      boostResult.textContent = "Not yet — try again 🙂";
-    }
+  boostQ.textContent = currentBoost.q;
+}
+
+function checkBoost() {
+  const v = Number(boostA.value.trim());
+
+  if (v === currentBoost.a) {
+    boostResult.textContent = "✅ Correct! Nice thinking.";
+    unlockSkills(["variables", "logic"]);
+    state.missionIndex++;
+    saveState(state);
+    levelUpIfNeeded();
+    setTimeout(generateBoostByLevel, 900);
+  } else {
+    boostResult.textContent = "❌ Not quite — try again!";
   }
+}
+
+/* ---------- Boost Types ---------- */
+
+function simpleAddition() {
+  const a = rand(5, 20);
+  const b = rand(5, 20);
+  return {
+    q: `What is ${a} + ${b}?`,
+    a: a + b
+  };
+}
+
+function mixedAdditionSubtraction() {
+  const a = rand(10, 30);
+  const b = rand(1, a);
+  const isAdd = Math.random() > 0.5;
+  return isAdd
+    ? { q: `What is ${a} + ${b}?`, a: a + b }
+    : { q: `What is ${a} − ${b}?`, a: a - b };
+}
+
+function multiplication() {
+  const a = rand(2, 9);
+  const b = rand(2, 9);
+  return {
+    q: `What is ${a} × ${b}?`,
+    a: a * b
+  };
+}
+
+function logicPattern() {
+  const start = rand(2, 10);
+  const step = rand(2, 5);
+  const seq = [start, start + step, start + step * 2];
+  return {
+    q: `What comes next? ${seq.join(", ")}, ?`,
+    a: start + step * 3
+  };
+}
+
+/* ---------- Utils ---------- */
+
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
   // -------------------------
   // Parent view
