@@ -248,6 +248,18 @@ if (logoutKidBtn) {
 }
 
 
+//initKidState(); --- IGNORE ---
+function initKidState() {
+  if (!localStorage.getItem("state")) {
+    localStorage.setItem("state", JSON.stringify({
+      level: 1,
+      missionIndex: 0,
+      skills: [],
+      creations: []
+    }));
+  }
+}
+
   // -------------------------
   // Missions / level
   // -------------------------
