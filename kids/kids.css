@@ -410,4 +410,26 @@ body{
   transform: translateY(-4px) scale(1.01);
   box-shadow: 0 16px 40px rgba(124,92,255,.35);
 }
+.parent-panel {
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px dashed rgba(255,255,255,0.25);
+}
+
+.parent-panel h3 {
+  margin-top: 0;
+}
+
+.parent-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
 

@@ -118,6 +118,18 @@
   // -------------------------
   const $ = (id) => document.getElementById(id);
 
+  //Parent view elements
+  const parentPanel = document.getElementById("parentPanel");
+  const parentLevel = document.getElementById("parentLevel");
+  const parentSkills = document.getElementById("parentSkills");
+
+  const role = localStorage.getItem("role");
+
+  // ===== ADD: Parent View role detection START =====
+  const IS_PARENT = role === "adult" || role === "admin";
+  // ===== ADD: Parent View role detection END =====
+
+
   // Dashboard elements
   const kidNameChip = $("kidNameChip");
   const levelEl = $("level");
@@ -152,6 +164,7 @@
   const stopBtn = $("stopBtn");
   const saveBtn = $("saveBtn");
   const runLog = $("runLog");
+
 
   // Creations
   const newProjectBtn = $("newProjectBtn");
@@ -245,6 +258,12 @@ if (logoutKidBtn) {
     ["token", "role", "email"].forEach(k => localStorage.removeItem(k));
     window.location.href = "/kids/login.html";
   });
+}
+
+// parent view init
+if (role === "adult" || role === "admin") {
+  parentPanel.classList.remove("hidden");
+  updateParentPanel();
 }
 
 
@@ -884,23 +903,72 @@ function openBrainBoost() {
 }
 
 function generateBoostByLevel() {
-  boostResult.textContent = "";
-  boostA.value = "";
+  const level = state.level;
 
-  const level = state.level || 1;
+// ===== ADD: Brain Boost Mode Selector START =====
+const modes = ["basic", "advancedMath", "science", "logic"];
+const mode = modes[Math.floor(Math.random() * modes.length)];
 
-  if (level <= 3) {
-    currentBoost = simpleAddition();
-  } else if (level <= 6) {
-    currentBoost = mixedAdditionSubtraction();
-  } else if (level <= 10) {
-    currentBoost = multiplication();
-  } else {
-    currentBoost = logicPattern();
-  }
-
-  boostQ.textContent = currentBoost.q;
+if (mode === "advancedMath") {
+  currentBoost = advancedMathBoost();
+} else if (mode === "science") {
+  currentBoost = scienceBoost();
+} else if (mode === "logic") {
+  currentBoost = logicBoost();
+} else {
+  // keep existing level-based math
+  if (level <= 3) currentBoost = simpleAddition();
+  else if (level <= 6) currentBoost = mixedAdditionSubtraction();
+  else if (level <= 10) currentBoost = multiplication();
+  else currentBoost = logicPattern();
 }
+}
+// ===== ADD: Brain Boost Mode Selector END =====
+
+
+// ===== ADD: Advanced Brain Boost Challenges START =====
+// Advanced Math (Square Roots & Patterns)
+function advancedMathBoost() {
+  const challenges = [
+    { q: "A square has 16 blocks. How many blocks are on one side?", a: 4 },
+    { q: "A square has 25 blocks. How many blocks are on one side?", a: 5 },
+    { q: "What comes next? 2, 4, 8, 16, ?", a: 32 }
+  ];
+  return challenges[Math.floor(Math.random() * challenges.length)];
+}
+
+// Science Thinking
+function scienceBoost() {
+  const challenges = [
+    {
+      q: "If you drop a ball and a feather at the same time (no wind), which hits the ground first?",
+      a: "together"
+    },
+    {
+      q: "What makes a light bulb turn on? (electricity / air / magic)",
+      a: "electricity"
+    }
+  ];
+  return challenges[Math.floor(Math.random() * challenges.length)];
+}
+
+// Logic & Game Thinking
+function logicBoost() {
+  const challenges = [
+    {
+      q: "If it is raining AND you have no umbrella, will you get wet? (yes / no)",
+      a: "yes"
+    },
+    {
+      q: "You move RIGHT 3 and UP 2. Where are you now? (x,y)",
+      a: "(3,2)"
+    }
+  ];
+  return challenges[Math.floor(Math.random() * challenges.length)];
+}
+
+// ===== ADD: Advanced Brain Boost Challenges END =====
+
 
 function checkBoost() {
   if (!currentBoost) {

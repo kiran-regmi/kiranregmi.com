@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC Voice Assistant - Test</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    .phone-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .call-button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+      width: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .call-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .call-button:active {
+      transform: translateY(0);
+    }
+
+    .info-box {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .info-box h3 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .info-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .info-box li {
+      padding: 8px 0;
+      color: #555;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .info-box li:last-child {
+      border-bottom: none;
+    }
+
+    .info-box li:before {
+      content: "✓ ";
+      color: #667eea;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .note {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 5px;
+      color: #856404;
+      font-size: 14px;
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .share-section {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px solid #e0e0e0;
+    }
+
+    .share-button {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 5px;
+      transition: opacity 0.2s;
+    }
+
+    .share-button:hover {
+      opacity: 0.9;
+    }
+
+    .share-button.email {
+      background: #EA4335;
+    }
+
+    .share-button.copy {
+      background: #555;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .phone-display {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 GRC Voice Assistant</h1>
+    <p class="subtitle">Test the AI-powered Cybersecurity Assistant</p>
+
+    <div class="phone-display">
+      +1 (844) 791-9163
+    </div>
+
+    <button class="call-button" onclick="makeCall()">
+      📞 Call Now
+    </button>
+
+    <div class="info-box">
+      <h3>What You Can Ask:</h3>
+      <ul>
+        <li>What is GRC?</li>
+        <li>Explain ransomware</li>
+        <li>What is phishing?</li>
+        <li>Tell me about encryption</li>
+        <li>What's a firewall?</li>
+        <li>Explain zero-day vulnerabilities</li>
+      </ul>
+    </div>
+
+    <div class="note">
+      <strong>📱 How it works:</strong> Click "Call Now" or dial the number above. The AI assistant will answer and respond to your cybersecurity questions in a casual, friendly tone.
+    </div>
+
+    <div class="share-section">
+      <h3 style="margin-bottom: 15px; color: #333;">Share with Others:</h3>
+      <button class="share-button" onclick="shareWhatsApp()">
+        📱 WhatsApp
+      </button>
+      <button class="share-button email" onclick="shareEmail()">
+        📧 Email
+      </button>
+      <button class="share-button copy" onclick="copyLink()">
+        📋 Copy Number
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function makeCall() {
+      window.location.href = 'tel:+18447919163';
+    }
+
+    function shareWhatsApp() {
+      const text = encodeURIComponent('Try this GRC Voice Assistant! Call +1 (844) 791-9163 and ask about cybersecurity, governance, risk, or compliance. The AI will answer your questions!');
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    function shareEmail() {
+      const subject = encodeURIComponent('Check out this GRC Voice Assistant');
+      const body = encodeURIComponent('I found this cool AI voice assistant for cybersecurity questions!\n\nCall: +1 (844) 791-9163\n\nAsk it anything about GRC (Governance, Risk, Compliance), ransomware, phishing, encryption, and more. It gives casual, easy-to-understand answers!');
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    function copyLink() {
+      const number = '+1 (844) 791-9163';
+      navigator.clipboard.writeText(number).then(() => {
+        alert('Phone number copied to clipboard! ✓');
+      }).catch(() => {
+        prompt('Copy this number:', number);
+      });
+    }
+  </script>
+</body>
+</html>

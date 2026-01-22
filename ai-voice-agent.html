@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Voice Agent – Kiran Regmi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #020617;
+      padding: 30px;
+      border-radius: 12px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    button {
+      padding: 12px 20px;
+      margin-top: 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+    button:disabled {
+      background: #475569;
+      cursor: not-allowed;
+    }
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #93c5fd;
+    }
+    #answer {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>AI Voice Agent</h2>
+    <p>Ask about AI, Cybersecurity, or GRC</p>
+
+    <button id="startBtn">🎤 Start Talking</button>
+
+    <div id="status"></div>
+    <div id="answer"></div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const statusDiv = document.getElementById("status");
+    const answerDiv = document.getElementById("answer");
+
+    const webhookUrl = "https://kiranregmi.app.n8n.cloud/webhook/ai-brain";
+
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      statusDiv.textContent = "Speech recognition not supported in this browser.";
+      startBtn.disabled = true;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    startBtn.onclick = () => {
+      answerDiv.textContent = "";
+      statusDiv.textContent = "Listening...";
+      startBtn.disabled = true;
+      recognition.start();
+    };
+
+    recognition.onresult = async (event) => {
+      const transcript = event.results[0][0].transcript;
+      statusDiv.textContent = "Thinking...";
+      try {
+        const res = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: transcript })
+        });
+
+        const data = await res.json();
+        const answer = data.answer || "Sorry, I did not get a response.";
+
+        answerDiv.textContent = answer;
+        statusDiv.textContent = "Speaking...";
+
+        const utterance = new SpeechSynthesisUtterance(answer);
+        utterance.lang = "en-US";
+        speechSynthesis.speak(utterance);
+
+        utterance.onend = () => {
+          statusDiv.textContent = "Ready.";
+          startBtn.disabled = false;
+        };
+      } catch (err) {
+        statusDiv.textContent = "Error contacting AI service.";
+        startBtn.disabled = false;
+      }
+    };
+
+    recognition.onerror = () => {
+      statusDiv.textContent = "Speech recognition error.";
+      startBtn.disabled = false;
+    };
+  </script>
+
+</body>
+</html>

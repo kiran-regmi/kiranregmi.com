@@ -43,6 +43,24 @@
   </header>
 
   <main class="container">
+
+    <!-- Parent View Panel (hidden by default) -->
+    <section id="parentPanel" class="parent-panel hidden">
+      <h3>🧑‍👦 Parent View</h3>
+
+      <div class="parent-actions">
+        <button class="btn" id="resetProgressBtn">🔄 Reset Progress</button>
+        <button class="btn" id="levelUpBtn">⬆️ Level Up</button>
+        <button class="btn" id="unlockAllSkillsBtn">🔓 Unlock All Skills</button>
+      </div>
+
+      <div class="parent-info">
+        <p><strong>Current Level:</strong> <span id="parentLevel"></span></p>
+        <p><strong>Skills:</strong> <span id="parentSkills"></span></p>
+      </div>
+    </section>
+
+
     <!-- Main Tiles -->
     <section class="tiles">
       <button class="tile" id="tileBuildGame" type="button">
@@ -182,6 +200,11 @@
       <div class="modalHeader">
         <div>
           <div class="modalTitle">🧠 Brain Boost</div>
+            <!-- added later brain boost-->
+                  <p class="brain-stats">
+          🧠 Streak: <span id="brainStreak">0</span>
+        </p>
+
           <div class="modalSub">Quick challenge. No pressure.</div>
         </div>
         <button class="btn ghost" id="closeBrainBtn" type="button">✖</button>
