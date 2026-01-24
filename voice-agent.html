@@ -369,6 +369,7 @@
 
         <div class="permission-notice" id="permissionNotice">
             ⚠️ Microphone access required. Please allow when prompted, or use text input below.
+            <br><small>Note: Voice mode works best on desktop Chrome. On mobile, text mode is recommended.</small>
         </div>
 
         <div class="agent-status">
@@ -452,12 +453,20 @@
         }
 
         function initSpeechRecognition() {
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                recognition = new SpeechRecognition();
-                recognition.continuous = true; // Keep listening continuously
-                recognition.interimResults = true; // Get interim results for interruption detection
-                recognition.lang = 'en-US';
+            // Check for mobile/browser compatibility
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (!SpeechRecognition) {
+                showError('Voice input not supported on this device. Please use text mode or try Chrome browser.');
+                switchMode('text');
+                return;
+            }
+            
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+            recognition.maxAlternatives = 1;
 
                 recognition.onstart = () => {
                     isListening = true;
@@ -471,7 +480,17 @@
 
                 recognition.onresult = async (event) => {
                     const lastResultIndex = event.results.length - 1;
-                    const transcript = event.results[lastResultIndex][0].transcript.toLowerCase().trim();
+                    const result = event.results[lastResultIndex];
+                    const transcript = result[0].transcript.toLowerCase().trim();
+                    const confidence = result[0].confidence;
+                    
+                    console.log('Heard:', transcript, 'Confidence:', confidence); // Debug
+                    
+                    // Only process if confidence is high enough
+                    if (confidence < 0.6) {
+                        console.log('Low confidence, ignoring');
+                        return;
+                    }
                     
                     // Check for stop/interrupt commands
                     if (isSpeaking && (
@@ -484,66 +503,98 @@
                         window.speechSynthesis.cancel();
                         isSpeaking = false;
                         statusText.textContent = 'Listening continuously...';
-                        return; // Don't process these as questions
+                        return;
                     }
 
-                    // Only process final results (not interim)
-                    if (event.results[lastResultIndex].isFinal) {
-                        // Filter out command-only phrases
-                        if (shouldIgnorePhrase(transcript)) {
+                    // Only process final results (not interim) with good confidence
+                    if (result.isFinal) {
+                        // Must be at least 5 words or a known command
+                        const wordCount = transcript.split(' ').length;
+                        
+                        // Filter out noise and unclear speech
+                        if (shouldIgnorePhrase(transcript) || wordCount < 3) {
+                            console.log('Ignoring short/noise phrase');
                             return;
                         }
 
-                        // Wait for agent to finish speaking before processing new question
+                        // Wait for agent to finish speaking
                         if (isSpeaking) {
-                            return; // Skip if still speaking
+                            console.log('Still speaking, ignoring input');
+                            return;
                         }
 
-                        addMessage('user', event.results[lastResultIndex][0].transcript);
+                        addMessage('user', result[0].transcript);
                         
-                        // Small delay to ensure smooth transition
-                        await new Promise(resolve => setTimeout(resolve, 500));
+                        // Longer delay for natural pacing
+                        await new Promise(resolve => setTimeout(resolve, 1000));
                         
-                        await getAIResponse(event.results[lastResultIndex][0].transcript);
+                        await getAIResponse(result[0].transcript);
                     }
                 };
 
                 recognition.onerror = (event) => {
+                    console.log('Recognition error:', event.error);
                     if (event.error === 'not-allowed') {
                         permissionNotice.classList.add('active');
-                        showError('Microphone access denied. Please enable microphone in browser settings or use text input.');
+                        showError('Microphone access denied. Please enable microphone or use text mode.');
                         continuousMode = false;
-                    } else if (event.error !== 'no-speech' && event.error !== 'aborted') {
-                        showError(`Error: ${event.error}. Please try again or use text input.`);
+                        switchMode('text');
+                    } else if (event.error === 'no-speech') {
+                        // Just ignore no-speech errors, don't stop
+                        console.log('No speech detected, continuing...');
+                    } else if (event.error === 'network') {
+                        showError('Network error. Check your connection and try text mode if needed.');
+                    } else if (event.error !== 'aborted') {
+                        console.log('Other error, but continuing...');
                     }
                 };
 
                 recognition.onend = () => {
                     // Auto-restart if in continuous mode
                     if (continuousMode && !isSpeaking) {
-                        try {
-                            recognition.start();
-                        } catch (e) {
-                            // Already started, ignore
-                        }
+                        setTimeout(() => {
+                            try {
+                                if (continuousMode) {
+                                    recognition.start();
+                                }
+                            } catch (e) {
+                                console.log('Recognition restart failed:', e);
+                            }
+                        }, 500); // Brief pause before restarting
                     } else if (!continuousMode) {
                         resetButton();
                     }
                 };
             } else {
-                showError('Speech recognition not supported. Using text input mode.');
+                showError('Speech recognition not supported. Using text mode.');
                 switchMode('text');
             }
         }
 
         function shouldIgnorePhrase(transcript) {
+            const t = transcript.toLowerCase().trim();
+            
+            // Ignore very short utterances
+            if (t.length < 5) return true;
+            
+            // Must have at least 3 words for a real question
+            const words = t.split(/\s+/).filter(w => w.length > 0);
+            if (words.length < 3 && !isGreeting(t)) return true;
+            
             const ignorePatterns = [
-                /^(stop|wait|hold on|pause|quiet|shh|hmm|um|uh)$/i,
-                /^(okay|ok|yeah|yes|no|nope)$/i,
-                /^(hey|hello|hi)$/i
+                /^(stop|wait|hold on|pause|quiet|shh|hmm|um|uh|er|ah)$/i,
+                /^(okay|ok|yeah|yes|yep|yup|no|nope|nah)$/i,
+                /^(uh huh|mm hmm|mhmm|huh|hm)$/i,
+                /^(the|a|an|and|or|but|so)$/i,
+                /^[^a-z]*$/i  // Only punctuation or numbers
             ];
             
-            return ignorePatterns.some(pattern => pattern.test(transcript));
+            return ignorePatterns.some(pattern => pattern.test(t));
+        }
+        
+        function isGreeting(transcript) {
+            const greetings = ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening'];
+            return greetings.some(g => transcript.includes(g));
         }
 
         talkButton.addEventListener('click', () => {
@@ -643,18 +694,19 @@
             const lastUserMessage = conversationHistory.length > 1 ? 
                 conversationHistory[conversationHistory.length - 2].content.toLowerCase() : '';
             
-            // Questions about Kiran Regmi
-            if (q.includes('kiran') || q.includes('who created') || q.includes('who made')) {
-                if (q.includes('who is kiran') || q.includes('kiran regmi')) {
-                    return "Kiran Regmi is a cybersecurity and GRC analyst specializing in AI governance, compliance frameworks, and risk management. He builds AI-powered solutions for security operations and governance automation. He's passionate about responsible AI implementation and helping organizations navigate the intersection of AI technology and governance.";
+            // Questions about Kiran Regmi - with better voice recognition variations
+            if (q.includes('kiran') || q.includes('keiran') || q.includes('kieran') || 
+                q.includes('who created') || q.includes('who made') || q.includes('your creator')) {
+                if (q.includes('know') && (q.includes('kiran') || q.includes('keiran') || q.includes('kieran'))) {
+                    return "Yes, I was created by Kiran Regmi. He's a cybersecurity and GRC analyst who specializes in AI governance and compliance frameworks.";
                 }
-                if (q.includes('what does he do') || q.includes('what does kiran do')) {
-                    return "Kiran works on cybersecurity and GRC projects, focusing on AI governance, compliance automation, and building intelligent security tools. He specializes in frameworks like SOC 2, NIST AI RMF, and ISO 27001, and develops AI agents to solve real-world security and compliance challenges.";
+                if (q.includes('who is') || q.includes('tell me about') || q.includes('about kiran')) {
+                    return "Kiran Regmi is a cybersecurity and GRC analyst specializing in AI governance, compliance frameworks, and risk management. He builds AI-powered solutions for security operations and governance automation. He's passionate about responsible AI implementation.";
                 }
-                if (q.includes('how do you know') || q.includes('tell me about')) {
-                    return "Kiran created me as part of his seven-day AI challenge. He built me to demonstrate practical applications of AI in cybersecurity and governance. I'm designed to help people understand security frameworks and GRC concepts.";
+                if (q.includes('what does he do') || q.includes('what does kiran do') || q.includes('his work')) {
+                    return "Kiran works on cybersecurity and GRC projects, focusing on AI governance, compliance automation, and building intelligent security tools. He specializes in frameworks like SOC 2, NIST AI RMF, and ISO 27001.";
                 }
-                return "I was created by Kiran Regmi, a cybersecurity and GRC professional who specializes in AI governance and compliance automation. He's working on innovative solutions at the intersection of AI and cybersecurity.";
+                return "I was created by Kiran Regmi, a cybersecurity and GRC professional who specializes in AI governance and compliance automation.";
             }
             
             // Natural greetings and pleasantries
@@ -674,12 +726,12 @@
             }
             
             // Weather - be honest but helpful
-            if (q.includes('weather')) {
+            if (q.includes('weather') || q.includes('temperature')) {
                 return "I can't check the weather, but I'd be happy to help with cybersecurity questions. What would you like to know?";
             }
             
             // Day/Date
-            if (q.includes('what day') || q.includes('what\'s the day') || q.includes('date today')) {
+            if (q.includes('what day') || q.includes('what\'s the day') || q.includes('date today') || q.includes('today\'s date')) {
                 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
                 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                 const now = new Date();
@@ -687,7 +739,7 @@
                 const month = months[now.getMonth()];
                 const date = now.getDate();
                 const year = now.getFullYear();
-                return `Today is ${day}, ${month} ${date}, ${year}. Do you have any cybersecurity questions?`;
+                return `Today is ${day}, ${month} ${date}, ${year}. Anything else I can help with?`;
             }
             
             // Conversational commands
@@ -720,7 +772,7 @@
             
             // Handle off-topic questions gracefully
             if (!isRelevant && q.length > 8 && !q.includes('help')) {
-                return "I focus on cybersecurity and GRC. Is there anything in that area I can help with?";
+                return "I focus on cybersecurity and GRC. Anything in that area I can help with?";
             }
 
             // Handle follow-up context
@@ -732,6 +784,14 @@
                 if (lastUserMessage.includes('ransomware')) {
                     return "Also implement application whitelisting, restrict PowerShell, maintain offline backups, and test your recovery process regularly.";
                 }
+            }
+
+            // Security Controls - ADDED THIS!
+            if (q.includes('security control') || q.includes('control') && q.includes('security')) {
+                if (q.includes('implement') || q.includes('choose')) {
+                    return "Start with basic controls: access management, encryption, backups, patch management, and monitoring. Then add controls based on your risk assessment and compliance requirements.";
+                }
+                return "Security controls are safeguards that reduce risk. They include technical controls like firewalls and encryption, administrative controls like policies and training, and physical controls like locks and cameras.";
             }
 
             // GRC responses - concise
@@ -845,13 +905,13 @@
                 return "Identify assets, analyze threats and vulnerabilities, assess likelihood and impact, score risks, and decide to accept, mitigate, transfer, or avoid.";
             }
 
-            // General help or unclear
+            // General help or unclear - be patient and specific
             if (q.includes('help') || q.length < 10) {
-                return "I can help with cybersecurity topics like SOC 2, ISO 27001, NIST frameworks, risk management, and security best practices. What interests you?";
+                return "I can help with cybersecurity topics like SOC 2, ISO 27001, NIST frameworks, risk management, and security best practices. What would you like to know?";
             }
 
-            // Catch-all
-            return "I can help with that. Could you be more specific about what you'd like to know?";
+            // Catch-all - be more specific about what's needed
+            return "I'd be happy to help with that. What specifically would you like to know?";
         }
 
         function speakResponse(text) {
@@ -871,12 +931,12 @@
 
                 currentUtterance.onend = () => {
                     isSpeaking = false;
-                    // Add pause after speaking before listening again
+                    // Add longer pause after speaking before listening again
                     setTimeout(() => {
                         if (continuousMode) {
                             statusText.textContent = 'Listening continuously...';
                         }
-                    }, 1000); // 1 second pause
+                    }, 1500); // 1.5 second pause for breathing room
                     currentUtterance = null;
                 };
 
