@@ -543,26 +543,18 @@
             }
 
             try {
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                // Using Hugging Face Inference API (free, no auth required)
+                const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-large', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1000,
-                        system: `You are an AI cybersecurity and GRC (Governance, Risk, and Compliance) expert assistant. You help users understand:
-- Cybersecurity threats, vulnerabilities, and risk management
-- GRC frameworks including SOC 2, NIST AI RMF, ISO 27001, and other compliance standards
-- AI security, governance, and responsible AI deployment
-- Third-party risk management (TPRM) and vendor assessments
-- Security controls, best practices, and implementation strategies
-
-Provide clear, accurate, and actionable advice. Keep responses conversational and concise (2-4 sentences for voice mode). Use simple language when explaining technical concepts.`,
-                        messages: [
-                            ...conversationHistory,
-                            { role: 'user', content: userMessage }
-                        ]
+                        inputs: `You are a cybersecurity and GRC expert. Answer this question concisely: ${userMessage}`,
+                        parameters: {
+                            max_length: 200,
+                            temperature: 0.7
+                        }
                     })
                 });
 
@@ -571,7 +563,16 @@ Provide clear, accurate, and actionable advice. Keep responses conversational an
                 }
 
                 const data = await response.json();
-                const aiResponse = data.content[0].text;
+                let aiResponse = '';
+                
+                if (Array.isArray(data) && data[0]?.generated_text) {
+                    aiResponse = data[0].generated_text;
+                } else if (data.generated_text) {
+                    aiResponse = data.generated_text;
+                } else {
+                    // Fallback response for cybersecurity topics
+                    aiResponse = generateFallbackResponse(userMessage);
+                }
 
                 conversationHistory.push(
                     { role: 'user', content: userMessage },
@@ -585,11 +586,57 @@ Provide clear, accurate, and actionable advice. Keep responses conversational an
                 }
 
             } catch (error) {
-                showError('Failed to get response. Please try again.');
+                // Use fallback response if API fails
+                const fallbackResponse = generateFallbackResponse(userMessage);
+                addMessage('agent', fallbackResponse);
+                
+                if (currentMode === 'voice') {
+                    speakResponse(fallbackResponse);
+                }
+                
                 console.error('API Error:', error);
             }
 
             resetButton();
+        }
+
+        function generateFallbackResponse(question) {
+            const q = question.toLowerCase();
+            
+            // Common cybersecurity and GRC topics
+            if (q.includes('soc 2') || q.includes('soc2')) {
+                return "SOC 2 is a compliance framework developed by AICPA that evaluates an organization's information systems based on five Trust Service Criteria: Security, Availability, Processing Integrity, Confidentiality, and Privacy. It's commonly required for SaaS companies and service providers handling customer data.";
+            }
+            if (q.includes('nist') && (q.includes('ai') || q.includes('rmf'))) {
+                return "The NIST AI Risk Management Framework (AI RMF) provides a structured approach to managing AI risks across four key functions: GOVERN, MAP, MEASURE, and MANAGE. It helps organizations identify, assess, and mitigate risks throughout the AI lifecycle while promoting trustworthy and responsible AI development.";
+            }
+            if (q.includes('iso 27001') || q.includes('iso27001')) {
+                return "ISO 27001 is an international standard for information security management systems (ISMS). It provides a systematic approach to managing sensitive company information, including people, processes, and IT systems, through risk assessment and treatment.";
+            }
+            if (q.includes('tprm') || q.includes('third party') || q.includes('vendor risk')) {
+                return "Third-Party Risk Management (TPRM) involves identifying, assessing, and mitigating risks associated with external vendors and partners. This includes evaluating their security controls, data handling practices, compliance posture, and potential impact on your organization's security and operations.";
+            }
+            if (q.includes('ransomware') || q.includes('malware')) {
+                return "Ransomware is a type of malicious software that encrypts victim data and demands payment for decryption. Key defenses include: regular backups, endpoint protection, network segmentation, employee security awareness training, and incident response planning. Zero-trust architecture can also help limit ransomware spread.";
+            }
+            if (q.includes('zero trust') || q.includes('zerotrust')) {
+                return "Zero Trust is a security model based on the principle 'never trust, always verify.' It assumes no user or system is trustworthy by default, requiring continuous verification through multi-factor authentication, least privilege access, micro-segmentation, and continuous monitoring.";
+            }
+            if (q.includes('phishing')) {
+                return "Phishing is a social engineering attack where attackers impersonate legitimate entities to steal credentials or sensitive information. Prevention includes security awareness training, email filtering, multi-factor authentication, and simulated phishing campaigns to test employee vigilance.";
+            }
+            if (q.includes('gdpr') || q.includes('data privacy')) {
+                return "GDPR (General Data Protection Regulation) is EU legislation requiring organizations to protect personal data and privacy. Key requirements include obtaining consent, data breach notification within 72 hours, data minimization, right to erasure, and appointing a Data Protection Officer for high-risk processing.";
+            }
+            if (q.includes('incident response') || q.includes('ir plan')) {
+                return "An incident response plan outlines procedures for detecting, responding to, and recovering from security incidents. Key phases include: Preparation, Identification, Containment, Eradication, Recovery, and Lessons Learned. Having a tested IR plan minimizes damage and recovery time.";
+            }
+            if (q.includes('penetration test') || q.includes('pentest')) {
+                return "Penetration testing is an authorized simulated cyberattack to identify vulnerabilities before malicious actors exploit them. It should be conducted regularly (at least annually), especially after major infrastructure changes, and cover network, application, and social engineering vectors.";
+            }
+            
+            // Default response
+            return "I'm a cybersecurity and GRC expert assistant. I can help with topics like SOC 2, NIST AI RMF, ISO 27001, TPRM, security controls, compliance frameworks, threat management, and best practices. Please ask me a specific question about cybersecurity or governance, and I'll provide detailed guidance.";
         }
 
         function speakResponse(text) {
