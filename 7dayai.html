@@ -706,9 +706,9 @@
             <div class="nav-logo">7-Day AI Challenge</div>
             <div class="nav-links">
                 <a href="https://elevenlabs.io/app/talk-to?agent_id=agent_1301kfm5t126frrv1cjc7ws0v8h2&branch_id=agtbrch_9101kfm5t2y4ejtty5q8df13x9vz" class="nav-link" target="_blank">ElevenLabs Agent</a>
-                <a href="https://www.voice-agent.html" class="nav-link highlight" onclick="openVoiceAgent(); return false;">Talk to Agent</a>
+                <a href="https://www.kiranregmi.com/voice-agent.html" class="nav-link highlight" target="_blank">Talk to Agent</a>
                 <a href="https://www.kiranregmi.com/ai-agent.html" class="nav-link" target="_blank">Voice Agent Demo</a>
-                <a href="https://www.kiranregmi.com" class="nav-link" target="_blank">Home</a>
+                <a href="https://www.kiranregmi.com" class="nav-link" target="_blank">Portfolio</a>
             </div>
         </div>
     </nav>
@@ -1040,7 +1040,7 @@
             </div>
 
             <p style="text-align: center; color: #a0aec0; margin-top: 3rem; font-size: 0.9rem;">
-                Designed & Developed by Kiran Regmi | Deployed with Vercel | Built with governance-first AI implementation principles | © 2026 kiranregmi.com · All rights reserved 
+                Built with governance-first AI implementation principles | January 2026
             </p>
         </div>
     </section>
@@ -1404,27 +1404,6 @@
 
         function scrollToSection(index) {
             sections[index].scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Open voice agent in new window
-        function openVoiceAgent() {
-            // Since we can't embed the voice agent artifact directly,
-            // we'll open it in a new window with the artifact content
-            const voiceAgentWindow = window.open('', 'Voice Agent', 'width=800,height=900');
-            if (voiceAgentWindow) {
-                voiceAgentWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html><head><title>AI Cybersecurity Voice Agent</title></head>
-                    <body style="margin:0;padding:0;">
-                        <div style="padding:2rem;text-align:center;background:#0a0e27;color:white;font-family:sans-serif;">
-                            <h2>AI Cybersecurity Voice Agent</h2>
-                            <p>To use the voice agent, please save the "AI Cybersecurity Voice Agent" artifact as an HTML file and open it in your browser.</p>
-                            <p style="margin-top:2rem;color:#a0aec0;">This agent requires microphone permissions and works best in Chrome.</p>
-                            <p style="margin-top:1rem;"><a href="#" onclick="window.close()" style="color:#667eea;">Close this window</a></p>
-                        </div>
-                    </body></html>
-                `);
-            }
         }
 
         // Modal functions
