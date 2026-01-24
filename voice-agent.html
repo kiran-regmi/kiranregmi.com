@@ -426,6 +426,8 @@
         let isListening = false;
         let conversationHistory = [];
         let currentMode = 'voice';
+        let isSpeaking = false;
+        let currentUtterance = null;
 
         function switchMode(mode) {
             currentMode = mode;
@@ -493,6 +495,13 @@
         }
 
         talkButton.addEventListener('click', () => {
+            // Stop current speech if speaking
+            if (isSpeaking && window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                statusText.textContent = 'Ready to talk';
+            }
+
             if (!recognition) {
                 initSpeechRecognition();
             }
@@ -542,37 +551,13 @@
                 micIcon.textContent = '⏳';
             }
 
+            // Stop any ongoing speech
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+            }
+
             try {
-                // Using Hugging Face Inference API (free, no auth required)
-                const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-large', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        inputs: `You are a cybersecurity and GRC expert. Answer this question concisely: ${userMessage}`,
-                        parameters: {
-                            max_length: 200,
-                            temperature: 0.7
-                        }
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-
-                const data = await response.json();
-                let aiResponse = '';
-                
-                if (Array.isArray(data) && data[0]?.generated_text) {
-                    aiResponse = data[0].generated_text;
-                } else if (data.generated_text) {
-                    aiResponse = data.generated_text;
-                } else {
-                    // Fallback response for cybersecurity topics
-                    aiResponse = generateFallbackResponse(userMessage);
-                }
+                const aiResponse = generateIntelligentResponse(userMessage);
 
                 conversationHistory.push(
                     { role: 'user', content: userMessage },
@@ -586,76 +571,202 @@
                 }
 
             } catch (error) {
-                // Use fallback response if API fails
-                const fallbackResponse = generateFallbackResponse(userMessage);
-                addMessage('agent', fallbackResponse);
-                
-                if (currentMode === 'voice') {
-                    speakResponse(fallbackResponse);
-                }
-                
-                console.error('API Error:', error);
+                showError('Something went wrong. Please try again.');
+                console.error('Error:', error);
             }
 
             resetButton();
         }
 
-        function generateFallbackResponse(question) {
-            const q = question.toLowerCase();
+        function generateIntelligentResponse(question) {
+            const q = question.toLowerCase().trim();
+            const lastContext = conversationHistory.length > 0 ? 
+                conversationHistory[conversationHistory.length - 1].content.toLowerCase() : '';
             
-            // Common cybersecurity and GRC topics
+            // Check if question is out of scope
+            const cybersecurityKeywords = [
+                'security', 'cyber', 'hack', 'risk', 'compliance', 'grc', 'governance',
+                'audit', 'control', 'threat', 'vulnerability', 'encryption', 'authentication',
+                'firewall', 'malware', 'phishing', 'ransomware', 'breach', 'incident',
+                'nist', 'iso', 'soc', 'gdpr', 'hipaa', 'pci', 'policy', 'framework',
+                'ai security', 'data protection', 'privacy', 'pen test', 'vulnerability',
+                'zero trust', 'access control', 'identity', 'tprm', 'vendor', 'third party'
+            ];
+            
+            const isRelevant = cybersecurityKeywords.some(keyword => q.includes(keyword));
+            
+            if (!isRelevant && q.length > 5) {
+                return "I'm specialized in cybersecurity, GRC, and AI governance topics. I can help you with questions about security frameworks, compliance, risk management, threat prevention, and governance practices. What would you like to know about cybersecurity?";
+            }
+
+            // Handle follow-up questions with context
+            if ((q.includes('how') || q.includes('what about') || q.includes('tell me more')) && 
+                lastContext.includes('soc 2')) {
+                return "For SOC 2 implementation, start with gap analysis against the Trust Service Criteria, document your security policies and procedures, implement required controls, and engage an auditor. The process typically takes 3-6 months. Type 1 reports show controls at a point in time, while Type 2 demonstrates effectiveness over 6-12 months.";
+            }
+
+            // GRC - Governance, Risk, and Compliance
+            if (q.includes('grc') && !q.includes('framework')) {
+                return "GRC stands for Governance, Risk, and Compliance. It's an integrated approach to managing an organization's overall governance structure, enterprise risk management, and regulatory compliance. GRC helps organizations align IT with business objectives, manage risks effectively, and meet compliance requirements efficiently.";
+            }
+            
+            if (q.includes('grc') && q.includes('framework')) {
+                return "Common GRC frameworks include NIST Cybersecurity Framework, ISO 27001 for information security management, COSO for internal controls, and COBIT for IT governance. These frameworks help organizations establish governance structures, identify and manage risks, and ensure regulatory compliance.";
+            }
+
+            // SOC 2
             if (q.includes('soc 2') || q.includes('soc2')) {
-                return "SOC 2 is a compliance framework developed by AICPA that evaluates an organization's information systems based on five Trust Service Criteria: Security, Availability, Processing Integrity, Confidentiality, and Privacy. It's commonly required for SaaS companies and service providers handling customer data.";
+                if (q.includes('difference') || q.includes('vs') || q.includes('compare')) {
+                    return "SOC 2 Type 1 evaluates the design of controls at a specific point in time, like a snapshot. Type 2 tests the operating effectiveness of those controls over a period, usually 6-12 months. Type 2 is more comprehensive and often preferred by customers as it demonstrates consistent security practices.";
+                }
+                return "SOC 2 is a compliance framework for service organizations that evaluates controls based on five Trust Service Criteria: Security, Availability, Processing Integrity, Confidentiality, and Privacy. It's essential for SaaS companies and cloud service providers to demonstrate they securely handle customer data.";
             }
-            if (q.includes('nist') && (q.includes('ai') || q.includes('rmf'))) {
-                return "The NIST AI Risk Management Framework (AI RMF) provides a structured approach to managing AI risks across four key functions: GOVERN, MAP, MEASURE, and MANAGE. It helps organizations identify, assess, and mitigate risks throughout the AI lifecycle while promoting trustworthy and responsible AI development.";
+
+            // NIST AI RMF
+            if (q.includes('nist') && (q.includes('ai') || q.includes('rmf') || q.includes('artificial intelligence'))) {
+                return "The NIST AI Risk Management Framework helps organizations manage risks throughout the AI lifecycle using four core functions: GOVERN establishes accountability and oversight, MAP identifies AI risks and context, MEASURE assesses and tracks risks, and MANAGE allocates resources to mitigate risks. It's designed to be flexible and applicable to any AI system.";
             }
+
+            // NIST Cybersecurity Framework
+            if (q.includes('nist') && (q.includes('cyber') || q.includes('csf'))) {
+                return "The NIST Cybersecurity Framework consists of five core functions: Identify your assets and risks, Protect through safeguards and controls, Detect security events quickly, Respond to incidents effectively, and Recover operations after incidents. It's widely adopted across industries for managing cybersecurity risk.";
+            }
+
+            // ISO 27001
             if (q.includes('iso 27001') || q.includes('iso27001')) {
-                return "ISO 27001 is an international standard for information security management systems (ISMS). It provides a systematic approach to managing sensitive company information, including people, processes, and IT systems, through risk assessment and treatment.";
+                if (q.includes('implement') || q.includes('get certified')) {
+                    return "ISO 27001 implementation involves defining your ISMS scope, conducting risk assessments, implementing necessary controls from Annex A, documenting policies and procedures, training staff, and undergoing external audit. Certification typically takes 6-12 months depending on organization size and maturity.";
+                }
+                return "ISO 27001 is the international standard for Information Security Management Systems. It provides a systematic approach to managing sensitive information through risk assessment, security controls implementation, and continuous improvement. Certification demonstrates to customers that you take information security seriously.";
             }
-            if (q.includes('tprm') || q.includes('third party') || q.includes('vendor risk')) {
-                return "Third-Party Risk Management (TPRM) involves identifying, assessing, and mitigating risks associated with external vendors and partners. This includes evaluating their security controls, data handling practices, compliance posture, and potential impact on your organization's security and operations.";
+
+            // TPRM
+            if (q.includes('tprm') || q.includes('third party risk') || q.includes('third-party risk') || 
+                q.includes('vendor risk') || q.includes('supplier risk')) {
+                return "Third-Party Risk Management evaluates security and compliance risks from vendors and partners. Key steps include: conducting due diligence before engagement, using security questionnaires and assessments, reviewing SOC 2 reports or certifications, defining SLAs with security requirements, and continuous monitoring. Critical vendors should undergo annual reassessments.";
             }
-            if (q.includes('ransomware') || q.includes('malware')) {
-                return "Ransomware is a type of malicious software that encrypts victim data and demands payment for decryption. Key defenses include: regular backups, endpoint protection, network segmentation, employee security awareness training, and incident response planning. Zero-trust architecture can also help limit ransomware spread.";
+
+            // Ransomware
+            if (q.includes('ransomware')) {
+                if (q.includes('prevent') || q.includes('protect') || q.includes('stop')) {
+                    return "Prevent ransomware with: regular offline backups, endpoint detection and response tools, network segmentation to limit spread, email filtering and anti-phishing training, patch management, least privilege access, and incident response planning. Multi-factor authentication and application whitelisting also significantly reduce risk.";
+                }
+                return "Ransomware encrypts your data and demands payment for decryption keys. Modern variants also steal data to pressure payment. Never pay ransoms as it funds criminal operations and doesn't guarantee data recovery. Focus on prevention, backups, and incident response preparedness.";
             }
+
+            // Zero Trust
             if (q.includes('zero trust') || q.includes('zerotrust')) {
-                return "Zero Trust is a security model based on the principle 'never trust, always verify.' It assumes no user or system is trustworthy by default, requiring continuous verification through multi-factor authentication, least privilege access, micro-segmentation, and continuous monitoring.";
+                return "Zero Trust security operates on 'never trust, always verify.' Core principles include: verify every user and device explicitly, use least privilege access, assume breach mentality, micro-segmentation of networks, continuous monitoring and validation, and strong authentication. It's essential for modern cloud and remote work environments.";
             }
-            if (q.includes('phishing')) {
-                return "Phishing is a social engineering attack where attackers impersonate legitimate entities to steal credentials or sensitive information. Prevention includes security awareness training, email filtering, multi-factor authentication, and simulated phishing campaigns to test employee vigilance.";
+
+            // Phishing
+            if (q.includes('phishing') || q.includes('spear phishing')) {
+                if (q.includes('prevent') || q.includes('train') || q.includes('stop')) {
+                    return "Combat phishing through regular security awareness training, simulated phishing campaigns to test readiness, email filtering and anti-spoofing controls, multi-factor authentication to protect compromised credentials, and clear reporting procedures. Train users to verify sender authenticity and be suspicious of urgent requests.";
+                }
+                return "Phishing uses fraudulent emails to trick users into revealing credentials or downloading malware. Spear phishing targets specific individuals with personalized content. Warning signs include urgent language, suspicious links, requests for sensitive information, and mismatched sender addresses. Always verify requests through alternate channels.";
             }
-            if (q.includes('gdpr') || q.includes('data privacy')) {
-                return "GDPR (General Data Protection Regulation) is EU legislation requiring organizations to protect personal data and privacy. Key requirements include obtaining consent, data breach notification within 72 hours, data minimization, right to erasure, and appointing a Data Protection Officer for high-risk processing.";
+
+            // Incident Response
+            if (q.includes('incident response') || q.includes('ir plan') || q.includes('security incident')) {
+                return "An effective incident response plan includes six phases: Preparation with defined roles and tools, Identification of security events, Containment to limit damage, Eradication to remove the threat, Recovery to restore operations, and Lessons Learned for improvement. Test your plan regularly and maintain an incident response team with clear escalation procedures.";
             }
-            if (q.includes('incident response') || q.includes('ir plan')) {
-                return "An incident response plan outlines procedures for detecting, responding to, and recovering from security incidents. Key phases include: Preparation, Identification, Containment, Eradication, Recovery, and Lessons Learned. Having a tested IR plan minimizes damage and recovery time.";
+
+            // Penetration Testing
+            if (q.includes('penetration test') || q.includes('pentest') || q.includes('pen test')) {
+                return "Penetration testing simulates real attacks to find vulnerabilities before hackers do. Conduct pentests at least annually, after major changes, and before product launches. Scope should include network infrastructure, web applications, APIs, and social engineering. Work with qualified testers and ensure proper authorization and rules of engagement.";
             }
-            if (q.includes('penetration test') || q.includes('pentest')) {
-                return "Penetration testing is an authorized simulated cyberattack to identify vulnerabilities before malicious actors exploit them. It should be conducted regularly (at least annually), especially after major infrastructure changes, and cover network, application, and social engineering vectors.";
+
+            // GDPR
+            if (q.includes('gdpr') || q.includes('data privacy regulation')) {
+                return "GDPR requires organizations processing EU personal data to: obtain explicit consent, notify breaches within 72 hours, honor data subject rights like access and deletion, implement privacy by design, maintain data processing records, and appoint a DPO for high-risk processing. Violations can result in fines up to 4% of global revenue.";
             }
-            
-            // Default response
-            return "I'm a cybersecurity and GRC expert assistant. I can help with topics like SOC 2, NIST AI RMF, ISO 27001, TPRM, security controls, compliance frameworks, threat management, and best practices. Please ask me a specific question about cybersecurity or governance, and I'll provide detailed guidance.";
+
+            // Multi-Factor Authentication
+            if (q.includes('mfa') || q.includes('multi-factor') || q.includes('2fa') || q.includes('two-factor')) {
+                return "Multi-factor authentication requires two or more verification methods: something you know like a password, something you have like a token or phone, or something you are like biometrics. MFA dramatically reduces unauthorized access risk. Implement it for all remote access, privileged accounts, and sensitive systems. Avoid SMS-based MFA when possible due to SIM swapping risks.";
+            }
+
+            // Encryption
+            if (q.includes('encrypt') && !q.includes('ransomware')) {
+                return "Encryption protects data confidentiality by converting it into unreadable format without the decryption key. Use AES-256 for data at rest, TLS 1.2 or higher for data in transit, and implement proper key management. Encrypt sensitive data, backups, and mobile devices. Remember encryption doesn't prevent data loss, but protects confidentiality if systems are compromised.";
+            }
+
+            // Access Control
+            if (q.includes('access control') || q.includes('least privilege')) {
+                return "Least privilege means users get only the minimum access needed for their job. Implement through: role-based access control, regular access reviews, time-limited elevated privileges, separation of duties for critical functions, and just-in-time access provisioning. Remove access immediately when roles change or employment ends.";
+            }
+
+            // Security Awareness
+            if (q.includes('security awareness') || q.includes('security training')) {
+                return "Effective security awareness training should be: ongoing not one-time, role-based for relevance, include simulated attacks to test learning, cover current threats like phishing and social engineering, and make reporting easy. Track metrics like phishing click rates and time to report incidents. Culture change takes time and executive support.";
+            }
+
+            // Vulnerability Management
+            if (q.includes('vulnerability') && (q.includes('manage') || q.includes('scan') || q.includes('patch'))) {
+                return "Vulnerability management includes: regular scanning to discover vulnerabilities, risk-based prioritization using CVSS scores and exploit availability, timely patching with critical patches within days, compensating controls for unpatchable systems, and continuous monitoring. Use automated tools and maintain an asset inventory to ensure complete coverage.";
+            }
+
+            // Cloud Security
+            if (q.includes('cloud security') || (q.includes('aws') || q.includes('azure') || q.includes('gcp'))) {
+                return "Cloud security follows the shared responsibility model: providers secure the infrastructure, you secure your data and applications. Key practices include: strong identity and access management, encrypt data at rest and in transit, enable logging and monitoring, use security groups and network segmentation, conduct regular audits, and understand your provider's compliance certifications.";
+            }
+
+            // Data Loss Prevention
+            if (q.includes('dlp') || q.includes('data loss prevention') || q.includes('data leakage')) {
+                return "Data Loss Prevention prevents sensitive data from leaving your organization. Implement DLP through: data classification to identify sensitive information, endpoint controls to block unauthorized transfers, email and web filtering, encryption of sensitive data, user activity monitoring, and clear acceptable use policies. Focus on high-risk data like PII, PHI, and intellectual property.";
+            }
+
+            // Business Continuity
+            if (q.includes('business continuity') || q.includes('bcp') || q.includes('disaster recovery')) {
+                return "Business Continuity Planning ensures operations continue during disruptions. Key elements include: business impact analysis to identify critical functions, recovery time and point objectives, documented recovery procedures, backup and redundancy strategies, alternate site provisions, regular testing, and crisis communication plans. Update plans annually and after major changes.";
+            }
+
+            // Security Operations Center
+            if (q.includes('soc') && (q.includes('center') || q.includes('operations'))) {
+                return "A Security Operations Center monitors, detects, and responds to security threats 24/7. Essential components include: SIEM for log aggregation and analysis, threat intelligence feeds, incident response playbooks, skilled analysts, defined escalation procedures, and metrics for mean time to detect and respond. Consider managed SOC services if building in-house isn't feasible.";
+            }
+
+            // Risk Assessment
+            if (q.includes('risk assessment') || q.includes('risk analysis')) {
+                return "Risk assessment identifies, evaluates, and prioritizes risks. The process includes: asset identification, threat and vulnerability analysis, likelihood and impact assessment, risk scoring, and treatment decisions to accept, mitigate, transfer, or avoid. Document assessments, review regularly, and ensure management understands residual risks after controls are applied.";
+            }
+
+            // Default helpful response for unclear questions
+            if (q.length < 10 || q.split(' ').length < 3) {
+                return "I'd be happy to help! Could you be more specific about what you'd like to know? I can explain cybersecurity concepts, compliance frameworks like SOC 2 and ISO 27001, risk management, security controls, or best practices for protecting your organization.";
+            }
+
+            // Catch-all for cybersecurity topics not explicitly covered
+            return "That's an important cybersecurity topic. While I can provide general guidance, I recommend consulting with security professionals for specific implementation details. I specialize in areas like GRC frameworks, compliance standards, risk management, and security best practices. Is there a particular aspect you'd like to explore?";
         }
 
         function speakResponse(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.9;
-                utterance.pitch = 1;
-                utterance.volume = 1;
                 
-                utterance.onstart = () => {
-                    statusText.textContent = 'Speaking...';
+                currentUtterance = new SpeechSynthesisUtterance(text);
+                currentUtterance.rate = 0.95;
+                currentUtterance.pitch = 1;
+                currentUtterance.volume = 1;
+                
+                currentUtterance.onstart = () => {
+                    isSpeaking = true;
+                    statusText.textContent = 'Speaking... (click mic to interrupt)';
                 };
 
-                utterance.onend = () => {
+                currentUtterance.onend = () => {
+                    isSpeaking = false;
+                    statusText.textContent = 'Ready to talk';
+                    currentUtterance = null;
+                };
+
+                currentUtterance.onerror = () => {
+                    isSpeaking = false;
                     statusText.textContent = 'Ready to talk';
                 };
 
-                window.speechSynthesis.speak(utterance);
+                window.speechSynthesis.speak(currentUtterance);
             }
         }
 
