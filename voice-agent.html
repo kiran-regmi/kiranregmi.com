@@ -634,132 +634,201 @@
             const lastUserMessage = conversationHistory.length > 1 ? 
                 conversationHistory[conversationHistory.length - 2].content.toLowerCase() : '';
             
-            // Handle conversational commands and phrases
+            // Natural greetings and pleasantries
+            if (q.match(/^(good morning|good afternoon|good evening)$/i)) {
+                const hour = new Date().getHours();
+                if (hour < 12) return "Good morning! How can I help you today?";
+                if (hour < 18) return "Good afternoon! What can I do for you?";
+                return "Good evening! What brings you here?";
+            }
+            
+            if (q.match(/^(hello|hi|hey|howdy)$/i)) {
+                return "Hi there! What can I help you with?";
+            }
+            
+            if (q.includes('how are you') || q.includes('how\'re you')) {
+                return "I'm doing well, thanks for asking! What would you like to know?";
+            }
+            
+            // Weather - be honest but helpful
+            if (q.includes('weather')) {
+                return "I can't check the weather, but I'd be happy to help with cybersecurity questions. What would you like to know?";
+            }
+            
+            // Day/Date
+            if (q.includes('what day') || q.includes('what\'s the day') || q.includes('date today')) {
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                const now = new Date();
+                const day = days[now.getDay()];
+                const month = months[now.getMonth()];
+                const date = now.getDate();
+                const year = now.getFullYear();
+                return `Today is ${day}, ${month} ${date}, ${year}. Do you have any cybersecurity questions?`;
+            }
+            
+            // Conversational commands
             if (q === 'stop' || q === 'wait' || q === 'hold on' || q === 'pause') {
-                return "Sure, take your time. I'm ready when you are.";
+                return "Okay.";
             }
             
-            if (q === 'thank you' || q === 'thanks' || q === 'got it') {
-                return "You're welcome! Feel free to ask if you have more questions.";
+            if (q === 'thank you' || q === 'thanks' || q === 'got it' || q === 'okay') {
+                return "You're welcome!";
             }
             
-            if (q === 'hello' || q === 'hi' || q === 'hey') {
-                return "Hello! I'm here to help with cybersecurity and GRC questions. What would you like to know?";
+            if (q === 'goodbye' || q === 'bye' || q === 'see you') {
+                return "Goodbye! Feel free to come back anytime.";
             }
 
-            // Check if question is out of scope
+            // Check if question is cybersecurity-related
             const cybersecurityKeywords = [
                 'security', 'cyber', 'hack', 'risk', 'compliance', 'grc', 'governance',
                 'audit', 'control', 'threat', 'vulnerability', 'encryption', 'authentication',
                 'firewall', 'malware', 'phishing', 'ransomware', 'breach', 'incident',
                 'nist', 'iso', 'soc', 'gdpr', 'hipaa', 'pci', 'policy', 'framework',
-                'ai security', 'data protection', 'privacy', 'pen test', 'vulnerability',
+                'ai security', 'data protection', 'privacy', 'pen test', 'penetration',
                 'zero trust', 'access control', 'identity', 'tprm', 'vendor', 'third party',
                 'attack', 'defense', 'secure', 'protect', 'monitor', 'detect', 'respond'
             ];
             
             const isRelevant = cybersecurityKeywords.some(keyword => q.includes(keyword)) ||
-                             q.includes('what is') || q.includes('how do') || q.includes('can you explain');
+                             q.includes('what is') || q.includes('how do') || q.includes('can you explain') ||
+                             q.includes('tell me about');
             
-            if (!isRelevant && q.length > 8) {
-                return "I focus on cybersecurity and GRC topics. I'd be happy to discuss security frameworks, compliance, risk management, or threat prevention. What cybersecurity question can I help with?";
+            // Handle off-topic questions gracefully
+            if (!isRelevant && q.length > 8 && !q.includes('help')) {
+                return "I focus on cybersecurity and GRC. Is there anything in that area I can help with?";
             }
 
-            // Handle follow-up questions intelligently
+            // Handle follow-up context
             if ((q.includes('more') || q.includes('else') || q.includes('also') || q.includes('additionally')) && 
                 lastUserMessage.length > 0) {
-                // Provide additional context based on last topic
                 if (lastUserMessage.includes('soc 2')) {
-                    return "For SOC 2 success, engage stakeholders early, document everything thoroughly, conduct regular internal audits, and consider hiring an experienced consultant for your first audit. Common pitfalls include inadequate documentation, lack of segregation of duties, and insufficient change management processes.";
+                    return "Most organizations need 3 to 6 months to prepare. Engage stakeholders early, document thoroughly, and consider hiring a consultant for your first audit.";
                 }
                 if (lastUserMessage.includes('ransomware')) {
-                    return "Additionally, implement application whitelisting to prevent unauthorized software execution, enable ransomware detection in your EDR solution, restrict PowerShell and scripting tools, and maintain offline encrypted backups tested regularly. Consider cyber insurance but read the fine print carefully.";
+                    return "Also implement application whitelisting, restrict PowerShell, maintain offline backups, and test your recovery process regularly.";
                 }
             }
 
-            // GRC - Governance, Risk, and Compliance
+            // GRC responses - concise
             if (q.includes('grc')) {
-                if (q.includes('implement') || q.includes('start') || q.includes('begin')) {
-                    return "Start your GRC program by establishing a governance committee with executive sponsorship, conducting a risk assessment to identify key threats, documenting compliance requirements for your industry, and selecting a GRC platform for centralized management. Focus on quick wins that demonstrate value to gain organizational buy-in.";
+                if (q.includes('implement') || q.includes('start')) {
+                    return "Start with executive sponsorship, conduct a risk assessment, document compliance requirements, and choose a GRC platform. Focus on quick wins first.";
                 }
-                if (q.includes('tool') || q.includes('software') || q.includes('platform')) {
-                    return "Popular GRC platforms include ServiceNow GRC, RSA Archer, MetricStream, and LogicGate. For smaller organizations, consider Vanta, Drata, or Secureframe which automate compliance monitoring. Choose based on your compliance needs, budget, integration requirements, and whether you need workflow automation.";
+                if (q.includes('tool') || q.includes('software')) {
+                    return "Popular options include ServiceNow GRC, RSA Archer, and MetricStream. For smaller companies, try Vanta, Drata, or Secureframe.";
                 }
-                return "GRC integrates Governance for strategic direction and accountability, Risk management to identify and mitigate threats, and Compliance to meet regulatory requirements. It creates a unified framework aligning security with business objectives, improving decision-making, and demonstrating due diligence to stakeholders.";
+                return "GRC means Governance, Risk, and Compliance. It integrates strategic direction, risk management, and regulatory compliance into one framework.";
             }
             
             // SOC 2
             if (q.includes('soc 2') || q.includes('soc2')) {
-                if (q.includes('difference') || q.includes('type 1') || q.includes('type 2')) {
-                    return "Type 1 examines control design at a single point in time, like a snapshot. Type 2 tests controls over 6-12 months, proving they work consistently. Most customers prefer Type 2 as it demonstrates ongoing commitment to security. Start with Type 1 if you need faster results.";
+                if (q.includes('type 1') || q.includes('type 2') || q.includes('difference')) {
+                    return "Type 1 checks controls at one point in time. Type 2 tests them over 6 to 12 months. Most customers prefer Type 2.";
                 }
-                if (q.includes('cost') || q.includes('price') || q.includes('expensive')) {
-                    return "SOC 2 audits typically cost between 20 to 100 thousand dollars depending on organization size, complexity, and scope. Factor in additional costs for remediation, consultant fees, and ongoing monitoring. The investment pays off through customer trust, competitive advantage, and reduced security incidents.";
+                if (q.includes('cost') || q.includes('expensive')) {
+                    return "Audits run 20 to 100 thousand dollars depending on size and complexity. Factor in remediation and consultant costs too.";
                 }
-                if (q.includes('prepare') || q.includes('ready')) {
-                    return "Preparation takes 3-6 months typically. Start with gap analysis, implement missing controls, document policies and procedures, train your team, and run internal audits. Most organizations aren't ready on first attempt, so build in time for remediation.";
-                }
-                return "SOC 2 evaluates service organizations using Trust Service Criteria: Security is mandatory, while Availability, Processing Integrity, Confidentiality, and Privacy are optional based on your services. It's the gold standard for SaaS companies demonstrating they protect customer data.";
+                return "SOC 2 evaluates service organizations on Security, Availability, Processing Integrity, Confidentiality, and Privacy. Essential for SaaS companies.";
             }
 
             // NIST AI RMF
-            if (q.includes('nist') && (q.includes('ai') || q.includes('rmf') || q.includes('artificial'))) {
-                if (q.includes('implement') || q.includes('apply') || q.includes('use')) {
-                    return "Apply NIST AI RMF by first establishing governance with clear AI oversight roles, then mapping your AI systems and their risks, measuring performance and impacts using metrics, and managing risks through controls. It's iterative, not linear, so expect continuous improvement cycles.";
-                }
-                return "NIST AI RMF provides a voluntary framework for managing AI risks using four functions: GOVERN establishes policies and accountability, MAP identifies AI context and risks, MEASURE tracks metrics and impacts, MANAGE implements and monitors controls. It's technology-neutral and risk-based.";
+            if (q.includes('nist') && (q.includes('ai') || q.includes('rmf'))) {
+                return "NIST AI RMF has four functions: GOVERN for oversight, MAP to identify risks, MEASURE to track them, and MANAGE to mitigate them.";
             }
 
             // ISO 27001
             if (q.includes('iso 27001') || q.includes('iso27001')) {
-                if (q.includes('annex') || q.includes('controls')) {
-                    return "ISO 27001 Annex A contains 93 security controls across 4 domains: Organizational, People, Physical, and Technological. You select applicable controls based on your risk assessment, not implement all 93. Common controls include access management, encryption, backup, and incident response.";
+                if (q.includes('controls') || q.includes('annex')) {
+                    return "Annex A has 93 controls across organizational, people, physical, and technological domains. You select based on your risk assessment.";
                 }
-                if (q.includes('cost') || q.includes('expensive')) {
-                    return "ISO 27001 certification costs vary widely from 15 to 100 thousand dollars based on organization size and scope. Budget for consultant fees, implementation costs, internal resources, and annual surveillance audits. Recertification occurs every 3 years.";
+                if (q.includes('cost')) {
+                    return "Certification costs 15 to 100 thousand dollars. Budget for consultants, implementation, and annual audits. Recertification is every 3 years.";
                 }
-                return "ISO 27001 defines requirements for establishing, implementing, and maintaining an Information Security Management System. It demonstrates systematic risk management and commitment to information security. Certification requires external audit and provides competitive advantage globally.";
+                return "ISO 27001 defines requirements for an information security management system. Certification requires external audit and demonstrates commitment to security.";
             }
 
-            // Add all the other topic responses from before...
+            // TPRM
             if (q.includes('tprm') || q.includes('third party risk') || q.includes('vendor risk')) {
-                return "Assess third-party risk through due diligence questionnaires, requesting SOC 2 or ISO 27001 reports, evaluating financial stability, checking references, defining SLAs with security requirements, and continuous monitoring. Categorize vendors by risk level and adjust scrutiny accordingly.";
+                return "Assess vendors through questionnaires, review their SOC 2 reports, check references, define security SLAs, and monitor continuously.";
             }
 
+            // Ransomware
             if (q.includes('ransomware')) {
-                if (q.includes('attacked') || q.includes('hit') || q.includes('encrypted')) {
-                    return "If hit by ransomware: immediately isolate affected systems, don't pay the ransom, notify law enforcement and cyber insurance, activate your incident response plan, restore from clean backups, and conduct forensics to identify the entry point. Document everything for legal and compliance purposes.";
+                if (q.includes('attacked') || q.includes('hit')) {
+                    return "Isolate affected systems immediately, don't pay, notify law enforcement, activate your incident response plan, and restore from backups.";
                 }
-                return "Defend against ransomware with offline backups tested regularly, endpoint detection and response, email filtering, security awareness training, network segmentation, patch management, and least privilege access. Consider backup immutability and air-gapped storage for critical data.";
+                return "Defend with offline backups, endpoint detection, email filtering, security training, network segmentation, and least privilege access.";
             }
 
+            // Zero Trust
             if (q.includes('zero trust')) {
-                return "Implement zero trust by verifying every access request regardless of location, enforcing least privilege, segmenting networks, requiring strong authentication, continuously monitoring behavior, and assuming breach. Start with high-value assets and expand gradually.";
+                return "Zero trust means verify everything, trust nothing. Enforce least privilege, segment networks, require strong authentication, and monitor continuously.";
             }
 
+            // Phishing
             if (q.includes('phishing')) {
-                return "Combat phishing through regular training with simulated campaigns, advanced email filtering, DMARC, DKIM, and SPF protocols, multi-factor authentication, security awareness culture, and easy incident reporting. Train users to verify requests through alternate channels before taking action.";
+                return "Combat phishing with regular training, simulated campaigns, email filtering, multi-factor authentication, and easy incident reporting.";
             }
 
-            // Continue with other topics... (keeping response concise)
+            // Incident Response
             if (q.includes('incident response')) {
-                return "Build incident response capability with defined roles, documented playbooks for common scenarios, 24/7 contact procedures, evidence collection processes, communication templates, and regular tabletop exercises. Establish relationships with forensics firms and legal counsel before you need them.";
+                return "Build capability with defined roles, documented playbooks, 24/7 contacts, evidence procedures, and regular tabletop exercises.";
             }
 
+            // Penetration Testing
             if (q.includes('penetration test') || q.includes('pentest')) {
-                return "Conduct pentests annually minimum, after major changes, and before launching new products. Define clear scope and rules of engagement, use qualified testers, remediate critical findings promptly, and retest after fixes. Consider red team exercises for mature programs.";
+                return "Test at least annually, after major changes, and before launches. Use qualified testers and ensure clear scope and authorization.";
             }
 
-            if (q.includes('mfa') || q.includes('multi-factor')) {
-                return "Implement MFA for all remote access, privileged accounts, and sensitive systems. Use authenticator apps or hardware tokens rather than SMS when possible. Provide backup codes and account recovery procedures. MFA reduces breach risk by over 99 percent.";
+            // MFA
+            if (q.includes('mfa') || q.includes('multi-factor') || q.includes('2fa')) {
+                return "MFA requires two or more verifications: password, token, or biometrics. Use authenticator apps over SMS. Reduces breach risk by 99 percent.";
             }
 
-            // Default for unclear but relevant questions
-            if (q.length < 10) {
-                return "Could you provide more details about what you'd like to know? I can explain concepts, guide implementation, or discuss best practices for cybersecurity and GRC.";
+            // GDPR
+            if (q.includes('gdpr')) {
+                return "GDPR requires consent, 72-hour breach notification, data subject rights, privacy by design, and a DPO for high-risk processing.";
             }
 
-            return "That's a good question. For detailed guidance on that specific topic, I recommend consulting with a cybersecurity professional. I can help with general concepts, frameworks, and best practices. What specific aspect interests you?";
+            // Encryption
+            if (q.includes('encrypt') && !q.includes('ransomware')) {
+                return "Use AES-256 for data at rest, TLS 1.2 or higher in transit. Implement proper key management and encrypt sensitive data and backups.";
+            }
+
+            // Access Control
+            if (q.includes('access control') || q.includes('least privilege')) {
+                return "Give users only the access they need. Use role-based control, regular reviews, and remove access when roles change.";
+            }
+
+            // Cloud Security
+            if (q.includes('cloud security') || q.includes('aws') || q.includes('azure')) {
+                return "Use strong identity management, encrypt data, enable logging, segment networks, and understand the shared responsibility model.";
+            }
+
+            // Business Continuity
+            if (q.includes('business continuity') || q.includes('disaster recovery')) {
+                return "Identify critical functions, set recovery objectives, document procedures, maintain backups, and test regularly.";
+            }
+
+            // Vulnerability Management
+            if (q.includes('vulnerability') && (q.includes('manage') || q.includes('scan'))) {
+                return "Scan regularly, prioritize by risk, patch critical issues within days, use compensating controls when needed, and monitor continuously.";
+            }
+
+            // Risk Assessment
+            if (q.includes('risk assessment')) {
+                return "Identify assets, analyze threats and vulnerabilities, assess likelihood and impact, score risks, and decide to accept, mitigate, transfer, or avoid.";
+            }
+
+            // General help or unclear
+            if (q.includes('help') || q.length < 10) {
+                return "I can help with cybersecurity topics like SOC 2, ISO 27001, NIST frameworks, risk management, and security best practices. What interests you?";
+            }
+
+            // Catch-all
+            return "I can help with that. Could you be more specific about what you'd like to know?";
         }
 
         function speakResponse(text) {
