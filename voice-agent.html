@@ -494,7 +494,16 @@
                             return;
                         }
 
+                        // Wait for agent to finish speaking before processing new question
+                        if (isSpeaking) {
+                            return; // Skip if still speaking
+                        }
+
                         addMessage('user', event.results[lastResultIndex][0].transcript);
+                        
+                        // Small delay to ensure smooth transition
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                        
                         await getAIResponse(event.results[lastResultIndex][0].transcript);
                     }
                 };
@@ -633,6 +642,20 @@
             const q = question.toLowerCase().trim();
             const lastUserMessage = conversationHistory.length > 1 ? 
                 conversationHistory[conversationHistory.length - 2].content.toLowerCase() : '';
+            
+            // Questions about Kiran Regmi
+            if (q.includes('kiran') || q.includes('who created') || q.includes('who made')) {
+                if (q.includes('who is kiran') || q.includes('kiran regmi')) {
+                    return "Kiran Regmi is a cybersecurity and GRC analyst specializing in AI governance, compliance frameworks, and risk management. He builds AI-powered solutions for security operations and governance automation. He's passionate about responsible AI implementation and helping organizations navigate the intersection of AI technology and governance.";
+                }
+                if (q.includes('what does he do') || q.includes('what does kiran do')) {
+                    return "Kiran works on cybersecurity and GRC projects, focusing on AI governance, compliance automation, and building intelligent security tools. He specializes in frameworks like SOC 2, NIST AI RMF, and ISO 27001, and develops AI agents to solve real-world security and compliance challenges.";
+                }
+                if (q.includes('how do you know') || q.includes('tell me about')) {
+                    return "Kiran created me as part of his seven-day AI challenge. He built me to demonstrate practical applications of AI in cybersecurity and governance. I'm designed to help people understand security frameworks and GRC concepts.";
+                }
+                return "I was created by Kiran Regmi, a cybersecurity and GRC professional who specializes in AI governance and compliance automation. He's working on innovative solutions at the intersection of AI and cybersecurity.";
+            }
             
             // Natural greetings and pleasantries
             if (q.match(/^(good morning|good afternoon|good evening)$/i)) {
@@ -837,7 +860,7 @@
                 window.speechSynthesis.cancel();
                 
                 currentUtterance = new SpeechSynthesisUtterance(text);
-                currentUtterance.rate = 1.0;
+                currentUtterance.rate = 0.85; // Slower, more natural pace
                 currentUtterance.pitch = 1.0;
                 currentUtterance.volume = 1;
                 
@@ -848,7 +871,12 @@
 
                 currentUtterance.onend = () => {
                     isSpeaking = false;
-                    statusText.textContent = 'Listening continuously...';
+                    // Add pause after speaking before listening again
+                    setTimeout(() => {
+                        if (continuousMode) {
+                            statusText.textContent = 'Listening continuously...';
+                        }
+                    }, 1000); // 1 second pause
                     currentUtterance = null;
                 };
 
@@ -857,10 +885,12 @@
                     statusText.textContent = 'Listening continuously...';
                 };
 
-                // Small delay to ensure speech cancellation completes
+                // Delay before speaking to ensure clean audio
                 setTimeout(() => {
-                    window.speechSynthesis.speak(currentUtterance);
-                }, 100);
+                    if (currentUtterance) {
+                        window.speechSynthesis.speak(currentUtterance);
+                    }
+                }, 300);
             }
         }
 
