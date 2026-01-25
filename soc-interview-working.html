@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOC Interview Prep v1.8 FINAL</title>
+    <title>SOC Interview Prep v2.0 COMPLETE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -919,7 +919,37 @@
         }
 
         function randomQuiz() {
-            alert('🎲 Random Quiz coming in v2.0!');
+            // Get all MUST KNOW questions
+            const allQuestions = [];
+            Object.keys(sectionsData).forEach(sectionId => {
+                const section = sectionsData[sectionId];
+                if (section.lessons) {
+                    section.lessons.forEach((lesson, idx) => {
+                        if (lesson.mustKnow) {
+                            allQuestions.push({
+                                section: section.title,
+                                question: lesson.q,
+                                id: sectionId
+                            });
+                        }
+                    });
+                }
+            });
+            
+            if (allQuestions.length === 0) {
+                alert('No MUST KNOW questions found!');
+                return;
+            }
+            
+            // Pick a random MUST KNOW question
+            const randomQ = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+            
+            // Show the quiz
+            const answer = prompt(`🎲 RANDOM QUIZ - MUST KNOW Question:\n\nSection: ${randomQ.section}\n\n${randomQ.question}\n\nType your answer below (or click Cancel to skip):`);
+            
+            if (answer) {
+                alert(`✅ Great! Here's what to remember:\n\nCheck the Expert Tips tab in "${randomQ.section}" section for the complete answer with examples and "Why This Wins" explanation.\n\n Keep practicing! 🚀`);
+            }
         }
 
         function resetProgress() {
