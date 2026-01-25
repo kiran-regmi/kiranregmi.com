@@ -14,22 +14,21 @@
 
         :root {
             --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --secondary: #8b5cf6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --dark: #0f172a;
-            --dark-light: #1e293b;
-            --gray: #475569;
-            --gray-light: #64748b;
+            --primary-light: #60a5fa;
+            --secondary: #a78bfa;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --accent: #f472b6;
+            --dark: #1e293b;
+            --dark-light: #334155;
             --text: #f1f5f9;
-            --text-dim: #94a3b8;
-            --border: #334155;
+            --text-dim: #cbd5e1;
+            --border: #475569;
         }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
@@ -46,9 +45,9 @@
             text-align: center;
             margin-bottom: 50px;
             padding: 60px 30px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, #3b82f6 0%, #a78bfa 100%);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
             position: relative;
             overflow: hidden;
         }
@@ -56,15 +55,21 @@
         header::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 60%);
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
 
         h1 {
-            font-size: clamp(2.5rem, 6vw, 3.8rem);
+            font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 800;
             margin-bottom: 15px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
@@ -78,7 +83,81 @@
             position: relative;
         }
 
-        /* Navigation Cards Grid - Like your screenshot */
+        /* Readiness Score */
+        .readiness-panel {
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.15));
+            border: 2px solid var(--success);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 40px rgba(52, 211, 153, 0.2);
+        }
+
+        .readiness-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .readiness-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .readiness-score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--success);
+            text-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+        }
+
+        .progress-container {
+            position: relative;
+            background: var(--dark);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            to { left: 100%; }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        /* Navigation Cards */
         .nav-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -87,12 +166,12 @@
         }
 
         .nav-card {
-            background: var(--dark-light);
+            background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
             padding: 35px 30px;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 2px solid var(--border);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
@@ -103,16 +182,16 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
             transform: scaleX(0);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
 
         .nav-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.3);
+            border-color: var(--primary-light);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(59, 130, 246, 0.4);
         }
 
         .nav-card:hover::before {
@@ -120,9 +199,9 @@
         }
 
         .nav-card h3 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 12px;
-            color: var(--text);
+            color: var(--primary-light);
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -131,8 +210,8 @@
 
         .nav-card p {
             color: var(--text-dim);
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.7;
             margin-bottom: 20px;
         }
 
@@ -143,177 +222,172 @@
         }
 
         .nav-link {
-            padding: 6px 14px;
-            background: var(--dark);
-            border-radius: 6px;
+            padding: 8px 16px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 600;
-            border: 1px solid var(--border);
-            transition: all 0.2s;
-            color: var(--text-dim);
+            border: 1px solid var(--primary);
+            transition: all 0.3s;
+            color: var(--primary-light);
         }
 
         .nav-link:hover {
             background: var(--primary);
-            border-color: var(--primary);
             color: white;
+            transform: translateY(-2px);
         }
 
-        /* Quick Actions Bar */
-        .quick-actions {
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+            align-items: center;
             justify-content: center;
-            margin-bottom: 50px;
-            padding: 30px;
-            background: var(--dark-light);
-            border-radius: 16px;
-            border: 1px solid var(--border);
+            padding: 20px;
         }
 
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--gray);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: var(--gray-light);
-            transform: translateY(-2px);
-        }
-
-        /* Content Section */
-        .content-section {
-            background: var(--dark-light);
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border: 2px solid var(--border);
+        .modal-content {
+            background: var(--dark);
+            border-radius: 24px;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
             overflow: hidden;
-            scroll-margin-top: 100px;
-            transition: all 0.3s ease;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.4s ease;
+            display: flex;
+            flex-direction: column;
         }
 
-        .content-section:hover {
-            border-color: var(--primary);
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .section-header {
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             padding: 30px;
-            background: rgba(59, 130, 246, 0.08);
-            border-bottom: 2px solid var(--border);
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s;
+            border-bottom: 2px solid var(--border);
         }
 
-        .section-header:hover {
-            background: rgba(59, 130, 246, 0.12);
-        }
-
-        .section-header h2 {
+        .modal-title {
             font-size: 1.8rem;
-            color: var(--primary);
+            font-weight: 700;
+            color: white;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .section-badge {
-            font-size: 0.75rem;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
         }
 
-        .badge-original {
-            background: var(--success);
-            color: white;
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: var(--dark-light);
+            border-bottom: 2px solid var(--border);
         }
 
-        .badge-expert {
-            background: var(--warning);
-            color: white;
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-dim);
+            border-bottom: 3px solid transparent;
         }
 
-        .badge-bonus {
-            background: var(--secondary);
-            color: white;
+        .tab:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-light);
         }
 
-        .toggle-icon {
-            font-size: 26px;
-            color: var(--primary);
-            transition: transform 0.3s;
+        .tab.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--primary-light);
+            border-bottom-color: var(--primary);
         }
 
-        .content-section.active .toggle-icon {
-            transform: rotate(180deg);
+        .tab-content {
+            display: none;
+            padding: 40px;
+            overflow-y: auto;
+            max-height: calc(90vh - 200px);
         }
 
-        .section-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .content-section.active .section-content {
-            max-height: 50000px;
-        }
-
-        .section-body {
-            padding: 40px 30px;
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         /* Question Cards */
         .question {
-            background: var(--dark);
-            border-left: 4px solid var(--primary);
+            background: var(--dark-light);
+            border-left: 4px solid var(--primary-light);
             padding: 25px;
             margin-bottom: 25px;
-            border-radius: 10px;
+            border-radius: 12px;
             transition: all 0.3s;
+            position: relative;
         }
 
         .question:hover {
             border-left-color: var(--success);
             transform: translateX(8px);
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 4px 20px rgba(52, 211, 153, 0.3);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 15px;
         }
 
         .question h4 {
-            color: var(--primary);
-            font-size: 1.2rem;
+            color: var(--primary-light);
+            font-size: 1.3rem;
             margin-bottom: 15px;
             font-weight: 700;
+            flex: 1;
         }
 
         .question h4::before {
@@ -322,13 +396,21 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--success);
+        }
+
         .answer {
             color: var(--text-dim);
             line-height: 1.8;
+            font-size: 1rem;
         }
 
         .answer em {
-            color: var(--gray-light);
+            color: var(--text);
             font-style: italic;
         }
 
@@ -349,25 +431,26 @@
         code {
             font-family: 'JetBrains Mono', monospace;
             background: rgba(59, 130, 246, 0.2);
-            padding: 3px 8px;
-            border-radius: 4px;
-            color: #60a5fa;
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: var(--primary-light);
             font-size: 0.9em;
+            border: 1px solid var(--primary);
         }
 
         /* Expert Box */
         .expert-box {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(217, 119, 6, 0.12));
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15));
             border-left: 4px solid var(--warning);
             padding: 25px;
             margin: 25px 0;
-            border-radius: 10px;
+            border-radius: 12px;
         }
 
         .expert-title {
             color: var(--warning);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -377,41 +460,65 @@
             content: "⚡ ";
         }
 
-        /* Why Better Box */
+        /* Why Box */
         .why-box {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.12));
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.15));
             border-left: 4px solid var(--success);
             padding: 20px;
             margin-top: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .why-title {
             color: var(--success);
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             margin-bottom: 10px;
             text-transform: uppercase;
         }
 
         .why-title::before {
             content: "✓ ";
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+        }
+
+        /* Foundation Content */
+        .foundation-box {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(139, 92, 246, 0.15));
+            border: 2px solid var(--secondary);
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .foundation-title {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .foundation-title::before {
+            content: "📚";
+            font-size: 1.5rem;
         }
 
         /* Tip Box */
         .tip-box {
-            background: rgba(59, 130, 246, 0.12);
+            background: rgba(59, 130, 246, 0.15);
             border: 2px solid var(--primary);
             padding: 25px;
             margin: 30px 0;
-            border-radius: 10px;
+            border-radius: 12px;
         }
 
         .tip-title {
-            color: var(--primary);
+            color: var(--primary-light);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 15px;
         }
 
@@ -426,7 +533,7 @@
         footer h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--success));
+            background: linear-gradient(135deg, var(--primary-light), var(--success));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -438,24 +545,23 @@
                 grid-template-columns: 1fr;
             }
 
-            .quick-actions {
+            .readiness-header {
                 flex-direction: column;
+                align-items: flex-start;
             }
 
-            .btn {
-                width: 100%;
+            .modal-content {
+                max-height: 95vh;
+                border-radius: 16px;
             }
 
-            .section-body {
+            .tab {
+                font-size: 0.85rem;
+                padding: 15px 10px;
+            }
+
+            .tab-content {
                 padding: 25px 20px;
-            }
-
-            .question {
-                padding: 20px;
-            }
-
-            header {
-                padding: 40px 20px;
             }
         }
 
@@ -463,34 +569,14 @@
             scroll-behavior: smooth;
         }
 
-        /* Scroll to top button */
-        .scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--primary);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        /* Loading animation for readiness score */
+        @keyframes scoreGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(52, 211, 153, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(52, 211, 153, 0.8), 0 0 60px rgba(52, 211, 153, 0.6); }
         }
 
-        .scroll-top.visible {
-            opacity: 1;
-        }
-
-        .scroll-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+        .readiness-score.glow {
+            animation: scoreGlow 2s ease-in-out;
         }
     </style>
 </head>
@@ -501,208 +587,114 @@
             <p class="subtitle">Complete Entry-Level Cybersecurity Interview Preparation Guide</p>
         </header>
 
-        <!-- Navigation Cards - Like your screenshot -->
+        <!-- Readiness Score Panel -->
+        <div class="readiness-panel">
+            <div class="readiness-header">
+                <div>
+                    <div class="readiness-title">📊 Interview Readiness Score</div>
+                    <p style="color: var(--text-dim); margin-top: 5px;">Check off questions as you master them</p>
+                </div>
+                <div class="readiness-score" id="readinessScore">0%</div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progressText">
+                <span id="completedCount">0</span> of <span id="totalCount">0</span> questions mastered
+            </div>
+        </div>
+
+        <!-- Navigation Cards -->
         <div class="nav-grid">
-            <div class="nav-card" onclick="scrollToSection('section1')">
+            <div class="nav-card" onclick="openModal('section1', 'Baseline Knowledge & Hardware')">
                 <h3>Baseline Knowledge & Hardware</h3>
                 <p>Core security concepts, boot process, malware persistence, and system fundamentals.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">5 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('section2')">
+            <div class="nav-card" onclick="openModal('section2', 'Core Technical Fundamentals')">
                 <h3>Core Technical Fundamentals</h3>
                 <p>OSI model, networking protocols, DNS, logs, SIEM correlation, and technical foundations.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">7 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('section3')">
+            <div class="nav-card" onclick="openModal('section3', 'Security Concepts')">
                 <h3>Security Concepts</h3>
                 <p>CIA Triad, Defense in Depth, MITRE ATT&CK, Zero Trust, and security frameworks.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">7 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('section4')">
+            <div class="nav-card" onclick="openModal('section4', 'Hands-On Practice')">
                 <h3>Hands-On Practice</h3>
                 <p>SOC lab setup, alert investigation, false positive reduction, and validation techniques.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">4 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('section5')">
+            <div class="nav-card" onclick="openModal('section5', 'Incident Response')">
                 <h3>Incident Response</h3>
                 <p>Alert triage, incident containment, management communication, and IR processes.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">4 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('section6')">
+            <div class="nav-card" onclick="openModal('section6', 'Cloud Security')">
                 <h3>Cloud Security</h3>
                 <p>Shared responsibility model, cloud logs, IAM abuse, and misconfiguration detection.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">4 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('section7')">
+            <div class="nav-card" onclick="openModal('section7', 'App/API Security')">
                 <h3>App/API Security</h3>
                 <p>OWASP Top 10, API abuse detection, broken authentication, and token security.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">4 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('section8')">
+            <div class="nav-card" onclick="openModal('section8', 'AI/ML Security')">
                 <h3>AI/ML Security</h3>
                 <p>AI security risks, prompt injection, data leakage, and emerging threats.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">3 Questions</span>
                     <span class="nav-link">Expert Tips</span>
+                    <span class="nav-link">Foundation</span>
                 </div>
             </div>
 
-            <div class="nav-card" onclick="scrollToSection('bonus')" style="grid-column: span 1;">
+            <div class="nav-card" onclick="openModal('bonus', 'BONUS Questions')">
                 <h3>🎁 BONUS Content</h3>
-                <p>IDS vs IPS, SIEM fundamentals, encryption, phishing investigation, and critical extras.</p>
+                <p>IDS vs IPS, SIEM fundamentals, encryption, phishing investigation, and success strategies.</p>
                 <div class="nav-card-footer">
                     <span class="nav-link">6 Questions</span>
                     <span class="nav-link">Success Tips</span>
+                    <span class="nav-link">Resources</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <button class="btn btn-primary" onclick="expandAll()">📖 Expand All Sections</button>
-            <button class="btn btn-secondary" onclick="collapseAll()">📚 Collapse All</button>
-            <button class="btn btn-secondary" onclick="filterView('original')">✅ Show Original</button>
-            <button class="btn btn-secondary" onclick="filterView('expert')">⭐ Show Expert</button>
-            <button class="btn btn-primary" onclick="filterView('all')">🎯 Show All</button>
-        </div>
-
-        <!-- SECTION 1 -->
-        <div class="content-section original-content" id="section1">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>
-                    <span>1. Baseline Knowledge & Hardware</span>
-                    <span class="section-badge badge-original">Your Questions</span>
-                </h2>
-                <span class="toggle-icon">▼</span>
-            </div>
-            <div class="section-content">
-                <div class="section-body">
-                    <div class="question">
-                        <h4>How does a computer boot?</h4>
-                        <div class="answer"><em>[Your answer: BIOS/UEFI, POST, bootloader, kernel loading, etc.]</em></div>
-                    </div>
-
-                    <div class="question">
-                        <h4>What's the difference between a workstation and a server?</h4>
-                        <div class="answer"><em>[Your answer here]</em></div>
-                    </div>
-
-                    <div class="question">
-                        <h4>What happens when a process crashes?</h4>
-                        <div class="answer"><em>[Your answer here]</em></div>
-                    </div>
-
-                    <div class="question">
-                        <h4>Where would malware persist on Windows?</h4>
-                        <div class="answer"><em>[Your answer here]</em></div>
-                    </div>
-
-                    <div class="question">
-                        <h4>Explain processes, services, memory, disk, logs</h4>
-                        <div class="answer"><em>[Your answer here]</em></div>
-                    </div>
-
-                    <div class="tip-box">
-                        <div class="tip-title">⚠️ Red Flags to Avoid</div>
-                        <p><strong>"I would Google it"</strong> - shows lack of foundational knowledge</p>
-                        <p style="margin-top: 10px;"><strong>"The SIEM tells me"</strong> - dependency on tools without understanding</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 1 EXPERT -->
-        <div class="content-section expert-content" id="section1-expert">
-            <div class="section-header" onclick="toggleSection(this)">
-                <h2>
-                    <span>💡 Expert Tips: Baseline Knowledge</span>
-                    <span class="section-badge badge-expert">Expert Advice</span>
-                </h2>
-                <span class="toggle-icon">▼</span>
-            </div>
-            <div class="section-content">
-                <div class="section-body">
-                    <div class="expert-box">
-                        <div class="expert-title">Enhanced Answer: How does a computer boot?</div>
-                        <div class="answer">
-                            <p><strong>Boot Sequence:</strong> Power On → BIOS/UEFI POST → Bootloader → OS Kernel → User Space</p>
-                            <ol>
-                                <li><strong>Power-On Self Test (POST):</strong> BIOS/UEFI checks hardware (CPU, RAM, peripherals)</li>
-                                <li><strong>Bootloader:</strong> Loads from boot device (GRUB for Linux, Windows Boot Manager for Windows)</li>
-                                <li><strong>Kernel Loading:</strong> OS kernel loaded into memory, initializes drivers</li>
-                                <li><strong>Init/System Services:</strong> System services start (Windows: services.msc, Linux: systemd/init)</li>
-                                <li><strong>Login Prompt:</strong> User authentication presented</li>
-                            </ol>
-                        </div>
-                        <div class="why-box">
-                            <div class="why-title">Why This Wins</div>
-                            <div class="answer">Shows complete chain understanding from hardware to OS—critical for investigating boot-sector malware, rootkits, UEFI threats. Demonstrates systems thinking beyond "click power button."</div>
-                        </div>
-                    </div>
-
-                    <div class="expert-box">
-                        <div class="expert-title">Enhanced Answer: Where would malware persist on Windows?</div>
-                        <div class="answer">
-                            <p><strong>Common Persistence Locations:</strong></p>
-                            <ul>
-                                <li><code>HKLM\Software\Microsoft\Windows\CurrentVersion\Run</code></li>
-                                <li><code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code></li>
-                                <li><code>C:\Users\[User]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code></li>
-                                <li><strong>Scheduled Tasks:</strong> <code>C:\Windows\System32\Tasks\</code></li>
-                                <li><strong>Services:</strong> <code>HKLM\SYSTEM\CurrentControlSet\Services</code></li>
-                                <li><strong>DLL Hijacking:</strong> Placing malicious DLLs in system path</li>
-                                <li><strong>WMI Event Subscriptions:</strong> Fileless persistence technique</li>
-                            </ul>
-                        </div>
-                        <div class="why-box">
-                            <div class="why-title">Why This Wins</div>
-                            <div class="answer">Demonstrates practical IR knowledge. Specific registry paths + <strong>fileless techniques</strong> (WMI) shows you're beyond basics. This is exactly what Tier 1/2 SOC analysts investigate daily.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Note: Remaining sections 2-8 would follow the same pattern -->
-        <!-- This is a PREVIEW to show you the design -->
-        <!-- Once you approve, I'll generate the complete version with ALL content -->
-
-        <div style="background: rgba(59, 130, 246, 0.12); border: 2px solid var(--primary); padding: 40px; border-radius: 16px; margin: 60px 0; text-align: center;">
-            <h2 style="color: var(--primary); margin-bottom: 20px; font-size: 1.8rem;">📋 Preview Version</h2>
-            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dim); max-width: 800px; margin: 0 auto;">
-                This is a <strong>design preview</strong> showing the card-based navigation and layout style. 
-                Sections 2-8 follow the same format with complete expert content.
-                <br><br>
-                <strong>Once you approve this design, I'll generate the full version with ALL 8 sections and complete expert recommendations!</strong>
-            </p>
         </div>
 
         <footer>
@@ -716,63 +708,232 @@
         </footer>
     </div>
 
-    <!-- Scroll to top button -->
-    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
-        ↑
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Section Title</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(event, 'lessons')">📝 Lessons</div>
+                <div class="tab" onclick="switchTab(event, 'expert')">⭐ Expert Tips</div>
+                <div class="tab" onclick="switchTab(event, 'foundation')">📚 Foundation</div>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="modalBody">
+                <!-- Content will be dynamically loaded -->
+            </div>
+        </div>
     </div>
 
     <script>
-        function toggleSection(header) {
-            const section = header.parentElement;
-            section.classList.toggle('active');
-        }
+        // Section data structure
+        const sectionsData = {
+            section1: {
+                lessons: [
+                    { q: "How does a computer boot?", a: "[Your answer: BIOS/UEFI, POST, bootloader, kernel loading, etc.]" },
+                    { q: "What's the difference between a workstation and a server?", a: "[Your answer here]" },
+                    { q: "What happens when a process crashes?", a: "[Your answer here]" },
+                    { q: "Where would malware persist on Windows?", a: "[Your answer here]" },
+                    { q: "Explain processes, services, memory, disk, logs", a: "[Your answer here]" }
+                ],
+                expert: `
+                    <div class="expert-box">
+                        <div class="expert-title">Enhanced Answer: How does a computer boot?</div>
+                        <div class="answer">
+                            <p><strong>Boot Sequence:</strong> Power On → BIOS/UEFI POST → Bootloader → OS Kernel → User Space</p>
+                            <ol>
+                                <li><strong>Power-On Self Test (POST):</strong> BIOS/UEFI checks hardware (CPU, RAM, peripherals)</li>
+                                <li><strong>Bootloader:</strong> Loads from boot device (GRUB for Linux, Windows Boot Manager)</li>
+                                <li><strong>Kernel Loading:</strong> OS kernel loaded into memory, initializes drivers</li>
+                                <li><strong>Init/System Services:</strong> System services start (Windows: services.msc, Linux: systemd)</li>
+                                <li><strong>Login Prompt:</strong> User authentication presented</li>
+                            </ol>
+                        </div>
+                        <div class="why-box">
+                            <div class="why-title">Why This Wins</div>
+                            <div class="answer">Shows complete chain understanding from hardware to OS—critical for investigating boot-sector malware, rootkits, UEFI threats.</div>
+                        </div>
+                    </div>
 
-        function expandAll() {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.add('active'));
-        }
-
-        function collapseAll() {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        }
-
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                setTimeout(() => {
-                    element.classList.add('active');
-                }, 600);
+                    <div class="expert-box">
+                        <div class="expert-title">Enhanced Answer: Where would malware persist?</div>
+                        <div class="answer">
+                            <p><strong>Common Persistence Locations:</strong></p>
+                            <ul>
+                                <li><code>HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code></li>
+                                <li><code>HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code></li>
+                                <li><strong>Scheduled Tasks:</strong> <code>C:\\Windows\\System32\\Tasks\\</code></li>
+                                <li><strong>Services:</strong> <code>HKLM\\SYSTEM\\CurrentControlSet\\Services</code></li>
+                                <li><strong>WMI Event Subscriptions:</strong> Fileless persistence technique</li>
+                            </ul>
+                        </div>
+                        <div class="why-box">
+                            <div class="why-title">Why This Wins</div>
+                            <div class="answer">Specific registry paths + <strong>fileless techniques</strong> proves IR knowledge beyond basics.</div>
+                        </div>
+                    </div>
+                `,
+                foundation: `
+                    <div class="foundation-box">
+                        <div class="foundation-title">Operating System Fundamentals</div>
+                        <div class="answer">
+                            <p><strong>Core Concepts You Need:</strong></p>
+                            <ul>
+                                <li><strong>Boot Process:</strong> Understanding BIOS/UEFI, bootloaders, and OS initialization</li>
+                                <li><strong>Process Management:</strong> How processes are created, scheduled, and terminated</li>
+                                <li><strong>Memory Management:</strong> Virtual memory, paging, and heap vs stack</li>
+                                <li><strong>File Systems:</strong> NTFS, ext4, file permissions, and attributes</li>
+                                <li><strong>System Logs:</strong> Where logs are stored and how to read them</li>
+                            </ul>
+                            <p style="margin-top: 20px;"><strong>🔗 Learn More:</strong> Link to dedicated OS Fundamentals page (coming soon)</p>
+                        </div>
+                    </div>
+                `
             }
-        }
+            // More sections would be added here...
+        };
 
-        function filterView(type) {
-            const original = document.querySelectorAll('.original-content');
-            const expert = document.querySelectorAll('.expert-content');
+        let totalQuestions = 0;
+        let completedQuestions = 0;
+
+        function openModal(sectionId, title) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
             
-            if (type === 'original') {
-                expert.forEach(s => s.style.display = 'none');
-                original.forEach(s => s.style.display = 'block');
-            } else if (type === 'expert') {
-                original.forEach(s => s.style.display = 'none');
-                expert.forEach(s => s.style.display = 'block');
-            } else {
-                original.forEach(s => s.style.display = 'block');
-                expert.forEach(s => s.style.display = 'block');
+            modalTitle.textContent = title;
+            modal.classList.add('active');
+            
+            // Load lessons tab by default
+            loadTabContent(sectionId, 'lessons');
+            
+            // Reset tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector('.tab').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function switchTab(event, tabName) {
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Get current section from modal title
+            const modalTitle = document.getElementById('modalTitle').textContent;
+            const sectionMap = {
+                'Baseline Knowledge & Hardware': 'section1',
+                'Core Technical Fundamentals': 'section2',
+                // Add more mappings...
+            };
+            
+            const sectionId = sectionMap[modalTitle] || 'section1';
+            loadTabContent(sectionId, tabName);
+        }
+
+        function loadTabContent(sectionId, tabName) {
+            const modalBody = document.getElementById('modalBody');
+            const data = sectionsData[sectionId];
+            
+            if (!data) {
+                modalBody.innerHTML = '<div class="tab-content active"><p>Content coming soon...</p></div>';
+                return;
+            }
+            
+            let content = '';
+            
+            if (tabName === 'lessons') {
+                content = '<div class="tab-content active">';
+                data.lessons.forEach((item, index) => {
+                    const qId = `${sectionId}-q${index}`;
+                    content += `
+                        <div class="question">
+                            <div class="question-header">
+                                <h4>${item.q}</h4>
+                                <input type="checkbox" class="checkbox" id="${qId}" onchange="updateProgress()">
+                            </div>
+                            <div class="answer"><em>${item.a}</em></div>
+                        </div>
+                    `;
+                });
+                content += '</div>';
+            } else if (tabName === 'expert') {
+                content = `<div class="tab-content active">${data.expert}</div>`;
+            } else if (tabName === 'foundation') {
+                content = `<div class="tab-content active">${data.foundation}</div>`;
+            }
+            
+            modalBody.innerHTML = content;
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            totalQuestions = checkboxes.length;
+            completedQuestions = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            const percentage = totalQuestions > 0 ? Math.round((completedQuestions / totalQuestions) * 100) : 0;
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('readinessScore').textContent = percentage + '%';
+            document.getElementById('completedCount').textContent = completedQuestions;
+            document.getElementById('totalCount').textContent = totalQuestions;
+            
+            // Add glow effect when score changes
+            const scoreElement = document.getElementById('readinessScore');
+            scoreElement.classList.add('glow');
+            setTimeout(() => scoreElement.classList.remove('glow'), 2000);
+            
+            // Save to localStorage
+            saveProgress();
+        }
+
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const progress = {};
+            checkboxes.forEach(cb => {
+                progress[cb.id] = cb.checked;
+            });
+            localStorage.setItem('socInterviewProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('socInterviewProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                Object.keys(progress).forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        checkbox.checked = progress[id];
+                    }
+                });
+                updateProgress();
             }
         }
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Show/hide scroll to top button
-        window.addEventListener('scroll', function() {
-            const scrollTop = document.getElementById('scrollTop');
-            if (window.pageYOffset > 300) {
-                scrollTop.classList.add('visible');
-            } else {
-                scrollTop.classList.remove('visible');
+        // Close modal on background click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
             }
+        });
+
+        // Initialize
+        window.addEventListener('load', function() {
+            // Count total questions
+            Object.keys(sectionsData).forEach(key => {
+                if (sectionsData[key].lessons) {
+                    totalQuestions += sectionsData[key].lessons.length;
+                }
+            });
+            document.getElementById('totalCount').textContent = totalQuestions;
+            
+            loadProgress();
         });
     </script>
 </body>
