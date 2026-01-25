@@ -3,137 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOC Analyst Interview Preparation</title>
+    <title>SOC Interview Prep v1.5 - Complete</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --primary: #3b82f6;
-            --primary-light: #60a5fa;
-            --secondary: #a78bfa;
-            --success: #34d399;
-            --warning: #fbbf24;
-            --accent: #f472b6;
-            --dark: #1e293b;
-            --dark-light: #334155;
-            --text: #f1f5f9;
-            --text-dim: #cbd5e1;
-            --border: #475569;
+            --primary: #3b82f6; --primary-light: #60a5fa; --secondary: #a78bfa;
+            --success: #34d399; --warning: #fbbf24; --danger: #ef4444;
+            --dark: #1e293b; --dark-light: #334155; --text: #f1f5f9;
+            --text-dim: #cbd5e1; --border: #475569;
         }
-
+        
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
+            color: var(--text); line-height: 1.6; min-height: 100vh;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Header */
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        
         header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding: 60px 30px;
+            text-align: center; margin-bottom: 40px; padding: 50px 30px;
             background: linear-gradient(135deg, #3b82f6 0%, #a78bfa 100%);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
-            position: relative;
-            overflow: hidden;
+            border-radius: 24px; box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
+            position: relative; overflow: hidden;
         }
-
+        
         header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
+            content: ''; position: absolute; top: -50%; right: -50%;
+            width: 200%; height: 200%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
             animation: pulse 8s ease-in-out infinite;
         }
-
+        
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.1); opacity: 0.8; }
         }
-
+        
         h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            font-size: clamp(2.5rem, 6vw, 3.8rem); font-weight: 800;
+            margin-bottom: 10px; text-shadow: 0 4px 20px rgba(0,0,0,0.3);
             position: relative;
         }
-
+        
         .subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            opacity: 0.95;
-            font-weight: 500;
-            position: relative;
+            font-size: clamp(0.95rem, 2.5vw, 1.2rem); opacity: 0.95;
+            font-weight: 500; position: relative;
         }
-
-        /* Readiness Score */
-        .readiness-panel {
-            background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.15));
-            border: 2px solid var(--success);
+        
+        .version-tag {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.2); padding: 8px 16px;
+            border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+        }
+        
+        /* Stats Panel */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--dark-light);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-light);
+        }
+        
+        .stat-value.success { color: var(--success); }
+        .stat-value.warning { color: var(--warning); }
+        .stat-value.danger { color: var(--danger); }
+        
+        .interview-ready-badge {
+            display: inline-block;
+            padding: 8px 20px;
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 50px;
-            box-shadow: 0 10px 40px rgba(52, 211, 153, 0.2);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-top: 10px;
         }
-
-        .readiness-header {
+        
+        .ready-yes {
+            background: var(--success);
+            color: white;
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        .ready-no {
+            background: var(--danger);
+            color: white;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(52, 211, 153, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(52, 211, 153, 0.8); }
+        }
+        
+        /* Progress Bar */
+        .progress-section {
+            background: var(--dark-light);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
+            margin-bottom: 15px;
         }
-
-        .readiness-title {
-            font-size: 1.8rem;
+        
+        .progress-title {
+            font-size: 1.2rem;
             font-weight: 700;
-            color: var(--success);
+            color: var(--primary-light);
         }
-
-        .readiness-score {
-            font-size: 3rem;
+        
+        .progress-percentage {
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--success);
-            text-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
         }
-
-        .progress-container {
+        
+        .progress-bar-container {
             position: relative;
             background: var(--dark);
-            height: 30px;
-            border-radius: 15px;
+            height: 20px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
         }
-
+        
         .progress-bar {
             height: 100%;
             background: linear-gradient(90deg, var(--success), var(--primary));
-            border-radius: 15px;
+            border-radius: 10px;
             transition: width 0.5s ease;
-            box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
             position: relative;
-            overflow: hidden;
         }
-
+        
         .progress-bar::before {
             content: '';
             position: absolute;
@@ -144,100 +176,149 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shimmer 2s infinite;
         }
-
-        @keyframes shimmer {
-            to { left: 100%; }
-        }
-
+        
+        @keyframes shimmer { to { left: 100%; } }
+        
         .progress-text {
             text-align: center;
-            margin-top: 15px;
-            font-size: 1rem;
+            margin-top: 10px;
             color: var(--text-dim);
-            font-weight: 600;
+            font-size: 0.9rem;
         }
-
-        /* Navigation Cards */
+        
+        /* Tools Bar */
+        .tools-bar {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .tool-btn {
+            padding: 12px 20px;
+            background: var(--dark-light);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tool-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Search Box */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: var(--dark-light);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            font-size: 1.2rem;
+        }
+        
+        /* Nav Grid */
         .nav-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
+            gap: 20px;
             margin-bottom: 60px;
         }
-
+        
         .nav-card {
             background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
-            padding: 35px 30px;
+            padding: 30px;
             border-radius: 20px;
             border: 2px solid var(--border);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s;
             position: relative;
             overflow: hidden;
         }
-
+        
         .nav-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             transform: scaleX(0);
             transition: transform 0.4s ease;
         }
-
+        
         .nav-card:hover {
             border-color: var(--primary-light);
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 60px rgba(59, 130, 246, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.3);
         }
-
-        .nav-card:hover::before {
-            transform: scaleX(1);
-        }
-
+        
+        .nav-card:hover::before { transform: scaleX(1); }
+        
         .nav-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
             color: var(--primary-light);
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
+        
         .nav-card p {
             color: var(--text-dim);
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
-
-        .nav-card-footer {
+        
+        .nav-stats {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
         }
-
-        .nav-link {
-            padding: 8px 16px;
+        
+        .nav-stat {
+            padding: 6px 12px;
             background: rgba(59, 130, 246, 0.2);
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            border: 1px solid var(--primary);
-            transition: all 0.3s;
             color: var(--primary-light);
+            border: 1px solid var(--primary);
         }
-
-        .nav-link:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
+        
+        .nav-stat.must-know {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: var(--danger);
         }
-
+        
         /* Modal */
         .modal {
             display: none;
@@ -246,23 +327,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
+        
         .modal.active {
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            animation: fadeIn 0.3s ease;
         }
-
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
         .modal-content {
             background: var(--dark);
             border-radius: 24px;
@@ -275,34 +353,33 @@
             display: flex;
             flex-direction: column;
         }
-
+        
         @keyframes slideUp {
             from { transform: translateY(50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-
+        
         .modal-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 30px;
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--border);
         }
-
+        
         .modal-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: white;
         }
-
+        
         .close-btn {
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            font-size: 2rem;
-            width: 45px;
-            height: 45px;
+            font-size: 1.8rem;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
@@ -310,400 +387,292 @@
             align-items: center;
             justify-content: center;
         }
-
+        
         .close-btn:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: rotate(90deg);
         }
-
-        /* Tabs */
+        
         .tabs {
             display: flex;
             background: var(--dark-light);
             border-bottom: 2px solid var(--border);
         }
-
+        
         .tab {
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s;
             color: var(--text-dim);
             border-bottom: 3px solid transparent;
         }
-
+        
         .tab:hover {
             background: rgba(59, 130, 246, 0.1);
             color: var(--primary-light);
         }
-
+        
         .tab.active {
             background: rgba(59, 130, 246, 0.2);
             color: var(--primary-light);
             border-bottom-color: var(--primary);
         }
-
+        
         .tab-content {
             display: none;
-            padding: 40px;
+            padding: 30px;
             overflow-y: auto;
-            max-height: calc(90vh - 200px);
+            max-height: calc(90vh - 180px);
         }
-
+        
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
         }
-
-        /* Question Cards */
+        
         .question {
             background: var(--dark-light);
             border-left: 4px solid var(--primary-light);
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
             transition: all 0.3s;
             position: relative;
         }
-
-        .question:hover {
-            border-left-color: var(--success);
-            transform: translateX(8px);
-            box-shadow: 0 4px 20px rgba(52, 211, 153, 0.3);
+        
+        .question.must-know {
+            border-left-color: var(--danger);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), var(--dark-light));
         }
-
+        
+        .question:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+        }
+        
         .question-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
             gap: 15px;
+            margin-bottom: 10px;
         }
-
+        
         .question h4 {
             color: var(--primary-light);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            font-size: 1.15rem;
             font-weight: 700;
             flex: 1;
         }
-
+        
         .question h4::before {
             content: "Q: ";
             color: var(--warning);
             font-family: 'JetBrains Mono', monospace;
         }
-
+        
+        .must-know-badge {
+            background: var(--danger);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
         .checkbox {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
             accent-color: var(--success);
         }
-
+        
         .answer {
             color: var(--text-dim);
-            line-height: 1.8;
-            font-size: 1rem;
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
-
+        
         .answer em {
             color: var(--text);
             font-style: italic;
         }
-
+        
         .answer strong {
             color: var(--success);
             font-weight: 600;
         }
-
+        
         .answer ul, .answer ol {
-            margin: 15px 0;
+            margin: 12px 0;
             padding-left: 25px;
         }
-
+        
         .answer li {
-            margin: 10px 0;
+            margin: 8px 0;
         }
-
+        
         code {
             font-family: 'JetBrains Mono', monospace;
             background: rgba(59, 130, 246, 0.2);
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 5px;
             color: var(--primary-light);
-            font-size: 0.9em;
-            border: 1px solid var(--primary);
+            font-size: 0.85em;
         }
-
-        /* Expert Box */
+        
         .expert-box {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15));
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.12));
             border-left: 4px solid var(--warning);
-            padding: 25px;
-            margin: 25px 0;
-            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
         }
-
+        
         .expert-title {
             color: var(--warning);
             font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-
+        
         .expert-title::before {
             content: "⚡ ";
         }
-
-        /* Why Box */
+        
         .why-box {
-            background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.15));
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.12), rgba(16, 185, 129, 0.12));
             border-left: 4px solid var(--success);
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
         }
-
+        
         .why-title {
             color: var(--success);
             font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
-
+        
         .why-title::before {
             content: "✓ ";
-            font-size: 1.3rem;
         }
-
-        /* Foundation Content */
+        
         .foundation-box {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(139, 92, 246, 0.15));
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.12), rgba(139, 92, 246, 0.12));
             border: 2px solid var(--secondary);
-            padding: 30px;
-            margin: 25px 0;
-            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
         }
-
+        
         .foundation-title {
             color: var(--secondary);
             font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .foundation-title::before {
-            content: "📚";
-            font-size: 1.5rem;
-        }
-
-        /* Tip Box */
-        .tip-box {
-            background: rgba(59, 130, 246, 0.15);
-            border: 2px solid var(--primary);
-            padding: 25px;
-            margin: 30px 0;
-            border-radius: 12px;
-        }
-
-        .tip-title {
-            color: var(--primary-light);
-            font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             margin-bottom: 15px;
         }
-
-        /* Footer */
+        
+        .foundation-title::before {
+            content: "📚 ";
+        }
+        
         footer {
             text-align: center;
-            padding: 60px 20px;
+            padding: 50px 20px;
             margin-top: 80px;
             border-top: 2px solid var(--border);
         }
-
+        
         footer h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
             background: linear-gradient(135deg, var(--primary-light), var(--success));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
-        /* Responsive */
+        
         @media (max-width: 768px) {
-            .nav-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .readiness-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .modal-content {
-                max-height: 95vh;
-                border-radius: 16px;
-            }
-
-            .tab {
-                font-size: 0.85rem;
-                padding: 15px 10px;
-            }
-
-            .tab-content {
-                padding: 25px 20px;
-            }
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Loading animation for readiness score */
-        @keyframes scoreGlow {
-            0%, 100% { text-shadow: 0 0 20px rgba(52, 211, 153, 0.5); }
-            50% { text-shadow: 0 0 40px rgba(52, 211, 153, 0.8), 0 0 60px rgba(52, 211, 153, 0.6); }
-        }
-
-        .readiness-score.glow {
-            animation: scoreGlow 2s ease-in-out;
+            .nav-grid { grid-template-columns: 1fr; }
+            .stats-panel { grid-template-columns: 1fr; }
+            .tools-bar { flex-direction: column; }
+            .tool-btn { width: 100%; }
+            .tab { font-size: 0.8rem; padding: 12px 8px; }
+            .tab-content { padding: 20px 15px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <div class="version-tag">v1.5 ENHANCED</div>
             <h1>🛡️ SOC Analyst Interview Mastery</h1>
-            <p class="subtitle">Complete Entry-Level Cybersecurity Interview Preparation Guide</p>
+            <p class="subtitle">Complete Interview Prep - 58 Questions | 27 MUST KNOW</p>
         </header>
 
-        <!-- Readiness Score Panel -->
-        <div class="readiness-panel">
-            <div class="readiness-header">
-                <div>
-                    <div class="readiness-title">📊 Interview Readiness Score</div>
-                    <p style="color: var(--text-dim); margin-top: 5px;">Check off questions as you master them</p>
+        <!-- Stats Panel -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-label">📊 Overall Progress</div>
+                <div class="stat-value" id="overallProgress">0%</div>
+                <div class="progress-bar-container" style="margin-top: 10px;">
+                    <div class="progress-bar" id="overallBar" style="width: 0%"></div>
                 </div>
-                <div class="readiness-score" id="readinessScore">0%</div>
             </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            
+            <div class="stat-card">
+                <div class="stat-label">🎯 MUST KNOW Mastered</div>
+                <div class="stat-value danger" id="mustKnowProgress">0/27</div>
+                <div class="interview-ready-badge ready-no" id="readyBadge">
+                    Not Ready Yet
+                </div>
             </div>
-            <div class="progress-text" id="progressText">
-                <span id="completedCount">0</span> of <span id="totalCount">0</span> questions mastered
+            
+            <div class="stat-card">
+                <div class="stat-label">⏱️ Time Spent Studying</div>
+                <div class="stat-value warning" id="timeSpent">0m</div>
+                <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 8px;">
+                    Keep going! 🚀
+                </div>
             </div>
         </div>
 
-        <!-- Navigation Cards -->
-        <div class="nav-grid">
-            <div class="nav-card" onclick="openModal('section1', 'Baseline Knowledge & Hardware')">
-                <h3>Baseline Knowledge & Hardware</h3>
-                <p>Core security concepts, boot process, malware persistence, and system fundamentals.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">5 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
+        <!-- Tools Bar -->
+        <div class="tools-bar">
+            <button class="tool-btn" onclick="randomQuiz()">🎲 Random Quiz Mode</button>
+            <button class="tool-btn" onclick="exportProgress()">📥 Export Progress</button>
+            <button class="tool-btn" onclick="resetProgress()">🔄 Reset All</button>
+            <button class="tool-btn" onclick="printView()">🖨️ Print View</button>
+        </div>
 
-            <div class="nav-card" onclick="openModal('section2', 'Core Technical Fundamentals')">
-                <h3>Core Technical Fundamentals</h3>
-                <p>OSI model, networking protocols, DNS, logs, SIEM correlation, and technical foundations.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">7 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
+        <!-- Search Box -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" 
+                   placeholder="Search questions, topics, or keywords..." 
+                   onkeyup="searchContent()">
+            <span class="search-icon">🔍</span>
+        </div>
 
-            <div class="nav-card" onclick="openModal('section3', 'Security Concepts')">
-                <h3>Security Concepts</h3>
-                <p>CIA Triad, Defense in Depth, MITRE ATT&CK, Zero Trust, and security frameworks.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">7 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
-
-            <div class="nav-card" onclick="openModal('section4', 'Hands-On Practice')">
-                <h3>Hands-On Practice</h3>
-                <p>SOC lab setup, alert investigation, false positive reduction, and validation techniques.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">4 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
-
-            <div class="nav-card" onclick="openModal('section5', 'Incident Response')">
-                <h3>Incident Response</h3>
-                <p>Alert triage, incident containment, management communication, and IR processes.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">4 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
-
-            <div class="nav-card" onclick="openModal('section6', 'Cloud Security')">
-                <h3>Cloud Security</h3>
-                <p>Shared responsibility model, cloud logs, IAM abuse, and misconfiguration detection.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">4 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
-
-            <div class="nav-card" onclick="openModal('section7', 'App/API Security')">
-                <h3>App/API Security</h3>
-                <p>OWASP Top 10, API abuse detection, broken authentication, and token security.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">4 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
-
-            <div class="nav-card" onclick="openModal('section8', 'AI/ML Security')">
-                <h3>AI/ML Security</h3>
-                <p>AI security risks, prompt injection, data leakage, and emerging threats.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">3 Questions</span>
-                    <span class="nav-link">Expert Tips</span>
-                    <span class="nav-link">Foundation</span>
-                </div>
-            </div>
-
-            <div class="nav-card" onclick="openModal('bonus', 'BONUS Questions')">
-                <h3>🎁 BONUS Content</h3>
-                <p>IDS vs IPS, SIEM fundamentals, encryption, phishing investigation, and success strategies.</p>
-                <div class="nav-card-footer">
-                    <span class="nav-link">6 Questions</span>
-                    <span class="nav-link">Success Tips</span>
-                    <span class="nav-link">Resources</span>
-                </div>
-            </div>
+        <!-- Navigation Grid -->
+        <div class="nav-grid" id="navGrid">
+            <!-- Cards will be generated by JavaScript -->
         </div>
 
         <footer>
             <h2>🛡️ You've Got This! 🛡️</h2>
-            <p style="font-size: 1.1rem; margin: 20px 0; color: var(--text-dim);">
-                Practice these questions out loud. Verbal explanation ≠ mental understanding.
+            <p style="font-size: 1rem; margin: 15px 0; color: var(--text-dim);">
+                Practice out loud. Master the MUST KNOW questions. You're ready!
             </p>
-            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.7;">
-                Complete SOC Analyst Interview Preparation Guide
+            <p style="margin-top: 25px; font-size: 0.85rem; opacity: 0.7;">
+                v1.5 ENHANCED - 58 Questions | 27 MUST KNOW | 75% Passing
             </p>
         </footer>
     </div>
@@ -712,103 +681,136 @@
     <div class="modal" id="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">Section Title</h2>
+                <h2 class="modal-title" id="modalTitle">Section</h2>
                 <button class="close-btn" onclick="closeModal()">×</button>
             </div>
-
-            <!-- Tabs -->
+            
             <div class="tabs">
                 <div class="tab active" onclick="switchTab(event, 'lessons')">📝 Lessons</div>
                 <div class="tab" onclick="switchTab(event, 'expert')">⭐ Expert Tips</div>
                 <div class="tab" onclick="switchTab(event, 'foundation')">📚 Foundation</div>
             </div>
-
-            <!-- Tab Content -->
+            
             <div id="modalBody">
-                <!-- Content will be dynamically loaded -->
+                <!-- Content loaded dynamically -->
             </div>
         </div>
     </div>
 
     <script>
-        // Section data structure
+        // THIS IS A PROTOTYPE - FULL CONTENT WILL BE ADDED ONCE APPROVED
+        // Section data structure with sample content for Section 1
+        
         const sectionsData = {
             section1: {
+                title: "Baseline Knowledge & Hardware",
+                total: 10,
+                mustKnow: 4,
+                description: "Core system fundamentals, boot process, malware persistence",
                 lessons: [
-                    { q: "How does a computer boot?", a: "[Your answer: BIOS/UEFI, POST, bootloader, kernel loading, etc.]" },
-                    { q: "What's the difference between a workstation and a server?", a: "[Your answer here]" },
-                    { q: "What happens when a process crashes?", a: "[Your answer here]" },
-                    { q: "Where would malware persist on Windows?", a: "[Your answer here]" },
-                    { q: "Explain processes, services, memory, disk, logs", a: "[Your answer here]" }
+                    { q: "How does a computer boot? (Step-by-step process)", a: "[Your answer]", mustKnow: true },
+                    { q: "What's the difference between a workstation and a server?", a: "[Your answer]", mustKnow: false },
+                    { q: "What happens when a process crashes?", a: "[Your answer]", mustKnow: false },
+                    { q: "Where would malware persist on Windows? (List ALL common locations)", a: "[Your answer]", mustKnow: true },
+                    { q: "Explain processes, services, memory, disk, and logs", a: "[Your answer]", mustKnow: true },
+                    { q: "What are the main differences between physical and virtual memory?", a: "[Your answer]", mustKnow: false },
+                    { q: "How do you investigate a system that won't boot?", a: "[Your answer]", mustKnow: false },
+                    { q: "What Windows Event IDs are most critical for security monitoring?", a: "[Your answer]", mustKnow: true },
+                    { q: "Explain DLL hijacking and how it works", a: "[Your answer]", mustKnow: false },
+                    { q: "What's the difference between a thread and a process?", a: "[Your answer]", mustKnow: false }
                 ],
                 expert: `
                     <div class="expert-box">
-                        <div class="expert-title">Enhanced Answer: How does a computer boot?</div>
+                        <div class="expert-title">Enhanced: Boot Process</div>
                         <div class="answer">
-                            <p><strong>Boot Sequence:</strong> Power On → BIOS/UEFI POST → Bootloader → OS Kernel → User Space</p>
+                            <p><strong>Complete Boot Sequence:</strong></p>
                             <ol>
-                                <li><strong>Power-On Self Test (POST):</strong> BIOS/UEFI checks hardware (CPU, RAM, peripherals)</li>
-                                <li><strong>Bootloader:</strong> Loads from boot device (GRUB for Linux, Windows Boot Manager)</li>
-                                <li><strong>Kernel Loading:</strong> OS kernel loaded into memory, initializes drivers</li>
-                                <li><strong>Init/System Services:</strong> System services start (Windows: services.msc, Linux: systemd)</li>
-                                <li><strong>Login Prompt:</strong> User authentication presented</li>
+                                <li><strong>Power-On Self Test (POST):</strong> BIOS/UEFI checks hardware</li>
+                                <li><strong>Bootloader:</strong> GRUB (Linux) or Windows Boot Manager</li>
+                                <li><strong>Kernel Loading:</strong> OS kernel loads into memory</li>
+                                <li><strong>Init/Services:</strong> System services start (systemd/services.msc)</li>
+                                <li><strong>Login Prompt:</strong> User authentication</li>
                             </ol>
                         </div>
                         <div class="why-box">
                             <div class="why-title">Why This Wins</div>
-                            <div class="answer">Shows complete chain understanding from hardware to OS—critical for investigating boot-sector malware, rootkits, UEFI threats.</div>
+                            <div class="answer">Shows systems thinking - critical for boot-sector malware investigation</div>
                         </div>
                     </div>
-
-                    <div class="expert-box">
-                        <div class="expert-title">Enhanced Answer: Where would malware persist?</div>
-                        <div class="answer">
-                            <p><strong>Common Persistence Locations:</strong></p>
-                            <ul>
-                                <li><code>HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code></li>
-                                <li><code>HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code></li>
-                                <li><strong>Scheduled Tasks:</strong> <code>C:\\Windows\\System32\\Tasks\\</code></li>
-                                <li><strong>Services:</strong> <code>HKLM\\SYSTEM\\CurrentControlSet\\Services</code></li>
-                                <li><strong>WMI Event Subscriptions:</strong> Fileless persistence technique</li>
-                            </ul>
-                        </div>
-                        <div class="why-box">
-                            <div class="why-title">Why This Wins</div>
-                            <div class="answer">Specific registry paths + <strong>fileless techniques</strong> proves IR knowledge beyond basics.</div>
-                        </div>
-                    </div>
+                    <p style="color: var(--text-dim); padding: 20px; text-align: center;">
+                        ✨ <strong>Full expert content for all 58 questions will be added in v2.0-COMPLETE</strong> ✨
+                    </p>
                 `,
                 foundation: `
                     <div class="foundation-box">
-                        <div class="foundation-title">Operating System Fundamentals</div>
+                        <div class="foundation-title">OS Fundamentals</div>
                         <div class="answer">
-                            <p><strong>Core Concepts You Need:</strong></p>
+                            <p><strong>Key Concepts for SOC Analysts:</strong></p>
                             <ul>
-                                <li><strong>Boot Process:</strong> Understanding BIOS/UEFI, bootloaders, and OS initialization</li>
-                                <li><strong>Process Management:</strong> How processes are created, scheduled, and terminated</li>
-                                <li><strong>Memory Management:</strong> Virtual memory, paging, and heap vs stack</li>
-                                <li><strong>File Systems:</strong> NTFS, ext4, file permissions, and attributes</li>
-                                <li><strong>System Logs:</strong> Where logs are stored and how to read them</li>
+                                <li><strong>Boot Process:</strong> BIOS/UEFI → Bootloader → Kernel → Services</li>
+                                <li><strong>Process Management:</strong> Creation, scheduling, termination</li>
+                                <li><strong>Memory Management:</strong> Virtual memory, paging, RAM vs disk</li>
+                                <li><strong>File Systems:</strong> NTFS (Windows), ext4 (Linux), permissions</li>
+                                <li><strong>Logging:</strong> Event logs location and format</li>
                             </ul>
-                            <p style="margin-top: 20px;"><strong>🔗 Learn More:</strong> Link to dedicated OS Fundamentals page (coming soon)</p>
                         </div>
                     </div>
                 `
             }
-            // More sections would be added here...
+            // Additional sections will have similar structure
         };
 
-        let totalQuestions = 0;
-        let completedQuestions = 0;
+        // Create placeholder sections
+        const sections = [
+            {id: 'section1', title: 'Baseline Knowledge & Hardware', total: 10, must: 4},
+            {id: 'section2', title: 'Core Technical Fundamentals', total: 10, must: 4},
+            {id: 'section3', title: 'Security Concepts', total: 10, must: 4},
+            {id: 'section4', title: 'Hands-On Practice', total: 6, must: 3},
+            {id: 'section5', title: 'Incident Response', total: 6, must: 3},
+            {id: 'section6', title: 'Cloud Security', total: 6, must: 3},
+            {id: 'section7', title: 'App/API Security', total: 5, must: 3},
+            {id: 'section8', title: 'AI/ML Security', total: 5, must: 3}
+        ];
 
+        // Generate navigation cards
+        function generateNavCards() {
+            const grid = document.getElementById('navGrid');
+            sections.forEach(section => {
+                const card = document.createElement('div');
+                card.className = 'nav-card';
+                card.onclick = () => openModal(section.id, section.title);
+                card.innerHTML = `
+                    <h3>${section.title}</h3>
+                    <p>${sectionsData[section.id]?.description || 'Content coming soon...'}</p>
+                    <div class="nav-stats">
+                        <span class="nav-stat">${section.total} Questions</span>
+                        <span class="nav-stat must-know">${section.must} MUST KNOW</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Time tracking
+        let startTime = Date.now();
+        let totalTimeSpent = 0;
+
+        function updateTimeTracker() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000 / 60);
+            totalTimeSpent = elapsed;
+            const hours = Math.floor(elapsed / 60);
+            const mins = elapsed % 60;
+            const display = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+            document.getElementById('timeSpent').textContent = display;
+        }
+
+        setInterval(updateTimeTracker, 60000); // Update every minute
+
+        // Modal functions
         function openModal(sectionId, title) {
             const modal = document.getElementById('modal');
-            const modalTitle = document.getElementById('modalTitle');
-            
-            modalTitle.textContent = title;
+            document.getElementById('modalTitle').textContent = title;
             modal.classList.add('active');
-            
-            // Load lessons tab by default
             loadTabContent(sectionId, 'lessons');
             
             // Reset tabs
@@ -821,75 +823,96 @@
         }
 
         function switchTab(event, tabName) {
-            // Update active tab
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Get current section from modal title
-            const modalTitle = document.getElementById('modalTitle').textContent;
-            const sectionMap = {
-                'Baseline Knowledge & Hardware': 'section1',
-                'Core Technical Fundamentals': 'section2',
-                // Add more mappings...
-            };
-            
-            const sectionId = sectionMap[modalTitle] || 'section1';
-            loadTabContent(sectionId, tabName);
+            const title = document.getElementById('modalTitle').textContent;
+            const section = sections.find(s => s.title === title);
+            if (section) {
+                loadTabContent(section.id, tabName);
+            }
         }
 
         function loadTabContent(sectionId, tabName) {
-            const modalBody = document.getElementById('modalBody');
             const data = sectionsData[sectionId];
+            const modalBody = document.getElementById('modalBody');
             
             if (!data) {
-                modalBody.innerHTML = '<div class="tab-content active"><p>Content coming soon...</p></div>';
+                modalBody.innerHTML = '<div class="tab-content active"><p style="padding: 40px; text-align: center; color: var(--text-dim);">✨ Content will be added in v2.0-COMPLETE once v1.5 design is approved</p></div>';
                 return;
             }
             
-            let content = '';
+            let content = '<div class="tab-content active">';
             
             if (tabName === 'lessons') {
-                content = '<div class="tab-content active">';
-                data.lessons.forEach((item, index) => {
-                    const qId = `${sectionId}-q${index}`;
+                data.lessons.forEach((item, idx) => {
+                    const qId = `${sectionId}-q${idx}`;
+                    const mustKnowBadge = item.mustKnow ? '<span class="must-know-badge">MUST KNOW</span>' : '';
+                    const questionClass = item.mustKnow ? 'question must-know' : 'question';
+                    
                     content += `
-                        <div class="question">
+                        <div class="${questionClass}">
                             <div class="question-header">
                                 <h4>${item.q}</h4>
-                                <input type="checkbox" class="checkbox" id="${qId}" onchange="updateProgress()">
+                                ${mustKnowBadge}
+                                <input type="checkbox" class="checkbox" id="${qId}" 
+                                       data-must-know="${item.mustKnow}" 
+                                       onchange="updateProgress()">
                             </div>
                             <div class="answer"><em>${item.a}</em></div>
                         </div>
                     `;
                 });
-                content += '</div>';
             } else if (tabName === 'expert') {
-                content = `<div class="tab-content active">${data.expert}</div>`;
+                content += data.expert;
             } else if (tabName === 'foundation') {
-                content = `<div class="tab-content active">${data.foundation}</div>`;
+                content += data.foundation;
             }
             
+            content += '</div>';
             modalBody.innerHTML = content;
+            loadSavedProgress();
         }
 
+        // Progress tracking
         function updateProgress() {
             const checkboxes = document.querySelectorAll('.checkbox');
-            totalQuestions = checkboxes.length;
-            completedQuestions = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const mustKnowBoxes = Array.from(checkboxes).filter(cb => cb.dataset.mustKnow === 'true');
+            const mustKnowCompleted = mustKnowBoxes.filter(cb => cb.checked).length;
+            const mustKnowTotal = mustKnowBoxes.length;
             
-            const percentage = totalQuestions > 0 ? Math.round((completedQuestions / totalQuestions) * 100) : 0;
+            const overallPercent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            const mustKnowPercent = mustKnowTotal > 0 ? Math.round((mustKnowCompleted / mustKnowTotal) * 100) : 0;
             
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('readinessScore').textContent = percentage + '%';
-            document.getElementById('completedCount').textContent = completedQuestions;
-            document.getElementById('totalCount').textContent = totalQuestions;
+            document.getElementById('overallProgress').textContent = overallPercent + '%';
+            document.getElementById('overallBar').style.width = overallPercent + '%';
+            document.getElementById('mustKnowProgress').textContent = `${mustKnowCompleted}/${mustKnowTotal}`;
             
-            // Add glow effect when score changes
-            const scoreElement = document.getElementById('readinessScore');
-            scoreElement.classList.add('glow');
-            setTimeout(() => scoreElement.classList.remove('glow'), 2000);
+            // Update readiness status (75% of MUST KNOW = 21/27)
+            const readyThreshold = Math.ceil(mustKnowTotal * 0.75);
+            const isReady = mustKnowCompleted >= readyThreshold;
+            const readyBadge = document.getElementById('readyBadge');
             
-            // Save to localStorage
+            if (isReady) {
+                readyBadge.className = 'interview-ready-badge ready-yes';
+                readyBadge.textContent = '✓ INTERVIEW READY!';
+            } else {
+                readyBadge.className = 'interview-ready-badge ready-no';
+                readyBadge.textContent = `Need ${readyThreshold - mustKnowCompleted} more MUST KNOW`;
+            }
+            
+            // Color code the stat value
+            const statValue = document.getElementById('mustKnowProgress');
+            if (mustKnowPercent >= 75) {
+                statValue.className = 'stat-value success';
+            } else if (mustKnowPercent >= 50) {
+                statValue.className = 'stat-value warning';
+            } else {
+                statValue.className = 'stat-value danger';
+            }
+            
             saveProgress();
         }
 
@@ -899,41 +922,85 @@
             checkboxes.forEach(cb => {
                 progress[cb.id] = cb.checked;
             });
-            localStorage.setItem('socInterviewProgress', JSON.stringify(progress));
+            localStorage.setItem('socProgress', JSON.stringify(progress));
+            localStorage.setItem('socTimeSpent', totalTimeSpent);
         }
 
-        function loadProgress() {
-            const saved = localStorage.getItem('socInterviewProgress');
+        function loadSavedProgress() {
+            const saved = localStorage.getItem('socProgress');
             if (saved) {
                 const progress = JSON.parse(saved);
                 Object.keys(progress).forEach(id => {
                     const checkbox = document.getElementById(id);
-                    if (checkbox) {
-                        checkbox.checked = progress[id];
-                    }
+                    if (checkbox) checkbox.checked = progress[id];
                 });
                 updateProgress();
             }
+            
+            const savedTime = localStorage.getItem('socTimeSpent');
+            if (savedTime) {
+                totalTimeSpent = parseInt(savedTime);
+                startTime = Date.now() - (totalTimeSpent * 60 * 1000);
+                updateTimeTracker();
+            }
+        }
+
+        // Search functionality
+        function searchContent() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.nav-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Tool functions
+        function randomQuiz() {
+            alert('🎲 Random Quiz Mode: Coming in v2.0! This will test you on random MUST KNOW questions.');
+        }
+
+        function exportProgress() {
+            const data = {
+                progress: localStorage.getItem('socProgress'),
+                timeSpent: totalTimeSpent,
+                date: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `soc-progress-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure? This will reset all your progress!')) {
+                localStorage.removeItem('socProgress');
+                localStorage.removeItem('socTimeSpent');
+                location.reload();
+            }
+        }
+
+        function printView() {
+            window.print();
         }
 
         // Close modal on background click
         document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+            if (e.target === this) closeModal();
         });
 
         // Initialize
         window.addEventListener('load', function() {
-            // Count total questions
-            Object.keys(sectionsData).forEach(key => {
-                if (sectionsData[key].lessons) {
-                    totalQuestions += sectionsData[key].lessons.length;
-                }
-            });
-            document.getElementById('totalCount').textContent = totalQuestions;
-            
-            loadProgress();
+            generateNavCards();
+            updateProgress();
+            updateTimeTracker();
         });
     </script>
 </body>
