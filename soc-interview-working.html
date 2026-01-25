@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOC Interview Prep - Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6366f1;--pd:#4f46e5;--s:#8b5cf6;--a:#06b6d4;--g:#10b981;--w:#f59e0b;--d:#0f172a;--d2:#1e293b;--d3:#334155;--tp:#f8fafc;--ts:#cbd5e1;--tm:#94a3b8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',sans-serif;background:linear-gradient(135deg,var(--d),#1a202c);color:var(--tp);line-height:1.7;min-height:100vh}
+.container{max-width:1400px;margin:0 auto;padding:20px}
+header{text-align:center;padding:80px 30px;margin-bottom:50px;background:linear-gradient(135deg,var(--p),var(--s));border-radius:24px;box-shadow:0 25px 50px -12px rgba(99,102,241,.4);position:relative;overflow:hidden}
+h1{font-size:clamp(2.5rem,7vw,4rem);font-weight:800;margin-bottom:20px;text-shadow:0 4px 20px rgba(0,0,0,.3);letter-spacing:-.02em}
+.subtitle{font-size:clamp(1.1rem,3vw,1.5rem);color:rgba(255,255,255,.95);font-weight:500}
+.controls{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;margin-bottom:40px;padding:30px;background:var(--d2);border-radius:20px;border:1px solid var(--d3)}
+.btn{padding:14px 28px;border:none;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:.5px}
+.btn-primary{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;box-shadow:0 4px 15px rgba(99,102,241,.4)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(99,102,241,.5)}
+.btn-secondary{background:var(--d3);color:var(--tp);border:1px solid var(--d3)}
+.btn-secondary:hover{background:#475569;transform:translateY(-2px)}
+.progress-bar{background:var(--d);height:12px;border-radius:10px;overflow:hidden;margin-top:20px}
+.progress-fill{background:linear-gradient(90deg,var(--p),var(--a));height:100%;width:0%;transition:width .5s ease;border-radius:10px}
+.progress-text{text-align:center;margin-top:12px;color:var(--ts);font-size:14px;font-weight:600}
+.section{background:var(--d2);border-radius:16px;margin-bottom:24px;border:1px solid var(--d3);overflow:hidden;transition:all .3s}
+.section:hover{border-color:var(--p);box-shadow:0 8px 30px rgba(99,102,241,.2)}
+.section-header{padding:24px 30px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(139,92,246,.08));border-bottom:1px solid var(--d3);transition:all .3s;user-select:none}
+.section-header:hover{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(139,92,246,.12))}
+.section-title{font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.badge{font-size:.7rem;padding:6px 14px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.badge-original{background:linear-gradient(135deg,var(--g),#059669);color:#fff}
+.badge-expert{background:linear-gradient(135deg,var(--w),#d97706);color:#fff}
+.badge-bonus{background:linear-gradient(135deg,var(--s),#7c3aed);color:#fff}
+.toggle-icon{font-size:28px;transition:transform .4s;color:var(--p);min-width:30px}
+.section.active .toggle-icon{transform:rotate(180deg)}
+.section-content{max-height:0;overflow:hidden;transition:max-height .5s}
+.section.active .section-content{max-height:30000px}
+.section-inner{padding:35px 30px}
+.q-card{background:var(--d);border-left:5px solid var(--p);padding:24px;margin-bottom:24px;border-radius:12px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.q-card:hover{border-left-color:var(--a);transform:translateX(8px)}
+.q{font-weight:700;color:var(--p);margin-bottom:14px;font-size:1.15rem;display:flex;align-items:start;gap:12px}
+.q::before{content:"Q:";color:var(--w);font-family:'Source Code Pro',monospace;font-weight:700;flex-shrink:0}
+.a{color:var(--ts);padding-left:32px;line-height:1.8}
+.a em{color:var(--tm);font-style:italic}
+.a strong{color:var(--g);font-weight:600}
+.a ul,.a ol{padding-left:24px;margin:12px 0}
+.a li{margin:10px 0}
+code{font-family:'Source Code Pro',monospace;background:rgba(99,102,241,.15);padding:3px 10px;border-radius:6px;color:var(--a);font-size:.9em}
+.improve{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(217,119,6,.1));border-left:5px solid var(--w);padding:24px;margin:24px 0;border-radius:12px}
+.improve-title{color:var(--w);font-weight:700;margin-bottom:14px;font-size:1rem;text-transform:uppercase;letter-spacing:1.2px}
+.improve-title::before{content:"⚡";margin-right:8px}
+.why{background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(5,150,105,.1));border-left:5px solid var(--g);padding:18px;margin-top:18px;border-radius:10px}
+.why-title{color:var(--g);font-weight:700;margin-bottom:10px;font-size:.95rem;text-transform:uppercase;letter-spacing:1px}
+.why-title::before{content:"✓";margin-right:8px;font-size:1.3rem}
+.tip{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(139,92,246,.12));border:2px solid var(--p);padding:24px;margin:28px 0;border-radius:12px}
+.tip-title{color:var(--p);font-weight:700;margin-bottom:12px;font-size:1.15rem}
+footer{text-align:center;padding:60px 30px;margin-top:80px;border-top:2px solid var(--d3)}
+@media (max-width:768px){header{padding:60px 20px}.controls{flex-direction:column;padding:20px}.btn{width:100%}.section-inner{padding:25px 20px}.q-card{padding:18px}.q{font-size:1.05rem}.a{padding-left:20px}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>🛡️ SOC Analyst Interview Mastery</h1>
+<p class="subtitle">Complete Entry-Level Cybersecurity Interview Guide - All 8 Sections</p>
+</header>
+
+<div class="controls">
+<button class="btn btn-primary" onclick="expandAll()">📖 Expand All</button>
+<button class="btn btn-secondary" onclick="collapseAll()">📚 Collapse All</button>
+<button class="btn btn-secondary" onclick="filter('original')">✅ Original</button>
+<button class="btn btn-secondary" onclick="filter('expert')">⭐ Expert</button>
+<button class="btn btn-primary" onclick="filter('all')">🎯 Show All</button>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="pb"></div></div>
+<div class="progress-text" id="pt">0% - Start exploring!</div>
+
+<div style="background:linear-gradient(135deg,rgba(6,182,212,.15),rgba(99,102,241,.15));border:2px solid var(--a);padding:30px;border-radius:16px;margin:40px 0">
+<h2 style="color:var(--a);margin-bottom:18px;font-size:1.5rem">📋 How to Use This Guide</h2>
+<p style="color:var(--ts);margin:10px 0"><strong>Your Original Questions:</strong> Fill in your answers as you prepare</p>
+<p style="color:var(--ts);margin:10px 0"><strong>Expert Recommendations:</strong> My improved versions with explanations</p>
+<p style="color:var(--ts);margin:10px 0"><strong>Bonus Content:</strong> Additional critical questions</p>
+</div>
+<div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>1. Baseline Knowledge & Hardware</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">How does a computer boot?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What's the difference between a workstation and a server?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What happens when a process crashes?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Where would malware persist on Windows?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Explain processes, services, memory, disk, logs</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: Baseline Knowledge</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>2. Core Technical Fundamentals</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">Explain the OSI model using a real attack</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What's the difference between TCP and UDP?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How does DNS abuse happen?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Why would port 445 traffic be suspicious?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Which logs do you check first during an alert?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What does a failed login look like in logs?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How do SIEMs correlate events?</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: Technical Fundamentals</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>3. Security Concepts</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">Explain CIA Triad</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Explain Defense in Depth</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Explain MITRE ATT&CK</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What is Zero Trust?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What's lateral movement?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Difference between threat, vulnerability, and risk?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What is least privilege and why does it fail?</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: Security Concepts</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>4. Hands-On Practice</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">Tell me about the SOC lab you built</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">Walk me through an alert you investigated</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How did you reduce false positives?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How would you validate an alert?</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: Hands-On Practice</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>5. Incident Response</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">Walk me through an incident from start to finish</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What's the first thing you do when you get an alert?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How do you contain an incident?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How do you explain incidents to management?</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: Incident Response</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>6. Cloud Security</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">What is the shared responsibility model?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What cloud logs matter the most?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How does IAM abuse happen?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How do you detect cloud misconfigurations?</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: Cloud Security</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>7. App/API Security</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">What is OWASP Top 10?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How does API abuse show in logs?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What's broken authentication?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How do tokens get abused?</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: App/API Security</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section original-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>8. AI/ML Security</span><span class="badge badge-original">Original</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">What security risks exist in AI systems?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">What is prompt injection?</div><div class="a"><em>[Your answer]</em></div></div><div class="q-card"><div class="q">How could AI leak sensitive data?</div><div class="a"><em>[Your answer]</em></div></div></div></div></div><div class="section expert-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>💡 Expert: AI/ML Security</span><span class="badge badge-expert">Expert Tips</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><p style="color:var(--ts)">Expert tips and enhanced answers for this section available in the complete markdown guide.</p></div></div></div><div class="section bonus-section">
+<div class="section-header" onclick="toggle(this)">
+<div class="section-title"><span>🎁 BONUS: Critical Questions</span><span class="badge badge-bonus">Bonus</span></div>
+<span class="toggle-icon">▼</span>
+</div>
+<div class="section-content"><div class="section-inner"><div class="q-card"><div class="q">IDS vs IPS?</div><div class="a"><em>IDS = monitors/alerts (passive). IPS = detects AND blocks (active)</em></div></div><div class="q-card"><div class="q">What is a SIEM?</div><div class="a"><em>Aggregates, normalizes, correlates events from multiple sources</em></div></div><div class="q-card"><div class="q">Symmetric vs Asymmetric Encryption?</div><div class="a"><em>Symmetric = same key. Asymmetric = public/private key</em></div></div></div></div></div>
+<footer>
+<h2 style="background:linear-gradient(135deg,var(--p),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent">🛡️ You've Got This! 🛡️</h2>
+<p style="margin:20px 0">Practice out loud. Verbal ≠ mental understanding.</p>
+</footer>
+</div>
+
+<script>
+function toggle(h){h.parentElement.classList.toggle('active');updateProgress()}
+function expandAll(){document.querySelectorAll('.section').forEach(s=>s.classList.add('active'));updateProgress()}
+function collapseAll(){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));updateProgress()}
+function filter(t){
+const o=document.querySelectorAll('.original-section'),e=document.querySelectorAll('.expert-section'),b=document.querySelectorAll('.bonus-section');
+if(t==='original'){e.forEach(s=>s.style.display='none');b.forEach(s=>s.style.display='none');o.forEach(s=>s.style.display='block')}
+else if(t==='expert'){o.forEach(s=>s.style.display='none');b.forEach(s=>s.style.display='none');e.forEach(s=>s.style.display='block')}
+else{o.forEach(s=>s.style.display='block');e.forEach(s=>s.style.display='block');b.forEach(s=>s.style.display='block')}
+}
+function updateProgress(){
+const a=document.querySelectorAll('.section'),b=document.querySelectorAll('.section.active'),p=Math.round((b.length/a.length)*100);
+document.getElementById('pb').style.width=p+'%';
+document.getElementById('pt').textContent=p===0?'0% - Start!':p<30?p+'% - Keep going!':p<70?p+'% - Progress!':p<100?p+'% - Almost there!':'100% - Ready! 🎯'}
+window.onload=updateProgress;
+</script>
+</body>
+</html>
