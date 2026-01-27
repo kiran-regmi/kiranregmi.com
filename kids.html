@@ -1,261 +1,818 @@
-<!--- Kids-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Builder Quest</title>
-  <link rel="stylesheet" href="./kids.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnQuest Academy - Learn, Play, Lead!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-purple: #8B5CF6;
+            --primary-pink: #EC4899;
+            --primary-orange: #F97316;
+            --primary-blue: #3B82F6;
+            --primary-green: #10B981;
+            --primary-yellow: #FCD34D;
+            --bg-cream: #FFF8F0;
+            --bg-white: #FFFFFF;
+            --text-dark: #1F2937;
+            --text-medium: #6B7280;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFE4E1 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-yellow);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            opacity: 0.3;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3rem;
+            color: white;
+            text-align: center;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            text-align: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .user-info {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .learning-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .learning-card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out backwards;
+        }
+
+        .learning-card:nth-child(1) { animation-delay: 0.3s; }
+        .learning-card:nth-child(2) { animation-delay: 0.4s; }
+        .learning-card:nth-child(3) { animation-delay: 0.5s; }
+        .learning-card:nth-child(4) { animation-delay: 0.6s; }
+        .learning-card:nth-child(5) { animation-delay: 0.7s; }
+
+        .learning-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .learning-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .learning-card:hover::before {
+            opacity: 1;
+        }
+
+        .learning-card.math { border-top: 5px solid var(--primary-blue); }
+        .learning-card.reading { border-top: 5px solid var(--primary-green); }
+        .learning-card.spelling { border-top: 5px solid var(--primary-orange); }
+        .learning-card.games { border-top: 5px solid var(--primary-pink); }
+        .learning-card.ai { border-top: 5px solid var(--primary-purple); }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            color: var(--text-medium);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            background: #E5E7EB;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.math { background: var(--primary-blue); }
+        .progress-fill.reading { background: var(--primary-green); }
+        .progress-fill.spelling { background: var(--primary-orange); }
+        .progress-fill.games { background: var(--primary-pink); }
+        .progress-fill.ai { background: var(--primary-purple); }
+
+        .leaderboard {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease-out 0.8s backwards;
+        }
+
+        .leaderboard-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-purple);
+            text-align: center;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .leaderboard-item.top-1 {
+            background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+            color: white;
+        }
+
+        .leaderboard-item.top-2 {
+            background: linear-gradient(135deg, #D1D5DB 0%, #9CA3AF 100%);
+        }
+
+        .leaderboard-item.top-3 {
+            background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%);
+        }
+
+        .rank {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            width: 40px;
+        }
+
+        .player-name {
+            flex: 1;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .player-points {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .close-btn {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 12px 30px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .close-btn:hover {
+            background: var(--primary-purple);
+            transform: scale(1.05);
+        }
+
+        .quiz-question {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-purple);
+            background: #F3F4F6;
+            transform: translateX(5px);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary-purple);
+            background: var(--primary-purple);
+            color: white;
+        }
+
+        .submit-quiz {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 40px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .submit-quiz:hover {
+            background: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2000;
+        }
+
+        .celebration.show {
+            animation: celebrate 1s ease-out;
+        }
+
+        @keyframes celebrate {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .learning-areas { grid-template-columns: 1fr; }
+            .user-stats { flex-direction: column; gap: 10px; }
+        }
+    </style>
 </head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="celebration" id="celebration">🎉</div>
 
-<script>
-  (function () {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
+    <div class="container">
+        <header>
+            <h1>🚀 LearnQuest Academy</h1>
+            <p class="tagline">Where Learning is an Adventure!</p>
+        </header>
 
-    if (!token || (role !== "kid" && role !== "admin")) {
-      window.location.href = "/kids/login.html";
-    }
-  })();
-</script>
+        <div class="user-info">
+            <div>
+                <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.8rem; margin-bottom: 5px;">Welcome, Explorer! 👋</h2>
+                <p style="color: var(--text-medium);">Keep learning and climbing the ranks!</p>
+            </div>
+            <div class="user-stats">
+                <div class="stat">
+                    <div class="stat-value" id="userLevel">5</div>
+                    <div class="stat-label">Level</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="userPoints">1,250</div>
+                    <div class="stat-label">Points</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="userRank">12</div>
+                    <div class="stat-label">Rank</div>
+                </div>
+            </div>
+        </div>
 
+        <div class="learning-areas">
+            <div class="learning-card math" onclick="openActivity('math')">
+                <div class="card-icon">🧮</div>
+                <h3 class="card-title">Math Master</h3>
+                <p class="card-description">Solve puzzles, master numbers, and become a calculation champion!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill math" style="width: 65%;"></div>
+                </div>
+                <small style="color: var(--text-medium);">65% Complete</small>
+            </div>
 
-<body class="kids-ui">
-  <!-- Top Bar -->
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">🧩</div>
-      <div>
-        <div class="title">Builder Quest</div>
-        <div class="subtitle">Build games. Build apps. Level up.</div>
-      </div>
+            <div class="learning-card reading" onclick="openActivity('reading')">
+                <div class="card-icon">📚</div>
+                <h3 class="card-title">Reading Adventure</h3>
+                <p class="card-description">Explore amazing stories and unlock new worlds through reading!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill reading" style="width: 45%;"></div>
+                </div>
+                <small style="color: var(--text-medium);">45% Complete</small>
+            </div>
+
+            <div class="learning-card spelling" onclick="openActivity('spelling')">
+                <div class="card-icon">✏️</div>
+                <h3 class="card-title">Spelling Bee</h3>
+                <p class="card-description">Challenge yourself with words and become a spelling superstar!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill spelling" style="width: 80%;"></div>
+                </div>
+                <small style="color: var(--text-medium);">80% Complete</small>
+            </div>
+
+            <div class="learning-card games" onclick="openActivity('games')">
+                <div class="card-icon">🎮</div>
+                <h3 class="card-title">Game Builder</h3>
+                <p class="card-description">Create your own games and share them with friends!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill games" style="width: 30%;"></div>
+                </div>
+                <small style="color: var(--text-medium);">30% Complete</small>
+            </div>
+
+            <div class="learning-card ai" onclick="openActivity('ai')">
+                <div class="card-icon">🤖</div>
+                <h3 class="card-title">AI Explorer</h3>
+                <p class="card-description">Learn how AI works and build your own smart programs!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill ai" style="width: 55%;"></div>
+                </div>
+                <small style="color: var(--text-medium);">55% Complete</small>
+            </div>
+        </div>
+
+        <div class="leaderboard">
+            <h2 class="leaderboard-title">🏆 Top Learners</h2>
+            <ul class="leaderboard-list">
+                <li class="leaderboard-item top-1">
+                    <span class="rank">🥇</span>
+                    <span class="player-name">Alex StarBright</span>
+                    <span class="player-points">2,850 pts</span>
+                </li>
+                <li class="leaderboard-item top-2">
+                    <span class="rank">🥈</span>
+                    <span class="player-name">Maya Genius</span>
+                    <span class="player-points">2,420 pts</span>
+                </li>
+                <li class="leaderboard-item top-3">
+                    <span class="rank">🥉</span>
+                    <span class="player-name">Sam QuickThink</span>
+                    <span class="player-points">2,180 pts</span>
+                </li>
+                <li class="leaderboard-item">
+                    <span class="rank">4</span>
+                    <span class="player-name">Luna SmartCat</span>
+                    <span class="player-points">1,950 pts</span>
+                </li>
+                <li class="leaderboard-item">
+                    <span class="rank">5</span>
+                    <span class="player-name">Zoe BrainPower</span>
+                    <span class="player-points">1,720 pts</span>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div class="status">
-      <div class="chip" id="kidNameChip">👋 Hi, Pranav</div>
-      <div class="chip">⭐ Level <span id="level">1</span></div>
-      <div class="chip">🎯 Mission: <span id="missionText">Make something move.</span></div>
-      <button class="btn ghost" id="openParentViewBtn" type="button" title="Parent View">📊</button>
+    <!-- Modal for Activities -->
+    <div class="modal" id="activityModal">
+        <div class="modal-content">
+            <h2 class="modal-header" id="modalTitle">Activity</h2>
+            <div id="modalBody"></div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
     </div>
-    <!-- Logout Button -->
-    <button class="btn ghost" id="logoutKidBtn">🚪 Log out</button>
 
-  </header>
+    <script>
+        // Create stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
 
-  <main class="container">
+        // Activity content
+        const activities = {
+            math: {
+                title: '🧮 Math Master Quiz',
+                quiz: [
+                    {
+                        question: 'What is 7 × 8?',
+                        options: ['54', '56', '58', '60'],
+                        correct: 1
+                    },
+                    {
+                        question: 'If you have 15 apples and give away 7, how many do you have left?',
+                        options: ['6', '7', '8', '9'],
+                        correct: 2
+                    },
+                    {
+                        question: 'What is 100 ÷ 5?',
+                        options: ['15', '20', '25', '30'],
+                        correct: 1
+                    }
+                ]
+            },
+            reading: {
+                title: '📚 Reading Comprehension',
+                content: `
+                    <div class="quiz-question">
+                        <h3 style="margin-bottom: 15px;">Story: The Brave Little Robot</h3>
+                        <p style="line-height: 1.8; margin-bottom: 15px;">
+                            In a world of tomorrow, there lived a small robot named Spark. Unlike the big robots who worked in factories, 
+                            Spark was designed to help children learn. One day, the city's power went out, and all the robots stopped working. 
+                            But Spark had a special solar battery that kept working even when the main power was off. Spark used this power 
+                            to help light the way for people to safety and kept teaching children even in the dark!
+                        </p>
+                        <div class="quiz-options">
+                            <h4 style="margin-bottom: 10px;">What made Spark different from other robots?</h4>
+                            <div class="quiz-option" onclick="selectOption(this)">Spark was bigger than others</div>
+                            <div class="quiz-option" onclick="selectOption(this)">Spark had a solar battery</div>
+                            <div class="quiz-option" onclick="selectOption(this)">Spark could fly</div>
+                            <div class="quiz-option" onclick="selectOption(this)">Spark was the oldest robot</div>
+                        </div>
+                        <button class="submit-quiz" onclick="checkAnswer('reading')">Submit Answer</button>
+                    </div>
+                `
+            },
+            spelling: {
+                title: '✏️ Spelling Challenge',
+                quiz: [
+                    {
+                        question: 'How do you spell the word meaning "very big"?',
+                        options: ['ENORMUS', 'ENORMOUS', 'ENORMOUSE', 'ENORMOS'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Which spelling is correct for "a trip to learn"?',
+                        options: ['ADVENTUR', 'ADVENTURE', 'ADVANTURE', 'ADVENTCHUR'],
+                        correct: 1
+                    }
+                ]
+            },
+            games: {
+                title: '🎮 Build Your First Game!',
+                content: `
+                    <div style="background: linear-gradient(135deg, #FFF8F0 0%, #FFE4E1 100%); padding: 25px; border-radius: 20px;">
+                        <h3 style="margin-bottom: 15px; font-family: 'Fredoka', sans-serif;">🎯 Click the Target Game</h3>
+                        <p style="margin-bottom: 20px;">Click the moving target to score points!</p>
+                        <div style="background: white; height: 300px; border-radius: 15px; position: relative; overflow: hidden; border: 3px solid var(--primary-pink);">
+                            <div id="gameTarget" style="position: absolute; width: 50px; height: 50px; background: var(--primary-pink); 
+                                border-radius: 50%; cursor: pointer; transition: all 0.3s ease;"></div>
+                            <div style="position: absolute; top: 10px; right: 10px; font-size: 2rem; font-family: 'Fredoka', sans-serif; 
+                                color: var(--primary-purple);">Score: <span id="gameScore">0</span></div>
+                        </div>
+                        <p style="margin-top: 15px; text-align: center; color: var(--text-medium);">
+                            Great job! Next, you'll learn how to code this game yourself! 🚀
+                        </p>
+                    </div>
+                `
+            },
+            ai: {
+                title: '🤖 AI Explorer - Teach AI to Recognize Patterns!',
+                content: `
+                    <div style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%); padding: 25px; border-radius: 20px;">
+                        <h3 style="margin-bottom: 15px; font-family: 'Fredoka', sans-serif;">What is AI?</h3>
+                        <p style="line-height: 1.8; margin-bottom: 20px;">
+                            AI (Artificial Intelligence) is like teaching a computer to think and learn, just like you do! 
+                            When you learn that cats have whiskers and dogs wag their tails, you're recognizing patterns. 
+                            AI does the same thing!
+                        </p>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                            <h4 style="margin-bottom: 10px;">🎨 Pattern Recognition Game</h4>
+                            <p style="margin-bottom: 15px;">Help AI learn! Which pattern comes next?</p>
+                            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px;">
+                                <div style="width: 40px; height: 40px; background: var(--primary-blue); border-radius: 50%;"></div>
+                                <div style="width: 40px; height: 40px; background: var(--primary-pink);"></div>
+                                <div style="width: 40px; height: 40px; background: var(--primary-blue); border-radius: 50%;"></div>
+                                <div style="width: 40px; height: 40px; background: var(--primary-pink);"></div>
+                                <div style="font-size: 2rem;">❓</div>
+                            </div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" onclick="selectOption(this)">Blue Circle</div>
+                                <div class="quiz-option" onclick="selectOption(this)">Pink Square</div>
+                                <div class="quiz-option" onclick="selectOption(this)">Green Triangle</div>
+                            </div>
+                            <button class="submit-quiz" onclick="checkAnswer('ai')">Check Answer</button>
+                        </div>
+                        
+                        <p style="background: var(--bg-cream); padding: 15px; border-radius: 10px; border-left: 4px solid var(--primary-purple);">
+                            💡 <strong>Fun Fact:</strong> The AI that helps you learn on this platform is using these same pattern-recognition 
+                            skills to understand what you need help with!
+                        </p>
+                    </div>
+                `
+            }
+        };
 
-    <!-- Parent View Panel (hidden by default) -->
-    <section id="parentPanel" class="parent-panel hidden">
-      <h3>🧑‍👦 Parent View</h3>
+        function openActivity(type) {
+            const modal = document.getElementById('activityModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            const activity = activities[type];
+            modalTitle.textContent = activity.title;
+            
+            if (activity.content) {
+                modalBody.innerHTML = activity.content;
+                if (type === 'games') {
+                    setTimeout(startGame, 100);
+                }
+            } else if (activity.quiz) {
+                let quizHTML = '';
+                activity.quiz.forEach((q, index) => {
+                    quizHTML += `
+                        <div class="quiz-question" data-correct="${q.correct}">
+                            <h4 style="margin-bottom: 15px;">Question ${index + 1}: ${q.question}</h4>
+                            <div class="quiz-options">
+                                ${q.options.map((opt, i) => `
+                                    <div class="quiz-option" data-index="${i}" onclick="selectQuizOption(this)">${opt}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                });
+                quizHTML += '<button class="submit-quiz" onclick="checkQuizAnswers(\'' + type + '\')">Submit Quiz</button>';
+                modalBody.innerHTML = quizHTML;
+            }
+            
+            modal.classList.add('active');
+        }
 
-      <div class="parent-actions">
-        <button class="btn" id="resetProgressBtn">🔄 Reset Progress</button>
-        <button class="btn" id="levelUpBtn">⬆️ Level Up</button>
-        <button class="btn" id="unlockAllSkillsBtn">🔓 Unlock All Skills</button>
-      </div>
+        function closeModal() {
+            document.getElementById('activityModal').classList.remove('active');
+        }
 
-      <div class="parent-info">
-        <p><strong>Current Level:</strong> <span id="parentLevel"></span></p>
-        <p><strong>Skills:</strong> <span id="parentSkills"></span></p>
-      </div>
-    </section>
+        function selectQuizOption(element) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
 
+        function selectOption(element) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
 
-    <!-- Main Tiles -->
-    <section class="tiles">
-      <button class="tile" id="tileBuildGame" type="button">
-        <div class="tileIcon">🎮</div>
-        <div class="tileTitle">Build a Game</div>
-        <div class="tileDesc">Make characters move, score points, and play.</div>
-      </button>
+        function checkQuizAnswers(type) {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            let total = questions.length;
+            
+            questions.forEach(q => {
+                const selected = q.querySelector('.quiz-option.selected');
+                if (selected && parseInt(selected.dataset.index) === parseInt(q.dataset.correct)) {
+                    correct++;
+                }
+            });
+            
+            showCelebration();
+            alert(`Great job! You got ${correct} out of ${total} correct! 🎉\n+${correct * 50} points!`);
+            updatePoints(correct * 50);
+        }
 
-      <button class="tile" id="tileBuildApp" type="button">
-        <div class="tileIcon">📱</div>
-        <div class="tileTitle">Build an App</div>
-        <div class="tileDesc">Make buttons, screens, counters, and fun apps.</div>
-      </button>
+        function checkAnswer(type) {
+            showCelebration();
+            alert('Awesome work! You earned 100 points! 🌟');
+            updatePoints(100);
+        }
 
-      <button class="tile" id="tileAskBot" type="button">
-        <div class="tileIcon">🤖</div>
-        <div class="tileTitle">Ask the Helper</div>
-        <div class="tileDesc">Get short hints (not full answers).</div>
-      </button>
+        function updatePoints(points) {
+            const currentPoints = parseInt(document.getElementById('userPoints').textContent.replace(',', ''));
+            const newPoints = currentPoints + points;
+            document.getElementById('userPoints').textContent = newPoints.toLocaleString();
+            
+            // Level up logic
+            const currentLevel = parseInt(document.getElementById('userLevel').textContent);
+            if (newPoints > currentLevel * 500) {
+                document.getElementById('userLevel').textContent = currentLevel + 1;
+                alert('🎊 Level Up! You\'re now Level ' + (currentLevel + 1) + '!');
+            }
+        }
 
-      <button class="tile" id="tileBrainBoost" type="button">
-        <div class="tileIcon">🧠</div>
-        <div class="tileTitle">Brain Boost</div>
-        <div class="tileDesc">Quick math & science mini-challenges.</div>
-      </button>
-    </section>
+        function showCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.classList.add('show');
+            setTimeout(() => celebration.classList.remove('show'), 1000);
+        }
 
-    <!-- Creations -->
-    <section class="panel">
-      <div class="panelHeader">
-        <h2>🏗️ My Creations</h2>
-        <div class="panelActions">
-          <button class="btn" id="newProjectBtn" type="button">➕ New</button>
-          <button class="btn ghost" id="clearAllBtn" type="button">🧹 Clear</button>
-        </div>
-      </div>
-
-      <div class="creations" id="creations"></div>
-      <div class="empty" id="emptyState">
-        No creations yet. Click <b>Build a Game</b> or <b>Build an App</b>.
-      </div>
-    </section>
-  </main>
-
-  <!-- Builder Modal -->
-  <div class="modalBackdrop hidden" id="builderBackdrop" role="dialog" aria-modal="true" aria-label="Builder">
-    <div class="modal">
-      <div class="modalHeader">
-        <div>
-          <div class="modalTitle" id="builderTitle">Build</div>
-          <div class="modalSub" id="builderSub">Pick blocks and press Play.</div>
-        </div>
-        <div class="modalHeaderRight">
-          <input class="input" id="projectName" placeholder="Name your creation (e.g., Coin Chase)" maxlength="32" />
-          <button class="btn ghost" id="closeBuilderBtn" type="button">✖</button>
-        </div>
-      </div>
-
-      <div class="modalBody">
-        <!-- Left: Block Library -->
-        <aside class="library">
-          <div class="sectionTitle">🧱 Blocks</div>
-          <div class="blockGroupTitle">Events</div>
-          <div class="blockList" id="blockListEvents"></div>
-
-          <div class="blockGroupTitle">Actions</div>
-          <div class="blockList" id="blockListActions"></div>
-
-          <div class="blockGroupTitle">Logic</div>
-          <div class="blockList" id="blockListLogic"></div>
-
-          <div class="hint">
-            Tip: Click blocks to add them to your script. Then press <b>Play</b>.
-          </div>
-        </aside>
-
-        <!-- Middle: Script -->
-        <section class="script">
-          <div class="sectionTitle">📜 My Script</div>
-          <div class="scriptArea" id="scriptArea"></div>
-          <div class="scriptActions">
-            <button class="btn ghost" id="undoBlockBtn" type="button">↩ Undo</button>
-            <button class="btn ghost" id="clearScriptBtn" type="button">🗑 Clear Script</button>
-          </div>
-        </section>
-
-        <!-- Right: Preview -->
-        <section class="preview">
-          <div class="sectionTitle">👀 Preview</div>
-
-          <!-- Game preview -->
-          <canvas id="gameCanvas" width="420" height="280" class="canvas hidden"></canvas>
-
-          <!-- App preview -->
-          <div id="appPreview" class="appPreview hidden"></div>
-
-          <div class="previewActions">
-            <button class="btn" id="playBtn" type="button">▶ Play</button>
-            <button class="btn ghost" id="stopBtn" type="button">⏹ Stop</button>
-            <button class="btn" id="saveBtn" type="button">💾 Save</button>
-          </div>
-
-          <div class="log" id="runLog"></div>
-        </section>
-      </div>
-    </div>
-  </div>
-
-  <!-- Helper Bot Modal -->
-  <div class="modalBackdrop hidden" id="botBackdrop" role="dialog" aria-modal="true" aria-label="Helper Bot">
-    <div class="modal small">
-      <div class="modalHeader">
-        <div>
-          <div class="modalTitle">🤖 Helper Bot</div>
-          <div class="modalSub">Short hints only. Try things.</div>
-        </div>
-        <button class="btn ghost" id="closeBotBtn" type="button">✖</button>
-      </div>
-
-      <div class="modalBody single">
-        <div class="chat" id="chat"></div>
-        <div class="chatBar">
-          <input class="input" id="chatInput" placeholder="Ask: how do I make a button work?" />
-          <button class="btn" id="sendChatBtn" type="button">Send</button>
-        </div>
-
-        <div class="tiny">
-          Phase 1 uses a built-in helper. Later we can connect this to your AI endpoint.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Brain Boost Modal -->
-  <div class="modalBackdrop hidden" id="brainBackdrop" role="dialog" aria-modal="true" aria-label="Brain Boost">
-    <div class="modal small">
-      <div class="modalHeader">
-        <div>
-          <div class="modalTitle">🧠 Brain Boost</div>
-            <!-- added later brain boost-->
-                  <p class="brain-stats">
-          🧠 Streak: <span id="brainStreak">0</span>
-        </p>
-
-          <div class="modalSub">Quick challenge. No pressure.</div>
-        </div>
-        <button class="btn ghost" id="closeBrainBtn" type="button">✖</button>
-      </div>
-
-      <div class="modalBody single">
-        <div class="boostCard">
-          <div class="boostQ" id="boostQ">What is 7 + 5?</div>
-          <div class="boostRow">
-            <input class="input" id="boostA" placeholder="Type answer" />
-            <button class="btn" id="checkBoostBtn" type="button">Check</button>
-          </div>
-          <div class="boostResult" id="boostResult"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Parent View Modal -->
-  <div class="modalBackdrop hidden" id="parentBackdrop" role="dialog" aria-modal="true" aria-label="Parent View">
-    <div class="modal small">
-      <div class="modalHeader">
-        <div>
-          <div class="modalTitle">📊 Parent View</div>
-          <div class="modalSub">Progress summary (Phase 1)</div>
-        </div>
-        <button class="btn ghost" id="closeParentBtn" type="button">✖</button>
-      </div>
-
-      <div class="modalBody single">
-        <div class="parentGrid">
-          <div class="parentStat">
-            <div class="parentLabel">Projects Saved</div>
-            <div class="parentValue" id="pvProjects">0</div>
-          </div>
-          <div class="parentStat">
-            <div class="parentLabel">Time Building</div>
-            <div class="parentValue" id="pvTime">0m</div>
-          </div>
-          <div class="parentStat">
-            <div class="parentLabel">Skills Unlocked</div>
-            <div class="parentValue" id="pvSkills">0</div>
-          </div>
-        </div>
-
-        <div class="parentSkills" id="parentSkills"></div>
-        <div class="tiny">Hook this into your real DB later. For now it tracks locally.</div>
-      </div>
-    </div>
-  </div>
-
-  <script src="./kids.js"></script>
+        // Simple game
+        let gameScore = 0;
+        let gameInterval;
+        
+        function startGame() {
+            gameScore = 0;
+            document.getElementById('gameScore').textContent = gameScore;
+            moveTarget();
+            gameInterval = setInterval(moveTarget, 2000);
+            
+            document.getElementById('gameTarget').onclick = function() {
+                gameScore += 10;
+                document.getElementById('gameScore').textContent = gameScore;
+                showCelebration();
+            };
+        }
+        
+        function moveTarget() {
+            const target = document.getElementById('gameTarget');
+            if (target) {
+                const maxX = target.parentElement.offsetWidth - 50;
+                const maxY = target.parentElement.offsetHeight - 50;
+                target.style.left = Math.random() * maxX + 'px';
+                target.style.top = Math.random() * maxY + 'px';
+            }
+        }
+    </script>
 </body>
 </html>
