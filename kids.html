@@ -13,6 +13,7 @@
             --primary-blue: #3B82F6;
             --primary-green: #10B981;
             --primary-yellow: #FCD34D;
+            --primary-red: #EF4444;
             --bg-cream: #FFF8F0;
             --bg-white: #FFFFFF;
             --text-dark: #1F2937;
@@ -76,7 +77,7 @@
             background: white;
             border-radius: 30px;
             padding: 50px;
-            max-width: 450px;
+            max-width: 500px;
             width: 90%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             animation: slideUp 0.6s ease-out;
@@ -103,6 +104,36 @@
             color: var(--text-medium);
             margin-bottom: 30px;
             font-size: 1.1rem;
+        }
+
+        .user-type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .user-type-btn {
+            padding: 20px;
+            border: 3px solid #E5E7EB;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .user-type-btn:hover {
+            border-color: var(--primary-purple);
+            background: #F3F4F6;
+        }
+
+        .user-type-btn.selected {
+            border-color: var(--primary-purple);
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            color: white;
         }
 
         .form-group {
@@ -276,6 +307,22 @@
             transform: scale(1.1);
         }
 
+        .nav-btn {
+            padding: 8px 20px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+        }
+
         .logout-btn {
             padding: 8px 20px;
             background: #EF4444;
@@ -412,7 +459,7 @@
         .learning-card.math::before { background: var(--primary-blue); }
         .learning-card.reading::before { background: var(--primary-green); }
         .learning-card.spelling::before { background: var(--primary-orange); }
-        .learning-card.games::before { background: var(--primary-pink); }
+        .learning-card.coding::before { background: var(--primary-pink); }
         .learning-card.ai::before { background: var(--primary-purple); }
 
         .learning-card:hover {
@@ -449,6 +496,19 @@
             z-index: 1;
         }
 
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .difficulty-easy { background: #D1FAE5; color: #065F46; }
+        .difficulty-medium { background: #FEF3C7; color: #92400E; }
+        .difficulty-hard { background: #FEE2E2; color: #991B1B; }
+
         .progress-container {
             position: relative;
             z-index: 1;
@@ -477,10 +537,7 @@
             left: 0;
             bottom: 0;
             right: 0;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255,255,255,0.3), 
-                transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shimmer 2s infinite;
         }
 
@@ -492,7 +549,7 @@
         .progress-fill.math { background: linear-gradient(90deg, var(--primary-blue) 0%, #60A5FA 100%); }
         .progress-fill.reading { background: linear-gradient(90deg, var(--primary-green) 0%, #34D399 100%); }
         .progress-fill.spelling { background: linear-gradient(90deg, var(--primary-orange) 0%, #FB923C 100%); }
-        .progress-fill.games { background: linear-gradient(90deg, var(--primary-pink) 0%, #F472B6 100%); }
+        .progress-fill.coding { background: linear-gradient(90deg, var(--primary-pink) 0%, #F472B6 100%); }
         .progress-fill.ai { background: linear-gradient(90deg, var(--primary-purple) 0%, #A78BFA 100%); }
 
         .progress-text {
@@ -639,7 +696,7 @@
             background: white;
             border-radius: 30px;
             padding: 40px;
-            max-width: 700px;
+            max-width: 800px;
             width: 90%;
             max-height: 85vh;
             overflow-y: auto;
@@ -690,7 +747,7 @@
             background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
             padding: 25px;
             border-radius: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-left: 5px solid var(--primary-purple);
         }
 
@@ -698,6 +755,7 @@
             color: var(--primary-purple);
             font-weight: 700;
             margin-bottom: 10px;
+            font-size: 0.95rem;
         }
 
         .quiz-options {
@@ -736,7 +794,7 @@
             z-index: 1;
         }
 
-        .quiz-option:hover {
+        .quiz-option:hover:not(.disabled) {
             border-color: var(--primary-purple);
             transform: translateX(8px);
         }
@@ -747,8 +805,92 @@
             color: white;
         }
 
-        .quiz-option.selected::before {
-            width: 100%;
+        .quiz-option.correct {
+            border-color: var(--primary-green);
+            background: linear-gradient(135deg, var(--primary-green) 0%, #34D399 100%);
+            color: white;
+            animation: correctPulse 0.5s ease;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--primary-red);
+            background: linear-gradient(135deg, var(--primary-red) 0%, #F87171 100%);
+            color: white;
+            animation: shake 0.5s ease;
+        }
+
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-box.show {
+            display: block;
+        }
+
+        .feedback-box.correct {
+            background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+            border-left: 5px solid var(--primary-green);
+        }
+
+        .feedback-box.incorrect {
+            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+            border-left: 5px solid var(--primary-red);
+        }
+
+        .feedback-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feedback-text {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .next-question-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #60A5FA 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .next-question-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
         }
 
         .submit-quiz {
@@ -772,8 +914,9 @@
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
         }
 
-        .submit-quiz:active {
-            transform: translateY(-1px);
+        .submit-quiz:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .celebration {
@@ -797,6 +940,59 @@
             100% { opacity: 0; transform: translate(-50%, -50%) scale(1) rotate(360deg); }
         }
 
+        /* Parent Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-card h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-purple);
+        }
+
+        .child-card {
+            background: #F9FAFB;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .child-card:hover {
+            background: #F3F4F6;
+            transform: translateX(5px);
+        }
+
+        .child-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mini-stat {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 5px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .login-box { padding: 30px; }
@@ -805,6 +1001,7 @@
             .learning-areas { grid-template-columns: 1fr; }
             .user-menu { gap: 10px; }
             .avatar-selection { grid-template-columns: repeat(3, 1fr); }
+            .user-type-selector { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -818,50 +1015,66 @@
             <div class="login-logo">🚀 LearnQuest</div>
             <p class="login-subtitle">Start Your Learning Adventure!</p>
             
-            <div class="form-group">
-                <label class="form-label">Your Name</label>
-                <input type="text" class="form-input" id="userName" placeholder="Enter your name" maxlength="20">
+            <div class="user-type-selector" id="userTypeSelector">
+                <button class="user-type-btn" data-type="student">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">🎓</div>
+                    Student
+                </button>
+                <button class="user-type-btn" data-type="parent">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">👨‍👩‍👧</div>
+                    Parent
+                </button>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">How old are you?</label>
-                <div class="age-selector" id="ageSelector">
-                    <button class="age-btn" data-age="6">6</button>
-                    <button class="age-btn" data-age="7">7</button>
-                    <button class="age-btn" data-age="8">8</button>
-                    <button class="age-btn" data-age="9">9</button>
-                    <button class="age-btn" data-age="10">10</button>
-                    <button class="age-btn" data-age="11">11</button>
-                    <button class="age-btn" data-age="12">12</button>
-                    <button class="age-btn" data-age="13">13</button>
-                    <button class="age-btn" data-age="14">14</button>
-                    <button class="age-btn" data-age="15">15</button>
+            <div id="studentForm" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" class="form-input" id="userName" placeholder="Enter your name" maxlength="20">
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="form-label">Choose Your Avatar</label>
-                <div class="avatar-selection" id="avatarSelector">
-                    <div class="avatar-option" data-avatar="🦁">🦁</div>
-                    <div class="avatar-option" data-avatar="🐼">🐼</div>
-                    <div class="avatar-option" data-avatar="🦊">🦊</div>
-                    <div class="avatar-option" data-avatar="🐨">🐨</div>
-                    <div class="avatar-option" data-avatar="🦉">🦉</div>
-                    <div class="avatar-option" data-avatar="🐸">🐸</div>
-                    <div class="avatar-option" data-avatar="🦄">🦄</div>
-                    <div class="avatar-option" data-avatar="🐲">🐲</div>
-                    <div class="avatar-option" data-avatar="🚀">🚀</div>
-                    <div class="avatar-option" data-avatar="⭐">⭐</div>
-                    <div class="avatar-option" data-avatar="🌈">🌈</div>
-                    <div class="avatar-option" data-avatar="🎨">🎨</div>
+                <div class="form-group">
+                    <label class="form-label">How old are you?</label>
+                    <div class="age-selector" id="ageSelector"></div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-label">Choose Your Avatar</label>
+                    <div class="avatar-selection" id="avatarSelector">
+                        <div class="avatar-option" data-avatar="🦁">🦁</div>
+                        <div class="avatar-option" data-avatar="🐼">🐼</div>
+                        <div class="avatar-option" data-avatar="🦊">🦊</div>
+                        <div class="avatar-option" data-avatar="🐨">🐨</div>
+                        <div class="avatar-option" data-avatar="🦉">🦉</div>
+                        <div class="avatar-option" data-avatar="🐸">🐸</div>
+                        <div class="avatar-option" data-avatar="🦄">🦄</div>
+                        <div class="avatar-option" data-avatar="🐲">🐲</div>
+                        <div class="avatar-option" data-avatar="🚀">🚀</div>
+                        <div class="avatar-option" data-avatar="⭐">⭐</div>
+                        <div class="avatar-option" data-avatar="🌈">🌈</div>
+                        <div class="avatar-option" data-avatar="🎨">🎨</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="login()">Start Learning! 🎓</button>
             </div>
 
-            <button class="btn-primary" onclick="login()">Start Learning! 🎓</button>
+            <div id="parentForm" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Parent Name</label>
+                    <input type="text" class="form-input" id="parentName" placeholder="Enter your name" maxlength="20">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Access Code (Create one)</label>
+                    <input type="password" class="form-input" id="parentCode" placeholder="Create a 4-digit code" maxlength="4">
+                </div>
+
+                <button class="btn-primary" onclick="parentLogin()">Access Dashboard 📊</button>
+            </div>
         </div>
     </div>
 
-    <!-- Main App -->
+    <!-- Student App -->
     <div class="app-container" id="appContainer">
         <div class="container">
             <div class="top-nav">
@@ -876,7 +1089,7 @@
             <header>
                 <div class="header-content">
                     <h1>🌟 Welcome Back, <span id="headerUserName"></span>!</h1>
-                    <p class="welcome-message">Ready to learn something amazing today?</p>
+                    <p class="welcome-message" id="welcomeMessage">Ready to learn something amazing today?</p>
                 </div>
             </header>
 
@@ -903,86 +1116,53 @@
                 </div>
             </div>
 
-            <div class="learning-areas">
-                <div class="learning-card math" onclick="openActivity('math')">
-                    <div class="card-icon">🧮</div>
-                    <h3 class="card-title">Math Master</h3>
-                    <p class="card-description">Solve puzzles, master numbers, and become a calculation champion!</p>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress-fill math" id="progressMath" style="width: 0%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span id="mathCompleted">0</span>
-                            <span id="mathPercent">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="learning-card reading" onclick="openActivity('reading')">
-                    <div class="card-icon">📚</div>
-                    <h3 class="card-title">Reading Adventure</h3>
-                    <p class="card-description">Explore amazing stories and unlock new worlds through reading!</p>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress-fill reading" id="progressReading" style="width: 0%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span id="readingCompleted">0</span>
-                            <span id="readingPercent">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="learning-card spelling" onclick="openActivity('spelling')">
-                    <div class="card-icon">✏️</div>
-                    <h3 class="card-title">Spelling Bee</h3>
-                    <p class="card-description">Challenge yourself with words and become a spelling superstar!</p>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress-fill spelling" id="progressSpelling" style="width: 0%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span id="spellingCompleted">0</span>
-                            <span id="spellingPercent">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="learning-card games" onclick="openActivity('games')">
-                    <div class="card-icon">🎮</div>
-                    <h3 class="card-title">Game Builder</h3>
-                    <p class="card-description">Create your own games and share them with friends!</p>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress-fill games" id="progressGames" style="width: 0%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span id="gamesCompleted">0</span>
-                            <span id="gamesPercent">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="learning-card ai" onclick="openActivity('ai')">
-                    <div class="card-icon">🤖</div>
-                    <h3 class="card-title">AI Explorer</h3>
-                    <p class="card-description">Learn how AI works and build your own smart programs!</p>
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress-fill ai" id="progressAI" style="width: 0%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span id="aiCompleted">0</span>
-                            <span id="aiPercent">0%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="learning-areas" id="learningAreas"></div>
 
             <div class="leaderboard">
                 <h2 class="leaderboard-title">🏆 Top Learners</h2>
                 <ul class="leaderboard-list" id="leaderboardList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parent Dashboard -->
+    <div class="app-container" id="parentDashboard">
+        <div class="container">
+            <div class="top-nav">
+                <div class="logo">👨‍👩‍👧 Parent Dashboard</div>
+                <div class="user-menu">
+                    <span id="parentNavName" style="font-weight: 600;"></span>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <header>
+                <div class="header-content">
+                    <h1>📊 Learning Progress Overview</h1>
+                    <p class="welcome-message">Monitor your children's learning journey</p>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>👶 Your Children</h3>
+                    <div id="childrenList"></div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>📈 Overall Stats</h3>
+                    <div id="overallStats"></div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>🎯 Recent Activity</h3>
+                    <div id="recentActivity"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-card" style="margin-top: 25px;">
+                <h3>📚 Detailed Progress</h3>
+                <div id="detailedProgress"></div>
             </div>
         </div>
     </div>
@@ -996,12 +1176,20 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+
     <script>
         // Global state
         let currentUser = null;
         let selectedAge = null;
         let selectedAvatar = null;
         let allUsers = [];
+        let userType = null;
+        let currentQuestionIndex = 0;
+        let currentActivity = null;
+        let quizAnswers = [];
 
         // Create stars
         function createStars() {
@@ -1017,14 +1205,36 @@
         }
         createStars();
 
-        // Age selection
-        document.getElementById('ageSelector').addEventListener('click', (e) => {
-            if (e.target.classList.contains('age-btn')) {
-                document.querySelectorAll('.age-btn').forEach(btn => btn.classList.remove('selected'));
-                e.target.classList.add('selected');
-                selectedAge = e.target.dataset.age;
+        // User type selection
+        document.getElementById('userTypeSelector').addEventListener('click', (e) => {
+            const btn = e.target.closest('.user-type-btn');
+            if (btn) {
+                document.querySelectorAll('.user-type-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                userType = btn.dataset.type;
+                
+                document.getElementById('studentForm').style.display = userType === 'student' ? 'block' : 'none';
+                document.getElementById('parentForm').style.display = userType === 'parent' ? 'block' : 'none';
             }
         });
+
+        // Generate age buttons
+        function generateAgeButtons() {
+            const ageSelector = document.getElementById('ageSelector');
+            for (let i = 6; i <= 15; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'age-btn';
+                btn.dataset.age = i;
+                btn.textContent = i;
+                btn.onclick = () => {
+                    document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedAge = i;
+                };
+                ageSelector.appendChild(btn);
+            }
+        }
+        generateAgeButtons();
 
         // Avatar selection
         document.getElementById('avatarSelector').addEventListener('click', (e) => {
@@ -1035,7 +1245,7 @@
             }
         });
 
-        // Login function
+        // Student login
         async function login() {
             const userName = document.getElementById('userName').value.trim();
             
@@ -1054,7 +1264,6 @@
                 return;
             }
 
-            // Create user object
             currentUser = {
                 name: userName,
                 age: selectedAge,
@@ -1066,47 +1275,133 @@
                     math: 0,
                     reading: 0,
                     spelling: 0,
-                    games: 0,
+                    coding: 0,
                     ai: 0
                 },
-                joinedDate: new Date().toISOString()
+                joinedDate: new Date().toISOString(),
+                lastActive: new Date().toISOString()
             };
 
-            // Save to storage
             try {
                 await window.storage.set(`user:${userName}`, JSON.stringify(currentUser), true);
                 localStorage.setItem('currentUser', userName);
+                localStorage.setItem('userType', 'student');
                 showApp();
             } catch (error) {
                 console.error('Error saving user:', error);
-                // Fallback to localStorage only
                 localStorage.setItem('currentUser', userName);
+                localStorage.setItem('userType', 'student');
                 localStorage.setItem(`user:${userName}`, JSON.stringify(currentUser));
                 showApp();
             }
         }
 
-        // Load user
-        async function loadUser() {
-            const userName = localStorage.getItem('currentUser');
-            if (!userName) return false;
+        // Parent login
+        async function parentLogin() {
+            const parentName = document.getElementById('parentName').value.trim();
+            const parentCode = document.getElementById('parentCode').value.trim();
+            
+            if (!parentName || !parentCode) {
+                alert('Please fill in all fields! 📝');
+                return;
+            }
+            
+            if (parentCode.length !== 4) {
+                alert('Access code must be 4 digits! 🔢');
+                return;
+            }
+
+            const parentData = {
+                name: parentName,
+                code: parentCode,
+                children: []
+            };
 
             try {
-                const result = await window.storage.get(`user:${userName}`, true);
-                if (result && result.value) {
-                    currentUser = JSON.parse(result.value);
-                    return true;
-                }
+                await window.storage.set(`parent:${parentName}`, JSON.stringify(parentData), true);
+                localStorage.setItem('currentParent', parentName);
+                localStorage.setItem('userType', 'parent');
+                currentUser = parentData;
+                showParentDashboard();
             } catch (error) {
-                console.error('Error loading user:', error);
-                // Fallback to localStorage
-                const userData = localStorage.getItem(`user:${userName}`);
-                if (userData) {
-                    currentUser = JSON.parse(userData);
-                    return true;
+                console.error('Error saving parent:', error);
+                localStorage.setItem('currentParent', parentName);
+                localStorage.setItem('userType', 'parent');
+                localStorage.setItem(`parent:${parentName}`, JSON.stringify(parentData));
+                currentUser = parentData;
+                showParentDashboard();
+            }
+        }
+
+        // Load user
+        async function loadUser() {
+            const savedUserType = localStorage.getItem('userType');
+            
+            if (savedUserType === 'student') {
+                const userName = localStorage.getItem('currentUser');
+                if (!userName) return false;
+
+                try {
+                    const result = await window.storage.get(`user:${userName}`, true);
+                    if (result && result.value) {
+                        currentUser = JSON.parse(result.value);
+                        return true;
+                    }
+                } catch (error) {
+                    const userData = localStorage.getItem(`user:${userName}`);
+                    if (userData) {
+                        currentUser = JSON.parse(userData);
+                        return true;
+                    }
+                }
+            } else if (savedUserType === 'parent') {
+                const parentName = localStorage.getItem('currentParent');
+                if (!parentName) return false;
+
+                try {
+                    const result = await window.storage.get(`parent:${parentName}`, true);
+                    if (result && result.value) {
+                        currentUser = JSON.parse(result.value);
+                        return true;
+                    }
+                } catch (error) {
+                    const parentData = localStorage.getItem(`parent:${parentName}`);
+                    if (parentData) {
+                        currentUser = JSON.parse(parentData);
+                        return true;
+                    }
                 }
             }
             return false;
+        }
+
+        // Learning paths based on age
+        function getLearningPath(age) {
+            if (age >= 6 && age <= 8) {
+                return {
+                    math: { difficulty: 'easy', topics: ['Addition', 'Subtraction', 'Counting', 'Shapes'] },
+                    reading: { difficulty: 'easy', topics: ['Simple Stories', 'Phonics', 'Sight Words'] },
+                    spelling: { difficulty: 'easy', topics: ['3-Letter Words', '4-Letter Words'] },
+                    coding: { difficulty: 'easy', topics: ['Block Coding', 'Sequences', 'Patterns'] },
+                    ai: { difficulty: 'easy', topics: ['What is AI?', 'Pattern Recognition'] }
+                };
+            } else if (age >= 9 && age <= 11) {
+                return {
+                    math: { difficulty: 'medium', topics: ['Multiplication', 'Division', 'Fractions', 'Geometry'] },
+                    reading: { difficulty: 'medium', topics: ['Chapter Books', 'Comprehension', 'Vocabulary'] },
+                    spelling: { difficulty: 'medium', topics: ['5-6 Letter Words', 'Compound Words'] },
+                    coding: { difficulty: 'medium', topics: ['Python Basics', 'Variables', 'Loops'] },
+                    ai: { difficulty: 'medium', topics: ['Machine Learning Basics', 'Data Patterns'] }
+                };
+            } else {
+                return {
+                    math: { difficulty: 'hard', topics: ['Algebra', 'Equations', 'Advanced Geometry'] },
+                    reading: { difficulty: 'hard', topics: ['Complex Texts', 'Analysis', 'Critical Thinking'] },
+                    spelling: { difficulty: 'hard', topics: ['Advanced Vocabulary', 'Latin Roots'] },
+                    coding: { difficulty: 'hard', topics: ['Functions', 'Algorithms', 'Problem Solving'] },
+                    ai: { difficulty: 'hard', topics: ['Neural Networks', 'AI Ethics', 'Applications'] }
+                };
+            }
         }
 
         // Show app
@@ -1114,7 +1409,6 @@
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('appContainer').classList.add('active');
             
-            // Update UI with user data
             document.getElementById('headerUserName').textContent = currentUser.name;
             document.getElementById('navUserName').textContent = currentUser.name;
             document.getElementById('navUserAvatar').textContent = currentUser.avatar;
@@ -1122,27 +1416,61 @@
             document.getElementById('userPoints').textContent = currentUser.points.toLocaleString();
             document.getElementById('userStreak').textContent = currentUser.streak;
 
-            // Update progress bars
-            updateProgressBars();
-            
-            // Load leaderboard
+            // Age-appropriate welcome message
+            const messages = [
+                "Ready to learn something amazing today?",
+                "Let's make today awesome!",
+                "Time to level up your skills!",
+                "Your brain is going to love this!",
+                "Adventure awaits in every lesson!"
+            ];
+            document.getElementById('welcomeMessage').textContent = messages[Math.floor(Math.random() * messages.length)];
+
+            renderLearningCards();
             loadLeaderboard();
         }
 
-        // Update progress bars
-        function updateProgressBars() {
-            const subjects = ['math', 'reading', 'spelling', 'games', 'ai'];
-            subjects.forEach(subject => {
-                const progress = currentUser.progress[subject] || 0;
+        // Render learning cards based on age
+        function renderLearningCards() {
+            const learningPath = getLearningPath(currentUser.age);
+            const learningAreas = document.getElementById('learningAreas');
+            
+            const cards = [
+                { id: 'math', icon: '🧮', title: 'Math Master', description: 'Solve puzzles and master numbers!' },
+                { id: 'reading', icon: '📚', title: 'Reading Adventure', description: 'Explore amazing stories!' },
+                { id: 'spelling', icon: '✏️', title: 'Spelling Bee', description: 'Become a spelling superstar!' },
+                { id: 'coding', icon: '💻', title: 'Coding Academy', description: 'Learn to code and build programs!' },
+                { id: 'ai', icon: '🤖', title: 'AI Explorer', description: 'Discover how AI works!' }
+            ];
+
+            learningAreas.innerHTML = cards.map(card => {
+                const path = learningPath[card.id];
+                const progress = currentUser.progress[card.id] || 0;
                 const percent = Math.round(progress);
-                document.getElementById(`progress${subject.charAt(0).toUpperCase() + subject.slice(1)}`).style.width = percent + '%';
-                document.getElementById(`${subject}Completed`).textContent = `${progress} activities`;
-                document.getElementById(`${subject}Percent`).textContent = percent + '%';
-            });
+                
+                return `
+                    <div class="learning-card ${card.id}" onclick="openActivity('${card.id}')">
+                        <div class="card-icon">${card.icon}</div>
+                        <span class="difficulty-badge difficulty-${path.difficulty}">${path.difficulty.toUpperCase()}</span>
+                        <h3 class="card-title">${card.title}</h3>
+                        <p class="card-description">${card.description}</p>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill ${card.id}" style="width: ${percent}%;"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>${Math.floor(progress)} completed</span>
+                                <span>${percent}%</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // Save user data
         async function saveUserData() {
+            currentUser.lastActive = new Date().toISOString();
             try {
                 await window.storage.set(`user:${currentUser.name}`, JSON.stringify(currentUser), true);
                 localStorage.setItem(`user:${currentUser.name}`, JSON.stringify(currentUser));
@@ -1173,19 +1501,15 @@
                 allUsers = [];
             }
 
-            // Add current user if not in list
             if (!allUsers.find(u => u.name === currentUser.name)) {
                 allUsers.push(currentUser);
             }
 
-            // Sort by points
             allUsers.sort((a, b) => b.points - a.points);
 
-            // Update rank
             const userRank = allUsers.findIndex(u => u.name === currentUser.name) + 1;
             document.getElementById('userRank').textContent = userRank;
 
-            // Render leaderboard
             const leaderboardList = document.getElementById('leaderboardList');
             leaderboardList.innerHTML = '';
 
@@ -1216,118 +1540,312 @@
             });
         }
 
+        // Parent Dashboard
+        async function showParentDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('parentDashboard').classList.add('active');
+            
+            document.getElementById('parentNavName').textContent = currentUser.name;
+
+            // Load all students
+            try {
+                const result = await window.storage.list('user:', true);
+                if (result && result.keys) {
+                    const userPromises = result.keys.map(async key => {
+                        try {
+                            const userData = await window.storage.get(key, true);
+                            return userData && userData.value ? JSON.parse(userData.value) : null;
+                        } catch {
+                            return null;
+                        }
+                    });
+                    
+                    allUsers = (await Promise.all(userPromises)).filter(u => u !== null);
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+
+            renderParentDashboard();
+        }
+
+        // Render parent dashboard
+        function renderParentDashboard() {
+            const childrenList = document.getElementById('childrenList');
+            const overallStats = document.getElementById('overallStats');
+            const recentActivity = document.getElementById('recentActivity');
+            const detailedProgress = document.getElementById('detailedProgress');
+
+            // Children list
+            if (allUsers.length === 0) {
+                childrenList.innerHTML = '<p style="color: var(--text-medium);">No students registered yet.</p>';
+            } else {
+                childrenList.innerHTML = allUsers.map(user => `
+                    <div class="child-card">
+                        <div class="child-name">
+                            <span>${user.avatar}</span>
+                            <span>${user.name}</span>
+                            <span style="font-size: 0.85rem; color: var(--text-medium); font-weight: 400;">(Age ${user.age})</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span>Level:</span>
+                            <span style="font-weight: 700;">${user.level}</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span>Points:</span>
+                            <span style="font-weight: 700;">${user.points}</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span>Streak:</span>
+                            <span style="font-weight: 700;">${user.streak} days</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Overall stats
+            const totalPoints = allUsers.reduce((sum, u) => sum + u.points, 0);
+            const avgLevel = allUsers.length > 0 ? (allUsers.reduce((sum, u) => sum + u.level, 0) / allUsers.length).toFixed(1) : 0;
+            
+            overallStats.innerHTML = `
+                <div class="mini-stat" style="margin-bottom: 15px;">
+                    <span>Total Students:</span>
+                    <span style="font-weight: 700; font-size: 1.2rem;">${allUsers.length}</span>
+                </div>
+                <div class="mini-stat" style="margin-bottom: 15px;">
+                    <span>Combined Points:</span>
+                    <span style="font-weight: 700; font-size: 1.2rem;">${totalPoints.toLocaleString()}</span>
+                </div>
+                <div class="mini-stat">
+                    <span>Average Level:</span>
+                    <span style="font-weight: 700; font-size: 1.2rem;">${avgLevel}</span>
+                </div>
+            `;
+
+            // Recent activity
+            const sorted = [...allUsers].sort((a, b) => new Date(b.lastActive) - new Date(a.lastActive));
+            recentActivity.innerHTML = sorted.slice(0, 5).map(user => `
+                <div class="mini-stat" style="margin-bottom: 12px; padding: 10px; background: #F9FAFB; border-radius: 8px;">
+                    <span>${user.avatar} ${user.name}</span>
+                    <span style="font-size: 0.85rem; color: var(--text-medium);">${timeAgo(user.lastActive)}</span>
+                </div>
+            `).join('');
+
+            // Detailed progress
+            detailedProgress.innerHTML = allUsers.map(user => `
+                <div style="margin-bottom: 30px; padding: 20px; background: #F9FAFB; border-radius: 15px;">
+                    <h4 style="margin-bottom: 15px; font-size: 1.2rem;">${user.avatar} ${user.name}'s Progress</h4>
+                    ${Object.entries(user.progress).map(([subject, progress]) => `
+                        <div style="margin-bottom: 12px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem;">
+                                <span style="text-transform: capitalize;">${subject}</span>
+                                <span style="font-weight: 700;">${Math.round(progress)}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill ${subject}" style="width: ${Math.round(progress)}%;"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+
+        // Time ago helper
+        function timeAgo(dateString) {
+            const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return Math.floor(seconds / 60) + ' min ago';
+            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hrs ago';
+            return Math.floor(seconds / 86400) + ' days ago';
+        }
+
         // Logout
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('currentUser');
+                localStorage.clear();
                 location.reload();
             }
         }
 
         // Show profile
         function showProfile() {
-            alert(`👤 ${currentUser.name}\n🎂 Age: ${currentUser.age}\n🏆 Level: ${currentUser.level}\n⭐ Points: ${currentUser.points}\n🔥 Streak: ${currentUser.streak} days`);
+            const info = `
+👤 Name: ${currentUser.name}
+🎂 Age: ${currentUser.age}
+🏆 Level: ${currentUser.level}
+⭐ Points: ${currentUser.points}
+🔥 Streak: ${currentUser.streak} days
+📅 Joined: ${new Date(currentUser.joinedDate).toLocaleDateString()}
+            `;
+            alert(info);
         }
 
-        // Activity system (quiz content)
-        const activities = {
+        // Quiz database with explanations
+        const quizDatabase = {
             math: {
-                title: '🧮 Math Master Quiz',
-                quizzes: [
+                easy: [
                     {
-                        question: 'What is 12 × 9?',
-                        options: ['98', '108', '118', '128'],
-                        correct: 1
-                    },
-                    {
-                        question: 'If you have 50 cookies and share them equally among 5 friends, how many does each friend get?',
-                        options: ['8', '9', '10', '11'],
-                        correct: 2
-                    },
-                    {
-                        question: 'What is 144 ÷ 12?',
+                        question: 'What is 5 + 7?',
                         options: ['10', '11', '12', '13'],
-                        correct: 2
+                        correct: 2,
+                        explanation: 'When we add 5 + 7, we can count up from 5: 6, 7, 8, 9, 10, 11, 12. The answer is 12!'
                     },
                     {
-                        question: 'What is 15 + 28 + 37?',
-                        options: ['70', '75', '80', '85'],
-                        correct: 2
+                        question: 'How many sides does a triangle have?',
+                        options: ['2', '3', '4', '5'],
+                        correct: 1,
+                        explanation: 'A triangle always has exactly 3 sides and 3 corners. That\'s why it\'s called a "tri-angle" (tri means three)!'
                     },
                     {
-                        question: 'A rectangle has a length of 8cm and width of 5cm. What is its area?',
-                        options: ['30 cm²', '35 cm²', '40 cm²', '45 cm²'],
-                        correct: 2
+                        question: 'What is 10 - 4?',
+                        options: ['5', '6', '7', '8'],
+                        correct: 1,
+                        explanation: 'If we start with 10 and take away 4, we have 6 left. Try counting: 10, 9, 8, 7, 6!'
+                    }
+                ],
+                medium: [
+                    {
+                        question: 'What is 12 × 8?',
+                        options: ['86', '96', '106', '116'],
+                        correct: 1,
+                        explanation: 'To multiply 12 × 8, think of it as (10 × 8) + (2 × 8) = 80 + 16 = 96. Breaking big problems into smaller ones helps!'
+                    },
+                    {
+                        question: 'What is 3/4 + 1/4?',
+                        options: ['1/2', '3/4', '1', '4/8'],
+                        correct: 2,
+                        explanation: 'When the denominators (bottom numbers) are the same, just add the numerators (top numbers): 3 + 1 = 4. So 4/4 = 1 whole!'
+                    }
+                ],
+                hard: [
+                    {
+                        question: 'Solve for x: 3x + 7 = 22',
+                        options: ['3', '4', '5', '6'],
+                        correct: 2,
+                        explanation: 'First subtract 7 from both sides: 3x = 15. Then divide both sides by 3: x = 5. Always do the opposite operation!'
+                    },
+                    {
+                        question: 'What is the area of a rectangle with length 12cm and width 7cm?',
+                        options: ['19 cm²', '38 cm²', '72 cm²', '84 cm²'],
+                        correct: 3,
+                        explanation: 'Area of a rectangle = length × width. So 12 × 7 = 84 square centimeters (cm²)!'
+                    }
+                ]
+            },
+            coding: {
+                easy: [
+                    {
+                        question: 'In block coding, what does a "loop" do?',
+                        options: ['Makes the program stop', 'Repeats actions', 'Deletes code', 'Changes colors'],
+                        correct: 1,
+                        explanation: 'A loop repeats the same actions over and over! It\'s like telling your robot "do this 5 times" instead of writing it 5 times. Very useful!'
+                    },
+                    {
+                        question: 'What is a "bug" in coding?',
+                        options: ['An insect', 'A mistake in code', 'A game character', 'A button'],
+                        correct: 1,
+                        explanation: 'A "bug" is a mistake or error in your code. The term comes from an actual moth that got stuck in an old computer! Debugging means fixing these mistakes.'
+                    }
+                ],
+                medium: [
+                    {
+                        question: 'In Python, what does this code print?\nprint(5 + 3 * 2)',
+                        options: ['10', '11', '16', '13'],
+                        correct: 1,
+                        explanation: 'Python follows math order of operations (PEMDAS)! Multiply first: 3 × 2 = 6, then add: 5 + 6 = 11.'
+                    },
+                    {
+                        question: 'What type of variable is "name = \'Alex\'"?',
+                        options: ['Number', 'String', 'Boolean', 'List'],
+                        correct: 1,
+                        explanation: 'Text in quotes is called a "string" in programming. Strings can hold letters, words, or sentences!'
+                    }
+                ],
+                hard: [
+                    {
+                        question: 'What will this code output?\nfor i in range(3):\n    print(i * 2)',
+                        options: ['0, 2, 4', '2, 4, 6', '0, 1, 2', '1, 2, 3'],
+                        correct: 0,
+                        explanation: 'range(3) gives us 0, 1, 2. The loop multiplies each by 2: (0×2=0), (1×2=2), (2×2=4). Output: 0, 2, 4!'
                     }
                 ]
             },
             reading: {
-                title: '📚 Reading Comprehension',
-                quizzes: [
+                easy: [
                     {
-                        question: 'Read this passage: "Luna was excited about her first day at the Space Academy. She had dreamed of becoming an astronaut since she was five years old. As she put on her silver training suit, she couldn\'t stop smiling." What is Luna\'s dream?',
-                        options: ['To be a teacher', 'To become an astronaut', 'To be a scientist', 'To be a pilot'],
-                        correct: 1
-                    },
+                        question: 'Story: "Sam found a lost puppy. He gave it water and food. Then he helped find its owner." What did Sam do first?',
+                        options: ['Found the owner', 'Gave it food', 'Found a puppy', 'Played with puppy'],
+                        correct: 2,
+                        explanation: 'The story says "Sam found a lost puppy" first. This happened before giving it water and food. Always look for time order words like "first," "then," and "finally"!'
+                    }
+                ],
+                medium: [
                     {
-                        question: 'In the story, how old was Luna when she started dreaming about space?',
-                        options: ['Three years old', 'Four years old', 'Five years old', 'Six years old'],
-                        correct: 2
+                        question: 'Read: "Despite the rain, Maya was determined to finish her garden." What does "determined" mean?',
+                        options: ['Sad', 'Decided to do something no matter what', 'Confused', 'Happy'],
+                        correct: 1,
+                        explanation: 'Determined means you\'ve made up your mind and won\'t give up, even when it\'s hard. The word "despite" (even though) gives us a clue!'
+                    }
+                ],
+                hard: [
+                    {
+                        question: 'In "The Road Not Taken," what does "Two roads diverged in a yellow wood" symbolize?',
+                        options: ['Getting lost', 'Making life choices', 'Going for a walk', 'Autumn season'],
+                        correct: 1,
+                        explanation: 'The two roads symbolize different choices in life. The yellow wood (autumn) suggests a time of change. The poem is about choosing your own path!'
                     }
                 ]
             },
             spelling: {
-                title: '✏️ Spelling Challenge',
-                quizzes: [
+                easy: [
                     {
-                        question: 'Which is the correct spelling?',
-                        options: ['DEFINATELY', 'DEFINITELY', 'DEFINATLY', 'DEFINENTLY'],
-                        correct: 1
-                    },
-                    {
-                        question: 'How do you spell "very unusual or remarkable"?',
-                        options: ['EXTRAORDINARY', 'EXTRAORDINERY', 'EXTRAORDIANRY', 'EXTRODINARY'],
-                        correct: 0
-                    },
-                    {
-                        question: 'Which spelling is correct for "aware of what is happening"?',
-                        options: ['CONSCIOUS', 'CONCIOUS', 'CONSIOUS', 'CONSCOUS'],
-                        correct: 0
+                        question: 'Which spelling is correct?',
+                        options: ['FREND', 'FRIEND', 'FREIND', 'FRIND'],
+                        correct: 1,
+                        explanation: 'FRIEND is correct! Remember: "I" before "E" except after "C" - but FRIEND is an exception. Think "A FRIEND to the END"!'
                     }
-                ]
-            },
-            games: {
-                title: '🎮 Game Builder Quiz',
-                quizzes: [
+                ],
+                medium: [
                     {
-                        question: 'In game design, what does "FPS" stand for?',
-                        options: ['Fast Player Speed', 'Frames Per Second', 'First Person Shooter', 'Fun Play Style'],
-                        correct: 1
-                    },
+                        question: 'How do you spell "very unusual"?',
+                        options: ['EXTRAORDINARY', 'EXTRAORDINERY', 'EXTRAORDIANRY', 'EXTRODINARY'],
+                        correct: 0,
+                        explanation: 'EXTRAORDINARY is correct! Break it down: EXTRA + ORDINARY. It means beyond ordinary, super special!'
+                    }
+                ],
+                hard: [
                     {
-                        question: 'What is a "sprite" in game development?',
-                        options: ['A type of drink', 'A 2D image or animation', 'A game level', 'A player character'],
-                        correct: 1
+                        question: 'Which is correct for "existing everywhere at once"?',
+                        options: ['UBIQUITUS', 'UBIQUITOUS', 'UBIQUITIOUS', 'UBIQUITEUS'],
+                        correct: 1,
+                        explanation: 'UBIQUITOUS is correct! It comes from Latin "ubique" meaning everywhere. Think of it as "u-bi-quit-ous" to remember the spelling!'
                     }
                 ]
             },
             ai: {
-                title: '🤖 AI Explorer Quiz',
-                quizzes: [
+                easy: [
                     {
-                        question: 'What does AI stand for?',
-                        options: ['Automatic Intelligence', 'Artificial Intelligence', 'Advanced Intelligence', 'Automated Information'],
-                        correct: 1
-                    },
+                        question: 'What does AI need to learn?',
+                        options: ['Magic', 'Data and examples', 'Batteries', 'Wi-Fi'],
+                        correct: 1,
+                        explanation: 'AI learns from data and examples, just like you learn from books and practice! The more examples it sees, the better it gets.'
+                    }
+                ],
+                medium: [
                     {
-                        question: 'Which of these is an example of AI?',
-                        options: ['A calculator', 'A voice assistant like Siri', 'A regular camera', 'A keyboard'],
-                        correct: 1
-                    },
+                        question: 'What is "machine learning"?',
+                        options: ['Teaching robots to walk', 'AI learning from data without being programmed', 'Building machines', 'Computer games'],
+                        correct: 1,
+                        explanation: 'Machine learning is when AI teaches itself by finding patterns in data! Instead of programming every rule, we let it discover patterns on its own.'
+                    }
+                ],
+                hard: [
                     {
-                        question: 'How does AI learn?',
-                        options: ['By reading books', 'From patterns in data', 'By watching videos', 'It doesn\'t learn'],
-                        correct: 1
+                        question: 'What is a neural network inspired by?',
+                        options: ['The internet', 'The human brain', 'Power lines', 'Phone networks'],
+                        correct: 1,
+                        explanation: 'Neural networks are inspired by how neurons in our brains connect and work together! Each "neuron" in the network passes information to others, just like our brain cells.'
                     }
                 ]
             }
@@ -1335,33 +1853,178 @@
 
         // Open activity
         function openActivity(type) {
+            const age = currentUser.age;
+            let difficulty = 'easy';
+            if (age >= 9 && age <= 11) difficulty = 'medium';
+            if (age >= 12) difficulty = 'hard';
+
+            const quizzes = quizDatabase[type][difficulty];
+            if (!quizzes) {
+                alert('Content coming soon for this age group!');
+                return;
+            }
+
+            currentActivity = type;
+            currentQuestionIndex = 0;
+            quizAnswers = [];
+
             const modal = document.getElementById('activityModal');
             const modalTitle = document.getElementById('modalTitle');
+            
+            const icons = {
+                math: '🧮',
+                reading: '📚',
+                spelling: '✏️',
+                coding: '💻',
+                ai: '🤖'
+            };
+
+            modalTitle.textContent = `${icons[type]} ${type.charAt(0).toUpperCase() + type.slice(1)} Quiz`;
+            
+            showQuestion();
+            modal.classList.add('active');
+        }
+
+        // Show question
+        function showQuestion() {
+            const age = currentUser.age;
+            let difficulty = 'easy';
+            if (age >= 9 && age <= 11) difficulty = 'medium';
+            if (age >= 12) difficulty = 'hard';
+
+            const quizzes = quizDatabase[currentActivity][difficulty];
+            const question = quizzes[currentQuestionIndex];
             const modalBody = document.getElementById('modalBody');
-            
-            const activity = activities[type];
-            modalTitle.textContent = activity.title;
-            
-            let quizHTML = '';
-            activity.quizzes.forEach((q, index) => {
-                quizHTML += `
-                    <div class="quiz-question" data-correct="${q.correct}" data-type="${type}">
-                        <div class="question-number">Question ${index + 1} of ${activity.quizzes.length}</div>
-                        <h4 style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.6;">${q.question}</h4>
-                        <div class="quiz-options">
-                            ${q.options.map((opt, i) => `
-                                <div class="quiz-option" data-index="${i}" onclick="selectQuizOption(this)">
-                                    <span>${opt}</span>
-                                </div>
-                            `).join('')}
+
+            modalBody.innerHTML = `
+                <div class="quiz-question">
+                    <div class="question-number">Question ${currentQuestionIndex + 1} of ${quizzes.length}</div>
+                    <h4 style="margin-bottom: 15px; font-size: 1.2rem; line-height: 1.6; white-space: pre-wrap;">${question.question}</h4>
+                    <div class="quiz-options">
+                        ${question.options.map((opt, i) => `
+                            <div class="quiz-option" data-index="${i}" onclick="checkAnswer(${i})">
+                                <span>${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="feedback-box" id="feedbackBox"></div>
+                </div>
+            `;
+        }
+
+        // Check answer with immediate feedback
+        function checkAnswer(selectedIndex) {
+            const age = currentUser.age;
+            let difficulty = 'easy';
+            if (age >= 9 && age <= 11) difficulty = 'medium';
+            if (age >= 12) difficulty = 'hard';
+
+            const quizzes = quizDatabase[currentActivity][difficulty];
+            const question = quizzes[currentQuestionIndex];
+            const options = document.querySelectorAll('.quiz-option');
+            const feedbackBox = document.getElementById('feedbackBox');
+
+            // Disable all options
+            options.forEach(opt => opt.classList.add('disabled'));
+
+            const isCorrect = selectedIndex === question.correct;
+            quizAnswers.push(isCorrect);
+
+            // Mark selected answer
+            if (isCorrect) {
+                options[selectedIndex].classList.add('correct');
+                feedbackBox.className = 'feedback-box correct show';
+                feedbackBox.innerHTML = `
+                    <div class="feedback-title">🎉 Excellent! That's Correct!</div>
+                    <div class="feedback-text">${question.explanation}</div>
+                    ${currentQuestionIndex < quizzes.length - 1 ? 
+                        '<button class="next-question-btn" onclick="nextQuestion()">Next Question →</button>' :
+                        '<button class="next-question-btn" onclick="finishQuiz()">See Results 🎊</button>'
+                    }
+                `;
+                showCelebration();
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+                feedbackBox.className = 'feedback-box incorrect show';
+                feedbackBox.innerHTML = `
+                    <div class="feedback-title">💡 Not Quite! Let's Learn Together</div>
+                    <div class="feedback-text">
+                        <strong>The correct answer is: ${question.options[question.correct]}</strong><br><br>
+                        ${question.explanation}
+                    </div>
+                    ${currentQuestionIndex < quizzes.length - 1 ? 
+                        '<button class="next-question-btn" onclick="nextQuestion()">Next Question →</button>' :
+                        '<button class="next-question-btn" onclick="finishQuiz()">See Results 🎊</button>'
+                    }
+                `;
+            }
+        }
+
+        // Next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish quiz
+        async function finishQuiz() {
+            const correct = quizAnswers.filter(a => a).length;
+            const total = quizAnswers.length;
+            const percentage = Math.round((correct / total) * 100);
+            const pointsEarned = correct * 100;
+
+            // Update user stats
+            currentUser.points += pointsEarned;
+            currentUser.progress[currentActivity] = Math.min(100, (currentUser.progress[currentActivity] || 0) + (correct * 10));
+
+            // Level up check
+            const newLevel = Math.floor(currentUser.points / 500) + 1;
+            const leveledUp = newLevel > currentUser.level;
+            currentUser.level = newLevel;
+
+            await saveUserData();
+
+            // Show results
+            const modalBody = document.getElementById('modalBody');
+            const encouragement = percentage >= 80 ? 'Outstanding! 🌟' : 
+                                percentage >= 60 ? 'Great job! 🎯' : 
+                                'Keep learning! 💪';
+
+            modalBody.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">${percentage >= 80 ? '🏆' : percentage >= 60 ? '🎉' : '📚'}</div>
+                    <h2 style="font-family: 'Fredoka', sans-serif; font-size: 2rem; margin-bottom: 15px;">${encouragement}</h2>
+                    <div style="background: #F9FAFB; padding: 25px; border-radius: 20px; margin-bottom: 20px;">
+                        <div style="font-size: 3rem; font-weight: 700; color: var(--primary-purple); margin-bottom: 10px;">
+                            ${correct}/${total}
+                        </div>
+                        <div style="color: var(--text-medium); margin-bottom: 20px;">Questions Correct</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary-green);">
+                            +${pointsEarned} Points!
                         </div>
                     </div>
-                `;
-            });
-            
-            quizHTML += `<button class="submit-quiz" onclick="submitQuiz('${type}')">Submit Quiz 🚀</button>`;
-            modalBody.innerHTML = quizHTML;
-            modal.classList.add('active');
+                    ${leveledUp ? `
+                        <div style="background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%); 
+                                    padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px;">
+                            <div style="font-size: 2rem; margin-bottom: 10px;">🎊 LEVEL UP! 🎊</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">You're now Level ${currentUser.level}!</div>
+                        </div>
+                    ` : ''}
+                    <button class="close-btn" onclick="closeModalAndRefresh()">Continue Learning! 🚀</button>
+                </div>
+            `;
+
+            showCelebration();
+        }
+
+        // Close modal and refresh
+        function closeModalAndRefresh() {
+            closeModal();
+            document.getElementById('userLevel').textContent = currentUser.level;
+            document.getElementById('userPoints').textContent = currentUser.points.toLocaleString();
+            renderLearningCards();
+            loadLeaderboard();
         }
 
         // Close modal
@@ -1369,69 +2032,10 @@
             document.getElementById('activityModal').classList.remove('active');
         }
 
-        // Select quiz option
-        function selectQuizOption(element) {
-            const parent = element.closest('.quiz-options');
-            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-        }
-
-        // Submit quiz
-        async function submitQuiz(type) {
-            const questions = document.querySelectorAll('.quiz-question');
-            let correct = 0;
-            let total = questions.length;
-            
-            questions.forEach(q => {
-                const selected = q.querySelector('.quiz-option.selected');
-                if (selected && parseInt(selected.dataset.index) === parseInt(q.dataset.correct)) {
-                    correct++;
-                }
-            });
-            
-            const pointsEarned = correct * 100;
-            const percentage = Math.round((correct / total) * 100);
-            
-            // Update user stats
-            currentUser.points += pointsEarned;
-            currentUser.progress[type] = Math.min(100, (currentUser.progress[type] || 0) + (correct * 5));
-            
-            // Check for level up
-            const newLevel = Math.floor(currentUser.points / 500) + 1;
-            const leveledUp = newLevel > currentUser.level;
-            currentUser.level = newLevel;
-            
-            // Save data
-            await saveUserData();
-            
-            // Show celebration
-            showCelebration();
-            
-            // Update UI
-            document.getElementById('userLevel').textContent = currentUser.level;
-            document.getElementById('userPoints').textContent = currentUser.points.toLocaleString();
-            updateProgressBars();
-            loadLeaderboard();
-            
-            // Show results
-            let message = `🎉 Amazing Work!\n\n`;
-            message += `✅ Correct: ${correct}/${total}\n`;
-            message += `📊 Score: ${percentage}%\n`;
-            message += `⭐ Points Earned: +${pointsEarned}\n`;
-            message += `🏆 Total Points: ${currentUser.points}`;
-            
-            if (leveledUp) {
-                message += `\n\n🎊 LEVEL UP! You're now Level ${currentUser.level}!`;
-            }
-            
-            alert(message);
-            closeModal();
-        }
-
         // Show celebration
         function showCelebration() {
             const celebration = document.getElementById('celebration');
-            const emojis = ['🎉', '🌟', '⭐', '🏆', '🎊', '✨', '🚀'];
+            const emojis = ['🎉', '🌟', '⭐', '🏆', '🎊', '✨', '🚀', '💫'];
             celebration.textContent = emojis[Math.floor(Math.random() * emojis.length)];
             celebration.classList.add('show');
             setTimeout(() => celebration.classList.remove('show'), 1500);
@@ -1441,11 +2045,15 @@
         async function init() {
             const hasUser = await loadUser();
             if (hasUser) {
-                showApp();
+                const userType = localStorage.getItem('userType');
+                if (userType === 'student') {
+                    showApp();
+                } else if (userType === 'parent') {
+                    showParentDashboard();
+                }
             }
         }
 
-        // Start the app
         init();
     </script>
 </body>
