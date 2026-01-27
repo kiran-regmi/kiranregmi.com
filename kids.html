@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LearnQuest Academy - Learn, Play, Lead!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-purple: #8B5CF6;
@@ -28,7 +28,7 @@
         }
 
         body {
-            font-family: 'Comic Neue', cursive;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #FFF8F0 0%, #FFE4E1 100%);
             color: var(--text-dark);
             min-height: 100vh;
@@ -54,89 +54,331 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.2); }
+            0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1.2) rotate(180deg); }
+        }
+
+        /* Login Screen */
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .login-logo {
+            text-align: center;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: var(--text-medium);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .avatar-selection {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            background: #F3F4F6;
+        }
+
+        .avatar-option:hover {
+            transform: scale(1.1);
+            background: #E5E7EB;
+        }
+
+        .avatar-option.selected {
+            border-color: var(--primary-purple);
+            background: #EDE9FE;
+            transform: scale(1.15);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .age-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .age-btn {
+            flex: 1;
+            min-width: 60px;
+            padding: 10px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .age-btn:hover {
+            border-color: var(--primary-purple);
+            background: #F3F4F6;
+        }
+
+        .age-btn.selected {
+            border-color: var(--primary-purple);
+            background: var(--primary-purple);
+            color: white;
+        }
+
+        /* Main App */
+        .app-container {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-container.active {
+            display: block;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
-            z-index: 1;
+        }
+
+        .top-nav {
+            background: white;
+            border-radius: 20px;
+            padding: 15px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            box-shadow: var(--shadow);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .logout-btn {
+            padding: 8px 20px;
+            background: #EF4444;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #DC2626;
+            transform: translateY(-2px);
         }
 
         header {
             background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
             border-radius: 30px;
-            padding: 30px;
+            padding: 40px;
             box-shadow: var(--shadow-lg);
             margin-bottom: 30px;
-            animation: slideDown 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
             font-family: 'Fredoka', sans-serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: white;
             text-align: center;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
             margin-bottom: 10px;
         }
 
-        .tagline {
+        .welcome-message {
             text-align: center;
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 600;
         }
 
-        .user-info {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
             background: white;
             border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 25px;
             box-shadow: var(--shadow);
-            animation: fadeIn 0.8s ease-out 0.2s backwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .user-stats {
-            display: flex;
-            gap: 30px;
-        }
-
-        .stat {
             text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
         .stat-value {
             font-family: 'Fredoka', sans-serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--primary-purple);
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
         }
 
         .stat-label {
-            font-size: 0.9rem;
             color: var(--text-medium);
+            font-weight: 600;
         }
 
         .learning-areas {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-bottom: 30px;
         }
@@ -147,17 +389,10 @@
             padding: 30px;
             box-shadow: var(--shadow);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            animation: fadeIn 0.8s ease-out backwards;
         }
-
-        .learning-card:nth-child(1) { animation-delay: 0.3s; }
-        .learning-card:nth-child(2) { animation-delay: 0.4s; }
-        .learning-card:nth-child(3) { animation-delay: 0.5s; }
-        .learning-card:nth-child(4) { animation-delay: 0.6s; }
-        .learning-card:nth-child(5) { animation-delay: 0.7s; }
 
         .learning-card::before {
             content: '';
@@ -165,30 +400,36 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .learning-card:hover {
-            transform: translateY(-10px) rotate(2deg);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            height: 5px;
+            transition: height 0.3s ease;
         }
 
         .learning-card:hover::before {
-            opacity: 1;
+            height: 100%;
+            opacity: 0.1;
         }
 
-        .learning-card.math { border-top: 5px solid var(--primary-blue); }
-        .learning-card.reading { border-top: 5px solid var(--primary-green); }
-        .learning-card.spelling { border-top: 5px solid var(--primary-orange); }
-        .learning-card.games { border-top: 5px solid var(--primary-pink); }
-        .learning-card.ai { border-top: 5px solid var(--primary-purple); }
+        .learning-card.math::before { background: var(--primary-blue); }
+        .learning-card.reading::before { background: var(--primary-green); }
+        .learning-card.spelling::before { background: var(--primary-orange); }
+        .learning-card.games::before { background: var(--primary-pink); }
+        .learning-card.ai::before { background: var(--primary-purple); }
+
+        .learning-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
 
         .card-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 15px;
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .card-title {
@@ -196,49 +437,89 @@
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
         }
 
         .card-description {
             color: var(--text-medium);
-            margin-bottom: 15px;
-            line-height: 1.5;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-container {
+            position: relative;
+            z-index: 1;
         }
 
         .progress-bar {
             background: #E5E7EB;
-            height: 8px;
+            height: 10px;
             border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .progress-fill {
             height: 100%;
             border-radius: 10px;
             transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .progress-fill.math { background: var(--primary-blue); }
-        .progress-fill.reading { background: var(--primary-green); }
-        .progress-fill.spelling { background: var(--primary-orange); }
-        .progress-fill.games { background: var(--primary-pink); }
-        .progress-fill.ai { background: var(--primary-purple); }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-fill.math { background: linear-gradient(90deg, var(--primary-blue) 0%, #60A5FA 100%); }
+        .progress-fill.reading { background: linear-gradient(90deg, var(--primary-green) 0%, #34D399 100%); }
+        .progress-fill.spelling { background: linear-gradient(90deg, var(--primary-orange) 0%, #FB923C 100%); }
+        .progress-fill.games { background: linear-gradient(90deg, var(--primary-pink) 0%, #F472B6 100%); }
+        .progress-fill.ai { background: linear-gradient(90deg, var(--primary-purple) 0%, #A78BFA 100%); }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            font-weight: 600;
+        }
 
         .leaderboard {
             background: white;
             border-radius: 25px;
-            padding: 30px;
+            padding: 35px;
             box-shadow: var(--shadow);
-            animation: fadeIn 0.8s ease-out 0.8s backwards;
         }
 
         .leaderboard-title {
             font-family: 'Fredoka', sans-serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--primary-purple);
+            margin-bottom: 25px;
             text-align: center;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .leaderboard-list {
@@ -249,16 +530,39 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
             border-radius: 15px;
-            background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+            background: #F9FAFB;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leaderboard-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-purple);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
         }
 
         .leaderboard-item:hover {
             transform: translateX(10px);
             box-shadow: var(--shadow);
+        }
+
+        .leaderboard-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .leaderboard-item.current-user {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border: 2px solid var(--primary-yellow);
         }
 
         .leaderboard-item.top-1 {
@@ -267,32 +571,52 @@
         }
 
         .leaderboard-item.top-2 {
-            background: linear-gradient(135deg, #D1D5DB 0%, #9CA3AF 100%);
+            background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
         }
 
         .leaderboard-item.top-3 {
-            background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%);
+            background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
         }
 
         .rank {
             font-family: 'Fredoka', sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
-            width: 40px;
+            width: 50px;
+            text-align: center;
+        }
+
+        .player-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .player-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid rgba(0,0,0,0.1);
         }
 
         .player-name {
-            flex: 1;
             font-weight: 600;
             font-size: 1.1rem;
         }
 
         .player-points {
             font-family: 'Fredoka', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -300,8 +624,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
             animation: fadeIn 0.3s ease;
@@ -315,33 +639,37 @@
             background: white;
             border-radius: 30px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 700px;
             width: 90%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             box-shadow: var(--shadow-lg);
-            animation: scaleIn 0.3s ease;
+            animation: modalSlide 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes scaleIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        @keyframes modalSlide {
+            from { transform: scale(0.7) translateY(-50px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
         }
 
         .modal-header {
             font-family: 'Fredoka', sans-serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .close-btn {
-            background: var(--primary-pink);
+            background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-purple) 100%);
             color: white;
             border: none;
             border-radius: 15px;
-            padding: 12px 30px;
+            padding: 12px 35px;
             font-family: 'Fredoka', sans-serif;
             font-size: 1.1rem;
             font-weight: 600;
@@ -354,63 +682,98 @@
         }
 
         .close-btn:hover {
-            background: var(--primary-purple);
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
         }
 
         .quiz-question {
-            background: #F9FAFB;
-            padding: 20px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+            padding: 25px;
+            border-radius: 20px;
             margin-bottom: 20px;
+            border-left: 5px solid var(--primary-purple);
+        }
+
+        .question-number {
+            color: var(--primary-purple);
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         .quiz-options {
             display: grid;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .quiz-option {
             background: white;
-            border: 2px solid #E5E7EB;
-            border-radius: 12px;
-            padding: 15px;
+            border: 3px solid #E5E7EB;
+            border-radius: 15px;
+            padding: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-option::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary-purple), var(--primary-pink));
+            transition: width 0.3s ease;
+            z-index: 0;
+        }
+
+        .quiz-option span {
+            position: relative;
+            z-index: 1;
         }
 
         .quiz-option:hover {
             border-color: var(--primary-purple);
-            background: #F3F4F6;
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
         .quiz-option.selected {
             border-color: var(--primary-purple);
-            background: var(--primary-purple);
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-pink) 100%);
             color: white;
         }
 
+        .quiz-option.selected::before {
+            width: 100%;
+        }
+
         .submit-quiz {
-            background: var(--primary-green);
+            background: linear-gradient(135deg, var(--primary-green) 0%, #34D399 100%);
             color: white;
             border: none;
             border-radius: 15px;
-            padding: 15px 40px;
+            padding: 18px 45px;
             font-family: 'Fredoka', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: block;
-            margin: 20px auto;
+            margin: 25px auto;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
 
         .submit-quiz:hover {
-            background: var(--primary-blue);
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .submit-quiz:active {
+            transform: translateY(-1px);
         }
 
         .celebration {
@@ -418,26 +781,30 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 5rem;
+            font-size: 6rem;
             opacity: 0;
             pointer-events: none;
-            z-index: 2000;
+            z-index: 3000;
         }
 
         .celebration.show {
-            animation: celebrate 1s ease-out;
+            animation: celebrate 1.5s ease-out;
         }
 
         @keyframes celebrate {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.5) rotate(180deg); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1) rotate(360deg); }
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
+            .login-box { padding: 30px; }
             h1 { font-size: 2rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .learning-areas { grid-template-columns: 1fr; }
-            .user-stats { flex-direction: column; gap: 10px; }
+            .user-menu { gap: 10px; }
+            .avatar-selection { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
@@ -445,118 +812,182 @@
     <div class="stars" id="stars"></div>
     <div class="celebration" id="celebration">🎉</div>
 
-    <div class="container">
-        <header>
-            <h1>🚀 LearnQuest Academy</h1>
-            <p class="tagline">Where Learning is an Adventure!</p>
-        </header>
-
-        <div class="user-info">
-            <div>
-                <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.8rem; margin-bottom: 5px;">Welcome, Explorer! 👋</h2>
-                <p style="color: var(--text-medium);">Keep learning and climbing the ranks!</p>
-            </div>
-            <div class="user-stats">
-                <div class="stat">
-                    <div class="stat-value" id="userLevel">5</div>
-                    <div class="stat-label">Level</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="userPoints">1,250</div>
-                    <div class="stat-label">Points</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="userRank">12</div>
-                    <div class="stat-label">Rank</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="learning-areas">
-            <div class="learning-card math" onclick="openActivity('math')">
-                <div class="card-icon">🧮</div>
-                <h3 class="card-title">Math Master</h3>
-                <p class="card-description">Solve puzzles, master numbers, and become a calculation champion!</p>
-                <div class="progress-bar">
-                    <div class="progress-fill math" style="width: 65%;"></div>
-                </div>
-                <small style="color: var(--text-medium);">65% Complete</small>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div class="login-logo">🚀 LearnQuest</div>
+            <p class="login-subtitle">Start Your Learning Adventure!</p>
+            
+            <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-input" id="userName" placeholder="Enter your name" maxlength="20">
             </div>
 
-            <div class="learning-card reading" onclick="openActivity('reading')">
-                <div class="card-icon">📚</div>
-                <h3 class="card-title">Reading Adventure</h3>
-                <p class="card-description">Explore amazing stories and unlock new worlds through reading!</p>
-                <div class="progress-bar">
-                    <div class="progress-fill reading" style="width: 45%;"></div>
+            <div class="form-group">
+                <label class="form-label">How old are you?</label>
+                <div class="age-selector" id="ageSelector">
+                    <button class="age-btn" data-age="6">6</button>
+                    <button class="age-btn" data-age="7">7</button>
+                    <button class="age-btn" data-age="8">8</button>
+                    <button class="age-btn" data-age="9">9</button>
+                    <button class="age-btn" data-age="10">10</button>
+                    <button class="age-btn" data-age="11">11</button>
+                    <button class="age-btn" data-age="12">12</button>
+                    <button class="age-btn" data-age="13">13</button>
+                    <button class="age-btn" data-age="14">14</button>
+                    <button class="age-btn" data-age="15">15</button>
                 </div>
-                <small style="color: var(--text-medium);">45% Complete</small>
             </div>
 
-            <div class="learning-card spelling" onclick="openActivity('spelling')">
-                <div class="card-icon">✏️</div>
-                <h3 class="card-title">Spelling Bee</h3>
-                <p class="card-description">Challenge yourself with words and become a spelling superstar!</p>
-                <div class="progress-bar">
-                    <div class="progress-fill spelling" style="width: 80%;"></div>
+            <div class="form-group">
+                <label class="form-label">Choose Your Avatar</label>
+                <div class="avatar-selection" id="avatarSelector">
+                    <div class="avatar-option" data-avatar="🦁">🦁</div>
+                    <div class="avatar-option" data-avatar="🐼">🐼</div>
+                    <div class="avatar-option" data-avatar="🦊">🦊</div>
+                    <div class="avatar-option" data-avatar="🐨">🐨</div>
+                    <div class="avatar-option" data-avatar="🦉">🦉</div>
+                    <div class="avatar-option" data-avatar="🐸">🐸</div>
+                    <div class="avatar-option" data-avatar="🦄">🦄</div>
+                    <div class="avatar-option" data-avatar="🐲">🐲</div>
+                    <div class="avatar-option" data-avatar="🚀">🚀</div>
+                    <div class="avatar-option" data-avatar="⭐">⭐</div>
+                    <div class="avatar-option" data-avatar="🌈">🌈</div>
+                    <div class="avatar-option" data-avatar="🎨">🎨</div>
                 </div>
-                <small style="color: var(--text-medium);">80% Complete</small>
             </div>
 
-            <div class="learning-card games" onclick="openActivity('games')">
-                <div class="card-icon">🎮</div>
-                <h3 class="card-title">Game Builder</h3>
-                <p class="card-description">Create your own games and share them with friends!</p>
-                <div class="progress-bar">
-                    <div class="progress-fill games" style="width: 30%;"></div>
-                </div>
-                <small style="color: var(--text-medium);">30% Complete</small>
-            </div>
-
-            <div class="learning-card ai" onclick="openActivity('ai')">
-                <div class="card-icon">🤖</div>
-                <h3 class="card-title">AI Explorer</h3>
-                <p class="card-description">Learn how AI works and build your own smart programs!</p>
-                <div class="progress-bar">
-                    <div class="progress-fill ai" style="width: 55%;"></div>
-                </div>
-                <small style="color: var(--text-medium);">55% Complete</small>
-            </div>
-        </div>
-
-        <div class="leaderboard">
-            <h2 class="leaderboard-title">🏆 Top Learners</h2>
-            <ul class="leaderboard-list">
-                <li class="leaderboard-item top-1">
-                    <span class="rank">🥇</span>
-                    <span class="player-name">Alex StarBright</span>
-                    <span class="player-points">2,850 pts</span>
-                </li>
-                <li class="leaderboard-item top-2">
-                    <span class="rank">🥈</span>
-                    <span class="player-name">Maya Genius</span>
-                    <span class="player-points">2,420 pts</span>
-                </li>
-                <li class="leaderboard-item top-3">
-                    <span class="rank">🥉</span>
-                    <span class="player-name">Sam QuickThink</span>
-                    <span class="player-points">2,180 pts</span>
-                </li>
-                <li class="leaderboard-item">
-                    <span class="rank">4</span>
-                    <span class="player-name">Luna SmartCat</span>
-                    <span class="player-points">1,950 pts</span>
-                </li>
-                <li class="leaderboard-item">
-                    <span class="rank">5</span>
-                    <span class="player-name">Zoe BrainPower</span>
-                    <span class="player-points">1,720 pts</span>
-                </li>
-            </ul>
+            <button class="btn-primary" onclick="login()">Start Learning! 🎓</button>
         </div>
     </div>
 
-    <!-- Modal for Activities -->
+    <!-- Main App -->
+    <div class="app-container" id="appContainer">
+        <div class="container">
+            <div class="top-nav">
+                <div class="logo">🚀 LearnQuest Academy</div>
+                <div class="user-menu">
+                    <span id="navUserName" style="font-weight: 600;"></span>
+                    <div class="user-avatar" id="navUserAvatar" onclick="showProfile()"></div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <header>
+                <div class="header-content">
+                    <h1>🌟 Welcome Back, <span id="headerUserName"></span>!</h1>
+                    <p class="welcome-message">Ready to learn something amazing today?</p>
+                </div>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="userLevel">1</div>
+                    <div class="stat-label">Level</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="userPoints">0</div>
+                    <div class="stat-label">Total Points</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="userRank">-</div>
+                    <div class="stat-label">Rank</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="userStreak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+
+            <div class="learning-areas">
+                <div class="learning-card math" onclick="openActivity('math')">
+                    <div class="card-icon">🧮</div>
+                    <h3 class="card-title">Math Master</h3>
+                    <p class="card-description">Solve puzzles, master numbers, and become a calculation champion!</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill math" id="progressMath" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="mathCompleted">0</span>
+                            <span id="mathPercent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learning-card reading" onclick="openActivity('reading')">
+                    <div class="card-icon">📚</div>
+                    <h3 class="card-title">Reading Adventure</h3>
+                    <p class="card-description">Explore amazing stories and unlock new worlds through reading!</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill reading" id="progressReading" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="readingCompleted">0</span>
+                            <span id="readingPercent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learning-card spelling" onclick="openActivity('spelling')">
+                    <div class="card-icon">✏️</div>
+                    <h3 class="card-title">Spelling Bee</h3>
+                    <p class="card-description">Challenge yourself with words and become a spelling superstar!</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill spelling" id="progressSpelling" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="spellingCompleted">0</span>
+                            <span id="spellingPercent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learning-card games" onclick="openActivity('games')">
+                    <div class="card-icon">🎮</div>
+                    <h3 class="card-title">Game Builder</h3>
+                    <p class="card-description">Create your own games and share them with friends!</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill games" id="progressGames" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="gamesCompleted">0</span>
+                            <span id="gamesPercent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learning-card ai" onclick="openActivity('ai')">
+                    <div class="card-icon">🤖</div>
+                    <h3 class="card-title">AI Explorer</h3>
+                    <p class="card-description">Learn how AI works and build your own smart programs!</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill ai" id="progressAI" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="aiCompleted">0</span>
+                            <span id="aiPercent">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h2 class="leaderboard-title">🏆 Top Learners</h2>
+                <ul class="leaderboard-list" id="leaderboardList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Modal -->
     <div class="modal" id="activityModal">
         <div class="modal-content">
             <h2 class="modal-header" id="modalTitle">Activity</h2>
@@ -566,10 +997,16 @@
     </div>
 
     <script>
-        // Create stars background
+        // Global state
+        let currentUser = null;
+        let selectedAge = null;
+        let selectedAvatar = null;
+        let allUsers = [];
+
+        // Create stars
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 40; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
@@ -580,121 +1017,323 @@
         }
         createStars();
 
-        // Activity content
+        // Age selection
+        document.getElementById('ageSelector').addEventListener('click', (e) => {
+            if (e.target.classList.contains('age-btn')) {
+                document.querySelectorAll('.age-btn').forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('selected');
+                selectedAge = e.target.dataset.age;
+            }
+        });
+
+        // Avatar selection
+        document.getElementById('avatarSelector').addEventListener('click', (e) => {
+            if (e.target.classList.contains('avatar-option')) {
+                document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
+                e.target.classList.add('selected');
+                selectedAvatar = e.target.dataset.avatar;
+            }
+        });
+
+        // Login function
+        async function login() {
+            const userName = document.getElementById('userName').value.trim();
+            
+            if (!userName) {
+                alert('Please enter your name! 😊');
+                return;
+            }
+            
+            if (!selectedAge) {
+                alert('Please select your age! 🎂');
+                return;
+            }
+            
+            if (!selectedAvatar) {
+                alert('Please choose an avatar! 🎨');
+                return;
+            }
+
+            // Create user object
+            currentUser = {
+                name: userName,
+                age: selectedAge,
+                avatar: selectedAvatar,
+                level: 1,
+                points: 0,
+                streak: 0,
+                progress: {
+                    math: 0,
+                    reading: 0,
+                    spelling: 0,
+                    games: 0,
+                    ai: 0
+                },
+                joinedDate: new Date().toISOString()
+            };
+
+            // Save to storage
+            try {
+                await window.storage.set(`user:${userName}`, JSON.stringify(currentUser), true);
+                localStorage.setItem('currentUser', userName);
+                showApp();
+            } catch (error) {
+                console.error('Error saving user:', error);
+                // Fallback to localStorage only
+                localStorage.setItem('currentUser', userName);
+                localStorage.setItem(`user:${userName}`, JSON.stringify(currentUser));
+                showApp();
+            }
+        }
+
+        // Load user
+        async function loadUser() {
+            const userName = localStorage.getItem('currentUser');
+            if (!userName) return false;
+
+            try {
+                const result = await window.storage.get(`user:${userName}`, true);
+                if (result && result.value) {
+                    currentUser = JSON.parse(result.value);
+                    return true;
+                }
+            } catch (error) {
+                console.error('Error loading user:', error);
+                // Fallback to localStorage
+                const userData = localStorage.getItem(`user:${userName}`);
+                if (userData) {
+                    currentUser = JSON.parse(userData);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Show app
+        function showApp() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').classList.add('active');
+            
+            // Update UI with user data
+            document.getElementById('headerUserName').textContent = currentUser.name;
+            document.getElementById('navUserName').textContent = currentUser.name;
+            document.getElementById('navUserAvatar').textContent = currentUser.avatar;
+            document.getElementById('userLevel').textContent = currentUser.level;
+            document.getElementById('userPoints').textContent = currentUser.points.toLocaleString();
+            document.getElementById('userStreak').textContent = currentUser.streak;
+
+            // Update progress bars
+            updateProgressBars();
+            
+            // Load leaderboard
+            loadLeaderboard();
+        }
+
+        // Update progress bars
+        function updateProgressBars() {
+            const subjects = ['math', 'reading', 'spelling', 'games', 'ai'];
+            subjects.forEach(subject => {
+                const progress = currentUser.progress[subject] || 0;
+                const percent = Math.round(progress);
+                document.getElementById(`progress${subject.charAt(0).toUpperCase() + subject.slice(1)}`).style.width = percent + '%';
+                document.getElementById(`${subject}Completed`).textContent = `${progress} activities`;
+                document.getElementById(`${subject}Percent`).textContent = percent + '%';
+            });
+        }
+
+        // Save user data
+        async function saveUserData() {
+            try {
+                await window.storage.set(`user:${currentUser.name}`, JSON.stringify(currentUser), true);
+                localStorage.setItem(`user:${currentUser.name}`, JSON.stringify(currentUser));
+            } catch (error) {
+                console.error('Error saving user data:', error);
+                localStorage.setItem(`user:${currentUser.name}`, JSON.stringify(currentUser));
+            }
+        }
+
+        // Load leaderboard
+        async function loadLeaderboard() {
+            try {
+                const result = await window.storage.list('user:', true);
+                if (result && result.keys) {
+                    const userPromises = result.keys.map(async key => {
+                        try {
+                            const userData = await window.storage.get(key, true);
+                            return userData && userData.value ? JSON.parse(userData.value) : null;
+                        } catch {
+                            return null;
+                        }
+                    });
+                    
+                    allUsers = (await Promise.all(userPromises)).filter(u => u !== null);
+                }
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                allUsers = [];
+            }
+
+            // Add current user if not in list
+            if (!allUsers.find(u => u.name === currentUser.name)) {
+                allUsers.push(currentUser);
+            }
+
+            // Sort by points
+            allUsers.sort((a, b) => b.points - a.points);
+
+            // Update rank
+            const userRank = allUsers.findIndex(u => u.name === currentUser.name) + 1;
+            document.getElementById('userRank').textContent = userRank;
+
+            // Render leaderboard
+            const leaderboardList = document.getElementById('leaderboardList');
+            leaderboardList.innerHTML = '';
+
+            allUsers.slice(0, 10).forEach((user, index) => {
+                const li = document.createElement('li');
+                li.className = 'leaderboard-item';
+                
+                if (index === 0) li.classList.add('top-1');
+                else if (index === 1) li.classList.add('top-2');
+                else if (index === 2) li.classList.add('top-3');
+                
+                if (user.name === currentUser.name) {
+                    li.classList.add('current-user');
+                }
+
+                const rankEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : (index + 1);
+
+                li.innerHTML = `
+                    <span class="rank">${rankEmoji}</span>
+                    <div class="player-info">
+                        <div class="player-avatar">${user.avatar}</div>
+                        <span class="player-name">${user.name}</span>
+                    </div>
+                    <span class="player-points">${user.points.toLocaleString()} pts</span>
+                `;
+                
+                leaderboardList.appendChild(li);
+            });
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                location.reload();
+            }
+        }
+
+        // Show profile
+        function showProfile() {
+            alert(`👤 ${currentUser.name}\n🎂 Age: ${currentUser.age}\n🏆 Level: ${currentUser.level}\n⭐ Points: ${currentUser.points}\n🔥 Streak: ${currentUser.streak} days`);
+        }
+
+        // Activity system (quiz content)
         const activities = {
             math: {
                 title: '🧮 Math Master Quiz',
-                quiz: [
+                quizzes: [
                     {
-                        question: 'What is 7 × 8?',
-                        options: ['54', '56', '58', '60'],
+                        question: 'What is 12 × 9?',
+                        options: ['98', '108', '118', '128'],
                         correct: 1
                     },
                     {
-                        question: 'If you have 15 apples and give away 7, how many do you have left?',
-                        options: ['6', '7', '8', '9'],
+                        question: 'If you have 50 cookies and share them equally among 5 friends, how many does each friend get?',
+                        options: ['8', '9', '10', '11'],
                         correct: 2
                     },
                     {
-                        question: 'What is 100 ÷ 5?',
-                        options: ['15', '20', '25', '30'],
-                        correct: 1
+                        question: 'What is 144 ÷ 12?',
+                        options: ['10', '11', '12', '13'],
+                        correct: 2
+                    },
+                    {
+                        question: 'What is 15 + 28 + 37?',
+                        options: ['70', '75', '80', '85'],
+                        correct: 2
+                    },
+                    {
+                        question: 'A rectangle has a length of 8cm and width of 5cm. What is its area?',
+                        options: ['30 cm²', '35 cm²', '40 cm²', '45 cm²'],
+                        correct: 2
                     }
                 ]
             },
             reading: {
                 title: '📚 Reading Comprehension',
-                content: `
-                    <div class="quiz-question">
-                        <h3 style="margin-bottom: 15px;">Story: The Brave Little Robot</h3>
-                        <p style="line-height: 1.8; margin-bottom: 15px;">
-                            In a world of tomorrow, there lived a small robot named Spark. Unlike the big robots who worked in factories, 
-                            Spark was designed to help children learn. One day, the city's power went out, and all the robots stopped working. 
-                            But Spark had a special solar battery that kept working even when the main power was off. Spark used this power 
-                            to help light the way for people to safety and kept teaching children even in the dark!
-                        </p>
-                        <div class="quiz-options">
-                            <h4 style="margin-bottom: 10px;">What made Spark different from other robots?</h4>
-                            <div class="quiz-option" onclick="selectOption(this)">Spark was bigger than others</div>
-                            <div class="quiz-option" onclick="selectOption(this)">Spark had a solar battery</div>
-                            <div class="quiz-option" onclick="selectOption(this)">Spark could fly</div>
-                            <div class="quiz-option" onclick="selectOption(this)">Spark was the oldest robot</div>
-                        </div>
-                        <button class="submit-quiz" onclick="checkAnswer('reading')">Submit Answer</button>
-                    </div>
-                `
-            },
-            spelling: {
-                title: '✏️ Spelling Challenge',
-                quiz: [
+                quizzes: [
                     {
-                        question: 'How do you spell the word meaning "very big"?',
-                        options: ['ENORMUS', 'ENORMOUS', 'ENORMOUSE', 'ENORMOS'],
+                        question: 'Read this passage: "Luna was excited about her first day at the Space Academy. She had dreamed of becoming an astronaut since she was five years old. As she put on her silver training suit, she couldn\'t stop smiling." What is Luna\'s dream?',
+                        options: ['To be a teacher', 'To become an astronaut', 'To be a scientist', 'To be a pilot'],
                         correct: 1
                     },
                     {
-                        question: 'Which spelling is correct for "a trip to learn"?',
-                        options: ['ADVENTUR', 'ADVENTURE', 'ADVANTURE', 'ADVENTCHUR'],
+                        question: 'In the story, how old was Luna when she started dreaming about space?',
+                        options: ['Three years old', 'Four years old', 'Five years old', 'Six years old'],
+                        correct: 2
+                    }
+                ]
+            },
+            spelling: {
+                title: '✏️ Spelling Challenge',
+                quizzes: [
+                    {
+                        question: 'Which is the correct spelling?',
+                        options: ['DEFINATELY', 'DEFINITELY', 'DEFINATLY', 'DEFINENTLY'],
                         correct: 1
+                    },
+                    {
+                        question: 'How do you spell "very unusual or remarkable"?',
+                        options: ['EXTRAORDINARY', 'EXTRAORDINERY', 'EXTRAORDIANRY', 'EXTRODINARY'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Which spelling is correct for "aware of what is happening"?',
+                        options: ['CONSCIOUS', 'CONCIOUS', 'CONSIOUS', 'CONSCOUS'],
+                        correct: 0
                     }
                 ]
             },
             games: {
-                title: '🎮 Build Your First Game!',
-                content: `
-                    <div style="background: linear-gradient(135deg, #FFF8F0 0%, #FFE4E1 100%); padding: 25px; border-radius: 20px;">
-                        <h3 style="margin-bottom: 15px; font-family: 'Fredoka', sans-serif;">🎯 Click the Target Game</h3>
-                        <p style="margin-bottom: 20px;">Click the moving target to score points!</p>
-                        <div style="background: white; height: 300px; border-radius: 15px; position: relative; overflow: hidden; border: 3px solid var(--primary-pink);">
-                            <div id="gameTarget" style="position: absolute; width: 50px; height: 50px; background: var(--primary-pink); 
-                                border-radius: 50%; cursor: pointer; transition: all 0.3s ease;"></div>
-                            <div style="position: absolute; top: 10px; right: 10px; font-size: 2rem; font-family: 'Fredoka', sans-serif; 
-                                color: var(--primary-purple);">Score: <span id="gameScore">0</span></div>
-                        </div>
-                        <p style="margin-top: 15px; text-align: center; color: var(--text-medium);">
-                            Great job! Next, you'll learn how to code this game yourself! 🚀
-                        </p>
-                    </div>
-                `
+                title: '🎮 Game Builder Quiz',
+                quizzes: [
+                    {
+                        question: 'In game design, what does "FPS" stand for?',
+                        options: ['Fast Player Speed', 'Frames Per Second', 'First Person Shooter', 'Fun Play Style'],
+                        correct: 1
+                    },
+                    {
+                        question: 'What is a "sprite" in game development?',
+                        options: ['A type of drink', 'A 2D image or animation', 'A game level', 'A player character'],
+                        correct: 1
+                    }
+                ]
             },
             ai: {
-                title: '🤖 AI Explorer - Teach AI to Recognize Patterns!',
-                content: `
-                    <div style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%); padding: 25px; border-radius: 20px;">
-                        <h3 style="margin-bottom: 15px; font-family: 'Fredoka', sans-serif;">What is AI?</h3>
-                        <p style="line-height: 1.8; margin-bottom: 20px;">
-                            AI (Artificial Intelligence) is like teaching a computer to think and learn, just like you do! 
-                            When you learn that cats have whiskers and dogs wag their tails, you're recognizing patterns. 
-                            AI does the same thing!
-                        </p>
-                        
-                        <div style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
-                            <h4 style="margin-bottom: 10px;">🎨 Pattern Recognition Game</h4>
-                            <p style="margin-bottom: 15px;">Help AI learn! Which pattern comes next?</p>
-                            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px;">
-                                <div style="width: 40px; height: 40px; background: var(--primary-blue); border-radius: 50%;"></div>
-                                <div style="width: 40px; height: 40px; background: var(--primary-pink);"></div>
-                                <div style="width: 40px; height: 40px; background: var(--primary-blue); border-radius: 50%;"></div>
-                                <div style="width: 40px; height: 40px; background: var(--primary-pink);"></div>
-                                <div style="font-size: 2rem;">❓</div>
-                            </div>
-                            <div class="quiz-options">
-                                <div class="quiz-option" onclick="selectOption(this)">Blue Circle</div>
-                                <div class="quiz-option" onclick="selectOption(this)">Pink Square</div>
-                                <div class="quiz-option" onclick="selectOption(this)">Green Triangle</div>
-                            </div>
-                            <button class="submit-quiz" onclick="checkAnswer('ai')">Check Answer</button>
-                        </div>
-                        
-                        <p style="background: var(--bg-cream); padding: 15px; border-radius: 10px; border-left: 4px solid var(--primary-purple);">
-                            💡 <strong>Fun Fact:</strong> The AI that helps you learn on this platform is using these same pattern-recognition 
-                            skills to understand what you need help with!
-                        </p>
-                    </div>
-                `
+                title: '🤖 AI Explorer Quiz',
+                quizzes: [
+                    {
+                        question: 'What does AI stand for?',
+                        options: ['Automatic Intelligence', 'Artificial Intelligence', 'Advanced Intelligence', 'Automated Information'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Which of these is an example of AI?',
+                        options: ['A calculator', 'A voice assistant like Siri', 'A regular camera', 'A keyboard'],
+                        correct: 1
+                    },
+                    {
+                        question: 'How does AI learn?',
+                        options: ['By reading books', 'From patterns in data', 'By watching videos', 'It doesn\'t learn'],
+                        correct: 1
+                    }
+                ]
             }
         };
 
+        // Open activity
         function openActivity(type) {
             const modal = document.getElementById('activityModal');
             const modalTitle = document.getElementById('modalTitle');
@@ -703,49 +1342,42 @@
             const activity = activities[type];
             modalTitle.textContent = activity.title;
             
-            if (activity.content) {
-                modalBody.innerHTML = activity.content;
-                if (type === 'games') {
-                    setTimeout(startGame, 100);
-                }
-            } else if (activity.quiz) {
-                let quizHTML = '';
-                activity.quiz.forEach((q, index) => {
-                    quizHTML += `
-                        <div class="quiz-question" data-correct="${q.correct}">
-                            <h4 style="margin-bottom: 15px;">Question ${index + 1}: ${q.question}</h4>
-                            <div class="quiz-options">
-                                ${q.options.map((opt, i) => `
-                                    <div class="quiz-option" data-index="${i}" onclick="selectQuizOption(this)">${opt}</div>
-                                `).join('')}
-                            </div>
+            let quizHTML = '';
+            activity.quizzes.forEach((q, index) => {
+                quizHTML += `
+                    <div class="quiz-question" data-correct="${q.correct}" data-type="${type}">
+                        <div class="question-number">Question ${index + 1} of ${activity.quizzes.length}</div>
+                        <h4 style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.6;">${q.question}</h4>
+                        <div class="quiz-options">
+                            ${q.options.map((opt, i) => `
+                                <div class="quiz-option" data-index="${i}" onclick="selectQuizOption(this)">
+                                    <span>${opt}</span>
+                                </div>
+                            `).join('')}
                         </div>
-                    `;
-                });
-                quizHTML += '<button class="submit-quiz" onclick="checkQuizAnswers(\'' + type + '\')">Submit Quiz</button>';
-                modalBody.innerHTML = quizHTML;
-            }
+                    </div>
+                `;
+            });
             
+            quizHTML += `<button class="submit-quiz" onclick="submitQuiz('${type}')">Submit Quiz 🚀</button>`;
+            modalBody.innerHTML = quizHTML;
             modal.classList.add('active');
         }
 
+        // Close modal
         function closeModal() {
             document.getElementById('activityModal').classList.remove('active');
         }
 
+        // Select quiz option
         function selectQuizOption(element) {
-            const parent = element.parentElement;
+            const parent = element.closest('.quiz-options');
             parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
         }
 
-        function selectOption(element) {
-            const parent = element.parentElement;
-            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-        }
-
-        function checkQuizAnswers(type) {
+        // Submit quiz
+        async function submitQuiz(type) {
             const questions = document.querySelectorAll('.quiz-question');
             let correct = 0;
             let total = questions.length;
@@ -757,62 +1389,64 @@
                 }
             });
             
-            showCelebration();
-            alert(`Great job! You got ${correct} out of ${total} correct! 🎉\n+${correct * 50} points!`);
-            updatePoints(correct * 50);
-        }
-
-        function checkAnswer(type) {
-            showCelebration();
-            alert('Awesome work! You earned 100 points! 🌟');
-            updatePoints(100);
-        }
-
-        function updatePoints(points) {
-            const currentPoints = parseInt(document.getElementById('userPoints').textContent.replace(',', ''));
-            const newPoints = currentPoints + points;
-            document.getElementById('userPoints').textContent = newPoints.toLocaleString();
+            const pointsEarned = correct * 100;
+            const percentage = Math.round((correct / total) * 100);
             
-            // Level up logic
-            const currentLevel = parseInt(document.getElementById('userLevel').textContent);
-            if (newPoints > currentLevel * 500) {
-                document.getElementById('userLevel').textContent = currentLevel + 1;
-                alert('🎊 Level Up! You\'re now Level ' + (currentLevel + 1) + '!');
+            // Update user stats
+            currentUser.points += pointsEarned;
+            currentUser.progress[type] = Math.min(100, (currentUser.progress[type] || 0) + (correct * 5));
+            
+            // Check for level up
+            const newLevel = Math.floor(currentUser.points / 500) + 1;
+            const leveledUp = newLevel > currentUser.level;
+            currentUser.level = newLevel;
+            
+            // Save data
+            await saveUserData();
+            
+            // Show celebration
+            showCelebration();
+            
+            // Update UI
+            document.getElementById('userLevel').textContent = currentUser.level;
+            document.getElementById('userPoints').textContent = currentUser.points.toLocaleString();
+            updateProgressBars();
+            loadLeaderboard();
+            
+            // Show results
+            let message = `🎉 Amazing Work!\n\n`;
+            message += `✅ Correct: ${correct}/${total}\n`;
+            message += `📊 Score: ${percentage}%\n`;
+            message += `⭐ Points Earned: +${pointsEarned}\n`;
+            message += `🏆 Total Points: ${currentUser.points}`;
+            
+            if (leveledUp) {
+                message += `\n\n🎊 LEVEL UP! You're now Level ${currentUser.level}!`;
             }
+            
+            alert(message);
+            closeModal();
         }
 
+        // Show celebration
         function showCelebration() {
             const celebration = document.getElementById('celebration');
+            const emojis = ['🎉', '🌟', '⭐', '🏆', '🎊', '✨', '🚀'];
+            celebration.textContent = emojis[Math.floor(Math.random() * emojis.length)];
             celebration.classList.add('show');
-            setTimeout(() => celebration.classList.remove('show'), 1000);
+            setTimeout(() => celebration.classList.remove('show'), 1500);
         }
 
-        // Simple game
-        let gameScore = 0;
-        let gameInterval;
-        
-        function startGame() {
-            gameScore = 0;
-            document.getElementById('gameScore').textContent = gameScore;
-            moveTarget();
-            gameInterval = setInterval(moveTarget, 2000);
-            
-            document.getElementById('gameTarget').onclick = function() {
-                gameScore += 10;
-                document.getElementById('gameScore').textContent = gameScore;
-                showCelebration();
-            };
-        }
-        
-        function moveTarget() {
-            const target = document.getElementById('gameTarget');
-            if (target) {
-                const maxX = target.parentElement.offsetWidth - 50;
-                const maxY = target.parentElement.offsetHeight - 50;
-                target.style.left = Math.random() * maxX + 'px';
-                target.style.top = Math.random() * maxY + 'px';
+        // Initialize app
+        async function init() {
+            const hasUser = await loadUser();
+            if (hasUser) {
+                showApp();
             }
         }
+
+        // Start the app
+        init();
     </script>
 </body>
 </html>
