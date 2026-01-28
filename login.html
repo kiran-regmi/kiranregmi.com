@@ -1,150 +1,144 @@
-
 <!DOCTYPE html>
 <html lang="en">
+<!-- 
+  kiranregmi.com - Login Page
+  Version: 2.3
+  Last Updated: January 28, 2026
+  Changes: Redesigned to match v2.3 homepage theme
+-->
 <head>
   <meta charset="UTF-8" />
   <title>Login • kiranregmi.com</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="./css/base.css" />
-  <link rel="stylesheet" href="./css/layout.css" />
-  <link rel="stylesheet" href="./css/components.css" />
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      background: #f3f4f6;
-      margin: 0;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .login-wrapper {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .login-card {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
-      max-width: 380px;
-      width: 100%;
-    }
-    .login-card h1 {
-      margin: 0 0 0.25rem 0;
-      font-size: 1.4rem;
-    }
-    .login-card p {
-      margin: 0 0 1.5rem 0;
-      font-size: 0.9rem;
-      color: #6b7280;
-    }
-    .form-group {
-      margin-bottom: 0.9rem;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      margin-bottom: 0.25rem;
-      color: #374151;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 0.6rem 0.7rem;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      font-size: 0.9rem;
-    }
-    .btn-primary {
-      width: 100%;
-      border: none;
-      border-radius: 999px;
-      padding: 0.7rem;
-      background: #2563eb;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 0.5rem;
-    }
-    .btn-primary:hover {
-      background: #1d4ed8;
-    }
-    #loginError {
-      margin-top: 0.5rem;
-      font-size: 0.8rem;
-      color: #dc2626;
-      min-height: 1em;
-    }
-    .login-footer {
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      color: #6b7280;
-    }
-    .login-footer code {
-      font-size: 0.7rem;
-      background: #f3f4f6;
-      padding: 0.1rem 0.25rem;
-      border-radius: 4px;
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-out;
     }
   </style>
 </head>
 
-<!-- ========== TOP NAVBAR ========== -->
-<body class="app-shell">
+<body class="bg-[#0a192f] text-[#ccd6f6]">
 
-<!-- TOP NAVBAR (reuse same markup as foundations) -->
-<header class="top-navbar">
-  <div class="top-navbar-inner">
-
-    <!-- Logo -->
-    <a href="../index.html" class="top-logo">
-      <span class="logo-badge">KR</span>
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
+    
+    <!-- LOGO -->
+    <a href="index.html" class="flex items-center gap-2">
+      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center text-sm">
+        KR
+      </span>
     </a>
 
-    <!-- Nav Links -->
-    <nav class="top-nav-links">
-      <a href="./index.html">Home</a>
-      <a href="./contact.html">Contact</a>
-      <a href="./login.html" id="loginLink">Log Out</a>
+    <!-- NAV LINKS -->
+    <nav class="flex items-center gap-6 text-sm">
+      <a href="index.html" class="hover:text-[#64ffda] transition">Home</a>
+      <a href="contact.html" class="hover:text-[#64ffda] transition">Contact</a>
     </nav>
   </div>
-</header>
+</nav>
 
-<!-- ========== Body start here ========== -->
-
-  <div class="login-wrapper">
-    <div class="login-card">
-      <h1>Secure Portal Login</h1>
-      <p>Sign in to access your dashboard and interview practice.</p>
-
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="loginEmail">Email</label>
-          <input type="email" id="loginEmail" required placeholder="you@kiranregmi.com" />
+<!-- MAIN -->
+<main class="min-h-screen flex items-center justify-center px-6 py-20">
+  <div class="w-full max-w-md animate-fade-in">
+    
+    <!-- Login Card -->
+    <div class="bg-[#112240] border border-slate-700 rounded-xl p-8">
+      <div class="text-center mb-8">
+        <div class="w-16 h-16 bg-[#64ffda]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-shield-halved text-[#64ffda] text-2xl"></i>
         </div>
+        <h1 class="text-2xl font-bold text-[#e6f1ff] mb-2">Secure Portal Login</h1>
+        <p class="text-sm text-[#8892b0]">Sign in to access your dashboard and learning platform</p>
+      </div>
 
-        <div class="form-group">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" required placeholder="••••••••" />
-        </div>
-
-        <button type="submit" class="btn-primary">Login</button>
-        <div id="loginError"></div>
+      <!-- Login Form -->
+      <form id="loginForm" class="space-y-6">
         
-        <!-- 🔥 Add this EXACT element -->
-    <p id="errorMsg" style="display:none; color:red;"></p>
+        <div>
+          <label for="loginEmail" class="block text-sm font-medium text-[#e6f1ff] mb-2">
+            Email Address
+          </label>
+          <input 
+            type="email" 
+            id="loginEmail" 
+            required 
+            placeholder="you@kiranregmi.com"
+            class="w-full px-4 py-3 bg-[#0a192f] border border-slate-700 rounded-lg text-sm text-[#e6f1ff] placeholder-slate-500 focus:border-[#64ffda] focus:outline-none transition"
+          />
+        </div>
+
+        <div>
+          <label for="loginPassword" class="block text-sm font-medium text-[#e6f1ff] mb-2">
+            Password
+          </label>
+          <input 
+            type="password" 
+            id="loginPassword" 
+            required 
+            placeholder="••••••••"
+            class="w-full px-4 py-3 bg-[#0a192f] border border-slate-700 rounded-lg text-sm text-[#e6f1ff] placeholder-slate-500 focus:border-[#64ffda] focus:outline-none transition"
+          />
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-lg hover:bg-[#4dd4b8] transition"
+        >
+          Sign In
+        </button>
+
+        <!-- Error Message -->
+        <div id="loginError" class="text-sm text-red-400 text-center min-h-[20px]"></div>
+        <p id="errorMsg" style="display:none; color:#ef4444;"></p>
+
       </form>
 
-      <div class="login-footer">
-        Demo accounts:<br />
-        User: <code>user@kiranregmi.com / User@123</code><br />
-        Test: <code>test@kiranregmi.com / Test@123</code>
+      <!-- Demo Accounts -->
+      <div class="mt-8 pt-6 border-t border-slate-700">
+        <p class="text-xs text-[#8892b0] mb-3 text-center">Demo Accounts:</p>
+        <div class="space-y-2 text-xs">
+          <div class="bg-[#0a192f] border border-slate-800 rounded px-3 py-2">
+            <span class="text-[#64ffda]">User:</span>
+            <code class="text-[#8892b0] ml-2">user@kiranregmi.com / User@123</code>
+          </div>
+          <div class="bg-[#0a192f] border border-slate-800 rounded px-3 py-2">
+            <span class="text-[#64ffda]">Test:</span>
+            <code class="text-[#8892b0] ml-2">test@kiranregmi.com / Test@123</code>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <script>
+    </div>
+
+    <!-- Back Link -->
+    <div class="text-center mt-6">
+      <a href="index.html" class="text-sm text-[#64ffda] hover:underline">
+        ← Back to Homepage
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="text-xs text-[#8892b0] border-t border-slate-800 py-6 text-center">
+  <p>© 2026 kiranregmi.com · Secure Authentication</p>
+</footer>
+
+<script>
 const API_BASE = "https://kiranregmi-com-backend.onrender.com/api";
 
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -158,7 +152,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
   try {
     const res = await fetch(`${API_BASE}/login`, {
-    // fetch(`${window.APP_CONFIG.API_BASE_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -178,7 +171,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     
     // Redirect to dashboard
     window.location.href = "/dashboard.html";
-   // window.location.href = "/welcome.html";
 
   } catch (err) {
     console.error(err);
@@ -187,9 +179,5 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 });
 </script>
 
-<script src="/app-config.js"></script>
-
-
 </body>
 </html>
-
