@@ -1,299 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- 
+  kiranregmi.com - Projects Page
+  Version: 2.3
+  Last Updated: January 28, 2026
+  Changes: Redesigned to match v2.3 homepage theme, enhanced project descriptions
+-->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kiran Regmi | SOC Analyst Portfolio</title>
+  <title>Projects - Kiran Regmi | SOC Analyst</title>
   <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
-
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
-<!-- NAVBAR -->
 <nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
   <div class="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-
-    <!-- LOGO -->
     <a href="index.html" class="flex items-center gap-2">
-      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center">
-        KR
-      </span>
+      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center text-sm">KR</span>
     </a>
-
-    <!-- DESKTOP NAV -->
     <div class="hidden md:flex items-center gap-6 text-sm">
-      <!--a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]" Learn< -->
-      <a href="ai-agent.html" class="hover:text-[#64ffda]">Voice-Agent</a>
-      <a href="assets/pdf/cybersecurity-news.pdf" class="hover:text-[#64ffda]" target="_blank>Cyber-Newst</a>
-      <a href="/kids/login.html" class="hover:text-[#64ffda]">Kids</a>
-      <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
-      <a href="login.html" class="hover:text-[#64ffda]">Login</a>
+      <a href="index.html" class="hover:text-[#64ffda] transition">Home</a>
+      <a href="certifications.html" class="hover:text-[#64ffda] transition">Certifications</a>
+      <a href="contact.html" class="hover:text-[#64ffda] transition">Contact</a>
+      <a href="login.html" class="px-4 py-2 border border-[#64ffda] text-[#64ffda] rounded hover:bg-[#64ffda] hover:text-[#0a192f] transition">Login</a>
     </div>
-
-    <!-- Mobile menu button -->
     <button id="mobileMenuBtn" class="md:hidden text-xl text-slate-300 hover:text-[#64ffda]">
       <i class="fa-solid fa-bars"></i>
     </button>
   </div>
-
-  <!-- MOBILE MENU -->
   <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#0a192f]">
     <div class="flex flex-col px-4 py-4 gap-3 text-sm">
-      <a href="ai-agent.html" class="hover:text-[#64ffda]">Voice-Agent</a>
-      <a href="assets/pdf/cybersecurity-news.pdf" class="hover:text-[#64ffda]">Cyber-Newst</a>
-      <a href="/kids/login.html">Kids</a>
+      <a href="index.html">Home</a>
+      <a href="certifications.html">Certifications</a>
       <a href="contact.html">Contact</a>
-      <a href="login.html">Login</a>
-      <a href="assets/pdf/kiranregmi-resume-soc.pdf" class="text-[#64ffda]" target="_blank">View Resume →</a>
+      <a href="login.html" class="text-[#64ffda]">Login</a>
     </div>
   </div>
 </nav>
 
+<main class="pt-24 pb-20 max-w-7xl mx-auto px-6">
 
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-[#e6f1ff] mb-4">SOC Projects & Labs</h1>
+    <p class="text-[#a8b2d1]">
+      Production-ready projects demonstrating SOC workflows, GRC processes, and security automation.
+    </p>
+  </div>
 
-<!-- MAIN -->
-<main class="pt-24 md:pt-28 pb-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-10">
+  <!-- FLAGSHIP PROJECTS -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-[#64ffda] mb-6 uppercase tracking-wide">Flagship Projects</h2>
+    <div class="grid md:grid-cols-2 gap-6">
 
-  <!-- LEFT SIDEBAR (Desktop Hero) -->
-  <aside class="hidden lg:flex flex-col gap-4 sticky top-28">
-
-    <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
-
-    <p class="text-[13.5px] text-[#a8b2d1]">Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on experience in security monitoring, alert triage, identity misuse detection, and log analysis through practical labs and simulations.</p>
-    <p class="text-[13.5px] text-[#a8b2d1]">I bring a strong background in GRC and security documentation — including risk assessments, control validation, SOP development, and escalation-ready reporting — enabling a structured, process-driven approach to SOC operations.</p>
-    <p class="text-xs text-slate-400"><strong>Target roles:</strong> SOC Analyst · Blue Team · Security Operations</p>
-    <a href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank"class="text-[#64ffda] text-sm hover:underline mt-2">View My Resume →</a>
-
-    <hr class="border-slate-900 my-3">
-
-    <!-- Desktop Sidebar Quick Links -->
-    <div class="flex flex-col gap-2 text-sm">
-      <!-- a href="" class="hover:text-[#64ffda]">--- Labs</a -- IGNORE -->
-      <a href="skills.html" class="hover:text-[#64ffda]">--- Skills</a>
-      <a href="projects.html" class="hover:text-[#64ffda]">--- Projects</a>
-      <a href="certifications.html" class="hover:text-[#64ffda]">--- Certifications</a>
-    </div>
-
-    <hr class="border-slate-900 my-3">
-
-    <!-- Desktop Social Icons (larger now) -->
-    <div class="flex gap-6 pt-2 text-2xl text-[#8892b0]">
-      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github hover:text-[#64ffda]"></i></a>
-      <a href="https://x.com/kiranimani" target="_blank"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
-      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank"><i class="fa-brands fa-youtube hover:text-[#64ffda]"></i></a>
-      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin hover:text-[#64ffda]"></i></a>
-    </div>
-
-  </aside>
-
-  <!-- RIGHT CONTENT -->
-  <section class="space-y-14 pb-20">
-
-    <!-- FLAGSHIP PROJECTS -->
-    <div>
-      <h2 class="text-lg font-semibold text-[#64ffda] mb-4 uppercase tracking-wide">Flagship Projects</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <a id="secure-interview-platform" href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Secure Interview Practice Platform</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            Secure, role-based platform demonstrating how I approach SOC investigations — validating alerts, understanding context, documenting outcomes, and improving decision quality over time.
-          </p>
-          <p class="text-xs text-[#8892b0] mt-3">
-            · Role-based authentication and protected API endpoints<br>
-            · SOC, GRC, and interview-focused question banks with study mode<br>
-            · Progress tracking to measure readiness and knowledge gaps<br>
-            · Designed for extensibility (IAM, Network, AI/GRC expansion)
-          </p>
-        </a>
-
-        <a id="ai-driven-cybersecurity" href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">AI Driven Cybersecurity</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            Focused on applying AI to support analysts with correlation, documentation, and control validation — not replacing human decision-making
-          </p>
-          <p class="text-xs text-[#8892b0] mt-3">
-            · Log summarization to support alert validation<br>
-            · Control evidence review and risk documentation assistance<br>
-            · Analyst-in-the-loop design to reduce noise and improve consistency
-          </p>
-        </a>
-
-        <a id="risk-management-tprm" href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Risk Management & TPRM</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            PCAP review · SIEM enrichment · threat indicators
-          </p>
-        </a>
-
-        <a id ="traffic-monitoring" href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Network Traffic Monitoring & Alert Analysis</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            PCAP review · SIEM enrichment · threat indicators
-          </p>
-        </a>
+      <div id="secure-interview-platform" class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="text-xl font-semibold text-[#e6f1ff] mb-2">Secure Interview Practice Platform</h3>
+        <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">JWT · RBAC · SOC Workflow</p>
+        <p class="text-sm text-[#a8b2d1] mb-4">
+          Production-grade platform demonstrating SOC investigation methodology: alert qualification, context gathering, decision logging, and escalation protocols.
+        </p>
+        <div class="text-xs text-[#8892b0] space-y-1">
+          <div>• Role-based access (Admin/User/Test)</div>
+          <div>• JWT authentication with secure API endpoints</div>
+          <div>• Progress tracking across SOC/GRC domains</div>
+          <div>• Incident documentation templates</div>
+        </div>
       </div>
-    </div>
 
-
-    <!-- SOC PROJECTS -->
-    <div>
-      <h2 class="text-lg font-semibold text-[#64ffda] mb-4 uppercase tracking-wide">SOC Projects</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <a href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Identity Misuse Detection Lab</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            Suspicious login analysis · MFA fatigue · account protection
-          </p>
-        </a>
-
-        <a href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Security Risk & Control Validation (SOC Context)</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            Log correlation · detection checks · alert verification
-          </p>
-        </a>
-
-        <a href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Network Traffic Monitoring & Alert Analysis</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            PCAP review · SIEM enrichment · threat indicators
-          </p>
-        </a>
-
-        <a href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Network Traffic Monitoring & Alert Analysis</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            PCAP review · SIEM enrichment · threat indicators
-          </p>
-        </a>
+      <div id="ai-driven-cybersecurity" class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="text-xl font-semibold text-[#e6f1ff] mb-2">AI-Driven SOC Automation</h3>
+        <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">AI Assistant · Log Analysis · GRC</p>
+        <p class="text-sm text-[#a8b2d1] mb-4">
+          AI-powered tools to augment analyst workflows — log correlation, alert enrichment, control validation — while maintaining human decision-making authority.
+        </p>
+        <div class="text-xs text-[#8892b0] space-y-1">
+          <div>• SIEM log summarization for alert triage</div>
+          <div>• Automated evidence collection for audits</div>
+          <div>• Voice agent for interview scheduling</div>
+          <div>• Analyst-in-the-loop validation</div>
+        </div>
       </div>
-    </div>
-
-   <!-- GRC | IAM | TPRM -->
-    <div>
-      <h2 class="text-lg font-semibold text-[#64ffda] mb-4 uppercase tracking-wide">GRC | IAM | TPRM</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <a href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">GRC: Risk Management Framework Project</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            Compliance documentation & security controls
-          </p>
-        </a>
-
-        <a href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">IAM Lab Story</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            Access governance & identity lifecycle
-          </p>
-        </a>
-
-        <a href="#" class="block p-6 rounded-xl bg-[#112240] border border-slate-800 hover:border-[#64ffda] transition">
-          <h3 class="font-semibold">Third-Party Risk Management Project</h3>
-          <p class="text-xs text-[#8892b0] mt-1">
-            Vendor assessments & security questionnaires
-          </p>
-        </a>
-
-      </div>
-    </div> 
-
-<!-- Lab Cards -->
-    
-   <div>
-      <h2 class="text-lg font-semibold text-[#64ffda] mb-4 uppercase tracking-wide">LABS</h2> 
-    <div class="space-y-6">
-
-      <!-- LAB 1 -->
-      <article class="p-6 rounded-xl bg-[#112240] border border-slate-800">
-        <h3 class="text-base font-semibold text-[#e6f1ff]">
-          Identity Misuse Detection Lab
-        </h3>
-        <p class="text-[11px] text-teal-300 uppercase tracking-wide mt-1">
-          Authentication ▪ IAM ▪ Investigation Workflow
-        </p>
-        <p class="mt-3 text-sm text-[#a8b2d1] leading-relaxed">
-          Analyzed abnormal auth patterns — failed logins, impossible travel,
-          and privilege abuse attempts — to distinguish malicious access
-          from environmental noise in IAM alerts.
-        </p>
-      </article>
-
-      <!-- LAB 2 -->
-      <article class="p-6 rounded-xl bg-[#112240] border border-slate-800">
-        <h3 class="text-base font-semibold text-[#e6f1ff]">
-          Network Traffic Monitoring & Alert Analysis
-        </h3>
-        <p class="text-[11px] text-teal-300 uppercase tracking-wide mt-1">
-          Network ▪ Detection ▪ Alert Validation
-        </p>
-        <p class="mt-3 text-sm text-[#a8b2d1] leading-relaxed">
-          Correlated logs, firewall data, and alert metadata to identify
-          suspicious outbound traffic, potential C2 behavior, and misfires in
-          signature-based detections.
-        </p>
-      </article>
-
-      <!-- LAB 3 -->
-      <article class="p-6 rounded-xl bg-[#112240] border border-slate-800">
-        <h3 class="text-base font-semibold text-[#e6f1ff]">
-          Vulnerable vs Hardened IAM Lab
-        </h3>
-        <p class="text-[11px] text-teal-300 uppercase tracking-wide mt-1">
-          Misconfigurations ▪ Hardening ▪ Control Impact
-        </p>
-        <p class="mt-3 text-sm text-[#a8b2d1] leading-relaxed">
-          Compared risky identity configurations vs. hardened security baselines
-          and observed how proper identity controls directly reduce alert noise
-          and increase detection fidelity.
-        </p>
-      </article>
 
     </div>
-
-
-    <!-- CTA -->
-    <div class="pt-6">
-      <a href="labs.html"
-        class="inline-block px-6 py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md hover:bg-[#53e6c3] transition">
-        View Hands-On Labs →
-      </a>
-    </div>
-
-<!-- ================= GLOBAL FOOTER ================= -->
-<footer class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 pb-10 mt-20 text-center">
-  <p>
-    Designed & Developed by <span class="text-[#64ffda]">Kiran Regmi</span> —
-    Deployed with Vercel · Powered by TailwindCSS · No paid resources used.
-  </p>
-  <p class="mt-2 text-[0.7rem] text-slate-500">
-    © 2025 kiranregmi.com · All rights reserved
-  </p>
-</footer>
-
   </section>
+
+  <!-- SOC PROJECTS -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-[#64ffda] mb-6 uppercase tracking-wide">SOC Projects</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div id="traffic-monitoring" class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="font-semibold text-[#e6f1ff] mb-2">SIEM Alert Investigation</h3>
+        <p class="text-xs text-[#8892b0]">QRadar · Threat Intel · IOCs · Splunk</p>
+      </div>
+
+      <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="font-semibold text-[#e6f1ff] mb-2">Identity Misuse Detection</h3>
+        <p class="text-xs text-[#8892b0]">Suspicious logins · MFA fatigue · Account protection</p>
+      </div>
+
+      <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="font-semibold text-[#e6f1ff] mb-2">Phishing Analysis Lab</h3>
+        <p class="text-xs text-[#8892b0]">Email threat detection · Credential harvesting · Documentation</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GRC | IAM | TPRM -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-[#64ffda] mb-6 uppercase tracking-wide">GRC | IAM | TPRM</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="font-semibold text-[#e6f1ff] mb-2">Risk Management Framework</h3>
+        <p class="text-xs text-[#8892b0]">NIST 800-53 · Control validation · Documentation</p>
+      </div>
+
+      <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="font-semibold text-[#e6f1ff] mb-2">IAM Governance Lab</h3>
+        <p class="text-xs text-[#8892b0]">Access governance · Least privilege · Identity lifecycle</p>
+      </div>
+
+      <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition">
+        <h3 class="font-semibold text-[#e6f1ff] mb-2">Third-Party Risk Management</h3>
+        <p class="text-xs text-[#8892b0]">Vendor assessments · Security questionnaires</p>
+      </div>
+
+    </div>
+  </section>
+
 </main>
 
-<!-- MOBILE BOTTOM NAV -->
-<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#112240] border-t border-slate-700 p-3 flex justify-around text-xs">
-  <a href="labs.html" class="hover:text-[#64ffda]">Labs</a>
-  <a href="skills.html" class="hover:text-[#64ffda]">Skills</a>
-  <a href="projects.html" class="hover:text-[#64ffda]">Projects</a>
-  <a href="certifications.html" class="hover:text-[#64ffda]">Certs</a>
-</nav>
-
-
+<footer class="text-xs text-[#8892b0] border-t border-slate-800 py-8 text-center">
+  <p>© 2026 kiranregmi.com · v2.3</p>
+</footer>
 
 <script>
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
@@ -302,4 +146,4 @@
 </script>
 
 </body>
-</html>z
+</html>
