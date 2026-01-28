@@ -1,4 +1,3 @@
-<!--version 2.2-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +77,7 @@
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
     }
 
-    /* Floating AI Button - No box, just gradient */
+    /* Floating AI Button - Cleaner design */
     .floating-ai-section {
       position: fixed;
       bottom: 90px;
@@ -87,17 +86,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .floating-ai-button {
       background: linear-gradient(135deg, #64ffda 0%, #00d4ff 100%);
       color: #0a192f;
       border: none;
-      padding: 18px 28px;
+      padding: 16px 24px;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
@@ -111,19 +110,33 @@
       filter: drop-shadow(0 8px 25px rgba(100, 255, 218, 0.5));
     }
 
+    .ai-phone-number {
+      font-size: 0.75rem;
+      color: #64ffda;
+      background: rgba(17, 34, 64, 0.95);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #64ffda;
+    }
+
     .version-badge {
       background: rgba(17, 34, 64, 0.95);
       backdrop-blur-sm;
-      padding: 6px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
       font-size: 0.65rem;
       color: #64ffda;
       border: 1px solid #64ffda;
     }
 
-    /* Profile image styling */
+    /* Profile image - Fixed to show full face */
     .profile-img {
-      box-shadow: 0 0 0 4px #0a192f, 0 0 0 8px #64ffda;
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 16px;
+      box-shadow: 0 0 0 3px #0a192f, 0 0 0 6px #64ffda;
     }
 
     /* Social icons enhanced */
@@ -143,8 +156,11 @@
 <div class="floating-ai-section animate-pulse-glow">
   <a href="tel:254-433-4635" class="floating-ai-button">
     <i class="fa-solid fa-phone-volume"></i>
-    Let AI Answer Now!
+    Call My AI Assistant
   </a>
+  <div class="ai-phone-number">
+    📞 254-433-4635
+  </div>
   <div class="version-badge">
     Production Ready
   </div>
@@ -199,12 +215,12 @@
   <section class="py-12 md:py-20 animate-fade-in-up">
     <div class="grid lg:grid-cols-[300px_1fr] gap-12 items-center">
       
-      <!-- Profile Image -->
+      <!-- Profile Image - Fixed -->
       <div class="flex justify-center lg:justify-start">
         <img 
           src="/assets/images/kiranregmi-headshot.png" 
           alt="Kiran Regmi - SOC Analyst" 
-          class="w-64 h-64 rounded-2xl object-cover profile-img"
+          class="profile-img"
         />
       </div>
 
@@ -369,7 +385,7 @@
     </div>
   </section>
 
-  <!-- CERTIFICATIONS SHOWCASE - Links to actual PDFs -->
+  <!-- CERTIFICATIONS SHOWCASE -->
   <section class="py-12 animate-fade-in-up">
     <h3 class="text-2xl font-bold text-[#e6f1ff] mb-2 text-center">
       <i class="fa-solid fa-certificate text-[#64ffda] mr-2"></i>
@@ -388,7 +404,6 @@
         <div class="text-[0.65rem] text-[#8892b0]">Exp: Mar 2028</div>
       </a>
 
-      <!-- Splunk -->
       <a href="assets/pdf/splunk-bootcamp.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
         <div class="text-3xl mb-2">📊</div>
         <div class="text-sm font-bold text-[#e6f1ff]">Splunk SIEM</div>
@@ -397,7 +412,6 @@
         <div class="text-[0.65rem] text-[#8892b0]">5 CPE Hours</div>
       </a>
 
-      <!-- Cisco CCST -->
       <a href="assets/pdf/cisco-network.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
         <div class="text-3xl mb-2">🌐</div>
         <div class="text-sm font-bold text-[#e6f1ff]">CCST</div>
@@ -405,7 +419,6 @@
         <div class="text-[0.65rem] text-[#8892b0] mt-2">Mar 2025</div>
       </a>
 
-      <!-- Azure -->
       <a href="assets/pdf/microsoft-azure.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
         <div class="text-3xl mb-2">☁️</div>
         <div class="text-sm font-bold text-[#e6f1ff]">Azure</div>
@@ -413,7 +426,6 @@
         <div class="text-[0.65rem] text-[#8892b0] mt-2">Apr 2025</div>
       </a>
 
-      <!-- Microsoft 365 -->
       <a href="assets/pdf/microsoft-365.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
         <div class="text-3xl mb-2">💼</div>
         <div class="text-sm font-bold text-[#e6f1ff]">365 Fundamentals</div>
@@ -421,7 +433,6 @@
         <div class="text-[0.65rem] text-[#8892b0] mt-2">May 2025</div>
       </a>
 
-      <!-- ISC2 NIST -->
       <a href="assets/pdf/isc2-nist.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
         <div class="text-3xl mb-2">🔐</div>
         <div class="text-sm font-bold text-[#e6f1ff]">NIST CSF 2.0</div>
@@ -429,7 +440,6 @@
         <div class="text-[0.65rem] text-[#8892b0] mt-2">Dec 2024</div>
       </a>
 
-      <!-- GRC -->
       <a href="assets/pdf/grc-mastery.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
         <div class="text-3xl mb-2">📋</div>
         <div class="text-sm font-bold text-[#e6f1ff]">GRC Mastery</div>
@@ -437,7 +447,6 @@
         <div class="text-[0.65rem] text-[#8892b0] mt-2">Jul 2025</div>
       </a>
 
-      <!-- IT Auditing -->
       <a href="assets/pdf/it-grc-bootcamp.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
         <div class="text-3xl mb-2">🔍</div>
         <div class="text-sm font-bold text-[#e6f1ff]">IT Auditing</div>
@@ -455,7 +464,7 @@
     </div>
   </section>
 
-  <!-- FEATURED SOC PROJECTS -->
+  <!-- FEATURED SOC PROJECTS - ENHANCED -->
   <section class="py-12 animate-fade-in-up">
     <h3 class="text-2xl font-bold text-[#e6f1ff] mb-8 text-center">
       <i class="fa-solid fa-folder-open text-[#64ffda] mr-2"></i>
@@ -464,7 +473,7 @@
 
     <div class="grid md:grid-cols-3 gap-6">
       
-      <!-- Project 1 -->
+      <!-- Project 1 - Enhanced -->
       <a href="projects.html#secure-interview-platform" class="block group">
         <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 h-full hover:border-[#64ffda] transition">
           <div class="flex items-start justify-between mb-3">
@@ -472,54 +481,72 @@
             <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#64ffda] transition"></i>
           </div>
           <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">Secure Interview Platform</h4>
-          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">Secure · Role-Based · SOC-Aligned</p>
-          <p class="text-sm text-[#a8b2d1] leading-relaxed">
-            Demonstrates alert validation, context gathering, decision documentation, and how I approach SOC investigations with role-based access control.
+          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">JWT Auth · RBAC · SOC Workflow</p>
+          <p class="text-sm text-[#a8b2d1] leading-relaxed mb-3">
+            Production-grade platform demonstrating SOC investigation methodology: alert qualification, context gathering, decision logging, and escalation protocols.
           </p>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">JWT Auth</span>
-            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">RBAC</span>
+          <div class="text-xs text-[#8892b0] space-y-1 mb-4">
+            <div>• Role-based access (Admin/User/Test)</div>
+            <div>• JWT authentication with secure API endpoints</div>
+            <div>• Progress tracking across SOC/GRC domains</div>
+            <div>• Incident documentation templates</div>
+          </div>
+          <div class="flex flex-wrap gap-2">
             <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Node.js</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">JWT</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">RBAC</span>
           </div>
         </div>
       </a>
 
-      <!-- Project 2 -->
+      <!-- Project 2 - Enhanced -->
       <a href="projects.html#ai-driven-cybersecurity" class="block group">
         <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 h-full hover:border-[#64ffda] transition">
           <div class="flex items-start justify-between mb-3">
             <i class="fa-solid fa-robot text-2xl text-[#64ffda]"></i>
             <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#64ffda] transition"></i>
           </div>
-          <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">AI-Driven Cybersecurity</h4>
-          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">Analyst-Assist · Automation (In Progress)</p>
-          <p class="text-sm text-[#a8b2d1] leading-relaxed">
-            Applying AI to support analysts with log correlation, documentation automation, and control validation—not replacing human decision-making.
+          <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">AI-Driven SOC Automation</h4>
+          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">AI Assistant · Log Analysis · GRC</p>
+          <p class="text-sm text-[#a8b2d1] leading-relaxed mb-3">
+            AI-powered tools to augment analyst workflows — log correlation, alert enrichment, control validation — while maintaining human decision-making authority.
           </p>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">AI/ML</span>
+          <div class="text-xs text-[#8892b0] space-y-1 mb-4">
+            <div>• SIEM log summarization for alert triage</div>
+            <div>• Automated evidence collection for audits</div>
+            <div>• Voice agent for interview scheduling</div>
+            <div>• Analyst-in-the-loop validation</div>
+          </div>
+          <div class="flex flex-wrap gap-2">
             <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Python</span>
-            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Automation</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">n8n</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Claude API</span>
           </div>
         </div>
       </a>
 
-      <!-- Project 3 -->
+      <!-- Project 3 - Enhanced -->
       <a href="projects.html#traffic-monitoring" class="block group">
         <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 h-full hover:border-[#64ffda] transition">
           <div class="flex items-start justify-between mb-3">
             <i class="fa-solid fa-network-wired text-2xl text-[#64ffda]"></i>
             <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#64ffda] transition"></i>
           </div>
-          <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">Network Traffic Monitoring</h4>
-          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">Network · SIEM · Indicators</p>
-          <p class="text-sm text-[#a8b2d1] leading-relaxed">
-            Analyzed suspicious traffic patterns, identified indicators of compromise, and documented findings for escalation to Tier-2.
+          <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">SIEM Alert Investigation</h4>
+          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">QRadar · Threat Intel · IOCs</p>
+          <p class="text-sm text-[#a8b2d1] leading-relaxed mb-3">
+            Hands-on SIEM investigation using QRadar and Splunk: directory traversal detection, threat intelligence enrichment, and escalation-ready reporting.
           </p>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Wireshark</span>
-            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">PCAP</span>
-            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">IOCs</span>
+          <div class="text-xs text-[#8892b0] space-y-1 mb-4">
+            <div>• Detected path traversal exploitation attempts</div>
+            <div>• Multi-source IOC validation (VirusTotal, Talos, Shodan)</div>
+            <div>• Log correlation across firewall/web server data</div>
+            <div>• Jira ticket creation with SOC handoff notes</div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">QRadar</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Splunk</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Threat Intel</span>
           </div>
         </div>
       </a>
