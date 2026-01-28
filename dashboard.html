@@ -2,9 +2,9 @@
 <html lang="en">
 <!-- 
   kiranregmi.com - Dashboard
-  Version: 2.3
-  Last Updated: January 28, 2026
-  Changes: Progressive welcome video, learning path cards with progress, role-based views ready
+  Version: 2.4
+  Last Updated: January 29, 2026
+  Changes: RBAC + Access Codes, 7-Day AI Challenge, Improved UI with animated background
 -->
 <head>
   <meta charset="UTF-8" />
@@ -19,63 +19,232 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
 
   <style>
+    /* Animated Background */
+    body {
+      background: #0a192f;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.15;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, #64ffda, #00d4ff);
+      top: -10%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      bottom: -10%;
+      right: -10%;
+      animation-delay: 7s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: 14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     .animate-fade-in {
       animation: fadeIn 0.6s ease-out;
     }
+
     .progress-bar {
       height: 6px;
       border-radius: 3px;
       background: #1e293b;
       overflow: hidden;
     }
+
     .progress-fill {
       height: 100%;
       background: linear-gradient(90deg, #64ffda, #00d4ff);
       transition: width 0.5s ease;
     }
+
+    /* Enhanced Cards */
+    .learning-card {
+      position: relative;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(17, 34, 64, 0.8), rgba(17, 34, 64, 0.6));
+      backdrop-filter: blur(10px);
+    }
+
+    .learning-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(135deg, #64ffda, #00d4ff);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .learning-card:hover::before {
+      opacity: 1;
+    }
+
+    .learning-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(100, 255, 218, 0.2);
+    }
+
+    .locked-card {
+      opacity: 0.6;
+    }
+
+    .locked-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Badge styles */
+    .badge {
+      font-size: 0.7rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-free {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+    }
+
+    .badge-premium {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+    }
+
+    .badge-locked {
+      background: rgba(148, 163, 184, 0.2);
+      color: #94a3b8;
+      border: 1px solid #475569;
+    }
+
+    .badge-progress {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+    }
+
+    .badge-new {
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      color: white;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Content wrapper to sit above background */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Access Code Input */
+    .code-input {
+      background: rgba(17, 34, 64, 0.6);
+      backdrop-filter: blur(10px);
+      border: 2px solid #334155;
+      transition: all 0.3s ease;
+    }
+
+    .code-input:focus {
+      border-color: #64ffda;
+      box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+      outline: none;
+    }
   </style>
 </head>
 
-<body class="bg-[#0a192f] text-[#ccd6f6]">
+<body class="text-[#ccd6f6]">
+
+<!-- ANIMATED BACKGROUND -->
+<div class="animated-bg">
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  <div class="gradient-orb orb-3"></div>
+</div>
+
+<!-- CONTENT WRAPPER -->
+<div class="content-wrapper">
 
 <!-- NAVBAR -->
-<nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
+<nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/80 backdrop-blur-sm">
   <div class="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
     
-    <!-- LOGO -->
     <a href="index.html" class="flex items-center gap-2">
       <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center text-sm">
         KR
       </span>
     </a>
 
-    <!-- NAV LINKS -->
     <nav class="hidden md:flex items-center gap-6 text-sm">
       <a href="index.html" class="hover:text-[#64ffda] transition">Home</a>
-      <a href="soc-interview-mastery.html" class="hover:text-[#64ffda] transition">SOC Mastery</a>
-      <a href="kids.html" class="hover:text-[#64ffda] transition">Kids</a>
       <a href="contact.html" class="hover:text-[#64ffda] transition">Contact</a>
+      <span class="text-[#8892b0]" id="userEmail">user@example.com</span>
       <a href="#" onclick="logout()" class="text-red-400 hover:text-red-300 transition">
         <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
       </a>
     </nav>
 
-    <!-- Mobile menu button -->
     <button id="mobileMenuBtn" class="md:hidden text-xl text-slate-300 hover:text-[#64ffda]">
       <i class="fa-solid fa-bars"></i>
     </button>
   </div>
 
-  <!-- MOBILE MENU -->
-  <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#0a192f]">
+  <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#0a192f]/95">
     <div class="flex flex-col px-4 py-4 gap-3 text-sm">
       <a href="index.html" class="hover:text-[#64ffda]">Home</a>
-      <a href="soc-interview-mastery.html" class="hover:text-[#64ffda]">SOC Mastery</a>
-      <a href="kids.html" class="hover:text-[#64ffda]">Kids</a>
       <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
       <a href="#" onclick="logout()" class="text-red-400">Logout</a>
     </div>
@@ -87,21 +256,48 @@
 
   <!-- Welcome Header -->
   <section class="mb-12 animate-fade-in">
-    <div class="bg-gradient-to-r from-[#112240] to-[#0a192f] border border-slate-700 rounded-xl p-8">
-      <h1 class="text-3xl font-bold text-[#e6f1ff] mb-2">
-        Welcome Back, <span class="text-[#64ffda]" id="userName">Student</span>! 👋
-      </h1>
-      <p class="text-[#a8b2d1]">
-        Your cybersecurity learning journey continues. Pick up where you left off or explore new domains.
-      </p>
+    <div class="bg-gradient-to-r from-[#112240]/80 to-[#0a192f]/80 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <h1 class="text-3xl font-bold text-[#e6f1ff] mb-2">
+            Welcome Back, <span class="text-[#64ffda]" id="userName">Student</span>! 👋
+          </h1>
+          <p class="text-[#a8b2d1]">
+            Your cybersecurity learning journey continues. Pick up where you left off.
+          </p>
+          <div class="mt-3 flex items-center gap-3">
+            <span class="badge badge-premium" id="rolebadge">Premium Member</span>
+            <span class="text-xs text-[#8892b0]" id="memberSince">Member since Jan 2026</span>
+          </div>
+        </div>
+        
+        <!-- Access Code Input -->
+        <div class="flex flex-col gap-2">
+          <label class="text-xs text-[#8892b0] uppercase tracking-wide">Have an Access Code?</label>
+          <div class="flex gap-2">
+            <input 
+              type="text" 
+              id="accessCodeInput"
+              placeholder="Enter code..."
+              class="code-input px-4 py-2 rounded-lg text-sm text-[#e6f1ff] w-48"
+            />
+            <button 
+              onclick="redeemCode()"
+              class="px-4 py-2 bg-[#64ffda] text-[#0a192f] rounded-lg font-semibold hover:bg-[#4dd4b8] transition text-sm"
+            >
+              Redeem
+            </button>
+          </div>
+          <p class="text-xs text-[#64ffda]" id="codeMessage"></p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Welcome Video Section - Collapsible -->
   <section class="mb-12 animate-fade-in" id="videoSection">
-    <div class="bg-[#112240] border border-slate-700 rounded-xl overflow-hidden">
+    <div class="bg-[#112240]/80 backdrop-blur-sm border border-slate-700 rounded-xl overflow-hidden">
       
-      <!-- Header (Always Visible) -->
       <div class="p-6 flex items-center justify-between cursor-pointer" onclick="toggleVideo()">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-[#64ffda]/10 rounded-full flex items-center justify-center">
@@ -115,7 +311,6 @@
         <i class="fa-solid fa-chevron-down text-[#8892b0] transition-transform" id="videoChevron"></i>
       </div>
 
-      <!-- Video Content (Collapsible) -->
       <div id="videoContent" class="hidden border-t border-slate-700">
         <div class="p-6">
           <video
@@ -142,19 +337,19 @@
   <section class="mb-12 animate-fade-in">
     <h2 class="text-2xl font-bold text-[#e6f1ff] mb-6">
       <i class="fa-solid fa-graduation-cap text-[#64ffda] mr-2"></i>
-      Your Learning Paths
+      Your Learning Platforms
     </h2>
 
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="platformsGrid">
 
       <!-- SOC Mastery -->
-      <a href="soc-interview-mastery.html" class="block group">
-        <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition h-full">
+      <a href="soc-interview-mastery.html" class="block group learning-card" data-platform="soc-mastery">
+        <div class="border border-slate-700 rounded-xl p-6 h-full">
           <div class="flex items-start justify-between mb-4">
-            <div class="w-12 h-12 bg-[#64ffda]/10 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 bg-gradient-to-br from-[#64ffda]/20 to-[#00d4ff]/20 rounded-lg flex items-center justify-center">
               <i class="fa-solid fa-shield-halved text-[#64ffda] text-xl"></i>
             </div>
-            <span class="text-xs px-3 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded-full">In Progress</span>
+            <span class="badge badge-progress">In Progress</span>
           </div>
 
           <h3 class="text-lg font-semibold text-[#e6f1ff] mb-2">SOC Analyst Mastery</h3>
@@ -162,11 +357,10 @@
             SIEM monitoring, alert triage, incident investigation, and SOC operations.
           </p>
 
-          <!-- Progress Bar -->
           <div class="mb-2">
             <div class="flex justify-between text-xs text-[#8892b0] mb-1">
               <span>Progress</span>
-              <span id="socProgress">45%</span>
+              <span>45%</span>
             </div>
             <div class="progress-bar">
               <div class="progress-fill" style="width: 45%"></div>
@@ -180,59 +374,28 @@
         </div>
       </a>
 
-      <!-- Kids Platform -->
-      <a href="kids.html" class="block group">
-        <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition h-full">
+      <!-- 7-Day AI Challenge - NEW -->
+      <a href="7dayai.html" class="block group learning-card" data-platform="7dayai">
+        <div class="border border-slate-700 rounded-xl p-6 h-full">
           <div class="flex items-start justify-between mb-4">
-            <div class="w-12 h-12 bg-[#64ffda]/10 rounded-lg flex items-center justify-center">
-              <i class="fa-solid fa-child text-[#64ffda] text-xl"></i>
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg flex items-center justify-center">
+              <i class="fa-solid fa-rocket text-purple-400 text-xl"></i>
             </div>
-            <span class="text-xs px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full">Beginner</span>
+            <div class="flex gap-2">
+              <span class="badge badge-new">New</span>
+              <span class="badge badge-free">Free</span>
+            </div>
           </div>
 
-          <h3 class="text-lg font-semibold text-[#e6f1ff] mb-2">Kids Learning</h3>
+          <h3 class="text-lg font-semibold text-[#e6f1ff] mb-2">7-Day AI Challenge</h3>
           <p class="text-sm text-[#8892b0] mb-4">
-            Age-appropriate cybersecurity fundamentals and digital safety lessons.
+            Build 7 AI projects in 7 days. Learn prompt engineering, AI agents, and automation.
           </p>
 
-          <!-- Progress Bar -->
           <div class="mb-2">
             <div class="flex justify-between text-xs text-[#8892b0] mb-1">
               <span>Progress</span>
-              <span id="kidsProgress">12%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 12%"></div>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between text-sm mt-4">
-            <span class="text-[#64ffda]">Continue Learning →</span>
-            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-[#64ffda] transition"></i>
-          </div>
-        </div>
-      </a>
-
-      <!-- AI Agent Builder -->
-      <a href="#" onclick="alert('Coming soon!')" class="block group">
-        <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 hover:border-[#64ffda] transition h-full opacity-75">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-12 h-12 bg-[#64ffda]/10 rounded-lg flex items-center justify-center">
-              <i class="fa-solid fa-robot text-[#64ffda] text-xl"></i>
-            </div>
-            <span class="text-xs px-3 py-1 bg-slate-500/10 text-slate-400 rounded-full">Not Started</span>
-          </div>
-
-          <h3 class="text-lg font-semibold text-[#e6f1ff] mb-2">AI Agent Development</h3>
-          <p class="text-sm text-[#8892b0] mb-4">
-            Build AI-powered automation agents for cybersecurity workflows.
-          </p>
-
-          <!-- Progress Bar -->
-          <div class="mb-2">
-            <div class="flex justify-between text-xs text-[#8892b0] mb-1">
-              <span>Progress</span>
-              <span>0%</span>
+              <span id="ai-progress">0%</span>
             </div>
             <div class="progress-bar">
               <div class="progress-fill" style="width: 0%"></div>
@@ -240,11 +403,75 @@
           </div>
 
           <div class="flex items-center justify-between text-sm mt-4">
-            <span class="text-slate-500">Coming Soon</span>
-            <i class="fa-solid fa-lock text-slate-600"></i>
+            <span class="text-purple-400">Start Challenge →</span>
+            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-purple-400 transition"></i>
           </div>
         </div>
       </a>
+
+      <!-- Kids Platform -->
+      <a href="kids.html" class="block group learning-card" data-platform="kids">
+        <div class="border border-slate-700 rounded-xl p-6 h-full">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg flex items-center justify-center">
+              <i class="fa-solid fa-child text-blue-400 text-xl"></i>
+            </div>
+            <span class="badge badge-free">Free</span>
+          </div>
+
+          <h3 class="text-lg font-semibold text-[#e6f1ff] mb-2">Kids Learning Portal</h3>
+          <p class="text-sm text-[#8892b0] mb-4">
+            Age-appropriate cybersecurity fundamentals and digital safety lessons for children.
+          </p>
+
+          <div class="mb-2">
+            <div class="flex justify-between text-xs text-[#8892b0] mb-1">
+              <span>Progress</span>
+              <span>12%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 12%"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-sm mt-4">
+            <span class="text-blue-400">Continue Learning →</span>
+            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-blue-400 transition"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- AI Agent Builder - LOCKED -->
+      <div class="block group learning-card locked-card" data-platform="ai-agent">
+        <div class="border border-slate-700 rounded-xl p-6 h-full">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-lg flex items-center justify-center">
+              <i class="fa-solid fa-robot text-orange-400 text-xl"></i>
+            </div>
+            <span class="badge badge-locked">
+              <i class="fa-solid fa-lock mr-1"></i> Locked
+            </span>
+          </div>
+
+          <h3 class="text-lg font-semibold text-[#e6f1ff] mb-2">AI Agent Development</h3>
+          <p class="text-sm text-[#8892b0] mb-4">
+            Build AI-powered automation agents for cybersecurity workflows and operations.
+          </p>
+
+          <div class="mb-4">
+            <p class="text-xs text-[#64ffda]">
+              <i class="fa-solid fa-sparkles mr-1"></i> Coming Soon
+            </p>
+          </div>
+
+          <button 
+            onclick="alert('Upgrade to Premium to unlock this platform!')"
+            class="w-full py-2 border-2 border-[#64ffda] text-[#64ffda] rounded-lg font-semibold hover:bg-[#64ffda]/10 transition text-sm"
+          >
+            Upgrade to Unlock
+          </button>
+        </div>
+      </div>
 
     </div>
   </section>
@@ -257,23 +484,23 @@
     </h2>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
-        <div class="text-3xl font-bold text-[#64ffda] mb-1">127</div>
+      <div class="bg-[#112240]/80 backdrop-blur-sm border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1" id="questionsAnswered">127</div>
         <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">Questions Answered</div>
       </div>
 
-      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
-        <div class="text-3xl font-bold text-[#64ffda] mb-1">3</div>
+      <div class="bg-[#112240]/80 backdrop-blur-sm border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1" id="badgesEarned">3</div>
         <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">Badges Earned</div>
       </div>
 
-      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
-        <div class="text-3xl font-bold text-[#64ffda] mb-1">18h</div>
+      <div class="bg-[#112240]/80 backdrop-blur-sm border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1" id="studyTime">18h</div>
         <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">Study Time</div>
       </div>
 
-      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
-        <div class="text-3xl font-bold text-[#64ffda] mb-1">87%</div>
+      <div class="bg-[#112240]/80 backdrop-blur-sm border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1" id="avgScore">87%</div>
         <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">Avg Score</div>
       </div>
     </div>
@@ -281,22 +508,147 @@
 
 </main>
 
+</div>
+
 <!-- FOOTER -->
-<footer class="text-xs text-[#8892b0] border-t border-slate-800 py-8 text-center">
-  <p>© 2026 kiranregmi.com · Cybersecurity Learning Portal</p>
+<footer class="text-xs text-[#8892b0] border-t border-slate-800 py-8 text-center relative z-10">
+  <p>© 2026 kiranregmi.com · Cybersecurity Learning Portal · v2.4</p>
 </footer>
 
 <script>
+// Access Control Configuration
+const ACCESS_MATRIX = {
+  'admin': ['soc-mastery', 'kids', '7dayai', 'ai-agent'],
+  'premium': ['soc-mastery', '7dayai', 'ai-agent'],
+  'basic': ['7dayai', 'kids'],
+  'test': ['7dayai'],
+  'kid': ['kids']
+};
+
+const ACCESS_CODE_MAP = {
+  '7DAY-AI-2026': { platform: '7dayai', expires: '2026-12-31', name: '7-Day AI Challenge' },
+  'SOC-TRIAL-30': { platform: 'soc-mastery', expires: '2026-02-28', name: 'SOC Trial' },
+  'PREMIUM-2026': { platform: 'premium', expires: '2026-12-31', name: 'Premium Access' },
+  'KID-ACCESS': { platform: 'kids', expires: '2099-12-31', name: 'Kids Portal' }
+};
+
 // Check authentication
 const token = localStorage.getItem("token");
 if (!token) {
   window.location.href = "/login.html";
 }
 
-// Set user name
-const email = localStorage.getItem("email");
-if (email) {
-  document.getElementById("userName").textContent = email.split('@')[0];
+// Load user data
+const email = localStorage.getItem("email") || "user@example.com";
+const role = localStorage.getItem("role") || "basic";
+const accessCodes = JSON.parse(localStorage.getItem("accessCodes") || "[]");
+
+// Update UI
+document.getElementById("userName").textContent = email.split('@')[0];
+document.getElementById("userEmail").textContent = email;
+
+// Update role badge
+const roleBadge = document.getElementById("rolebage");
+const roleNames = {
+  'admin': 'Administrator',
+  'premium': 'Premium Member',
+  'basic': 'Basic Member',
+  'test': 'Test Account',
+  'kid': 'Kids Account'
+};
+if (roleBadge) {
+  roleBadge.textContent = roleNames[role] || 'Member';
+}
+
+// Check platform access
+function hasAccess(platform) {
+  // Check role-based access
+  if (ACCESS_MATRIX[role]?.includes(platform)) {
+    return true;
+  }
+  
+  // Check access code access
+  for (let code of accessCodes) {
+    const codeData = ACCESS_CODE_MAP[code];
+    if (codeData && codeData.platform === platform) {
+      // Check if expired
+      if (new Date(codeData.expires) > new Date()) {
+        return true;
+      }
+    }
+  }
+  
+  return false;
+}
+
+// Apply access control to cards
+document.querySelectorAll('[data-platform]').forEach(card => {
+  const platform = card.getAttribute('data-platform');
+  
+  if (!hasAccess(platform)) {
+    // Lock the card
+    card.classList.add('locked-card');
+    card.style.pointerEvents = 'none';
+    
+    // Change badge to locked
+    const badge = card.querySelector('.badge');
+    if (badge && !badge.classList.contains('badge-locked')) {
+      badge.className = 'badge badge-locked';
+      badge.innerHTML = '<i class="fa-solid fa-lock mr-1"></i> Locked';
+    }
+    
+    // Update CTA
+    const cta = card.querySelector('.text-sm.mt-4');
+    if (cta) {
+      cta.innerHTML = '<span class="text-slate-500">Unlock with code or upgrade</span>';
+    }
+  }
+});
+
+// Redeem access code
+function redeemCode() {
+  const input = document.getElementById('accessCodeInput');
+  const message = document.getElementById('codeMessage');
+  const code = input.value.trim().toUpperCase();
+  
+  if (!code) {
+    message.textContent = 'Please enter a code';
+    message.style.color = '#ef4444';
+    return;
+  }
+  
+  const codeData = ACCESS_CODE_MAP[code];
+  
+  if (!codeData) {
+    message.textContent = 'Invalid code';
+    message.style.color = '#ef4444';
+    return;
+  }
+  
+  // Check if expired
+  if (new Date(codeData.expires) < new Date()) {
+    message.textContent = 'This code has expired';
+    message.style.color = '#ef4444';
+    return;
+  }
+  
+  // Check if already redeemed
+  if (accessCodes.includes(code)) {
+    message.textContent = 'Code already redeemed';
+    message.style.color = '#f59e0b';
+    return;
+  }
+  
+  // Redeem code
+  accessCodes.push(code);
+  localStorage.setItem('accessCodes', JSON.stringify(accessCodes));
+  
+  message.textContent = `✓ Success! ${codeData.name} unlocked`;
+  message.style.color = '#10b981';
+  input.value = '';
+  
+  // Reload page to update access
+  setTimeout(() => location.reload(), 1500);
 }
 
 // Mobile menu toggle
@@ -320,13 +672,13 @@ function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
   localStorage.removeItem("email");
+  localStorage.removeItem("accessCodes");
   window.location.href = "/login.html";
 }
 
 // Check if first time visitor
 const hasSeenVideo = localStorage.getItem("hasSeenWelcomeVideo");
 if (!hasSeenVideo) {
-  // Auto-expand video on first visit
   document.getElementById("videoContent").classList.remove("hidden");
   document.getElementById("videoChevron").classList.add("rotate-180");
 }
