@@ -1,38 +1,177 @@
+<!--version 2.2-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kiran Regmi | SOC Analyst </title>
+  <title>Kiran Regmi | SOC Analyst | Security Operations</title>
   <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Kiran Regmi - SOC Analyst specializing in security monitoring, SIEM (Splunk, QRadar), threat detection, and incident response. Available for immediate hire.">
+  <meta name="keywords" content="SOC Analyst, Security Operations, SIEM, Splunk, QRadar, Threat Detection, Incident Response, Cybersecurity">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
+
+  <style>
+    /* Custom animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(100, 255, 218, 0.6));
+      }
+      50% {
+        transform: scale(1.02);
+        filter: drop-shadow(0 0 20px rgba(100, 255, 218, 0.8));
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .animate-pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #64ffda 0%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Skill badge hover effect */
+    .skill-badge {
+      transition: all 0.3s ease;
+    }
+
+    .skill-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(100, 255, 218, 0.3);
+    }
+
+    /* Certification card hover */
+    .cert-card {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .cert-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Floating AI Button - No box, just gradient */
+    .floating-ai-section {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .floating-ai-button {
+      background: linear-gradient(135deg, #64ffda 0%, #00d4ff 100%);
+      color: #0a192f;
+      border: none;
+      padding: 18px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .floating-ai-button:hover {
+      transform: translateY(-3px);
+      filter: drop-shadow(0 8px 25px rgba(100, 255, 218, 0.5));
+    }
+
+    .version-badge {
+      background: rgba(17, 34, 64, 0.95);
+      backdrop-blur-sm;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      color: #64ffda;
+      border: 1px solid #64ffda;
+    }
+
+    /* Profile image styling */
+    .profile-img {
+      box-shadow: 0 0 0 4px #0a192f, 0 0 0 8px #64ffda;
+    }
+
+    /* Social icons enhanced */
+    .social-icon {
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-3px) scale(1.1);
+    }
+  </style>
 </head>
 
 <body class="bg-[#0a192f] text-[#ccd6f6]">
 
+<!-- FLOATING AI VOICE ASSISTANT BUTTON -->
+<div class="floating-ai-section animate-pulse-glow">
+  <a href="tel:254-433-4635" class="floating-ai-button">
+    <i class="fa-solid fa-phone-volume"></i>
+    Let AI Answer Now!
+  </a>
+  <div class="version-badge">
+    Production Ready
+  </div>
+</div>
+
 <!-- NAVBAR -->
 <nav class="fixed top-0 left-0 right-0 z-40 border-b border-slate-800 bg-[#0a192f]/95 backdrop-blur-sm">
   <div class="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-
+    
     <!-- LOGO -->
     <a href="index.html" class="flex items-center gap-2">
-      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center">
+      <span class="w-9 h-9 rounded-full border border-[#64ffda] text-[#64ffda] font-bold flex items-center justify-center text-sm">
         KR
       </span>
     </a>
 
     <!-- DESKTOP NAV -->
     <div class="hidden md:flex items-center gap-6 text-sm">
-      <!--a href="#" onclick="alert('Coming soon');return false;" class="hover:text-[#64ffda]" Learn< -->
-      <a href="7dayai.html" class="hover:text-[#64ffda]" target="_blank">7Day-AI</a>
-      <a href="assets/pdf/cybersecurity-news.pdf" class="hover:text-[#64ffda]" target="_blank">Cyber-News</a>
-      <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
-      <a href="login.html" class="hover:text-[#64ffda]">Login</a>
+      <a href="projects.html" class="hover:text-[#64ffda] transition">Projects</a>
+      <a href="certifications.html" class="hover:text-[#64ffda] transition">Certifications</a>
+      <a href="assets/pdf/Kiran_Regmi_SOC_Analyst_Resume.pdf" target="_blank" class="hover:text-[#64ffda] transition">
+        Resume
+      </a>
+      <a href="contact.html" class="hover:text-[#64ffda] transition">Contact</a>
+      <a href="login.html" class="px-4 py-2 border border-[#64ffda] text-[#64ffda] rounded hover:bg-[#64ffda] hover:text-[#0a192f] transition">
+        Login
+      </a>
     </div>
 
     <!-- Mobile menu button -->
@@ -44,166 +183,482 @@
   <!-- MOBILE MENU -->
   <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#0a192f]">
     <div class="flex flex-col px-4 py-4 gap-3 text-sm">
-      <a href="7dayai.html" class="hover:text-[#64ffda]" target="_blank">7DayAI</a>
-      <a href="assets/pdf/cybersecurity-news.pdf" class="hover:text-[#64ffda]">Cyber-Newst</a>
-      <a href="/kids/login.html">Kids</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html">Login</a>
-      <a href="assets/pdf/kiranregmi-resume-soc.pdf" class="text-[#64ffda]" target="_blank">View Resume →</a>
+      <a href="projects.html" class="hover:text-[#64ffda]">Projects</a>
+      <a href="certifications.html" class="hover:text-[#64ffda]">Certifications</a>
+      <a href="contact.html" class="hover:text-[#64ffda]">Contact</a>
+      <a href="login.html" class="text-[#64ffda]">Login</a>
+      <a href="assets/pdf/Kiran_Regmi_SOC_Analyst_Resume.pdf" class="text-[#64ffda]" target="_blank">Download Resume →</a>
     </div>
   </div>
 </nav>
 
+<!-- MAIN CONTENT -->
+<main class="pt-20 pb-20 max-w-7xl mx-auto px-6 lg:px-12">
 
+  <!-- HERO SECTION -->
+  <section class="py-12 md:py-20 animate-fade-in-up">
+    <div class="grid lg:grid-cols-[300px_1fr] gap-12 items-center">
+      
+      <!-- Profile Image -->
+      <div class="flex justify-center lg:justify-start">
+        <img 
+          src="/assets/images/kiranregmi-headshot.png" 
+          alt="Kiran Regmi - SOC Analyst" 
+          class="w-64 h-64 rounded-2xl object-cover profile-img"
+        />
+      </div>
 
-<!-- MAIN -->
-<main class="pt-24 md:pt-28 pb-20 max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-[1.2fr_1.8fr] gap-10">
+      <!-- Hero Content -->
+      <div class="text-center lg:text-left">
+        <div class="inline-block px-4 py-1.5 mb-4 bg-[#64ffda]/10 border border-[#64ffda]/30 rounded-full text-[#64ffda] text-xs font-semibold uppercase tracking-wide">
+          🟢 Available for Immediate Hire
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-[#e6f1ff] mb-4">
+          Kiran Regmi
+        </h1>
+        
+        <h2 class="text-xl md:text-2xl text-[#64ffda] mb-6 gradient-text font-semibold">
+          SOC Analyst | Security Operations | Threat Detection
+        </h2>
+        
+        <p class="text-[#a8b2d1] text-base md:text-lg max-w-3xl mb-4">
+          Cybersecurity professional with hands-on experience in <strong class="text-[#e6f1ff]">SIEM monitoring (Splunk, QRadar), alert triage, phishing detection, and incident investigation</strong>. Ready to contribute immediately to Tier-1 SOC operations.
+        </p>
 
-  <!-- LEFT SIDEBAR (Desktop Hero) -->
-  <aside class="hidden lg:flex flex-col gap-4 sticky top-28">
+        <p class="text-sm text-[#8892b0] italic mb-8">
+          "Portfolio demonstrates production-ready SOC workflows, not just labs."
+        </p>
 
-    <h1 class="text-3xl font-semibold text-[#e6f1ff]">Kiran Regmi</h1>
+        <!-- Primary CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
+          <a href="https://calendly.com/kiranregmi" target="_blank" class="px-8 py-3 bg-[#64ffda] text-[#0a192f] rounded-lg font-semibold hover:bg-[#4dd4b8] transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-calendar-check"></i>
+            Schedule Interview
+          </a>
+          <a href="projects.html" class="px-8 py-3 border-2 border-[#64ffda] text-[#64ffda] rounded-lg font-semibold hover:bg-[#64ffda]/10 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved"></i>
+            View SOC Projects
+          </a>
+        </div>
 
-    <p class="text-[13.5px] text-[#a8b2d1]">Cybersecurity professional preparing for a Tier-1 SOC Analyst role, with hands-on experience in security monitoring, alert triage, identity misuse detection, and log analysis through practical labs and simulations.</p>
-    <p class="text-[13.5px] text-[#a8b2d1]">I bring a strong background in GRC and security documentation — including risk assessments, control validation, SOP development, and escalation-ready reporting — enabling a structured, process-driven approach to SOC operations.</p>
-    <p class="text-xs text-slate-400"><strong>Target roles:</strong> SOC Analyst · Blue Team · Security Operations</p>
-    <a href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank"class="text-[#64ffda] text-sm hover:underline mt-2">View My Resume →</a>
-
-    <hr class="border-slate-900 my-3">
-
-    <!-- Desktop Sidebar Quick Links -->
-    <div class="flex flex-col gap-2 text-sm">
-
-      <a href="skills.html" class="hover:text-[#64ffda]">--- Skills</a>
-      <a href="projects.html" class="hover:text-[#64ffda]">--- Projects</a>
-      <a href="certifications.html" class="hover:text-[#64ffda]">--- Certifications</a>
-    </div>
-
-    <hr class="border-slate-900 my-3">
-
-    <!-- Desktop Social Icons (larger now) -->
-    <div class="flex gap-6 pt-2 text-2xl text-[#8892b0]">
-      <a href="https://github.com/kiran-regmi" target="_blank"><i class="fa-brands fa-github hover:text-[#64ffda]"></i></a>
-      <a href="https://x.com/kiranimani" target="_blank"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
-      <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank"><i class="fa-brands fa-youtube hover:text-[#64ffda]"></i></a>
-      <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank"><i class="fa-brands fa-linkedin hover:text-[#64ffda]"></i></a>
-    </div>
-
-  </aside>
-
-
-
-  <!-- RIGHT CONTENT -->
-  <section class="space-y-10">
-
-    <!-- MOBILE HERO -->
-    <div class="lg:hidden bg-[#112240] border border-slate-700 rounded-xl p-6 text-center">
-      <h2 class="text-xl font-semibold text-[#e6f1ff]">Kiran Regmi</h2>
-      <p class="text-xs text-[#8892b0] mt-2 leading-relaxed">Cybersecurity professional preparing for a Tier-1 SOC Analyst role with hands-on experience in security monitoring, alert triage, identity misuse detection, and log analysis through labs and simulation.</p>
-      <a class="inline-block mt-4 px-4 py-2 bg-[#64ffda] rounded-md text-[#0a192f]" href="assets/pdf/kiranregmi-resume-soc.pdf" target="_blank">View Resume</a>
-
-      <div class="flex justify-center gap-8 mt-4 text-2xl text-[#8892b0]">
-        <a href="https://github.com/kiran-regmi"><i class="fa-brands fa-github hover:text-[#64ffda]"></i></a>
-        <a href="https://x.com/kiranimani"><i class="fa-brands fa-x-twitter hover:text-[#64ffda]"></i></a>
-        <a href="https://www.linkedin.com/in/kiran-regmi/"><i class="fa-brands fa-linkedin hover:text-[#64ffda]"></i></a>
+        <!-- Social Links - Enhanced -->
+        <div class="mb-4">
+          <p class="text-xs text-[#8892b0] uppercase tracking-wide mb-3">Connect With Me</p>
+          <div class="flex gap-4 justify-center lg:justify-start text-2xl">
+            <a href="https://github.com/kiran-regmi" target="_blank" class="social-icon text-[#8892b0] hover:text-[#64ffda] transition">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/kiran-regmi/" target="_blank" class="social-icon text-[#8892b0] hover:text-[#64ffda] transition">
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="https://x.com/kiranimani" target="_blank" class="social-icon text-[#8892b0] hover:text-[#64ffda] transition">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://www.youtube.com/@kiran-regmi-cyber-defense" target="_blank" class="social-icon text-[#8892b0] hover:text-[#64ffda] transition">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-
-
-
-    <!-- Hiring Manager -->
-    <div class="bg-[#112240] border border-teal-400/40 rounded-xl p-7">
-      <h3 class="text-teal-300 text-sm font-semibold uppercase tracking-wide mb-3">For Hiring Managers & Recruiters</h3>
-      
-      <p class="text-sm text-[#e6f1ff]">
-        This site demonstrates <strong>TIER-1 SOC-aligned security operations</strong>, including:
-        <p class="text-sm text-[#a8b2d1] mt-2">
-            <ul class="text-sm text-[#a8b2d1] mt-2 list-disc list-inside">
-              <li>Alert qualification and triage</li>
-              <li>Log correlation and validation</li>
-              <li>Identity misuse and authentication analysis</li>
-              <li>Escalation-ready documentation and reporting</li>
-            </ul>
-      <p class="text-sm text-[#a8b2d1] mt-2">
-        The projects below are <strong>not labs</strong> - they simulate real SOC workflows, decision-making, and process discipline expected in production environments.
-      <a href="projects.html"
-         class="inline-block w-full text-center mt-6 px-6 py-3 bg-[#64ffda] text-[#0a192f] font-semibold rounded-md">
-        View SOC Projects & Labs
-      </a>
-    </div>
-
-    <!-- SOC Mindset -->
-    <div class="bg-[#02101f] rounded-xl p-5 border-l-2 border-teal-400 text-xs">
-      <h4 class="text-[#e6f1ff] font-semibold mb-2">SOC Mindset</h4>
-      <p class="text-[#a8b2d1]">
-        Tier-1 drives operational stability — reducing noise for Tier-2/3 and preventing delays in real threats.
-      </p>
-      <p class="mt-2 text-[#a8b2d1]">
-        Strong shift handovers ensure 24/7 situational awareness with no dropped alerts.
-      </p>
-    </div>
-
-    <!-- SOC Projects -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-    <!-- Card 1 -->
-      <a href="projects.html#secure-interview-platform" class="block">
-        <div class="bg-[#112240] h-full border border-slate-800 rounded-xl p-6 flex flex-col justify-between">
-          <h4 class="text-sm text-[#e6f1ff] font-semibold">Secure Interview Practice Platform</h4>
-          <p class="text-[11px] text-teal-300 mt-1 uppercase tracking-wide">Secure · Role-based · SOC-Aligned </p>
-          <p class="text-[11px] text-[#8892b0] mt-3">Secure, role-based platform demonstrating how I approach SOC investigations — validating alerts, understanding context, documenting outcomes, and improving decision quality over time.</p>
-        </div>
-      </a>  
-
-      <!-- Card 2 -->
-      <a href="projects.html#ai-driven-cybersecurity" class="block">
-        <div class="bg-[#112240] h-full border border-slate-800 rounded-xl p-6 flex flex-col justify-between">
-          <h4 class="text-sm text-[#e6f1ff] font-semibold">AI Driven Cybersecurity</h4>
-          <p class="text-[11px] text-teal-300 mt-1 uppercase tracking-wide">Analyst-Assist · GRC & SOC Automation (in progress)</p>
-          <p class="text-[11px] text-[#8892b0] mt-3">Focused on applying AI to support analysts with correlation, documentation, and control validation — not replacing human decision-making.</p>
-        </div>
-      </a>
-
-      <!-- Card 3 -->
-      <a href="projects.html#traffic-monitoring" class="block">
-        <div class="bg-[#112240] h-full border border-slate-800 rounded-xl p-6 flex flex-col justify-between">
-          <h4 class="text-sm text-[#e6f1ff] font-semibold">Network Traffic Monitoring</h4>
-          <p class="text-[11px] text-teal-300 mt-1 uppercase tracking-wide">Network · Visibility  · SIEM · Indicators</p>
-          <p class="text-[11px] text-[#8892b0] mt-3">Analyzed suspicious traffic patterns for escalation.</p>
-        </div>
-      </a>
-    </div>
-      
-<!-- ================= GLOBAL FOOTER ================= -->
-<footer class="text-xs text-[#8892b0] border-t border-slate-800 pt-8 pb-10 mt-20 text-center">
-  <p>
-    Designed & Developed by <span class="text-[#64ffda]">Kiran Regmi</span> —
-    Deployed with Vercel · Powered by TailwindCSS · No paid resources used.
-  </p>
-  <p class="mt-2 text-[0.7rem] text-slate-500">
-    © 2025 kiranregmi.com · All rights reserved
-  </p>
-</footer>
-
   </section>
+
+  <!-- SOC MINDSET CALLOUT -->
+  <section class="py-8 animate-fade-in-up">
+    <div class="bg-gradient-to-r from-[#112240] to-[#0a192f] border-l-4 border-[#64ffda] rounded-lg p-8">
+      <h3 class="text-xl font-bold text-[#e6f1ff] mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-brain text-[#64ffda]"></i>
+        SOC Analyst Mindset
+      </h3>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <p class="text-[#a8b2d1] leading-relaxed">
+            <strong class="text-[#e6f1ff]">Tier-1 drives operational stability</strong> — reducing noise for Tier-2/3 and preventing delays in real threats. Every alert qualified properly saves senior analysts valuable time.
+          </p>
+        </div>
+        <div>
+          <p class="text-[#a8b2d1] leading-relaxed">
+            <strong class="text-[#e6f1ff]">Strong shift handovers ensure 24/7 situational awareness</strong> with no dropped alerts. Clear documentation and escalation protocols maintain continuous security posture.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS MATRIX -->
+  <section class="py-12 animate-fade-in-up">
+    <h3 class="text-2xl font-bold text-[#e6f1ff] mb-6 text-center">
+      <i class="fa-solid fa-laptop-code text-[#64ffda] mr-2"></i>
+      SOC Analyst Technical Skills
+    </h3>
+    
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-chart-line text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Splunk</div>
+        <div class="text-[0.65rem] text-[#8892b0]">SIEM</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-shield-halved text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">QRadar</div>
+        <div class="text-[0.65rem] text-[#8892b0]">IBM SIEM</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-brands fa-linux text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Linux</div>
+        <div class="text-[0.65rem] text-[#8892b0]">Red Hat</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-brands fa-windows text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Windows</div>
+        <div class="text-[0.65rem] text-[#8892b0]">AD/IAM</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-brands fa-aws text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">AWS</div>
+        <div class="text-[0.65rem] text-[#8892b0]">EC2/IAM</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-brands fa-microsoft text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Azure</div>
+        <div class="text-[0.65rem] text-[#8892b0]">Cloud</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-network-wired text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Networking</div>
+        <div class="text-[0.65rem] text-[#8892b0]">TCP/IP</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-ticket text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Jira</div>
+        <div class="text-[0.65rem] text-[#8892b0]">Ticketing</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-bug text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Vulnerability</div>
+        <div class="text-[0.65rem] text-[#8892b0]">Management</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-envelope text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Phishing</div>
+        <div class="text-[0.65rem] text-[#8892b0]">Analysis</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-code text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Scripting</div>
+        <div class="text-[0.65rem] text-[#8892b0]">Python/Bash</div>
+      </div>
+
+      <div class="skill-badge bg-[#112240] border border-slate-700 rounded-lg p-4 text-center hover:border-[#64ffda]">
+        <i class="fa-solid fa-book text-2xl text-[#64ffda] mb-2"></i>
+        <div class="text-xs font-semibold text-[#e6f1ff]">Documentation</div>
+        <div class="text-[0.65rem] text-[#8892b0]">SOPs</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS SHOWCASE - Links to actual PDFs -->
+  <section class="py-12 animate-fade-in-up">
+    <h3 class="text-2xl font-bold text-[#e6f1ff] mb-2 text-center">
+      <i class="fa-solid fa-certificate text-[#64ffda] mr-2"></i>
+      Professional Certifications
+    </h3>
+    <p class="text-center text-sm text-[#8892b0] mb-8">8 Industry-Recognized Credentials • Click to view certificate</p>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      
+      <!-- CompTIA Security+ -->
+      <a href="assets/pdf/comptia-securityplus.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">🛡️</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">Security+</div>
+        <div class="text-xs text-[#64ffda] mt-1">CompTIA</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">Mar 2025</div>
+        <div class="text-[0.65rem] text-[#8892b0]">Exp: Mar 2028</div>
+      </a>
+
+      <!-- Splunk -->
+      <a href="assets/pdf/splunk-bootcamp.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">📊</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">Splunk SIEM</div>
+        <div class="text-xs text-[#64ffda] mt-1">Bootcamp</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">Dec 2025</div>
+        <div class="text-[0.65rem] text-[#8892b0]">5 CPE Hours</div>
+      </a>
+
+      <!-- Cisco CCST -->
+      <a href="assets/pdf/cisco-network.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">🌐</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">CCST</div>
+        <div class="text-xs text-[#64ffda] mt-1">Cisco Networking</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">Mar 2025</div>
+      </a>
+
+      <!-- Azure -->
+      <a href="assets/pdf/microsoft-azure.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">☁️</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">Azure</div>
+        <div class="text-xs text-[#64ffda] mt-1">Microsoft</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">Apr 2025</div>
+      </a>
+
+      <!-- Microsoft 365 -->
+      <a href="assets/pdf/microsoft-365.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">💼</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">365 Fundamentals</div>
+        <div class="text-xs text-[#64ffda] mt-1">Microsoft</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">May 2025</div>
+      </a>
+
+      <!-- ISC2 NIST -->
+      <a href="assets/pdf/isc2-nist.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">🔐</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">NIST CSF 2.0</div>
+        <div class="text-xs text-[#64ffda] mt-1">ISC2</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">Dec 2024</div>
+      </a>
+
+      <!-- GRC -->
+      <a href="assets/pdf/grc-mastery.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">📋</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">GRC Mastery</div>
+        <div class="text-xs text-[#64ffda] mt-1">GRC Program</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">Jul 2025</div>
+      </a>
+
+      <!-- IT Auditing -->
+      <a href="assets/pdf/it-grc-bootcamp.pdf" target="_blank" class="cert-card bg-[#112240] border border-slate-700 rounded-lg p-5 text-center hover:border-[#64ffda]">
+        <div class="text-3xl mb-2">🔍</div>
+        <div class="text-sm font-bold text-[#e6f1ff]">IT Auditing</div>
+        <div class="text-xs text-[#64ffda] mt-1">GRC Bootcamp</div>
+        <div class="text-[0.65rem] text-[#8892b0] mt-2">Dec 2025</div>
+        <div class="text-[0.65rem] text-[#8892b0]">5 CPE Hours</div>
+      </a>
+
+    </div>
+
+    <div class="text-center mt-6">
+      <a href="certifications.html" class="text-[#64ffda] text-sm hover:underline">
+        View All Certification Details →
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURED SOC PROJECTS -->
+  <section class="py-12 animate-fade-in-up">
+    <h3 class="text-2xl font-bold text-[#e6f1ff] mb-8 text-center">
+      <i class="fa-solid fa-folder-open text-[#64ffda] mr-2"></i>
+      Featured SOC Projects
+    </h3>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <!-- Project 1 -->
+      <a href="projects.html#secure-interview-platform" class="block group">
+        <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 h-full hover:border-[#64ffda] transition">
+          <div class="flex items-start justify-between mb-3">
+            <i class="fa-solid fa-shield-halved text-2xl text-[#64ffda]"></i>
+            <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#64ffda] transition"></i>
+          </div>
+          <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">Secure Interview Platform</h4>
+          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">Secure · Role-Based · SOC-Aligned</p>
+          <p class="text-sm text-[#a8b2d1] leading-relaxed">
+            Demonstrates alert validation, context gathering, decision documentation, and how I approach SOC investigations with role-based access control.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">JWT Auth</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">RBAC</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Node.js</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 2 -->
+      <a href="projects.html#ai-driven-cybersecurity" class="block group">
+        <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 h-full hover:border-[#64ffda] transition">
+          <div class="flex items-start justify-between mb-3">
+            <i class="fa-solid fa-robot text-2xl text-[#64ffda]"></i>
+            <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#64ffda] transition"></i>
+          </div>
+          <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">AI-Driven Cybersecurity</h4>
+          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">Analyst-Assist · Automation (In Progress)</p>
+          <p class="text-sm text-[#a8b2d1] leading-relaxed">
+            Applying AI to support analysts with log correlation, documentation automation, and control validation—not replacing human decision-making.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">AI/ML</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Python</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Automation</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 3 -->
+      <a href="projects.html#traffic-monitoring" class="block group">
+        <div class="bg-[#112240] border border-slate-700 rounded-xl p-6 h-full hover:border-[#64ffda] transition">
+          <div class="flex items-start justify-between mb-3">
+            <i class="fa-solid fa-network-wired text-2xl text-[#64ffda]"></i>
+            <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#64ffda] transition"></i>
+          </div>
+          <h4 class="text-lg font-semibold text-[#e6f1ff] mb-2">Network Traffic Monitoring</h4>
+          <p class="text-xs text-[#64ffda] mb-3 uppercase tracking-wide">Network · SIEM · Indicators</p>
+          <p class="text-sm text-[#a8b2d1] leading-relaxed">
+            Analyzed suspicious traffic patterns, identified indicators of compromise, and documented findings for escalation to Tier-2.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">Wireshark</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">PCAP</span>
+            <span class="px-2 py-1 bg-[#64ffda]/10 text-[#64ffda] rounded text-xs">IOCs</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="text-center mt-8">
+      <a href="projects.html" class="inline-block px-8 py-3 border-2 border-[#64ffda] text-[#64ffda] rounded-lg font-semibold hover:bg-[#64ffda]/10 transition">
+        View All SOC Projects →
+      </a>
+    </div>
+  </section>
+
+  <!-- QUICK STATS -->
+  <section class="py-12 animate-fade-in-up">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      
+      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1">8</div>
+        <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">Certifications</div>
+      </div>
+
+      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1">10+</div>
+        <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">GitHub Projects</div>
+      </div>
+
+      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1">100%</div>
+        <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">Documentation</div>
+      </div>
+
+      <div class="bg-[#112240] border border-slate-700 rounded-lg p-6 text-center">
+        <div class="text-3xl font-bold text-[#64ffda] mb-1">24/7</div>
+        <div class="text-xs text-[#a8b2d1] uppercase tracking-wide">Response Ready</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GITHUB ACTIVITY -->
+  <section class="py-12 animate-fade-in-up">
+    <div class="bg-[#112240] border border-slate-700 rounded-xl p-8 text-center">
+      <h3 class="text-xl font-bold text-[#e6f1ff] mb-4">
+        <i class="fa-brands fa-github text-[#64ffda] mr-2"></i>
+        Active on GitHub
+      </h3>
+      <p class="text-sm text-[#a8b2d1] mb-6">
+        Building security tools, documenting SOC workflows, and contributing to cybersecurity projects.
+      </p>
+      <a href="https://github.com/kiran-regmi" target="_blank" class="inline-block px-8 py-3 bg-[#64ffda] text-[#0a192f] rounded-lg font-semibold hover:bg-[#4dd4b8] transition">
+        <i class="fa-brands fa-github mr-2"></i>
+        View My GitHub Profile
+      </a>
+    </div>
+  </section>
+
 </main>
 
+<!-- FOOTER -->
+<footer class="text-xs text-[#8892b0] border-t border-slate-800 py-8 mt-20 text-center">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="mb-2">
+      Designed & Developed by <span class="text-[#64ffda] font-semibold">Kiran Regmi</span>
+    </p>
+    <p class="text-[0.7rem] text-slate-500">
+      Deployed with Vercel · Secured with JWT/OAuth · Powered by TailwindCSS
+    </p>
+    <p class="mt-4 text-[0.7rem] text-slate-500">
+      © 2026 kiranregmi.com · All rights reserved
+    </p>
+    <p class="mt-2 text-[0.7rem] text-[#64ffda]">
+      Response Time: Within 24 hours
+    </p>
+  </div>
+</footer>
+
 <!-- MOBILE BOTTOM NAV -->
-<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#112240] border-t border-slate-700 p-3 flex justify-around text-xs">
-  <a href="labs.html" class="hover:text-[#64ffda]">Labs</a>
-  <a href="skills.html" class="hover:text-[#64ffda]">Skills</a>
-  <a href="projects.html" class="hover:text-[#64ffda]">Projects</a>
-  <a href="certifications.html" class="hover:text-[#64ffda]">Certs</a>
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#112240] border-t border-slate-700 p-3 flex justify-around text-xs z-40">
+  <a href="skills.html" class="hover:text-[#64ffda] flex flex-col items-center gap-1">
+    <i class="fa-solid fa-laptop-code"></i>
+    <span>Skills</span>
+  </a>
+  <a href="projects.html" class="hover:text-[#64ffda] flex flex-col items-center gap-1">
+    <i class="fa-solid fa-folder-open"></i>
+    <span>Projects</span>
+  </a>
+  <a href="certifications.html" class="hover:text-[#64ffda] flex flex-col items-center gap-1">
+    <i class="fa-solid fa-certificate"></i>
+    <span>Certs</span>
+  </a>
+  <a href="contact.html" class="hover:text-[#64ffda] flex flex-col items-center gap-1">
+    <i class="fa-solid fa-envelope"></i>
+    <span>Contact</span>
+  </a>
 </nav>
 
 <script>
+  // Mobile menu toggle
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
-  mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+  
+  mobileMenuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Add fade-in animation on scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'all 0.6s ease-out';
+    observer.observe(el);
+  });
 </script>
 
-<!-- Voice Agent Widget -->
-
-<script src="https://YOUR-SERVER-URL.com/widget.js"></script>
 </body>
 </html>
