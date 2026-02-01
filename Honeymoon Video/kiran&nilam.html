@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiran & Nilam - Our Honeymoon Journey</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #000;
+      overflow: hidden;
+      color: white;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .slide img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      animation: kenBurns 12s ease-in-out;
+      filter: brightness(0.9) contrast(1.1);
+    }
+
+    /* Ken Burns Effect - Different for each slide */
+    @keyframes kenBurns {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1.05); }
+    }
+
+    .slide:nth-child(even) img {
+      animation: kenBurnsAlt 12s ease-in-out;
+    }
+
+    @keyframes kenBurnsAlt {
+      0% { transform: scale(1.1) translateX(0); }
+      50% { transform: scale(1.2) translateX(-20px); }
+      100% { transform: scale(1.05) translateX(-10px); }
+    }
+
+    /* Text Overlays */
+    .text-overlay {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      padding: 20px 40px;
+      border-radius: 15px;
+      animation: fadeInUp 1.5s ease-out;
+      max-width: 90%;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .text-overlay h1 {
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #ff6b9d, #feca57);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .text-overlay h2 {
+      font-size: clamp(1rem, 3vw, 2rem);
+      margin-bottom: 8px;
+      color: #feca57;
+      font-style: italic;
+    }
+
+    .text-overlay p {
+      font-size: clamp(0.9rem, 2vw, 1.3rem);
+      color: #ecf0f1;
+      line-height: 1.6;
+      margin: 5px 0;
+    }
+
+    .text-overlay .location {
+      font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+      color: #3498db;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .text-overlay .date {
+      font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      color: #95a5a6;
+      margin-top: 3px;
+    }
+
+    /* Opening Title Screen */
+    .title-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      animation: titleFadeOut 3s ease-in-out 2s forwards;
+    }
+
+    @keyframes titleFadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    .title-screen h1 {
+      font-size: clamp(2rem, 6vw, 5rem);
+      margin-bottom: 20px;
+      animation: titlePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes titlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .title-screen .names {
+      font-size: clamp(1.5rem, 4vw, 3.5rem);
+      margin: 20px 0;
+      font-style: italic;
+      color: #feca57;
+    }
+
+    .title-screen .subtitle {
+      font-size: clamp(1rem, 3vw, 2rem);
+      color: #ecf0f1;
+    }
+
+    .title-screen .heart {
+      font-size: clamp(2rem, 5vw, 4rem);
+      animation: heartBeat 1.5s ease-in-out infinite;
+      color: #e74c3c;
+      margin: 20px 0;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.2); }
+      50% { transform: scale(1); }
+    }
+
+    /* Ending Screen */
+    .ending-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a192f 0%, #112240 50%, #1a1f3a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 5;
+    }
+
+    .ending-screen.active {
+      animation: endingFadeIn 3s ease-in-out forwards;
+    }
+
+    @keyframes endingFadeIn {
+      to { opacity: 1; visibility: visible; }
+    }
+
+    .ending-screen h1 {
+      font-size: clamp(1.8rem, 5vw, 4rem);
+      margin-bottom: 30px;
+      color: #64ffda;
+    }
+
+    .ending-screen .message {
+      font-size: clamp(1.2rem, 3.5vw, 2.5rem);
+      font-style: italic;
+      color: #feca57;
+      margin: 20px 0;
+      text-align: center;
+      max-width: 80%;
+    }
+
+    .ending-screen .signature {
+      font-size: clamp(1rem, 2.5vw, 1.8rem);
+      color: #ecf0f1;
+      margin-top: 40px;
+    }
+
+    /* Music Player UI */
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 15px 20px;
+      border-radius: 30px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 2px solid #64ffda;
+    }
+
+    .music-player button {
+      background: linear-gradient(135deg, #64ffda, #00d4ff);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: #0a192f;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .music-player button:hover {
+      transform: scale(1.1);
+    }
+
+    .music-player .info {
+      font-size: 12px;
+      color: #64ffda;
+    }
+
+    /* Instructions Overlay */
+    .instructions {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px 30px;
+      border-radius: 10px;
+      z-index: 100;
+      text-align: center;
+      animation: fadeOut 5s ease-in-out 3s forwards;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    .instructions p {
+      font-size: 14px;
+      color: #64ffda;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, #64ffda, #feca57, #ff6b9d);
+      z-index: 101;
+      transition: width 0.1s linear;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Instructions -->
+<div class="instructions">
+  <p>🎵 Click play button to add music | 📹 Press F11 for fullscreen</p>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Opening Title Screen -->
+<div class="title-screen">
+  <h1>❤️ Our Honeymoon Journey ❤️</h1>
+  <div class="names">Kiran & Nilam</div>
+  <div class="heart">💕</div>
+  <div class="subtitle">Sikkim & Darjeeling</div>
+  <div class="subtitle" style="margin-top: 10px;">Summer 2015</div>
+</div>
+
+<!-- Slideshow Container -->
+<div class="slideshow-container" id="slideshow">
+  
+  <!-- Slide 1: Pokhara Lake - Boat -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/pokharalake-ship.jpg" alt="Pokhara Lake">
+    <div class="text-overlay">
+      <h2>हाम्रो यात्रा सुरु</h2>
+      <p>Life jackets लगाएर, साथ साथ</p>
+      <p class="location">📍 Pokhara Lake, Nepal</p>
+      <p class="date">Summer 2015</p>
+    </div>
+  </div>
+
+  <!-- Slide 2: Tea Garden Main -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/tea-garden-main.JPG" alt="Tea Garden">
+    <div class="text-overlay">
+      <h2>चिया बगानमा</h2>
+      <p>Traditional Nepali dress मा, यादगार पल</p>
+      <p class="location">📍 Darjeeling Tea Gardens</p>
+      <p class="date">The hills called us home</p>
+    </div>
+  </div>
+
+  <!-- Slide 3: Train Station -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/at-train-station.JPG" alt="Train Station">
+    <div class="text-overlay">
+      <h2>Railway Romance</h2>
+      <p>Hand in hand, journey को हरेक पल</p>
+      <p class="location">📍 Heritage Railway, Darjeeling</p>
+      <p class="date">Our path together</p>
+    </div>
+  </div>
+
+  <!-- Slide 4: Tea Garden Nilam Portrait -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/tea-garden-nilam.JPG" alt="Nilam in Tea Garden">
+    <div class="text-overlay">
+      <h2>मेरो साथी, मेरो जीवन</h2>
+      <p>Basket संग, smile संग</p>
+      <p class="location">📍 Tea Picking Experience</p>
+      <p class="date">Nilam's radiant smile</p>
+    </div>
+  </div>
+
+  <!-- Slide 5: Night Out 1 -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/night-out1.JPG" alt="Night Market">
+    <div class="text-overlay">
+      <h2>Evening Lights</h2>
+      <p>City lights र हाम्रो प्यार</p>
+      <p class="location">📍 Night Market, Gangtok</p>
+      <p class="date">Under the city lights</p>
+    </div>
+  </div>
+
+  <!-- Slide 6: IMG_0930 (Night Out 2) -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/IMG_0930.JPG" alt="Evening Together">
+    <div class="text-overlay">
+      <h2>साँझको मिठास</h2>
+      <p>Together in the gentle evening</p>
+      <p class="location">📍 MG Marg, Gangtok</p>
+      <p class="date">Romantic evenings</p>
+    </div>
+  </div>
+
+  <!-- Slide 7: Sikkim Tourism -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/sikkim-tourism.JPG" alt="Sikkim Tourism">
+    <div class="text-overlay">
+      <h2>Playful Moments</h2>
+      <p>हाँसो, खुशी, र मज्जा</p>
+      <p class="location">📍 Sikkim Tourism Spot</p>
+      <p class="date">Making memories</p>
+    </div>
+  </div>
+
+  <!-- Slide 8: Fewa Lake 4 -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/fewa-lake4.JPG" alt="Fewa Lake">
+    <div class="text-overlay">
+      <h2>Lake of Love</h2>
+      <p>शान्त पानी, शान्त मन</p>
+      <p class="location">📍 Fewa Lake, Pokhara</p>
+      <p class="date">Peaceful reflections</p>
+    </div>
+  </div>
+
+  <!-- Slide 9: At Fewa Lake -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/at-fewa-lake.JPG" alt="At Fewa Lake">
+    <div class="text-overlay">
+      <h2>Together by the Water</h2>
+      <p>तिका लगाएर, सधैं संगै</p>
+      <p class="location">📍 Fewa Lake Shore</p>
+      <p class="date">Blessed moments</p>
+    </div>
+  </div>
+
+  <!-- Slide 10: IMG_1134 (Fewa Lake with Child) -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/IMG_1134.JPG" alt="Family at Lake">
+    <div class="text-overlay">
+      <h2>परिवार, प्यार, खुशी</h2>
+      <p>नयाँ सुरुवात, नयाँ आशा</p>
+      <p class="location">📍 Fewa Lake, Pokhara</p>
+      <p class="date">Family beginning</p>
+    </div>
+  </div>
+
+  <!-- Slide 11: Carrying Nilam -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/carrying-nilam.JPG" alt="Carrying Nilam">
+    <div class="text-overlay">
+      <h1>❤️</h1>
+      <p>तिमीलाई बोकेर, जहाँ पनि जानेछु</p>
+      <p class="location">📍 Mountain Trail</p>
+      <p class="date">Carrying you forever</p>
+    </div>
+  </div>
+
+  <!-- Slide 12: Fewa Lake Profile -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/fewa-lake-profile.JPG" alt="Nilam Profile">
+    <div class="text-overlay">
+      <h2>मेरो चन्द्रमा</h2>
+      <p>Nilam - My silent love</p>
+      <p class="location">📍 Fewa Lake</p>
+      <p class="date">Beauty by the lake</p>
+    </div>
+  </div>
+
+  <!-- Slide 13: Darjeeling Profile -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/darjeeling-profile-nilam.jpg" alt="Darjeeling Portrait">
+    <div class="text-overlay">
+      <h2>पहाडकी रानी</h2>
+      <p>Traditional grace, timeless beauty</p>
+      <p class="location">📍 Darjeeling Hills</p>
+      <p class="date">Forever in my heart</p>
+    </div>
+  </div>
+
+  <!-- Slide 14: Final Together Photo -->
+  <div class="slide">
+    <img src="/mnt/user-data/uploads/fewa-lake4.JPG" alt="Forever Together">
+    <div class="text-overlay">
+      <h1>सधैं संगै ❤️</h1>
+      <p>Kiran & Nilam</p>
+      <p>Summer 2015 - Forever</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Ending Screen -->
+<div class="ending-screen" id="endingScreen">
+  <h1>💕 Sikkim & Darjeeling 💕</h1>
+  <div class="message">"To my silent love..."</div>
+  <div class="message" style="font-size: clamp(1rem, 2.5vw, 1.8rem); margin-top: 20px;">
+    हाम्रो honeymoon को यादहरु<br>
+    सधैं मनमा रहनेछन्
+  </div>
+  <div class="signature">
+    ~ Kiran ~<br>
+    Summer 2015
+  </div>
+  <div style="margin-top: 40px; font-size: clamp(0.9rem, 2vw, 1.5rem); color: #95a5a6;">
+    Created with Love ❤️
+  </div>
+</div>
+
+<!-- Music Player UI -->
+<div class="music-player">
+  <button onclick="toggleMusic()" id="musicBtn">▶️</button>
+  <div class="info">
+    <div>Add Your Music</div>
+    <div style="font-size: 10px;">Background song</div>
+  </div>
+</div>
+
+<script>
+// Slideshow Configuration
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+const slideDuration = 12000; // 12 seconds per slide
+const totalDuration = totalSlides * slideDuration + 5000; // +5s for ending
+let currentSlide = 0;
+let startTime = Date.now();
+
+// Progress Bar
+const progressBar = document.getElementById('progressBar');
+
+function updateProgress() {
+  const elapsed = Date.now() - startTime;
+  const progress = Math.min((elapsed / totalDuration) * 100, 100);
+  progressBar.style.width = progress + '%';
+  
+  if (progress < 100) {
+    requestAnimationFrame(updateProgress);
+  }
+}
+
+// Start progress bar after title screen
+setTimeout(() => {
+  startTime = Date.now();
+  updateProgress();
+}, 5000);
+
+// Slideshow Logic
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    if (i === index) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+}
+
+function nextSlide() {
+  currentSlide++;
+  if (currentSlide < totalSlides) {
+    showSlide(currentSlide);
+    setTimeout(nextSlide, slideDuration);
+  } else {
+    // Show ending screen
+    setTimeout(() => {
+      document.getElementById('endingScreen').classList.add('active');
+    }, 2000);
+  }
+}
+
+// Start slideshow after title screen (5 seconds)
+setTimeout(() => {
+  showSlide(0);
+  setTimeout(nextSlide, slideDuration);
+}, 5000);
+
+// Music Player (Placeholder - User adds their own music)
+let musicPlaying = false;
+
+function toggleMusic() {
+  const btn = document.getElementById('musicBtn');
+  
+  if (!musicPlaying) {
+    btn.textContent = '⏸️';
+    musicPlaying = true;
+    alert('Please add your background music:\n\n1. Right-click this page\n2. Select "Inspect" or press F12\n3. In Console, paste:\n\nconst audio = new Audio("YOUR_MUSIC_FILE.mp3");\naudio.loop = true;\naudio.play();\n\nOr use Windows "Stereo Mix" to record with background music playing.');
+  } else {
+    btn.textContent = '▶️';
+    musicPlaying = false;
+  }
+}
+
+// Auto-fullscreen suggestion
+setTimeout(() => {
+  console.log('💡 Tip: Press F11 for fullscreen experience!');
+}, 3000);
+
+// Keyboard controls
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+});
+
+console.log('%c❤️ Kiran & Nilam - Honeymoon Memories ❤️', 'font-size: 20px; color: #ff6b9d; font-weight: bold;');
+console.log('%cTo add music: Play your favorite romantic song in background while recording this page.', 'font-size: 14px; color: #64ffda;');
+console.log('%cTo record: Use OBS Studio, Windows Game Bar (Win+G), or screen recorder.', 'font-size: 14px; color: #feca57;');
+</script>
+
+</body>
+</html>
