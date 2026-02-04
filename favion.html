@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KR Favicon Generator</title>
+    <style>
+        body {
+            background: #0a192f;
+            color: #64ffda;
+            font-family: 'Courier New', monospace;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .preview-section {
+            background: #112240;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #64ffda;
+        }
+        
+        h2 {
+            margin-top: 0;
+            color: #64ffda;
+        }
+        
+        .preview-grid {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .preview-item {
+            text-align: center;
+        }
+        
+        .preview-item label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        
+        canvas {
+            border: 1px solid #64ffda;
+            background: white;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        
+        .dark-bg {
+            background: #0a192f !important;
+        }
+        
+        .download-section {
+            margin-top: 20px;
+        }
+        
+        button {
+            background: #64ffda;
+            color: #0a192f;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        button:hover {
+            background: #52e6c6;
+        }
+        
+        .code-section {
+            background: #112240;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #64ffda;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        pre {
+            background: #0a192f;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        
+        code {
+            color: #64ffda;
+        }
+        
+        .info {
+            color: #8892b0;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>KR Favicon Generator</h1>
+    
+    <div class="preview-section">
+        <h2>Preview</h2>
+        <div class="preview-grid">
+            <div class="preview-item">
+                <label>16x16 (actual size)</label>
+                <canvas id="favicon16" width="16" height="16"></canvas>
+            </div>
+            <div class="preview-item">
+                <label>16x16 (8x scaled)</label>
+                <canvas id="favicon16-large" width="128" height="128"></canvas>
+            </div>
+            <div class="preview-item">
+                <label>32x32 (actual size)</label>
+                <canvas id="favicon32" width="32" height="32"></canvas>
+            </div>
+            <div class="preview-item">
+                <label>32x32 (4x scaled)</label>
+                <canvas id="favicon32-large" width="128" height="128"></canvas>
+            </div>
+        </div>
+        <div class="preview-grid" style="margin-top: 20px;">
+            <div class="preview-item">
+                <label>16x16 on dark</label>
+                <canvas id="favicon16-dark" width="16" height="16" class="dark-bg"></canvas>
+            </div>
+            <div class="preview-item">
+                <label>16x16 on dark (8x)</label>
+                <canvas id="favicon16-dark-large" width="128" height="128" class="dark-bg"></canvas>
+            </div>
+        </div>
+        
+        <div class="download-section">
+            <button onclick="downloadFavicon(16)">Download 16x16</button>
+            <button onclick="downloadFavicon(32)">Download 32x32</button>
+            <button onclick="downloadAllSizes()">Download All Sizes</button>
+        </div>
+        <p class="info">✓ Optimized for browser tabs and bookmarks</p>
+    </div>
+
+    <div class="code-section">
+        <h2>HTML Implementation Code</h2>
+        <pre><code>&lt;!-- Add these to your &lt;head&gt; section --&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
+&lt;link rel="shortcut icon" href="/favicon.ico"&gt;</code></pre>
+    </div>
+
+    <script>
+        // Draw 16x16 favicon
+        function drawFavicon16(canvasId, scale = 1, darkBg = false) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Background
+            if (darkBg) {
+                ctx.fillStyle = '#0a192f';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            const size = 16;
+            const s = scale;
+            
+            // Border circle
+            ctx.strokeStyle = '#64ffda';
+            ctx.lineWidth = 1 * s;
+            ctx.beginPath();
+            ctx.arc(8 * s, 8 * s, 6.5 * s, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // K letter
+            ctx.fillStyle = '#64ffda';
+            ctx.font = `bold ${9 * s}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('K', 5.5 * s, 8 * s);
+            
+            // R letter
+            ctx.fillText('R', 10.5 * s, 8 * s);
+        }
+        
+        // Draw 32x32 favicon
+        function drawFavicon32(canvasId, scale = 1) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const s = scale;
+            
+            // Border circle
+            ctx.strokeStyle = '#64ffda';
+            ctx.lineWidth = 2 * s;
+            ctx.beginPath();
+            ctx.arc(16 * s, 16 * s, 13 * s, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // K letter
+            ctx.fillStyle = '#64ffda';
+            ctx.font = `bold ${18 * s}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('K', 11 * s, 16 * s);
+            
+            // R letter
+            ctx.fillText('R', 21 * s, 16 * s);
+        }
+        
+        // Initial draw
+        drawFavicon16('favicon16', 1);
+        drawFavicon16('favicon16-large', 8);
+        drawFavicon16('favicon16-dark', 1, true);
+        drawFavicon16('favicon16-dark-large', 8, true);
+        drawFavicon32('favicon32', 1);
+        drawFavicon32('favicon32-large', 4);
+        
+        // Download function
+        function downloadFavicon(size) {
+            // Create a temporary canvas for the download
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = size;
+            tempCanvas.height = size;
+            const ctx = tempCanvas.getContext('2d');
+            
+            if (size === 16) {
+                // Draw on white background
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, size, size);
+                
+                // Border circle
+                ctx.strokeStyle = '#64ffda';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(8, 8, 6.5, 0, 2 * Math.PI);
+                ctx.stroke();
+                
+                // K letter
+                ctx.fillStyle = '#64ffda';
+                ctx.font = 'bold 9px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('K', 5.5, 8);
+                
+                // R letter
+                ctx.fillText('R', 10.5, 8);
+            } else if (size === 32) {
+                // Draw on white background
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, size, size);
+                
+                // Border circle
+                ctx.strokeStyle = '#64ffda';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(16, 16, 13, 0, 2 * Math.PI);
+                ctx.stroke();
+                
+                // K letter
+                ctx.fillStyle = '#64ffda';
+                ctx.font = 'bold 18px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('K', 11, 16);
+                
+                // R letter
+                ctx.fillText('R', 21, 16);
+            }
+            
+            // Download
+            tempCanvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `favicon-${size}x${size}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+        
+        function downloadAllSizes() {
+            setTimeout(() => downloadFavicon(16), 100);
+            setTimeout(() => downloadFavicon(32), 300);
+            alert('Downloading all favicon sizes...');
+        }
+    </script>
+</body>
+</html>
