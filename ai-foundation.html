@@ -106,79 +106,53 @@
             background: #667eea;
             border-radius: 10px;
         }
-
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #667eea;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-gray-900">KR</a>
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-14">
+                <a href="index.html" class="text-xl font-bold text-gray-900 hover:text-gray-700">KR</a>
+                <div class="hidden md:flex items-center space-x-6 text-sm">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 transition">Home</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-gray-900 transition">Projects</a>
+                    <a href="certifications.html" class="text-gray-600 hover:text-gray-900 transition">Certifications</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition">Contact</a>
+                    <a href="login.html" class="text-gray-600 hover:text-gray-900 transition">Login</a>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="projects.html" class="nav-link text-gray-700 hover:text-gray-900">Projects</a>
-                    <a href="certifications.html" class="nav-link text-gray-700 hover:text-gray-900">Certifications</a>
-                    <a href="contact.html" class="nav-link text-gray-700 hover:text-gray-900">Contact</a>
-                    <a href="dashboard.html" class="nav-link text-gray-700 hover:text-gray-900">Dashboard</a>
-                </div>
-                <a href="index.html" class="text-gray-600 hover:text-gray-900">
-                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
-                </a>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="gradient-bg text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="gradient-bg text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
             <div class="text-center">
-                <div class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-                    <span class="text-sm font-semibold">🤖 AI Foundation Series</span>
-                </div>
-                <h1 class="text-5xl md:text-6xl font-bold mb-6">
-                    Master AI in Just<br>5 Minutes Daily
-                </h1>
-                <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-                    From basic concepts to transformer architecture - a comprehensive 22-day journey designed for SOC analysts transitioning into AI-enhanced security operations
+                <h1 class="text-4xl font-bold mb-3">AI Foundation</h1>
+                <p class="text-lg text-white/90 mb-6 max-w-2xl mx-auto">
+                    Learn AI fundamentals in just 5 minutes daily - a 22-day journey for SOC analysts
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
-                        <i class="fas fa-calendar-check text-2xl mr-3"></i>
+                <div class="flex flex-wrap gap-3 justify-center items-center">
+                    <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
+                        <i class="fas fa-calendar-check text-lg mr-2"></i>
                         <div class="text-left">
-                            <div class="text-sm opacity-90">Progress</div>
-                            <div class="text-xl font-bold" id="progress-display">0/22 Days</div>
+                            <div class="text-xs opacity-90">Progress</div>
+                            <div class="text-base font-bold" id="progress-display">0/22 Days</div>
                         </div>
                     </div>
-                    <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
-                        <i class="fas fa-clock text-2xl mr-3"></i>
+                    <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
+                        <i class="fas fa-clock text-lg mr-2"></i>
                         <div class="text-left">
-                            <div class="text-sm opacity-90">Time Investment</div>
-                            <div class="text-xl font-bold">5 min/day</div>
+                            <div class="text-xs opacity-90">Time Investment</div>
+                            <div class="text-base font-bold">5 min/day</div>
                         </div>
                     </div>
-                    <button onclick="resetProgress()" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg px-6 py-3 transition">
-                        <i class="fas fa-redo mr-2"></i>Reset Progress
+                    <button onclick="resetProgress()" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg px-4 py-2 transition text-sm">
+                        <i class="fas fa-redo mr-1"></i>Reset Progress
                     </button>
                 </div>
             </div>
@@ -186,8 +160,8 @@
     </section>
 
     <!-- Main Content -->
-    <section class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="py-8">
+        <div class="max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
@@ -285,11 +259,11 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-gray-400">Designed & Developed by Kiran Regmi</p>
-            <p class="text-gray-500 text-sm mt-2">Deployed with Vercel · Secured with JWT/OAuth · Powered by TailwindCSS</p>
-            <p class="text-gray-500 text-sm mt-2">© 2026 kiranregmi.com · All rights reserved</p>
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm">Designed & Developed by Kiran Regmi</p>
+            <p class="text-gray-500 text-xs mt-1">Deployed with Vercel · Secured with JWT/OAuth · Powered by TailwindCSS</p>
+            <p class="text-gray-500 text-xs mt-1">© 2026 kiranregmi.com · All rights reserved</p>
         </div>
     </footer>
 
