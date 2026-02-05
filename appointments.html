@@ -67,10 +67,31 @@
         }
 
         .date-box {
-            min-width: 80px;
+            min-width: 70px;
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        @media (max-width: 640px) {
+            .date-box {
+                min-width: 60px;
+            }
+            
+            .day-number {
+                font-size: 2rem;
+                padding: 4px 0;
+            }
+            
+            .month-badge {
+                font-size: 0.65rem;
+                padding: 3px;
+            }
+            
+            .year-label {
+                font-size: 0.75rem;
+                padding-bottom: 4px;
+            }
         }
 
         .appointment-details {
@@ -102,6 +123,19 @@
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+                margin: 0.5rem;
+            }
+            
+            .modal {
+                padding: 0.5rem;
+            }
         }
 
         .form-group {
@@ -227,25 +261,34 @@
                     <a href="projects.html" class="text-gray-600 hover:text-gray-900 transition">Projects</a>
                     <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition">Contact</a>
                 </div>
-                <button class="md:hidden text-gray-600">
+                <button id="mobile-menu-toggle" class="md:hidden text-gray-600">
                     <i class="fas fa-bars"></i>
                 </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-gray-200 py-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 transition">Home</a>
+                    <a href="dashboard.html" class="text-gray-600 hover:text-gray-900 transition">Dashboard</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-gray-900 transition">Projects</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition">Contact</a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Header Section -->
-    <div class="bg-white border-b border-gray-200 py-8">
+    <div class="bg-white border-b border-gray-200 py-6">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex flex-col gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                         <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>
                         Appointment Tracker
                     </h1>
-                    <p class="text-gray-600">Manage all your medical, client, and personal appointments in one place</p>
+                    <p class="text-sm md:text-base text-gray-600">Manage all your medical, client, and personal appointments in one place</p>
                 </div>
-                <button onclick="openAddModal()" class="btn-primary">
+                <button onclick="openAddModal()" class="btn-primary w-full md:w-auto md:self-start">
                     <i class="fas fa-plus mr-2"></i>
                     Add Appointment
                 </button>
@@ -279,7 +322,7 @@
         <!-- Appointments Section -->
         <div class="mb-6">
             <h2 class="text-xl font-bold text-gray-900 mb-4">Future Visits</h2>
-            <div id="appointments-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="appointments-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Appointments will be inserted here -->
             </div>
             
@@ -327,16 +370,21 @@
                     <input type="text" id="appointment-title" class="form-input" placeholder="e.g., Follow Up Appointment" required>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="form-group">
                         <label class="form-label">Contact Name *</label>
                         <input type="text" id="contact-name" class="form-input" placeholder="e.g., Chen, Shuang" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Location *</label>
-                        <input type="text" id="location" class="form-input" placeholder="e.g., Jps Watauga" required>
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" id="phone-number" class="form-input" placeholder="e.g., (817) 555-1234">
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Location *</label>
+                    <input type="text" id="location" class="form-input" placeholder="e.g., Jps Watauga" required>
                 </div>
 
                 <div class="form-group">
@@ -344,7 +392,7 @@
                     <input type="text" id="department" class="form-input" placeholder="e.g., Orthopedic, Marketing">
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="form-group">
                         <label class="form-label">Date *</label>
                         <input type="date" id="appointment-date" class="form-input" required>
@@ -367,7 +415,7 @@
                     <textarea id="notes" class="form-input" rows="3" placeholder="Additional information..."></textarea>
                 </div>
 
-                <div class="flex gap-3 mt-6">
+                <div class="flex flex-col sm:flex-row gap-3 mt-6">
                     <button type="submit" class="btn-primary flex-1">
                         <i class="fas fa-save mr-2"></i>
                         Save Appointment
@@ -412,6 +460,7 @@
                 type: document.getElementById('appointment-type').value,
                 title: document.getElementById('appointment-title').value,
                 contactName: document.getElementById('contact-name').value,
+                phoneNumber: document.getElementById('phone-number').value,
                 location: document.getElementById('location').value,
                 department: document.getElementById('department').value,
                 date: document.getElementById('appointment-date').value,
@@ -451,6 +500,7 @@
             document.getElementById('appointment-type').value = appointment.type;
             document.getElementById('appointment-title').value = appointment.title;
             document.getElementById('contact-name').value = appointment.contactName;
+            document.getElementById('phone-number').value = appointment.phoneNumber || '';
             document.getElementById('location').value = appointment.location;
             document.getElementById('department').value = appointment.department || '';
             document.getElementById('appointment-date').value = appointment.date;
@@ -564,6 +614,7 @@
                             
                             <div class="space-y-1 text-sm text-gray-600">
                                 <div><i class="fas fa-user w-4 mr-1"></i>${appointment.contactName}</div>
+                                ${appointment.phoneNumber ? `<div><i class="fas fa-phone w-4 mr-1"></i>${appointment.phoneNumber}</div>` : ''}
                                 <div><i class="fas fa-map-marker-alt w-4 mr-1"></i>${appointment.location}</div>
                                 ${appointment.department ? `<div><i class="fas fa-building w-4 mr-1"></i>${appointment.department}</div>` : ''}
                                 ${arrivalTime ? `<div><i class="fas fa-clock w-4 mr-1"></i>Arrive by ${arrivalTime}</div>` : ''}
@@ -600,6 +651,12 @@
             if (e.target === this) {
                 closeModal();
             }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
         });
     </script>
 </body>
