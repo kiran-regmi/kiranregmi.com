@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+  kiranregmi.com/ai-foundation.html
+  Version: 1.0
+  Last Updated: feb 5, 2026
+  Changes: Initial creation of the AI Foundation page with 22-day learning journey, progress tracking, and important concepts section. Designed for SOC analysts transitioning into AI-enhanced security operations.
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Foundation | Kiran Regmi</title>
+    <meta name="description" content="Learn AI fundamentals in just 5 minutes daily - from basic concepts to transformer architecture and practical applications">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag-basic { background: #DBEAFE; color: #1E40AF; }
+        .tag-architecture { background: #FCE7F3; color: #BE185D; }
+        .tag-advanced { background: #FEF3C7; color: #92400E; }
+        .tag-important { background: #FEE2E2; color: #991B1B; }
+
+        .sticky-sidebar {
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .check-animation {
+            animation: checkPop 0.3s ease;
+        }
+
+        @keyframes checkPop {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link:hover {
+            transform: translateX(4px);
+            color: #667eea;
+        }
+
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gray-900">KR</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="projects.html" class="nav-link text-gray-700 hover:text-gray-900">Projects</a>
+                    <a href="certifications.html" class="nav-link text-gray-700 hover:text-gray-900">Certifications</a>
+                    <a href="contact.html" class="nav-link text-gray-700 hover:text-gray-900">Contact</a>
+                    <a href="dashboard.html" class="nav-link text-gray-700 hover:text-gray-900">Dashboard</a>
+                </div>
+                <a href="index.html" class="text-gray-600 hover:text-gray-900">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+                    <span class="text-sm font-semibold">🤖 AI Foundation Series</span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    Master AI in Just<br>5 Minutes Daily
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
+                    From basic concepts to transformer architecture - a comprehensive 22-day journey designed for SOC analysts transitioning into AI-enhanced security operations
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
+                        <i class="fas fa-calendar-check text-2xl mr-3"></i>
+                        <div class="text-left">
+                            <div class="text-sm opacity-90">Progress</div>
+                            <div class="text-xl font-bold" id="progress-display">0/22 Days</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
+                        <i class="fas fa-clock text-2xl mr-3"></i>
+                        <div class="text-left">
+                            <div class="text-sm opacity-90">Time Investment</div>
+                            <div class="text-xl font-bold">5 min/day</div>
+                        </div>
+                    </div>
+                    <button onclick="resetProgress()" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg px-6 py-3 transition">
+                        <i class="fas fa-redo mr-2"></i>Reset Progress
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="sticky-sidebar bg-white rounded-lg shadow-sm p-6 custom-scrollbar">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-bookmark text-purple-600 mr-2"></i>
+                            Quick Reference
+                        </h3>
+                        
+                        <!-- Search -->
+                        <div class="mb-6">
+                            <div class="relative">
+                                <input 
+                                    type="text" 
+                                    id="searchInput"
+                                    placeholder="Search topics..."
+                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <!-- Filter Tags -->
+                        <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Filter by Category</h4>
+                            <div class="space-y-2">
+                                <button onclick="filterByCategory('all')" class="filter-btn w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition text-sm">
+                                    <i class="fas fa-list mr-2 text-gray-600"></i>All Topics (22)
+                                </button>
+                                <button onclick="filterByCategory('basic')" class="filter-btn w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition text-sm">
+                                    <i class="fas fa-graduation-cap mr-2 text-blue-600"></i>Basics (10)
+                                </button>
+                                <button onclick="filterByCategory('architecture')" class="filter-btn w-full text-left px-3 py-2 rounded-lg hover:bg-pink-50 transition text-sm">
+                                    <i class="fas fa-cogs mr-2 text-pink-600"></i>Architecture (7)
+                                </button>
+                                <button onclick="filterByCategory('advanced')" class="filter-btn w-full text-left px-3 py-2 rounded-lg hover:bg-yellow-50 transition text-sm">
+                                    <i class="fas fa-rocket mr-2 text-yellow-600"></i>Advanced (5)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Important Concepts -->
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                                <i class="fas fa-star text-yellow-500 mr-2"></i>Key Concepts
+                            </h4>
+                            <div class="space-y-2 text-sm">
+                                <a href="#concept-attention" class="sidebar-link block text-gray-600 hover:text-purple-600">• Attention Mechanism</a>
+                                <a href="#concept-rag" class="sidebar-link block text-gray-600 hover:text-purple-600">• RAG (Retrieval-Augmented)</a>
+                                <a href="#concept-hardware" class="sidebar-link block text-gray-600 hover:text-purple-600">• CPU vs GPU vs TPU</a>
+                                <a href="#concept-embeddings" class="sidebar-link block text-gray-600 hover:text-purple-600">• Vector Embeddings</a>
+                                <a href="#concept-hallucination" class="sidebar-link block text-gray-600 hover:text-purple-600">• Hallucination</a>
+                                <a href="#concept-tokenization" class="sidebar-link block text-gray-600 hover:text-purple-600">• Tokenization</a>
+                                <a href="#concept-finetuning" class="sidebar-link block text-gray-600 hover:text-purple-600">• Fine-Tuning</a>
+                                <a href="#concept-context" class="sidebar-link block text-gray-600 hover:text-purple-600">• Context Window</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="lg:col-span-3">
+                    <!-- Daily Sessions -->
+                    <div class="mb-12">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold text-gray-900">
+                                <i class="fas fa-calendar-alt text-purple-600 mr-3"></i>
+                                Daily Learning Journey
+                            </h2>
+                            <div class="text-sm text-gray-600">
+                                <span id="completed-count">0</span> of 22 completed
+                            </div>
+                        </div>
+
+                        <div id="lessons-container" class="space-y-4">
+                            <!-- Lessons will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Important Concepts Section -->
+                    <div id="important-concepts" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-8 shadow-sm">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-500 mr-3"></i>
+                            Essential AI Concepts
+                        </h2>
+                        <p class="text-gray-700 mb-8">Master these core concepts to build a solid foundation in AI technology</p>
+
+                        <div class="grid gap-6">
+                            <!-- Concept Cards will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400">Designed & Developed by Kiran Regmi</p>
+            <p class="text-gray-500 text-sm mt-2">Deployed with Vercel · Secured with JWT/OAuth · Powered by TailwindCSS</p>
+            <p class="text-gray-500 text-sm mt-2">© 2026 kiranregmi.com · All rights reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Lesson Data
+        const lessons = [
+            {
+                day: 1,
+                title: "What is AI?",
+                category: "basic",
+                topic: "Introduction to Artificial Intelligence",
+                content: "AI is <strong>\"man-made thinking power\"</strong> or machine intelligence. It allows machines to analyze data, identify patterns, and make decisions.",
+                example: "YouTube suggesting videos based on your past likes.",
+                keywords: ["artificial intelligence", "machine learning", "patterns", "decisions"]
+            },
+            {
+                day: 2,
+                title: "Generative AI",
+                category: "basic",
+                topic: "Generative AI basics",
+                content: "A type of AI that <strong>creates something new</strong> (text, images, video, audio) rather than just searching for it.",
+                example: "Gamma AI creating a PowerPoint presentation from a script in seconds.",
+                keywords: ["generative ai", "content creation", "text generation", "image generation"]
+            },
+            {
+                day: 3,
+                title: "Search Engine vs. Answer Engine",
+                category: "basic",
+                topic: "Google vs. ChatGPT",
+                content: "Google is a <strong>Search Engine</strong> (finds existing links). ChatGPT is an <strong>Answer Engine</strong> (explains concepts like a teacher).",
+                example: "Google gives links to Java books; ChatGPT explains \"Java for a 10-year-old\".",
+                keywords: ["search engine", "answer engine", "chatgpt", "google"]
+            },
+            {
+                day: 4,
+                title: "AI in Daily Life",
+                category: "basic",
+                topic: "Ubiquitous AI",
+                content: "AI is integrated into almost every minute of modern life, working quietly in the background.",
+                example: "Mobile Face Locks, Google Maps routes, and Banking fraud detection.",
+                keywords: ["daily ai", "face recognition", "maps", "fraud detection"]
+            },
+            {
+                day: 5,
+                title: "AI and the Job Market",
+                category: "basic",
+                topic: "Job Security in the AI Era",
+                content: "AI handles <strong>repetitive, boring tasks</strong>, empowering humans to focus on creativity.",
+                example: "The Golden Rule: <strong>AI will not replace you, but a person using AI will</strong>.",
+                keywords: ["job market", "automation", "career", "skills"]
+            },
+            {
+                day: 6,
+                title: "Large Language Models (LLM)",
+                category: "architecture",
+                topic: "The \"Brain\" of AI",
+                content: "An <strong>LLM</strong> is an AI system trained on <strong>huge datasets</strong> to understand and generate human-like language.",
+                example: "GPT-4 is the brain (LLM) inside the ChatGPT app (the tool).",
+                keywords: ["llm", "language model", "gpt", "training"]
+            },
+            {
+                day: 7,
+                title: "Understanding GPT",
+                category: "architecture",
+                topic: "Generative Pre-trained Transformer",
+                content: "<strong>Generative</strong> (creates content), <strong>Pre-trained</strong> (trained on books/websites), <strong>Transformer</strong> (the internal architecture).",
+                example: "GPT predicts the next word in a sentence based on learned patterns.",
+                keywords: ["gpt", "transformer", "generative", "pre-trained"]
+            },
+            {
+                day: 8,
+                title: "Real-Time vs. Stored Knowledge",
+                category: "basic",
+                topic: "Web Search Capabilities",
+                content: "AI tools have a \"knowledge cutoff\" but can perform <strong>Web Searches</strong> for live, real-time data.",
+                example: "Asking for today's dollar rate triggers a live search.",
+                keywords: ["knowledge cutoff", "web search", "real-time", "live data"]
+            },
+            {
+                day: 9,
+                title: "The Attention Mechanism",
+                category: "architecture",
+                topic: "Focusing on Context",
+                content: "A mechanism that allows AI to <strong>focus on important words</strong> in a sentence while ignoring noise.",
+                example: "In \"Ravi didn't pass because <strong>he</strong> was sick,\" AI knows \"he\" refers to Ravi.",
+                keywords: ["attention mechanism", "context", "focus", "relationships"],
+                important: true
+            },
+            {
+                day: 10,
+                title: "Tokenization & Hardware",
+                category: "architecture",
+                topic: "Tokens and Processors",
+                content: "AI breaks text into <strong>Tokens</strong> (numeric units). <strong>GPUs</strong> are used instead of CPUs for their parallel math power.",
+                example: "\"ChatGPT\" might be broken into two tokens: \"Chat\" and \"GPT\".",
+                keywords: ["tokenization", "tokens", "gpu", "hardware"]
+            },
+            {
+                day: 11,
+                title: "CPU vs. GPU vs. TPU",
+                category: "advanced",
+                topic: "AI's Specialized Brains",
+                content: "<strong>CPUs</strong> are generalists; <strong>GPUs</strong> are parallel workers (100 people working together); <strong>TPUs</strong> are high-end AI factories.",
+                example: "A CPU is one person making 100 dosas; a GPU is 10 people making them together.",
+                keywords: ["cpu", "gpu", "tpu", "hardware", "parallel processing"],
+                important: true
+            },
+            {
+                day: 12,
+                title: "Transformer Architecture (Encoder)",
+                category: "architecture",
+                topic: "Understanding the Input",
+                content: "The <strong>Encoder</strong> reads the input, uses <strong>Input Embeddings</strong> (words to numbers), and <strong>Positional Encoding</strong> (word order).",
+                example: "Positional encoding helps AI know the difference between \"Dog bites man\" and \"Man bites dog\".",
+                keywords: ["transformer", "encoder", "embeddings", "positional encoding"]
+            },
+            {
+                day: 13,
+                title: "Transformer Architecture (Decoder)",
+                category: "architecture",
+                topic: "Writing the Response",
+                content: "The <strong>Decoder</strong> predicts the output token-by-token using <strong>Masked Attention</strong> to prevent \"cheating\" during training.",
+                example: "It hides future words so the model learns to predict, not copy.",
+                keywords: ["transformer", "decoder", "masked attention", "prediction"]
+            },
+            {
+                day: 14,
+                title: "Encoder-Decoder Interaction",
+                category: "architecture",
+                topic: "Encoder-Decoder Logic",
+                content: "The <strong>Encoder</strong> understands the question, and the <strong>Decoder</strong> generates the answer while referring back to the question.",
+                example: "A student (Decoder) refers back to the exam question (Encoder) while writing.",
+                keywords: ["encoder", "decoder", "interaction", "logic"]
+            },
+            {
+                day: 15,
+                title: "The Decoding Process Flow",
+                category: "architecture",
+                topic: "Predictive Cycles",
+                content: "AI predicts a word, adds it to the input, and repeats the cycle until it reaches an <strong>End Token</strong>.",
+                example: "For \"Rain is heavy,\" it first predicts \"Rain,\" then \"is,\" then \"heavy\".",
+                keywords: ["decoding", "prediction", "tokens", "generation"]
+            },
+            {
+                day: 16,
+                title: "Machine Learning Basics",
+                category: "basic",
+                topic: "Linear Regression",
+                content: "A simple ML model used to find relationships between data points to <strong>predict outcomes</strong>.",
+                example: "Training a model on \"Study Hours\" and \"Marks\" to predict future grades.",
+                keywords: ["machine learning", "regression", "prediction", "training"]
+            },
+            {
+                day: 17,
+                title: "Memory & Hallucination",
+                category: "advanced",
+                topic: "Context Windows",
+                content: "The <strong>Context Window</strong> is short-term memory. <strong>Hallucination</strong> is when AI confidently gives a wrong answer.",
+                example: "If a chat is 500 pages long, AI may \"forget\" the beginning of the talk.",
+                keywords: ["context window", "memory", "hallucination", "limitations"],
+                important: true
+            },
+            {
+                day: 18,
+                title: "Token Limits and API Costs",
+                category: "advanced",
+                topic: "The Cost of AI",
+                content: "AI has <strong>Token Limits</strong> per interaction. Companies charge for <strong>API usage</strong> based on the number of tokens used.",
+                example: "Generating a video might cost 60 tokens (approx. 25-30 rupees) in compute.",
+                keywords: ["tokens", "api", "costs", "limits"]
+            },
+            {
+                day: 19,
+                title: "AI Evolution: RNN vs. Transformer",
+                category: "architecture",
+                topic: "RNN vs. Transformer",
+                content: "<strong>RNNs</strong> read word-by-word and have short memories. <strong>Transformers</strong> look at all words at once using Attention.",
+                example: "RNNs struggle with long books; Transformers process huge documents easily.",
+                keywords: ["rnn", "transformer", "evolution", "attention"]
+            },
+            {
+                day: 20,
+                title: "The Vocabulary (Vocab)",
+                category: "advanced",
+                topic: "The Lookup Table",
+                content: "Every AI model has a fixed <strong>Vocabulary</strong> (list of tokens) and <strong>Token IDs</strong> (their index number).",
+                example: "The word \"I\" might be associated with Token ID 101 in the vocab.",
+                keywords: ["vocabulary", "tokens", "token ids", "lookup"]
+            },
+            {
+                day: 21,
+                title: "Vector Embeddings",
+                category: "advanced",
+                topic: "Semantic Meaning",
+                content: "Groups of numbers (<strong>Vectors</strong>) that represent a word's meaning and properties.",
+                example: "\"Apple\" and \"Orange\" are saved close together because both share the property \"Food\".",
+                keywords: ["vectors", "embeddings", "semantic", "meaning"],
+                important: true
+            },
+            {
+                day: 22,
+                title: "Fine-Tuning vs. RAG",
+                category: "advanced",
+                topic: "Customizing AI",
+                content: "<strong>Fine-Tuning</strong> retrains a model to change its behavior/tone. <strong>RAG</strong> lets the AI refer to your private documents.",
+                example: "Fine-Tuning makes a bot polite; RAG allows a bot to answer questions using only your company's policy PDF.",
+                keywords: ["fine-tuning", "rag", "customization", "retrieval"],
+                important: true
+            }
+        ];
+
+        const importantConcepts = [
+            {
+                id: "concept-attention",
+                title: "Attention Mechanism",
+                description: "The \"heart\" of modern AI. It allows the model to <strong>focus on the most important words</strong> in a long sentence while ignoring the rest. It helps AI understand context and relationships (e.g., knowing \"he\" refers to \"Ravi\").",
+                icon: "fa-crosshairs",
+                color: "purple"
+            },
+            {
+                id: "concept-hardware",
+                title: "CPU vs. GPU vs. TPU",
+                description: "<strong>CPU:</strong> A general-purpose worker; handles one task at a time (Slow for AI).<br><strong>GPU:</strong> A parallel workforce (like 100 people) used for heavy math and AI training.<br><strong>TPU:</strong> An \"AI factory machine\" built specifically for large-scale AI math.",
+                icon: "fa-microchip",
+                color: "blue"
+            },
+            {
+                id: "concept-rag",
+                title: "RAG (Retrieval-Augmented Generation)",
+                description: "RAG allows an AI to <strong>reference private notes</strong> before answering. It <strong>Retrieves</strong> data from a local database, <strong>Augments</strong> it into your prompt, and then <strong>Generates</strong> a response using that specific info.",
+                icon: "fa-database",
+                color: "green"
+            },
+            {
+                id: "concept-finetuning",
+                title: "Fine-Tuning",
+                description: "The process of taking a general model (like an MBBS doctor) and training it further with specific data to make it a <strong>specialist</strong> (like a cardiologist).",
+                icon: "fa-sliders-h",
+                color: "pink"
+            },
+            {
+                id: "concept-hallucination",
+                title: "Hallucination",
+                description: "When an AI <strong>confidently provides wrong or unverified info</strong>. This happens because AI is a \"next-word prediction\" model, not a fact-checking machine.",
+                icon: "fa-exclamation-triangle",
+                color: "red"
+            },
+            {
+                id: "concept-embeddings",
+                title: "Vector Embeddings",
+                description: "A group of numbers that represent a word's <strong>semantic properties</strong> (e.g., \"Is it food?\", \"Does it have wheels?\"). By calculating the <strong>\"semantic distance\"</strong> between these numbers, AI knows which words are related.",
+                icon: "fa-project-diagram",
+                color: "indigo"
+            },
+            {
+                id: "concept-tokenization",
+                title: "Tokenization",
+                description: "AI doesn't read text; it reads <strong>Tokens</strong>. This process breaks text into small units (tokens) and assigns them a <strong>Token ID</strong> (index number) from its internal <strong>Vocabulary</strong>.",
+                icon: "fa-code",
+                color: "yellow"
+            },
+            {
+                id: "concept-context",
+                title: "Context Window",
+                description: "This is the AI's <strong>working memory</strong>. It remembers only the conversation in the <strong>current chat</strong>. Once the chat is closed or the limit is reached, AI starts \"forgetting\" earlier parts of the talk.",
+                icon: "fa-window-maximize",
+                color: "teal"
+            }
+        ];
+
+        // Progress tracking
+        let completedDays = JSON.parse(localStorage.getItem('aiFoundationProgress')) || [];
+
+        function toggleDay(day) {
+            const index = completedDays.indexOf(day);
+            if (index > -1) {
+                completedDays.splice(index, 1);
+            } else {
+                completedDays.push(day);
+            }
+            localStorage.setItem('aiFoundationProgress', JSON.stringify(completedDays));
+            updateProgress();
+            renderLessons();
+        }
+
+        function updateProgress() {
+            const total = lessons.length;
+            const completed = completedDays.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('progress-display').textContent = `${completed}/${total} Days`;
+            document.getElementById('completed-count').textContent = completed;
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                completedDays = [];
+                localStorage.setItem('aiFoundationProgress', JSON.stringify(completedDays));
+                updateProgress();
+                renderLessons();
+            }
+        }
+
+        function toggleAccordion(day) {
+            const content = document.getElementById(`content-${day}`);
+            const icon = document.getElementById(`icon-${day}`);
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+
+        function renderLessons(filteredLessons = lessons) {
+            const container = document.getElementById('lessons-container');
+            container.innerHTML = '';
+
+            filteredLessons.forEach(lesson => {
+                const isCompleted = completedDays.includes(lesson.day);
+                const categoryClass = `tag-${lesson.category}`;
+                
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-lg shadow-sm card-hover lesson-card`;
+                card.setAttribute('data-category', lesson.category);
+                
+                card.innerHTML = `
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-sm font-bold text-purple-600 bg-purple-100 px-3 py-1 rounded-full">
+                                        Day ${lesson.day}
+                                    </span>
+                                    <span class="tag ${categoryClass}">
+                                        ${lesson.category.charAt(0).toUpperCase() + lesson.category.slice(1)}
+                                    </span>
+                                    ${lesson.important ? '<span class="tag tag-important">⭐ Important</span>' : ''}
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-1">${lesson.title}</h3>
+                                <p class="text-sm text-gray-600">${lesson.topic}</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button 
+                                    onclick="toggleDay(${lesson.day})" 
+                                    class="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition ${isCompleted ? 'bg-green-500 border-green-500' : 'border-gray-300 hover:border-green-500'}"
+                                >
+                                    ${isCompleted ? '<i class="fas fa-check text-white text-sm check-animation"></i>' : ''}
+                                </button>
+                                <button 
+                                    onclick="toggleAccordion(${lesson.day})"
+                                    class="text-gray-400 hover:text-gray-600 transition"
+                                >
+                                    <i id="icon-${lesson.day}" class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="content-${lesson.day}" class="accordion-content">
+                            <div class="border-t pt-4 mt-4">
+                                <div class="mb-4">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">
+                                        <i class="fas fa-book-open text-purple-600 mr-2"></i>Definition
+                                    </h4>
+                                    <p class="text-gray-700 leading-relaxed">${lesson.content}</p>
+                                </div>
+                                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                                    <h4 class="text-sm font-semibold text-blue-900 mb-2">
+                                        <i class="fas fa-lightbulb text-blue-600 mr-2"></i>Real-World Example
+                                    </h4>
+                                    <p class="text-blue-800">${lesson.example}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function renderImportantConcepts() {
+            const container = document.querySelector('#important-concepts .grid');
+            
+            importantConcepts.forEach(concept => {
+                const colorMap = {
+                    purple: 'bg-purple-100 text-purple-600',
+                    blue: 'bg-blue-100 text-blue-600',
+                    green: 'bg-green-100 text-green-600',
+                    pink: 'bg-pink-100 text-pink-600',
+                    red: 'bg-red-100 text-red-600',
+                    indigo: 'bg-indigo-100 text-indigo-600',
+                    yellow: 'bg-yellow-100 text-yellow-600',
+                    teal: 'bg-teal-100 text-teal-600'
+                };
+                
+                const card = document.createElement('div');
+                card.id = concept.id;
+                card.className = 'bg-white rounded-lg p-6 shadow-sm card-hover';
+                
+                card.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 ${colorMap[concept.color]} rounded-lg flex items-center justify-center">
+                            <i class="fas ${concept.icon} text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">${concept.title}</h3>
+                            <p class="text-gray-700 leading-relaxed">${concept.description}</p>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            if (searchTerm === '') {
+                renderLessons();
+                return;
+            }
+            
+            const filtered = lessons.filter(lesson => {
+                return lesson.title.toLowerCase().includes(searchTerm) ||
+                       lesson.topic.toLowerCase().includes(searchTerm) ||
+                       lesson.content.toLowerCase().includes(searchTerm) ||
+                       lesson.keywords.some(keyword => keyword.includes(searchTerm));
+            });
+            
+            renderLessons(filtered);
+        });
+
+        // Filter by category
+        function filterByCategory(category) {
+            if (category === 'all') {
+                renderLessons();
+            } else {
+                const filtered = lessons.filter(lesson => lesson.category === category);
+                renderLessons(filtered);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            renderLessons();
+            renderImportantConcepts();
+        });
+    </script>
+</body>
+</html>
