@@ -521,8 +521,13 @@
             container.innerHTML = '';
 
             filtered.forEach(appointment => {
-                const [year, month, day] = '2026-03-04'.split('-').map(Number);
-                const date = new Date(year, month - 1, day); // Creates local date directly;
+                // Parse date in local timezone to avoid off-by-one errors
+                const [year, month, day] = appointment.date.split('-').map(Number);
+                const date = new Date(year, month - 1, day);
+                
+                const monthStr = date.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+                const dayNum = date.getDate();
+                const yearNum = date.getFullYear();
                 
                 const startTime = formatTime(appointment.startTime);
                 const arrivalTime = appointment.arrivalTime ? formatTime(appointment.arrivalTime) : null;
@@ -534,9 +539,9 @@
                     <div class="flex gap-4">
                         <!-- Date Box -->
                         <div class="date-box flex-shrink-0">
-                            <div class="month-badge">${month}</div>
-                            <div class="day-number">${day}</div>
-                            <div class="year-label">${year}</div>
+                            <div class="month-badge">${monthStr}</div>
+                            <div class="day-number">${dayNum}</div>
+                            <div class="year-label">${yearNum}</div>
                         </div>
                         
                         <!-- Appointment Details -->
