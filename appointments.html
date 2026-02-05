@@ -521,10 +521,8 @@
             container.innerHTML = '';
 
             filtered.forEach(appointment => {
-                const date = new Date(appointment.date);
-                const month = date.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-                const day = date.getDate();
-                const year = date.getFullYear();
+                const [year, month, day] = '2026-03-04'.split('-').map(Number);
+                const date = new Date(year, month - 1, day); // Creates local date directly;
                 
                 const startTime = formatTime(appointment.startTime);
                 const arrivalTime = appointment.arrivalTime ? formatTime(appointment.arrivalTime) : null;
